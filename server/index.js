@@ -1,25 +1,33 @@
 const cors = require('cors');
 const morgan = require('morgan');
-const landing = require('./routes/landing')
 const route1 = require('./routes/route1')
-const route2 = require('./routes/route2')
+const { Sequelize } = require("sequelize")
 const express = require('express');
-const app = express()
+const Connection = require("./utils/connection");
+const app = express();
 
 
-// Middleware
-app.use(cors())
-app.use(morgan("tiny"))
+		//Database Setup
+		const sequelize = new Sequelize(Connection);
+		module.exports = sequelize;
+		try {
+			sequelize.authenticate();
+			console.log("Connection has been established successfully.");
+		} catch (error) {
+			console.log("Unable to connect to the database:");
+		}
+
+// Middleware 
+app.use(cors());
+app.use(morgan("tiny"));
+app.use(express.json());
 require("dotenv").config()
 
 
 // Routing
-app.use('/', landing)
 app.use('/api/route1', route1)
-app.use('/api/route2', route2)
 
-
-// Listener
+// Listener       
 app.listen(process.env.PORT, () =>
-        console.log(`Server listening on ${process.env.PORT}...`)
+	console.log(`Server listening on ${process.env.PORT}...`)
 );
