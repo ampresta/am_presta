@@ -10,7 +10,7 @@ const PORT = process.env.PORT
 
 //Database Setup
 try {
-	sequelize.authenticate();
+	db.authenticate();
 	console.log("Connection has been established successfully.");
 } catch (error) {
 	console.log("Unable to connect to the database:");
