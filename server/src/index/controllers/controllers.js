@@ -1,8 +1,9 @@
 module.exports.login = (req, res) => {
   if (req.body){
  	
-	    res.send(req.body["email"]);
-
+	    email=req.body["username"];
+	    password=req.body["password"];
+	  
 	
   }
   res.send("error");

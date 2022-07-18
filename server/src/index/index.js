@@ -10,6 +10,7 @@ const express = require("express");
 
   //Database Setup
   const sequelize = new Sequelize(Connection);
+  module.exports.sequelize = sequelize;
   try {
     await sequelize.authenticate();
     console.log("Connection has been established successfully.");
