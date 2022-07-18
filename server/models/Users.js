@@ -1,22 +1,19 @@
-// const { Sequelize, DataTypes } = require("sequelize");
-const sequelize  = require("../index");
-// const sequelize = new Sequelize('sqlite::memory:');
+const Sequelize = require("sequelize")
+const db = require("../config/database");
 
-const User = sequelize.define("User", {
+module.exports = db.define("User", {
   // Model attributes are defined here
   id: {
-    type: DataTypes.INTEGER,
+    type: Sequelize.INTEGER,
     autoIncrement: true,
     primaryKey: true,
   },
   username: {
-    type: DataTypes.STRING,
+    type: Sequelize.STRING,
     allowNull: false,
   },
   password: {
-    type: DataTypes.STRING,
+    type: Sequelize.STRING,
     allowNull: false // defaults to true
   },
 });
-
-console.log(User === sequelize.models.User); // true
