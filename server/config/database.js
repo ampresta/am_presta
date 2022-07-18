@@ -1,6 +1,7 @@
+const { Sequelize} = require("sequelize")
 require("dotenv").config()
 
-Connection = {
+const Connection = {
     dialect: "postgres",
     host: "localhost",
     port: "5432",
@@ -9,4 +10,4 @@ Connection = {
     database: process.env.DB_NAME
 }
 
-module.exports = Connection;
+module.exports = new Sequelize(Connection);
