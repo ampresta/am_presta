@@ -3,7 +3,7 @@ const morgan = require('morgan');
 const route1 = require('./routes/route1')
 const express = require('express');
 const app = express();
-const sequelize = require("./config/database")
+const db = require("./config/database")
 
 const PORT = process.env.PORT
 
