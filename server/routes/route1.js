@@ -2,7 +2,7 @@ const {
     func1,
     func2,
     func3
-} = require("../controllers/route1Controller")
+} = require("../controllers/route1/route1Controller")
 const router = require('express').Router();
 
 
