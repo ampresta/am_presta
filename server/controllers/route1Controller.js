@@ -1,5 +1,5 @@
 module.exports.func1 = (req, res, next) => {
-    res.send("Hello World");
+    res.send("route1");
     next()
 }
 

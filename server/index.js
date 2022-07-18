@@ -14,12 +14,12 @@ require("dotenv").config()
 
 
 // Routing
-app.get('/', landing)
-app.get('/route1', route1)
-app.get('/api/route2', route2)
+app.use('/', landing)
+app.use('/api/route1', route1)
+app.use('/api/route2', route2)
 
 
 // Listener
 app.listen(process.env.PORT, () =>
-    console.log(`Server listening on ${process.env.PORT}...`)
+        console.log(`Server listening on ${process.env.PORT}...`)
 );
