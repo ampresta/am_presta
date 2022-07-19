@@ -2,24 +2,20 @@ const Sequelize = require("sequelize");
 const db = require("../config/database");
 const Collaborateur = require("./Collaborateur");
 
-const User = db.define("User", {
+const Departement = db.define("Departement", {
   // Model attributes are defined here
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
-  },
-  username: {
-    type: Sequelize.STRING,
-    allowNull: false,
     primaryKey: true,
   },
-  password: {
+
+  nom: {
     type: Sequelize.STRING,
-    allowNull: false, // defaults to true
+    allowNull: false,
   },
 });
 
-User.hasOne(Collaborateur);
-Collaborateur.belongsTo(User)
-module.exports = User;
-
+Departement.hasMany(Collaborateur);
+Collaborateur.belongsTo(Departement);
+module.exports = Departement;
