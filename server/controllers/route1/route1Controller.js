@@ -1,6 +1,6 @@
 module.exports.func1 = (req, res, next) => {
-    res.send("route1");
-    next()
+    return res.send(req.user+" route1");
+    
 }
 
 module.exports.func2 = (req, res, next) => {

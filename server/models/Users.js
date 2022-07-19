@@ -6,11 +6,12 @@ module.exports = db.define("User", {
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
-    primaryKey: true,
+
   },
   username: {
     type: Sequelize.STRING,
     allowNull: false,
+	  primaryKey:true
   },
   password: {
     type: Sequelize.STRING,
