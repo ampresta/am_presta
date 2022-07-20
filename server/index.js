@@ -5,7 +5,9 @@ const express = require("express");
 const app = express();
 const db = require("./config/database");
 const login = require("./routes/login");
+const societe = require("./routes/societe");
 const PORT = process.env.PORT;
+const dept = require("./routes/dept");
 
 //Database Setup
 try {
@@ -24,6 +26,8 @@ require("dotenv").config();
 // Routing
 app.use("/api/route1", route1);
 app.use("/api/login", login);
+app.use("/api/societe", societe);
+app.use("/api/dept", dept);
 // Listener
 app.listen(PORT, () => console.log(`Server listening on ${PORT}...`));
 
