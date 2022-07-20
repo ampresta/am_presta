@@ -1,6 +1,5 @@
 const cors = require("cors");
 const morgan = require("morgan");
-const route1 = require("./routes/route1");
 const express = require("express");
 const app = express();
 const db = require("./config/database");
@@ -22,7 +21,6 @@ app.use(express.json());
 require("dotenv").config();
 
 // Routing
-app.use("/api/route1", route1);
 app.use("/api/login", login);
 // Listener
 app.listen(PORT, () => console.log(`Server listening on ${PORT}...`));
