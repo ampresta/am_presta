@@ -1,7 +1,7 @@
 # What's Done:
 
 - [x] login ,register for 1 type of accounts
-- [] models:
+- [ ] models:
   - [x] User:
     - [x] add User and associate an admin to it
     - [ ] modify password
@@ -23,6 +23,7 @@
 
 - jwt sessions
 
-#Notes:
+# Notes:
+
 each time server restarts the databaase become empty due to force:true ... mal9itsh 7al sara7a
 
