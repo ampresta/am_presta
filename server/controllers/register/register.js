@@ -6,7 +6,7 @@ const User = require("../../models/Users");
 
 module.exports = async (req, res) => {
   try {
-    const { username, password, nom, prenom, societe } = req.body;
+    const { username, password, nom, prenom, societe} = req.body;
 
     const pep = process.env.PEPPER;
     if (!societe || !prenom || !nom || !username || !password)
@@ -22,8 +22,8 @@ module.exports = async (req, res) => {
         username,
         password: hash,
         Collaborateur: {
-          nom: nom,
-          prenom: prenom,
+          nom,
+          prenom,
 
           SocieteId: societe,
           admin: true,

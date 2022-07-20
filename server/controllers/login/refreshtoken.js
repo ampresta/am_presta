@@ -2,7 +2,7 @@ const User = require("../../models/Users");
 const { verify } = require("jsonwebtoken");
 
 module.exports = async (req, res) => {
-  jwt = req.cookies["jbid"];
+  const jwt = req.cookies["jbid"];
   if (!jwt) {
     return res.sendStatus(403);
   }

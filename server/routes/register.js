@@ -1,8 +1,8 @@
-const express = require("express");
 const refreshtoken = require("../controllers/login/refreshtoken");
-const register = require("../controllers/login/register");
-const router = express.Router()
+const register = require("../controllers/register/register");
+const router = require("express").Router();
 
+// Routing
 router.post("/", register)
 router.get("/refreshtoken", refreshtoken)
 
