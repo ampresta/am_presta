@@ -19,7 +19,7 @@ const Collaborateur = db.define("Collaborateur", {
   },
   email: {
     type: Sequelize.STRING,
-    allowNull: false,
+    allowNull: true,
   },
   admin: {
     type: Sequelize.BOOLEAN,
