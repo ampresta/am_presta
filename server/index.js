@@ -4,6 +4,7 @@ const express = require("express");
 const app = express();
 const db = require("./config/database");
 const login = require("./routes/login");
+const register = require("./routes/register");
 const societe = require("./routes/societe");
 const PORT = process.env.PORT;
 const dept = require("./routes/dept");
@@ -24,8 +25,10 @@ require("dotenv").config();
 
 // Routing
 app.use("/api/login", login);
+app.use("/api/register", register);
 app.use("/api/societe", societe);
 app.use("/api/dept", dept);
+
 // Listener
 app.listen(PORT, () => console.log(`Server listening on ${PORT}...`));
 
