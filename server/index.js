@@ -29,10 +29,8 @@ app.use("/api/login", login);
 app.use("/api/register", register);
 app.use("/api/societe", societe);
 app.use("/api/dept", dept);
-<<<<<<< HEAD
-app.use("/api/cours", cours);
-=======
 
->>>>>>> d1083873c5cd8ae04aa708a66e1b349ecbda5bd3
+app.use("/api/cours", cours);
+
 // Listener
 app.listen(PORT, () => console.log(`Server listening on ${PORT}...`));
