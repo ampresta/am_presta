@@ -3,7 +3,7 @@ const argon2 = require("argon2");
 const { sign } = require("jsonwebtoken");
 
 module.exports = async (req, res) => {
-  try {
+  try { 
     const { username, password } = req.body;
 
     const user = await User.findOne({ where: { username } });
@@ -18,16 +18,16 @@ module.exports = async (req, res) => {
     if (chekcUser) {
       const refreshtoken = sign(
         { user_id: user.id },
-        process.env.JWT_REFRESH_SALT,
+        process.env.JWT_REFRESH_SALT, 
         { expiresIn: "7d" }
       );
 
       res.cookie("jbid", refreshtoken, { httpOnly: true });
       accesstoken = sign({ user_id: user.id }, process.env.JWTSALT, { expiresIn: "15m" });
-      return res.json({ accesstoken });
+      return res.json({ status:true, accesstoken });
     } 
 
-    return res.send({ status: false, msg: "Wrong Credentials" });
+    return res.send({ status: false, msg: "Username or Password incorrect" });
   } catch (err) {
     return res.send("error: " + err);
   }
