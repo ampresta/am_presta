@@ -1,15 +1,15 @@
 const Societe = require("../../models/Societe");
 
 module.exports = async (req, res) => {
-  nom = req.body["name"];
-  if (!nom) {
+  const { name } = req.body;
+  if (!name) {
     return res.sendStatus(403);
   }
   try {
-    await Societe.create({ name: nom });
+    await Societe.create({ name });
   } catch (err) {
     console.log(err);
     return res.sendStatus(403);
   }
-  return res.send("Done");
+  return res.send({ status: true, msg: "Societe Created Successfully" });
 };

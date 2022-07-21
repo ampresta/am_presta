@@ -1,7 +1,5 @@
-const { Router } = require("express");
+const router = require("express").Router();
 const addDept = require("../controllers/departement/addDept");
-
-router = Router();
 
 router.post("/add", addDept);
 

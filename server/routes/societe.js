@@ -1,6 +1,5 @@
-const express = require("express");
 const addSociete = require("../controllers/societe/addSociete");
+const router = require("express").Router();
 
-router=express.Router();
-router.post('/add',addSociete);
-module.exports=router
+router.post("/add", addSociete);
+module.exports = router;

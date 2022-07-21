@@ -1,34 +1,34 @@
 const User = require("../../models/Users");
 const argon2 = require("argon2");
 const { sign } = require("jsonwebtoken");
+
 module.exports = async (req, res) => {
-  if (req.method == "POST") {
-    user = req.body["username"];
-    password = req.body["password"];
-    const user_ = await User.findOne({ where: { username: user } });
-    if (user_ == null) {
-      return res.send("Not found!");
-    } else {
-      pep = process.env.PEPPER;
-      try {
-        if (await argon2.verify(user_.password, password + pep)) {
-          refreshtoken = sign(
-            { user_id: user_.id },
-            process.env.JWT_REFRESH_SALT,
-            { expiresIn: "7d" }
-          );
-          res.cookie("jbid", refreshtoken, { httpOnly: true });
-          accesstoken = sign({ user_id: user_.id }, process.env.JWTSALT, {
-            expiresIn: "15m",
-          });
-          return res.json({ accesstoken: accesstoken });
-        } else {
-          return res.send("Wrong Credentials");
-        }
-      } catch (err) {
-        return res.send("error: " + err);
-      }
-    }
+  try { 
+    const { username, password } = req.body;
+
+    const user = await User.findOne({ where: { username } });
+
+    if (user === null)
+      return res.send({ status: false, msg: "User Not found!" });
+
+    const pep = process.env.PEPPER;
+
+    const chekcUser = await argon2.verify(user.password, password + pep);
+
+    if (chekcUser) {
+      const refreshtoken = sign(
+        { user_id: user.id },
+        process.env.JWT_REFRESH_SALT, 
+        { expiresIn: "7d" }
+      );
+
+      res.cookie("jbid", refreshtoken, { httpOnly: true });
+      accesstoken = sign({ user_id: user.id }, process.env.JWTSALT, { expiresIn: "15m" });
+      return res.json({ status:true, accesstoken });
+    } 
+
+    return res.send({ status: false, msg: "Username or Password incorrect" });
+  } catch (err) {
+    return res.send("error: " + err);
   }
-  return res.send("NOT POST");
 };

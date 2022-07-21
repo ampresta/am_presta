@@ -1,10 +1,10 @@
 const cors = require("cors");
 const morgan = require("morgan");
-const route1 = require("./routes/route1");
 const express = require("express");
 const app = express();
 const db = require("./config/database");
 const login = require("./routes/login");
+const register = require("./routes/register");
 const societe = require("./routes/societe");
 const dept = require("./routes/dept");
 const cours = require("./routes/cours");
@@ -25,10 +25,14 @@ app.use(express.json());
 require("dotenv").config();
 
 // Routing
-app.use("/api/route1", route1);
 app.use("/api/login", login);
+app.use("/api/register", register);
 app.use("/api/societe", societe);
 app.use("/api/dept", dept);
+<<<<<<< HEAD
 app.use("/api/cours", cours);
+=======
+
+>>>>>>> d1083873c5cd8ae04aa708a66e1b349ecbda5bd3
 // Listener
 app.listen(PORT, () => console.log(`Server listening on ${PORT}...`));
