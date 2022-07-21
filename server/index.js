@@ -6,9 +6,10 @@ const app = express();
 const db = require("./config/database");
 const login = require("./routes/login");
 const societe = require("./routes/societe");
-const PORT = process.env.PORT;
 const dept = require("./routes/dept");
+const cours = require("./routes/cours");
 
+const PORT = process.env.PORT;
 //Database Setup
 try {
   db.authenticate();
@@ -28,6 +29,6 @@ app.use("/api/route1", route1);
 app.use("/api/login", login);
 app.use("/api/societe", societe);
 app.use("/api/dept", dept);
+app.use("/api/cours", cours);
 // Listener
 app.listen(PORT, () => console.log(`Server listening on ${PORT}...`));
-

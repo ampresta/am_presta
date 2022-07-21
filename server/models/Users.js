@@ -7,11 +7,13 @@ const User = db.define("User", {
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
+    primaryKey: true,
+    allowNull: false,
   },
   username: {
     type: Sequelize.STRING,
     allowNull: false,
-    primaryKey: true,
+    unique: true,
   },
   password: {
     type: Sequelize.STRING,
@@ -20,6 +22,5 @@ const User = db.define("User", {
 });
 
 User.hasOne(Collaborateur);
-Collaborateur.belongsTo(User)
+Collaborateur.belongsTo(User);
 module.exports = User;
-

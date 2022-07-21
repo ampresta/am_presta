@@ -1,7 +1,6 @@
 const Sequelize = require("sequelize");
 const db = require("../config/database");
 const Quota = require("./Quota");
-const Quota = require("./Quota");
 
 const Cours = db.define("Cours", {
   // Model attributes are defined here

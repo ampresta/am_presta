@@ -10,7 +10,6 @@ const Connection = {
   database: process.env.DB_NAME,
 };
 const sequelize = new Sequelize(Connection);
-sequelize.sync({force:true});
+sequelize.sync({ alter: true });
 console.log("All models were synchronized successfully.");
 module.exports = sequelize;
-
