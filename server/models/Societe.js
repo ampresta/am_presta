@@ -14,6 +14,7 @@ const Societe = db.define("Societe", {
   name: {
     type: Sequelize.STRING,
     allowNull: false,
+    unique: true,
   },
 });
 
@@ -21,7 +22,7 @@ Societe.hasMany(Departement);
 Departement.belongsTo(Societe);
 
 Societe.hasMany(Collaborateur);
-Collaborateur.belongsTo(Societe);
+Collaborateur.Societe = Collaborateur.belongsTo(Societe);
 
 Societe.hasMany(Quota);
 Quota.belongsTo(Societe);
