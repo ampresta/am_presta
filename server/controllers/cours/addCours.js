@@ -1,6 +1,6 @@
 Cours = require("../../models/Cours");
 module.exports = async (req, res) => {
-  cours = req.body["name"];
+  cours = req.body["nom"];
   provider = req.body["provider"];
   description = req.body["description"];
   if (!cours || !provider || !description) {
@@ -8,12 +8,12 @@ module.exports = async (req, res) => {
   }
   try {
     Cours.create({
-      name: cours,
+      nom: cours,
       provider: provider,
       description: description,
     });
-    return res.send("Done");
-  } catch {
-    return res.sendStatus(403);
+    return res.json({ status: "done" });
+  } catch (err) {
+    return res.send({ status: "error", err: err });
   }
 };

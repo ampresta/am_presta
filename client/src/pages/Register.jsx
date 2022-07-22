@@ -141,7 +141,7 @@ function Register() {
             onChange={(e) => handleChange(e)}
           />
           <input
-            type="number"
+            type="text"
             placeholder="Societe"
             name="societe"
             min={0}

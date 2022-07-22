@@ -19,6 +19,8 @@
   - [x] Quota
     - [x] create a Quota
     - [x] update quota
+  - Session
+    - [x] add session
 
 # What needs more testing :
 
