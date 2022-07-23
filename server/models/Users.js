@@ -4,14 +4,11 @@ const Collaborateur = require("./Collaborateur");
 
 const User = db.define("User", {
   // Model attributes are defined here
-  id: {
-    type: Sequelize.INTEGER,
-    autoIncrement: true,
-  },
+
   username: {
+    unique: true,
     type: Sequelize.STRING,
     allowNull: false,
-    primaryKey: true,
   },
   password: {
     type: Sequelize.STRING,
@@ -19,7 +16,7 @@ const User = db.define("User", {
   },
 });
 
-User.hasOne(Collaborateur);
-Collaborateur.belongsTo(User)
-module.exports = User;
+User.Collaborateur = User.hasOne(Collaborateur);
+Collaborateur.belongsTo(User);
 
+module.exports = User;

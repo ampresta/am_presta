@@ -18,6 +18,9 @@
     - [x] create a societe
   - [x] Quota
     - [x] create a Quota
+    - [x] update quota
+  - Session
+    - [x] add session
 
 # What needs more testing :
 
@@ -26,4 +29,3 @@
 # Notes:
 
 each time server restarts the databaase become empty due to force:true ... mal9itsh 7al sara7a
-
