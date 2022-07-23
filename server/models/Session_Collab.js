@@ -28,10 +28,7 @@ const Session_Collab = db.define("Session_Collab", {
   },
 });
 
-Session_Collab.belongsTo(Session, { foreignKey: "session" });
-Session.hasOne(Session_Collab);
-
-Session_Collab.belongsTo("Collaborateur", { foreignKey: "collab" });
-Collaborateur.hasOne(Session_Collab);
+Session.belongsToMany(Collaborateur, { through: Session_Collab });
+Collaborateur.belongsToMany(Session, { through: Session_Collab });
 
 module.exports = Session_Collab;

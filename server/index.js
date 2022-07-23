@@ -8,7 +8,7 @@ const register = require("./routes/register");
 const societe = require("./routes/societe");
 const dept = require("./routes/dept");
 const cours = require("./routes/cours");
-
+const session = require("./routes/session");
 const PORT = process.env.PORT;
 //Database Setup
 try {
@@ -29,7 +29,7 @@ app.use("/api/login", login);
 app.use("/api/register", register);
 app.use("/api/societe", societe);
 app.use("/api/dept", dept);
-
+app.use("/api/session", session);
 app.use("/api/cours", cours);
 
 // Listener

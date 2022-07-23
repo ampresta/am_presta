@@ -1,8 +1,5 @@
 const Sequelize = require("sequelize");
 const db = require("../config/database");
-const Cours = require("Cours");
-const Session = require("./Session");
-const Departement = require("./Departement");
 const Collaborateur = require("./Collaborateur");
 const ChallengeCollab = db.define("Challenge", {
   // Model attributes are defined here

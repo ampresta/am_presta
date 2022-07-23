@@ -1,6 +1,6 @@
 const Sequelize = require("sequelize");
 const db = require("../config/database");
-const Cours = require("Cours");
+const Cours = require("./Cours");
 const Session = db.define("Session", {
   // Model attributes are defined here
 
@@ -23,6 +23,6 @@ const Session = db.define("Session", {
 });
 
 Session.hasOne(Cours);
-Cours.belongsTo(Session);
+Cours.hasMany(Session);
 
 module.exports = Session;

@@ -1,6 +1,5 @@
 const Sequelize = require("sequelize");
 const db = require("../config/database");
-const Cours = require("Cours");
 const Session = require("./Session");
 const Departement = require("./Departement");
 const Challenge = db.define("Challenge", {
@@ -24,10 +23,10 @@ const Challenge = db.define("Challenge", {
   },
 });
 
-Challenge.hasMany(Session);
-Challenge.hasMany(Departement);
+Challenge.belongsToMany(Session, { through: Challenge_Session });
+Challenge.belongsToMany(Departement, { through: Challenge_Dept });
 
-Session.belongsToMany(Challenge, { through: "Challenge_Session" });
-Departement.belongsToMany(Challenge, { through: "Challenge_Dept" });
+Session.belongsToMany(Challenge, { through: Challenge_Session });
+Departement.belongsToMany(Challenge, { through: Challenge_Dept });
 
 module.exports = Challenge;
