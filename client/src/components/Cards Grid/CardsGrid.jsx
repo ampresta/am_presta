@@ -1,4 +1,4 @@
-import Card from "../card/Card";
+import Card from "./card/Card";
 import "./cardsgrid.scss";
 
 export default function CardsGrid() {
