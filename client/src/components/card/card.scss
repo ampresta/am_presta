@@ -1,0 +1,52 @@
+$color-light: rgba(132, 139, 200, 0.18);
+$card-shadow: 0 2rem 3rem $color-light;
+$card-radius: 1rem;
+
+.card {
+  position: relative;
+  background-color: #fff;
+  padding: 1.8rem;
+  border-radius: $card-radius;
+  box-shadow: $card-shadow;
+
+  .card-body {
+    text-align: right;
+
+    hr {
+      margin: 0 auto;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+      width: 50%;
+      border: 0.5px solid rgb(223, 223, 223);
+    }
+
+    .description {
+      text-align: left;
+    }
+
+    .gain {
+      color: #41f1b6;
+    }
+
+    .loss {
+      color: #ff7782;
+    }
+  }
+
+  .card-icon {
+    position: absolute;
+    top: -20%;
+    left: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: red;
+    padding: 1.2rem;
+
+    span {
+      color: white;
+      font-size: 2rem;
+    }
+  }
+}

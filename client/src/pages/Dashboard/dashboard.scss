@@ -1,7 +1,17 @@
-.dashboard{
-    display: flex;
-    .dashboardContainer{
-        width: 100%;
-        padding-inline: 1%;
+.dashboard {
+  display: flex;
+
+  .content {
+    width: 100%;
+    padding-inline: 1%;
+
+    .dashboardWrapper {
+      padding-inline: 5rem;
+      margin-top: 1rem;
+
+      .cardsGrid {
+        margin-top: 5rem;
+      }
     }
+  }
 }
