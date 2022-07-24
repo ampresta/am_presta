@@ -1,0 +1,33 @@
+.SidebarWrapper {
+  height: 95vh;
+  width: 233px;
+  top: 16px;
+  left: 16px;
+  background: #393940;
+  border-radius: 10px;
+
+  .links {
+    display: flex;
+    flex-direction: column;
+    height: 80%;
+    justify-content: space-between;
+
+    .section {
+      bottom: 10px;
+      left: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      list-style-type: none;
+      padding: 0px;
+      margin: 0px;
+
+      &:nth-child(1) {
+        position: "static";
+      }
+      &:nth-child(2) {
+        position: "absolute";
+      }
+    }
+  }
+}
