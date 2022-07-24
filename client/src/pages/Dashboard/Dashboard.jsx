@@ -1,12 +1,16 @@
 import React from "react";
 import Sidebar from "../../components/sidebar/Sidebar";
-import "./dashboard.scss"
+import Navbar from "../../components/navbar/Navbar";
+import "./dashboard.scss";
 
 function Dashboard() {
   return (
-    <div className="wrapper">
+    <div className="dashboard">
       <Sidebar />
-      <h1>Dashboard</h1>
+      <div className="dashboardContainer">
+        <Navbar path="Dashboard"/>
+        CONTENT
+      </div>
     </div>
   );
 }

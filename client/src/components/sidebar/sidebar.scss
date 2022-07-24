@@ -1,20 +1,18 @@
-.SidebarWrapper {
-  height: 95vh;
-  width: 233px;
-  top: 16px;
-  left: 16px;
+.sidebar {
+  min-height: 100vh;
   background: #393940;
-  border-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  padding-inline:  10px
+   ;
 
   .links {
     display: flex;
     flex-direction: column;
-    height: 80%;
+    align-items: stretch;
     justify-content: space-between;
 
     .section {
-      bottom: 10px;
-      left: 50%;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -22,11 +20,10 @@
       padding: 0px;
       margin: 0px;
 
-      &:nth-child(1) {
-        position: "static";
-      }
-      &:nth-child(2) {
-        position: "absolute";
+      &:nth-child(2){
+        position: fixed;
+        bottom: 1rem;
+        left: 10px;
       }
     }
   }

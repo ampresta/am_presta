@@ -14,7 +14,7 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className="SidebarWrapper">
+    <div className="sidebar">
       <SidebarLogo />
       <div className="links">
         <div className="section">
@@ -37,6 +37,5 @@ const Sidebar = () => {
   );
 };
 
-/* Logo */
 
 export default Sidebar;

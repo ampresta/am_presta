@@ -9,24 +9,23 @@
   margin-bottom: 5px;
 
   a {
+    display: flex;
+    align-items: center;
     margin: 2px 15px;
     color: #0e94d4;
     text-decoration: none;
     margin-left: 22px;
     margin-top: 1px;
     margin-bottom: 1px;
+    color: white;
 
     span {
-      color: white;
-      vertical-align: middle;
-
       &:nth-child(1) {
         font-size: 22px;
         margin-right: 19px;
       }
 
       &:nth-child(2) {
-        font-family: "Roboto";
         font-weight: 500;
         font-size: 14px;
       }
