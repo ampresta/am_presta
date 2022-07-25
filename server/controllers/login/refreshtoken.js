@@ -1,27 +1,28 @@
 const User = require("../../models/Users");
-const { verify } = require("jsonwebtoken");
+const { verify, sign } = require("jsonwebtoken");
 
 module.exports = async (req, res) => {
   const jwt = req.cookies["jbid"];
   if (!jwt) {
-    return res.sendStatus(403);
+    return res.send({ status: false, msg: "No cookie" });
   }
   try {
-    payload = verify(jwt, JWT_REFRESH_SALT);
-    user_ = User.findOne({ where: { id: payload.user_id } });
+    payload = verify(jwt, process.env.JWT_REFRESH_SALT);
+    user_ = await User.findOne({ where: { id: payload.user_id } });
     if (!user_) {
-      return res.sendStatus(403);
+      return res.send({ status: false, msg: "No user" });
     }
-    accesstoken = sign({ user_id: user_.id }, process.env.JWTSALT, {
+    accesstoken = sign(payload, process.env.JWTSALT, {
       expiresIn: "15m",
     });
 
-    refreshtoken = sign({ user_id: user_.id }, process.env.JWT_REFRESH_SALT, {
+    refreshtoken = sign(payload, process.env.JWT_REFRESH_SALT, {
       expiresIn: "7d",
     });
     res.cookie("jbid", refreshtoken, { httpOnly: true });
     return res.json({ accesstoken: accesstoken });
   } catch (err) {
-    return res.sendStatus(403);
+    console.log(err);
+    return res.send({ status: false, msg: err });
   }
 };

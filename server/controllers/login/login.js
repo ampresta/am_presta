@@ -1,11 +1,14 @@
 const User = require("../../models/Users");
 const argon2 = require("argon2");
 const { sign } = require("jsonwebtoken");
+const GetType = require("./GetType");
 
 module.exports = async (req, res) => {
-  try { 
+  try {
     const { username, password } = req.body;
-
+    if (!username || !password) {
+      return res.send({ status: false, msg: "Check parameters" });
+    }
     const user = await User.findOne({ where: { username } });
 
     if (user === null)
@@ -13,19 +16,25 @@ module.exports = async (req, res) => {
 
     const pep = process.env.PEPPER;
 
-    const chekcUser = await argon2.verify(user.password, password + pep);
+    const checkUser = await argon2.verify(user.password, password + pep);
 
-    if (chekcUser) {
+    if (checkUser) {
+      type = await GetType(user);
+      if (type === "Error") {
+        return res.json({ status: false, msg: "Undefined User Type " });
+      }
       const refreshtoken = sign(
-        { user_id: user.id },
-        process.env.JWT_REFRESH_SALT, 
+        { user_id: user.id, type },
+        process.env.JWT_REFRESH_SALT,
         { expiresIn: "7d" }
       );
 
       res.cookie("jbid", refreshtoken, { httpOnly: true });
-      accesstoken = sign({ user_id: user.id }, process.env.JWTSALT, { expiresIn: "15m" });
-      return res.json({ status:true, accesstoken });
-    } 
+      accesstoken = sign({ user_id: user.id, type }, process.env.JWTSALT, {
+        expiresIn: "10m",
+      });
+      return res.json({ status: true, accesstoken, type });
+    }
 
     return res.send({ status: false, msg: "Username or Password incorrect" });
   } catch (err) {

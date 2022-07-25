@@ -1,7 +1,6 @@
 const Cours = require("../../models/Cours");
 const sequelize = require("sequelize");
 const Session = require("../../models/Session");
-const Session_Collab = require("../../models/Session_Collab");
 module.exports = async (req, res) => {
   if (req.method == "POST") {
     filters = {};
