@@ -61,7 +61,7 @@ function Companies() {
                     </MDButton>
                   </MDBox>
                 </Grid>
-                </Grid>
+              </Grid>
 
               <MDBox pt={3}>
                 <DataTable
