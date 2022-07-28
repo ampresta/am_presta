@@ -43,7 +43,6 @@ function Dashboard() {
 
   useEffect(() => {
     axios.get("http://localhost:5000/api/cours/browse").then((res) => {
-      console.log(res);
       setCoursesCount(res.data.length)
     });
   });
