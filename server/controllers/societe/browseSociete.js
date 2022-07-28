@@ -3,18 +3,20 @@ const sequelize = require("sequelize");
 const Collaborateur = require("../../models/Collaborateur");
 
 module.exports = async (req, res) => {
+  filters = {};
+  filters.include = {
+    model: Collaborateur,
+    attributes: ["nom", "prenom"],
+    where: {
+      admin: true,
+    },
+  };
   if (req.method === "POST") {
     const { search } = req.body;
+
     if (search) {
       console.log(search);
-      filters = {};
-      filters.include = {
-        model: Collaborateur,
-        attributes: ["nom"],
-        where: {
-          admin: true,
-        },
-      };
+
       filters.attributes = {
         include: [
           [
@@ -32,13 +34,13 @@ module.exports = async (req, res) => {
       societe = await Societe.findAll(filters);
       return res.json({ status: true, msg: societe });
     } else {
-      societe = await Societe.findAll();
+      societe = await Societe.findAll(filters);
 
       return res.json({ status: false, msg: societe });
     }
   }
 
-  societe = await Societe.findAll();
+  societe = await Societe.findAll(filters);
 
   return res.json({ status: true, msg: societe });
 };
