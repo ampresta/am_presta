@@ -34,18 +34,46 @@ import React, { useState, useEffect } from "react";
 //Axios
 import axios from "axios";
 
+// Endpoints
+import { amCardsRoute } from "utils/APIRoutes";
+
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
 
   const { columns, rows } = authorsTableData();
 
   const [coursesCount, setCoursesCount] = useState(0);
+  const [partnersCount, setPartnersCount] = useState(0);
+  const [companiesCount, setCompaniesCount] = useState(0);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/cours/browse").then((res) => {
-      setCoursesCount(res.data.length)
-    });
+    const fetchCards = async (model) => {
+      const { data } = await axios.post(amCardsRoute, { model })
+      switch (model) {
+        case "cours":
+          setCoursesCount(data.count)
+          break;
+        
+          case "societe":
+            setCompaniesCount(data.count)
+          break;
+        
+          case "provider":
+            setPartnersCount(data.count)
+            break;
+      
+        default:
+          break;
+      }
+    }
+
+    fetchCards("cours").catch(console.error);
+    fetchCards("societe").catch(console.error);
+    fetchCards("provider").catch(console.error);
   });
+
+    
+  
 
   return (
 
@@ -59,8 +87,8 @@ function Dashboard() {
               <ComplexStatisticsCard
                 color="dark"
                 icon="class"
-                title="Total Courses"
-                count={coursesCount}
+                title="Total Companies"
+                count={companiesCount}
                 percentage={{
                   color: "success",
                   amount: "+55%",
@@ -73,8 +101,8 @@ function Dashboard() {
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
                 icon="school"
-                title="Actual Sessions"
-                count={12}
+                title="Total Courses"
+                count={coursesCount}
                 percentage={{
                   color: "success",
                   amount: "+3%",
@@ -88,8 +116,8 @@ function Dashboard() {
               <ComplexStatisticsCard
                 color="success"
                 icon="store"
-                title="Actual Departments"
-                count={5}
+                title="Total Partners"
+                count={partnersCount}
                 percentage={{
                   color: "success",
                   amount: "+1%",
