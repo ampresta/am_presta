@@ -10,6 +10,7 @@ const dept = require("./routes/dept");
 const cours = require("./routes/cours");
 const session = require("./routes/session");
 const PORT = process.env.PORT;
+const dashboard = require("./routes/dashboard");
 //Database Setup
 try {
   db.authenticate();
@@ -31,6 +32,6 @@ app.use("/api/societe", societe);
 app.use("/api/dept", dept);
 app.use("/api/session", session);
 app.use("/api/cours", cours);
-
+app.use("/api/dashboard", dashboard);
 // Listener
 app.listen(PORT, () => console.log(`Server listening on ${PORT}...`));
