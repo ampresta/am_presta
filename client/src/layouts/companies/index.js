@@ -45,8 +45,19 @@ function Companies() {
               </MDBox>
 
               <Grid container spacing={2}>
-                <Grid xs={10} md={10}>
-                  <MDBox ml={6} mt={4} py={2} px={2}>
+                <MDBox ml={3} py={2} px={2} mt={3}>
+                  <MDButton variant="gradient" color="info" size="small">
+                    <Icon fontSize="big" color="light">
+                      add
+                    </Icon>
+                    add company
+                  </MDButton>
+                </MDBox>
+              </Grid>
+
+              <Grid container spacing={2}>
+                <Grid xs={9.5} md={11}>
+                  <MDBox ml={3} py={2} px={2}>
                     <MDInput
                       variant="outlined"
                       label="Search here..."
@@ -54,10 +65,12 @@ function Companies() {
                     />
                   </MDBox>
                 </Grid>
-                <Grid xs={2} md={1}>
-                  <MDBox mt={4} py={2}>
+                <Grid xs={1} md={1}>
+                  <MDBox py={2}>
                     <MDButton variant="gradient" color="info">
-                      <Icon fontSize="big">refresh</Icon>
+                      <Icon fontSize="big" color="light">
+                        refresh
+                      </Icon>
                     </MDButton>
                   </MDBox>
                 </Grid>
