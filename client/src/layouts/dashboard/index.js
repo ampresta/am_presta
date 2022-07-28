@@ -27,10 +27,26 @@ import { Link } from "react-router-dom";
 // Data
 import authorsTableData from "layouts/dashboard/data/companiesTableData";
 
+
+// Hooks
+import React, { useState, useEffect } from "react";
+
+//Axios
+import axios from "axios";
+
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
 
   const { columns, rows } = authorsTableData();
+
+  const [coursesCount, setCoursesCount] = useState(0);
+
+  useEffect(() => {
+    axios.get("http://localhost:5000/api/cours/browse").then((res) => {
+      console.log(res);
+      setCoursesCount(res.data.length)
+    });
+  });
 
   return (
 
@@ -45,7 +61,7 @@ function Dashboard() {
                 color="dark"
                 icon="class"
                 title="Total Courses"
-                count={240}
+                count={coursesCount}
                 percentage={{
                   color: "success",
                   amount: "+55%",
