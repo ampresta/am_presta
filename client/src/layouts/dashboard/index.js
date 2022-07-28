@@ -33,6 +33,8 @@ function Dashboard() {
   const { columns, rows } = authorsTableData();
 
   return (
+
+    
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox py={3}>
