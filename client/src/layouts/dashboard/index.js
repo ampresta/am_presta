@@ -7,7 +7,6 @@ import MDBox from "components/MDBox";
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Footer from "examples/Footer";
 import ReportsBarChart from "examples/Charts/BarCharts/ReportsBarChart";
 import ReportsLineChart from "examples/Charts/LineCharts/ReportsLineChart";
 import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
@@ -17,15 +16,16 @@ import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
 import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
 
 // Dashboard components
-// import Projects from "layouts/dashboard/components/Projects";
 import OrdersOverview from "layouts/dashboard/components/OrdersOverview";
 
 import Card from "@mui/material/Card";
 import MDTypography from "components/MDTypography";
 import DataTable from "examples/Tables/DataTable";
 
+import { Link } from "react-router-dom";
+
 // Data
-import authorsTableData from "layouts/tables/data/authorsTableData";
+import authorsTableData from "layouts/dashboard/data/companiesTableData";
 
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
@@ -138,7 +138,7 @@ function Dashboard() {
                   coloredShadow="info"
                 >
                   <MDTypography variant="h6" color="white">
-                    Authors Table
+                    Companies
                   </MDTypography>
                 </MDBox>
                 <MDBox pt={2}>
@@ -151,6 +151,11 @@ function Dashboard() {
                   />
                 </MDBox>
               </Card>
+              <Link to={"/companies"}>
+                <MDTypography align={"center"} fontSize={14} mt={2}>
+                  Show All
+                </MDTypography>
+              </Link>
             </Grid>
             <Grid item xs={12} md={6} lg={4}>
               <OrdersOverview />
@@ -158,7 +163,6 @@ function Dashboard() {
           </Grid>
         </MDBox>
       </MDBox>
-      <Footer />
     </DashboardLayout>
   );
 }
