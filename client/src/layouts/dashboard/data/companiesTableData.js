@@ -29,7 +29,7 @@ function Data() {
       { Header: "manager", accessor: "manager", align: "center" },
       { Header: "date", accessor: "date", align: "center" },
     ],
-
+    rows: []
   }
   return table
 }
