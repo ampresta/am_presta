@@ -11,6 +11,7 @@ const cours = require("./routes/cours");
 const session = require("./routes/session");
 const PORT = process.env.PORT;
 const dashboard = require("./routes/dashboard");
+const provider = require("./routes/provider");
 //Database Setup
 try {
   db.authenticate();
@@ -33,6 +34,6 @@ app.use("/api/dept", dept);
 app.use("/api/session", session);
 app.use("/api/cours", cours);
 app.use("/api/dashboard", dashboard);
-
+app.use("/api/provider", provider);
 // Listener
 app.listen(PORT, () => console.log(`Server listening on ${PORT}...`));
