@@ -3,6 +3,8 @@ import Grid from "@mui/material/Grid";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
+import MDAvatar from "components/MDAvatar";
+
 
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
@@ -11,12 +13,8 @@ import ReportsBarChart from "examples/Charts/BarCharts/ReportsBarChart";
 import ReportsLineChart from "examples/Charts/LineCharts/ReportsLineChart";
 import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
 
-// Data
-import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
-import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
-
-// Dashboard components
-import OrdersOverview from "layouts/dashboard/components/OrdersOverview";
+//component
+import PopularCoursesList from "examples/Lists/PopularCoursesList";
 
 import Card from "@mui/material/Card";
 import MDTypography from "components/MDTypography";
@@ -26,7 +24,9 @@ import { Link } from "react-router-dom";
 
 // Data
 import authorsTableData from "layouts/dashboard/data/companiesTableData";
-
+import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
+import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
+import popularCoursesListData from "layouts/dashboard/data/popularCoursesListData";
 
 // Hooks
 import React, { useState, useEffect } from "react";
@@ -34,23 +34,86 @@ import React, { useState, useEffect } from "react";
 //Axios
 import axios from "axios";
 
+// Endpoints
+import { amCardsRoute, companiesRoute} from "utils/APIRoutes";
+
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
 
-  const { columns, rows } = authorsTableData();
+  const { columns } = authorsTableData();
 
   const [coursesCount, setCoursesCount] = useState(0);
+  const [partnersCount, setPartnersCount] = useState(0);
+  const [companiesCount, setCompaniesCount] = useState(0);
+  const [companies, setComnpanies] = useState([])
+  
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/cours/browse").then((res) => {
-      console.log(res);
-      setCoursesCount(res.data.length)
-    });
+    const fetchCards = async (model) => {
+      const { data } = await axios.post(amCardsRoute, { model });
+      switch (model) {
+        case "cours":
+          setCoursesCount(data.count);
+          break;
+<<<<<<< HEAD
+        
+        case "societe":
+          setCompaniesCount(data.count)
+          break;
+        
+        case "provider":
+          setPartnersCount(data.count)
+          break;
+      
+=======
+
+        case "societe":
+          setCompaniesCount(data.count);
+          break;
+
+        case "provider":
+          setPartnersCount(data.count);
+          break;
+
+>>>>>>> 18a06707d1b98f24fee0062628547c959e1e53a5
+        default:
+          break;
+      }
+    };
+
+    // const handleCompanies = (companies) => {
+
+    //   // const Author = ({ image, name, company }) => (
+    //   //   <MDBox display="flex" alignItems="center" lineHeight={1}>
+    //   //     <MDAvatar src={image} name={name} size="sm" />
+    //   //     <MDBox ml={2} lineHeight={1}>
+    //   //       <MDTypography display="block" variant="button" fontWeight="medium">
+    //   //         {name}
+    //   //       </MDTypography>
+    //   //       <MDTypography variant="caption">{company}</MDTypography>
+    //   //     </MDBox>
+    //   //   </MDBox>
+    //   // );
+
+    //   // let temp = []
+    //   console.log(companies);
+     
+    // }
+
+
+    // const getAllCompanies = async () => {
+    //   const { data } = await axios.get(companiesRoute);
+    //   handleCompanies(data.msg)
+     
+    // }
+    
+    // getAllCompanies()
+    fetchCards("cours").catch(console.error);
+    fetchCards("societe").catch(console.error);
+    fetchCards("provider").catch(console.error);
   });
 
   return (
-
-    
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox py={3}>
@@ -60,8 +123,8 @@ function Dashboard() {
               <ComplexStatisticsCard
                 color="dark"
                 icon="class"
-                title="Total Courses"
-                count={coursesCount}
+                title="Total Companies"
+                count={companiesCount}
                 percentage={{
                   color: "success",
                   amount: "+55%",
@@ -74,8 +137,8 @@ function Dashboard() {
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
                 icon="school"
-                title="Actual Sessions"
-                count={12}
+                title="Total Courses"
+                count={coursesCount}
                 percentage={{
                   color: "success",
                   amount: "+3%",
@@ -89,8 +152,8 @@ function Dashboard() {
               <ComplexStatisticsCard
                 color="success"
                 icon="store"
-                title="Actual Departments"
-                count={5}
+                title="Total Partners"
+                count={partnersCount}
                 percentage={{
                   color: "success",
                   amount: "+1%",
@@ -161,7 +224,7 @@ function Dashboard() {
                 </MDBox>
                 <MDBox pt={2}>
                   <DataTable
-                    table={{ columns, rows }}
+                    table={{ columns, companies }}
                     isSorted={false}
                     entriesPerPage={false}
                     showTotalEntries={false}
@@ -176,7 +239,10 @@ function Dashboard() {
               </Link>
             </Grid>
             <Grid item xs={12} md={6} lg={4}>
-              <OrdersOverview />
+              <PopularCoursesList
+                title="popular courses"
+                profiles={popularCoursesListData}
+              />
             </Grid>
           </Grid>
         </MDBox>
