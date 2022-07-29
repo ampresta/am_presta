@@ -40,15 +40,11 @@ function Data(props) {
     const getAllCompanies = async () => {
       const { data } = await axios.post(topCompaniesRoute)
       setAllCompanies((prev) => data.companies)
-      console.log(data.companies);
   }
-  
-    
     getAllCompanies()
   }, [])
 
   
-
   let table = {
     columns: [
       {
@@ -66,7 +62,7 @@ function Data(props) {
   allCompanies.map(company => (
     table.rows.push(  
     {
-      author: <Author image="" name="" company={company.name} />,
+      author: <Author image="" name={company.name} company={company.name} />,
       manager: (
         <MDTypography
           component="a"

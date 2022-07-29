@@ -1,8 +1,11 @@
 // @mui material components
 import Grid from "@mui/material/Grid";
+import Card from "@mui/material/Card";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
+import MDTypography from "components/MDTypography";
+
 
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
@@ -14,26 +17,26 @@ import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatist
 //component
 import PopularCoursesList from "examples/Lists/PopularCoursesList";
 
-import Card from "@mui/material/Card";
-import MDTypography from "components/MDTypography";
-import DataTable from "examples/Tables/DataTable";
-
-import { Link } from "react-router-dom";
 
 // Data
 import authorsTableData from "layouts/dashboard/data/companiesTableData";
 import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
 import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
 import popularCoursesListData from "layouts/dashboard/data/popularCoursesListData";
+import DataTable from "examples/Tables/DataTable";
 
 // Hooks
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 //Axios
 import axios from "axios";
 
 // Endpoints
-import { amCardsRoute, companiesRoute } from "utils/APIRoutes";
+import { amCardsRoute } from "utils/APIRoutes";
+
+
+
 
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;

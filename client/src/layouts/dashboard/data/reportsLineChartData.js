@@ -1,25 +1,30 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.1.0
-=========================================================
+import axios from "axios"
+import { graphsRoute } from "utils/APIRoutes";
 
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
 
-Coded by www.creative-tim.com
+const getData = async (type, length) => {
+  const {data} = await axios.post(graphsRoute, {
+    model: type,
+    "length": length
+  })
+  return data.results;
+}
 
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-export default {
+let graphs = {
   sales: {
     labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-    datasets: { label: "Mobile apps", data: [50, 40, 300, 320, 500, 350, 200, 230, 500] },
+    datasets: {
+      label: "Courses",
+      data: getData("cours", 9).then(data => graphs.sales.datasets.data = data)
+    },
   },
   tasks: {
     labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-    datasets: { label: "Desktop apps", data: [50, 40, 300, 220, 500, 250, 400, 230, 500] },
+    datasets: {
+      label: "Desktop apps",
+      data: getData("cours", 9).then(data => graphs.tasks.datasets.data = data)
+    },
   },
 };
+
+export default graphs
