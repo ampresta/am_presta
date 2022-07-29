@@ -20,8 +20,29 @@ module.exports = async (req, res) => {
       [db.fn("extract", sequelize.literal('month FROM "createdAt"')), "month"],
     ],
     group: ["month"],
+    order: [sequelize.literal("month")],
   });
+  results = [];
+  now = 1;
+  val = 0;
+  chart.forEach((element) => {
+    console.log(parseInt(element.dataValues.month));
+    while (true) {
+      ex = false;
+      if (now == parseInt(element.dataValues.month)) {
+        val += parseInt(element.dataValues.count);
+        ex = true;
+      }
+
+      results[now - 1] = val;
+      now++;
+      if (ex) {
+        break;
+      }
+    }
+  });
+
   return res.send({
-    chart,
+    results,
   });
 };
