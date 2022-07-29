@@ -12,6 +12,9 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import DataTable from "examples/Tables/DataTable";
 
+// import Link
+import { Link } from "react-router-dom";
+
 // @mui icons
 import Icon from "@mui/material/Icon";
 
@@ -45,14 +48,16 @@ function Companies() {
               </MDBox>
 
               <Grid container spacing={2}>
-                <MDBox ml={3} py={2} px={2} mt={3}>
-                  <MDButton variant="gradient" color="info" size="small">
-                    <Icon fontSize="big" color="light">
-                      add
-                    </Icon>
-                    add company
-                  </MDButton>
-                </MDBox>
+                <Link to={"/companies/add"}>
+                  <MDBox ml={3} py={2} px={2} mt={3}>
+                    <MDButton variant="gradient" color="info" size="small">
+                      <Icon fontSize="big" color="light">
+                        add
+                      </Icon>
+                      add company
+                    </MDButton>
+                  </MDBox>
+                </Link>
               </Grid>
 
               <Grid container spacing={2}>
