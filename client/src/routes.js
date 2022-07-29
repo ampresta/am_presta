@@ -2,7 +2,6 @@ import Dashboard from "layouts/dashboard";
 import Tables from "layouts/tables";
 import Companies from "layouts/companies";
 import AddCompanies from "layouts/companies/add";
-import Basic from "layouts/authentication/sign-in/index";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -31,14 +30,6 @@ const routes = [
     icon: <Icon fontSize="small">school</Icon>,
     route: "/courses",
     component: <Tables />,
-  },
-  {
-    type: "collapse",
-    name: "Register",
-    key: "register",
-    icon: <Icon fontSize="small">dashboard</Icon>,
-    route: "/register",
-    component: <Basic />,
   },
   {
     name: "Add companies",
