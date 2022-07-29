@@ -11,12 +11,8 @@ import ReportsBarChart from "examples/Charts/BarCharts/ReportsBarChart";
 import ReportsLineChart from "examples/Charts/LineCharts/ReportsLineChart";
 import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
 
-// Data
-import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
-import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
-
-// Dashboard components
-import OrdersOverview from "layouts/dashboard/components/OrdersOverview";
+//component
+import PopularCoursesList from "examples/Lists/PopularCoursesList";
 
 import Card from "@mui/material/Card";
 import MDTypography from "components/MDTypography";
@@ -26,7 +22,9 @@ import { Link } from "react-router-dom";
 
 // Data
 import authorsTableData from "layouts/dashboard/data/companiesTableData";
-
+import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
+import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
+import popularCoursesListData from "layouts/dashboard/data/popularCoursesListData";
 
 // Hooks
 import React, { useState, useEffect } from "react";
@@ -48,36 +46,31 @@ function Dashboard() {
 
   useEffect(() => {
     const fetchCards = async (model) => {
-      const { data } = await axios.post(amCardsRoute, { model })
+      const { data } = await axios.post(amCardsRoute, { model });
       switch (model) {
         case "cours":
-          setCoursesCount(data.count)
+          setCoursesCount(data.count);
           break;
-        
-          case "societe":
-            setCompaniesCount(data.count)
+
+        case "societe":
+          setCompaniesCount(data.count);
           break;
-        
-          case "provider":
-            setPartnersCount(data.count)
-            break;
-      
+
+        case "provider":
+          setPartnersCount(data.count);
+          break;
+
         default:
           break;
       }
-    }
+    };
 
     fetchCards("cours").catch(console.error);
     fetchCards("societe").catch(console.error);
     fetchCards("provider").catch(console.error);
   });
 
-    
-  
-
   return (
-
-    
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox py={3}>
@@ -203,7 +196,10 @@ function Dashboard() {
               </Link>
             </Grid>
             <Grid item xs={12} md={6} lg={4}>
-              <OrdersOverview />
+              <PopularCoursesList
+                title="popular courses"
+                profiles={popularCoursesListData}
+              />
             </Grid>
           </Grid>
         </MDBox>
