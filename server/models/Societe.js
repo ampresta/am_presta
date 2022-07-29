@@ -11,6 +11,9 @@ const Societe = db.define("Societe", {
     autoIncrement: true,
     primaryKey: true,
   },
+  image: {
+    type: Sequelize.STRING,
+  },
   name: {
     type: Sequelize.STRING,
     allowNull: false,

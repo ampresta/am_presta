@@ -1,3 +1,4 @@
+const { STRING } = require("sequelize");
 const Sequelize = require("sequelize");
 const db = require("../config/database");
 
@@ -28,6 +29,9 @@ const Collaborateur = db.define("Collaborateur", {
   instructor: {
     type: Sequelize.BOOLEAN,
     allowNull: false,
+  },
+  image: {
+    type: STRING,
   },
 });
 module.exports = Collaborateur;
