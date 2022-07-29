@@ -29,7 +29,7 @@ module.exports = async (req, res) => {
     order: [sequelize.literal("year"), sequelize.literal("month")],
   });
   if (chart.length == 0) {
-    results = Array.fill(0, 0, length);
+    results = Array(length).fill(0);
   } else {
     final_year = chart.at(-1).dataValues.year;
     final_month = chart.at(-1).dataValues.month;
