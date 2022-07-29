@@ -9,11 +9,11 @@ module.exports = async (req, res) => {
   try {
     Cours.create({
       nom: cours,
-      provider: provider,
+      ProviderId: provider,
       description: description,
     });
     return res.json({ status: "done" });
   } catch (err) {
-    return res.send({ status: "error", err: err }); 
+    return res.send({ status: "error", err: err });
   }
 };

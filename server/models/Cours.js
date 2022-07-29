@@ -17,11 +17,6 @@ const Cours = db.define(
       allowNull: false,
     },
 
-    provider: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
-
     description: {
       type: Sequelize.STRING,
       allowNull: false,

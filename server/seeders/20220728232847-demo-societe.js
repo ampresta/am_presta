@@ -3,6 +3,64 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert(
+      "Societes",
+      [
+        {
+          name: "Ja44énnat",
+          createdAt: "2022-02-12",
+          updatedAt: new Date(),
+        },
+        {
+          name: "Jannat2121",
+          createdAt: "2021-02-12",
+          updatedAt: new Date(),
+        },
+        {
+          name: "Jannat0000",
+          createdAt: "2020-07-12",
+          updatedAt: new Date(),
+        },
+        {
+          name: "Jannat",
+          createdAt: "2022-03-12",
+          updatedAt: new Date(),
+        },
+        {
+          name: "J8annat",
+          createdAt: "2022-04-12",
+          updatedAt: new Date(),
+        },
+        {
+          name: "Jakknnat",
+          createdAt: "2022-05-12",
+          updatedAt: new Date(),
+        },
+        {
+          name: "Jannppat2",
+          createdAt: "2022-03-12",
+          updatedAt: new Date(),
+        },
+
+        {
+          name: "Jannat5",
+          createdAt: "2022-01-12",
+          updatedAt: new Date(),
+        },
+        {
+          name: "Jannat28",
+          createdAt: "2022-06-12",
+          updatedAt: new Date(),
+        },
+        {
+          name: "Jannat200",
+          createdAt: "2022-07-12",
+          updatedAt: new Date(),
+        },
+      ],
+      {}
+    );
+
+    await queryInterface.bulkInsert(
       "Collaborateurs",
       [
         {
@@ -23,38 +81,6 @@ module.exports = {
           instructor: false,
           SocieteId: 1,
           createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-      ],
-      {}
-    );
-    await queryInterface.bulkInsert(
-      "Societes",
-      [
-        {
-          name: "Jannat",
-          createdAt: "2022-08-12",
-          updatedAt: new Date(),
-        },
-        {
-          name: "Jannat2",
-          createdAt: "2022-03-12",
-          updatedAt: new Date(),
-        },
-
-        {
-          name: "Jannat5",
-          createdAt: "2022-01-12",
-          updatedAt: new Date(),
-        },
-        {
-          name: "Jannat28",
-          createdAt: "2022-06-12",
-          updatedAt: new Date(),
-        },
-        {
-          name: "Jannat200",
-          createdAt: "2022-07-12",
           updatedAt: new Date(),
         },
       ],
