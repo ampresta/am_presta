@@ -33,5 +33,6 @@ app.use("/api/dept", dept);
 app.use("/api/session", session);
 app.use("/api/cours", cours);
 app.use("/api/dashboard", dashboard);
+
 // Listener
 app.listen(PORT, () => console.log(`Server listening on ${PORT}...`));

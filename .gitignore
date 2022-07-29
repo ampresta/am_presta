@@ -2,3 +2,5 @@ server/node_modules/
 public/node_modules/
 server/.env
 server/config/config.json
+server/.env
+
