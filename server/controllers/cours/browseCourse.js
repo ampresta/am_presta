@@ -1,6 +1,7 @@
 const Cours = require("../../models/Cours");
 const sequelize = require("sequelize");
 const Session = require("../../models/Session");
+const Provider = require("../../models/Provider");
 module.exports = async (req, res) => {
   filters = {};
 
@@ -8,6 +9,10 @@ module.exports = async (req, res) => {
     {
       model: Session,
       attributes: ["id"],
+    },
+    {
+      model: Provider,
+      attributes: ["id", "nom"],
     },
   ];
 
@@ -22,7 +27,7 @@ module.exports = async (req, res) => {
     ],
   };
 
-  filters.group = ["Cours.id", "Sessions.id"];
+  filters.group = ["Cours.id", "Sessions.id", "Provider.id"];
   if (req.method == "POST") {
     const { search, provider } = req.body;
 
@@ -42,15 +47,22 @@ module.exports = async (req, res) => {
     if (provider) {
       if (filters.where) {
         temp = filters.where;
-        filters.where = { [sequelize.Op.and]: [filters.where, { provider }] };
+        filters.where = {
+          [sequelize.Op.and]: [filters.where, { ProviderId: provider }],
+        };
       } else {
-        filters.where = { provider };
+        filters.where = { ProviderId: provider };
       }
     }
     console.log(filters);
+    try {
+      const cours = await Cours.findAll(filters); // Implementing search
 
-    const cours = await Cours.findAll(filters); // Implementing search
-    return res.json(cours);
+      return res.json(cours);
+    } catch (err) {
+      console.log(err);
+      return res.send({ status: "error" });
+    }
   } else {
     const cours = await Cours.findAll(filters); // Implementing search
     return res.json(cours);
