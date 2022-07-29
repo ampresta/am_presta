@@ -2,7 +2,7 @@ const Collaborateur = require("../../models/Collaborateur");
 const Cours = require("../../models/Cours");
 const Provider = require("../../models/Provider");
 const Societe = require("../../models/Societe");
-module.exports = (req, res) => {
+module.exports = async (req, res) => {
   const { model, id } = req.body;
   if (model == "cours") {
     Model = Cours;
@@ -15,9 +15,9 @@ module.exports = (req, res) => {
   } else {
     return res.sendStatus(404);
   }
-
-  Model.image = req.file.path;
-  Model.save();
+  const u = await Model.findOne({ id });
+  u.image = req.file.path;
+  await u.save();
   console.log(req.file.path);
   return res.send({ go: req.file.path });
 };
