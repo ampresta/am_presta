@@ -1,5 +1,5 @@
+const sequelize = require("sequelize");
 const Collaborateur = require("../../models/Collaborateur");
-const Cours = require("../../models/Cours");
 const Societe = require("../../models/Societe");
 module.exports = async (req, res) => {
   companies = await Societe.findAll({
@@ -8,7 +8,7 @@ module.exports = async (req, res) => {
       attributes: [],
     },
     attributes: [[db.fn("count", "CollaborateurId"), "count"]],
-    order: ["count", "DESC"],
+    order: [sequelize.literal("count DESC")],
     limit: 3,
   });
 
