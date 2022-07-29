@@ -8,7 +8,6 @@ const getData = async (type, length) => {
     model: type,
     "length": length
   })
-  console.log(data);
   return data.results;
 }
 

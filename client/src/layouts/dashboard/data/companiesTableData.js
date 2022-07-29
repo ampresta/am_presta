@@ -3,9 +3,6 @@ import MDBox from "components/MDBox";
 import MDAvatar from "components/MDAvatar";
 import MDTypography from "components/MDTypography";
 
-// @mui icons
-import Icon from "@mui/material/Icon";
-
 // axios
 import axios from "axios";
 

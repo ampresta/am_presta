@@ -82,6 +82,7 @@ function Companies() {
               </Grid>
 
               <MDBox pt={3}>
+
                 <DataTable
                   table={{ columns, rows }}
                   isSorted={false}
@@ -89,6 +90,7 @@ function Companies() {
                   showTotalEntries={false}
                   noEndBorder
                 />
+                
               </MDBox>
             </Card>
           </Grid>
