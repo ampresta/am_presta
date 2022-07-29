@@ -12,6 +12,8 @@ const session = require("./routes/session");
 const PORT = process.env.PORT;
 const dashboard = require("./routes/dashboard");
 const provider = require("./routes/provider");
+const multer = require("multer");
+const handleUpload = require("./controllers/upload/handleUpload");
 //Database Setup
 try {
   db.authenticate();
@@ -26,6 +28,16 @@ app.use(morgan("tiny"));
 app.use(express.json());
 require("dotenv").config();
 
+// FILE STORAGE
+const STORAGE = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "./media");
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + file.originalname);
+  },
+});
+const upload = multer({ storage: STORAGE });
 // Routing
 app.use("/api/login", login);
 app.use("/api/register", register);
@@ -35,5 +47,7 @@ app.use("/api/session", session);
 app.use("/api/cours", cours);
 app.use("/api/dashboard", dashboard);
 app.use("/api/provider", provider);
+app.post("/upload", upload.single("image"), handleUpload);
+
 // Listener
 app.listen(PORT, () => console.log(`Server listening on ${PORT}...`));
