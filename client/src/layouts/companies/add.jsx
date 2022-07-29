@@ -11,7 +11,6 @@ import MDButton from "components/MDButton";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import { useState } from "react";
-import { addCompaniesRoute } from "utils/APIRoutes";
 
 // Axios
 import axios from "axios";
@@ -24,7 +23,7 @@ function AddCompanies() {
   const handleSubmit = async (event) => {
     console.log(name);
     event.preventDefault();
-    const { data } = await axios.post(addCompaniesRoute, { name: name });
+    const { data } = await axios.post("", { name: name });
     if (data.status) {
       navigate("/companies");
     }
