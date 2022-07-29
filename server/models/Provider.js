@@ -1,5 +1,4 @@
 const { Sequelize } = require("sequelize");
-
 const db = require("../config/database");
 const Cours = require("./Cours");
 const Provider = db.define("Provider", {
