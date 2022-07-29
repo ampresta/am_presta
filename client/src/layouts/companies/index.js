@@ -50,7 +50,7 @@ function Companies() {
               <Grid container spacing={2}>
                 <Link to={"/companies/add"}>
                   <MDBox ml={3} py={2} px={2} mt={3}>
-                    <MDButton variant="gradient" color="dark" size="small">
+                    <MDButton variant="gradient" color="info" size="small">
                       <Icon fontSize="big" color="light">
                         add
                       </Icon>

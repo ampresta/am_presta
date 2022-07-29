@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
 // react-router components
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
@@ -12,6 +12,7 @@ import Sidenav from "examples/Sidenav";
 
 import MDBox from "components/MDBox";
 import Icon from "@mui/material/Icon";
+import Switch from "@mui/material/Switch";
 
 // Material Dashboard 2 React themes
 import theme from "assets/theme";
@@ -26,32 +27,17 @@ import themeDark from "assets/theme-dark";
 import routes from "routes";
 
 // Material Dashboard 2 React contexts
-import { useMaterialUIController, setMiniSidenav } from "context";
+import { useMaterialUIController, setDarkMode } from "context";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
 
-  const { miniSidenav, layout, sidenavColor, darkMode } = controller;
-
-  const [onMouseEnter, setOnMouseEnter] = useState(false);
+  const { layout, sidenavColor, darkMode } = controller;
 
   const { pathname } = useLocation();
 
-  // Open sidenav when mouse enter on mini sidenav
-  const handleOnMouseEnter = () => {
-    if (miniSidenav && !onMouseEnter) {
-      setMiniSidenav(dispatch, false);
-      setOnMouseEnter(true);
-    }
-  };
-
-  // Close sidenav when mouse leave mini sidenav
-  const handleOnMouseLeave = () => {
-    if (onMouseEnter) {
-      setMiniSidenav(dispatch, true);
-      setOnMouseEnter(false);
-    }
-  };
+  // Activate darkMode
+  const handleDarkMode = () => setDarkMode(dispatch, !darkMode);
 
   // Setting page scroll to 0 when changing the route
   useEffect(() => {
@@ -81,27 +67,27 @@ export default function App() {
       return null;
     });
 
-  const configsButton = (
+  const darkModeToggle = (
     <MDBox
       display="flex"
       justifyContent="center"
       alignItems="center"
-      width="3rem"
-      height="3rem"
+      width="6.8rem"
+      height="1.8rem"
       bgColor={darkMode ? "white" : "info"}
       shadow="sm"
-      borderRadius="50%"
+      borderRadius="15px"
       position="fixed"
       right="2rem"
       bottom="2rem"
       zIndex={99}
       color={darkMode ? "dark" : "white"}
       sx={{ cursor: "pointer" }}
-      //   onclick={setDarkMode}
+      lineHeight={1}
     >
-      <Icon fontSize="small" color="inherit">
-        light
-      </Icon>
+      <Icon fontSize="small">light_mode</Icon>
+      <Switch checked={darkMode} onChange={handleDarkMode} />
+      <Icon fontSize="small">dark_mode</Icon>
     </MDBox>
   );
 
@@ -110,14 +96,8 @@ export default function App() {
       <CssBaseline />
       {layout === "dashboard" && (
         <>
-          <Sidenav
-            color={sidenavColor}
-            brand={AmpLogo}
-            routes={routes}
-            onMouseEnter={handleOnMouseEnter}
-            onMouseLeave={handleOnMouseLeave}
-          />
-          {configsButton}
+          <Sidenav color={sidenavColor} brand={AmpLogo} routes={routes} />
+          {darkModeToggle}
         </>
       )}
       <Routes>
