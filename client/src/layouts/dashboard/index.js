@@ -3,6 +3,8 @@ import Grid from "@mui/material/Grid";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
+import MDAvatar from "components/MDAvatar";
+
 
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
@@ -35,16 +37,18 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 // Endpoints
-import { amCardsRoute } from "utils/APIRoutes";
+import { amCardsRoute, companiesRoute} from "utils/APIRoutes";
 
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
 
-  const { columns, rows } = authorsTableData();
+  const { columns } = authorsTableData();
 
   const [coursesCount, setCoursesCount] = useState(0);
   const [partnersCount, setPartnersCount] = useState(0);
   const [companiesCount, setCompaniesCount] = useState(0);
+  const [companies, setComnpanies] = useState([])
+  
 
   useEffect(() => {
     const fetchCards = async (model) => {
@@ -54,19 +58,46 @@ function Dashboard() {
           setCoursesCount(data.count)
           break;
         
-          case "societe":
-            setCompaniesCount(data.count)
+        case "societe":
+          setCompaniesCount(data.count)
           break;
         
-          case "provider":
-            setPartnersCount(data.count)
-            break;
+        case "provider":
+          setPartnersCount(data.count)
+          break;
       
         default:
           break;
       }
     }
 
+    // const handleCompanies = (companies) => {
+
+    //   // const Author = ({ image, name, company }) => (
+    //   //   <MDBox display="flex" alignItems="center" lineHeight={1}>
+    //   //     <MDAvatar src={image} name={name} size="sm" />
+    //   //     <MDBox ml={2} lineHeight={1}>
+    //   //       <MDTypography display="block" variant="button" fontWeight="medium">
+    //   //         {name}
+    //   //       </MDTypography>
+    //   //       <MDTypography variant="caption">{company}</MDTypography>
+    //   //     </MDBox>
+    //   //   </MDBox>
+    //   // );
+
+    //   // let temp = []
+    //   console.log(companies);
+     
+    // }
+
+
+    // const getAllCompanies = async () => {
+    //   const { data } = await axios.get(companiesRoute);
+    //   handleCompanies(data.msg)
+     
+    // }
+    
+    // getAllCompanies()
     fetchCards("cours").catch(console.error);
     fetchCards("societe").catch(console.error);
     fetchCards("provider").catch(console.error);
@@ -188,7 +219,7 @@ function Dashboard() {
                 </MDBox>
                 <MDBox pt={2}>
                   <DataTable
-                    table={{ columns, rows }}
+                    table={{ columns, companies }}
                     isSorted={false}
                     entriesPerPage={false}
                     showTotalEntries={false}
