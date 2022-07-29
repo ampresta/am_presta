@@ -1,6 +1,6 @@
 import Dashboard from "layouts/dashboard";
 import Tables from "layouts/tables";
-import Companies from "layouts/companies/index";
+import Companies from "layouts/companies";
 import AddCompanies from "layouts/companies/add";
 import Basic from "layouts/authentication/sign-in/index";
 
@@ -8,14 +8,6 @@ import Basic from "layouts/authentication/sign-in/index";
 import Icon from "@mui/material/Icon";
 
 const routes = [
-  {
-    type: "collapse",
-    name: "Register",
-    key: "register",
-    icon: <Icon fontSize="small">dashboard</Icon>,
-    route: "/register",
-    component: <Basic />,
-  },
   {
     type: "collapse",
     name: "Dashboard",
@@ -34,19 +26,26 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Add Companies",
-    key: "companies",
-    icon: <Icon fontSize="small">work</Icon>,
-    route: "/companies/add",
-    component: <AddCompanies />,
-  },
-  {
-    type: "collapse",
     name: "Courses",
     key: "courses",
     icon: <Icon fontSize="small">school</Icon>,
     route: "/courses",
     component: <Tables />,
+  },
+  {
+    type: "collapse",
+    name: "Register",
+    key: "register",
+    icon: <Icon fontSize="small">dashboard</Icon>,
+    route: "/register",
+    component: <Basic />,
+  },
+  {
+    name: "Add companies",
+    key: "Add comapnies",
+    icon: <Icon fontSize="small">work</Icon>,
+    route: "/companies/add",
+    component: <AddCompanies />,
   },
 ];
 

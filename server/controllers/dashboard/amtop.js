@@ -1,17 +1,17 @@
 const Collaborateur = require("../../models/Collaborateur");
+const Cours = require("../../models/Cours");
 const Societe = require("../../models/Societe");
 module.exports = async (req, res) => {
   companies = await Societe.findAll({
-    limit: 3,
-    order: ["createdAt"],
     include: {
       model: Collaborateur,
-      attributes: ["nom", "prenom"],
-      where: {
-        admin: true,
-      },
+      attributes: [],
     },
+    attributes: [[db.fn("count", "CollaborateurId"), "count"]],
+    order: ["count", "DESC"],
+    limit: 3,
   });
+
   return res.send({
     companies,
   });
