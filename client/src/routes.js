@@ -3,6 +3,7 @@ import Tables from "layouts/tables";
 import Companies from "layouts/companies";
 import AddCompanies from "layouts/companies/add";
 import Partners from "layouts/partners";
+import Courses from "layouts/courses";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -30,7 +31,7 @@ const routes = [
     key: "courses",
     icon: <Icon fontSize="small">school</Icon>,
     route: "/courses",
-    component: <Tables />,
+    component: <Courses />,
   },
   {
     type: "collapse",

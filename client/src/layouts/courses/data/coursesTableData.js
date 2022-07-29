@@ -1,0 +1,118 @@
+// Material Dashboard 2 React components
+import MDBox from "components/MDBox";
+import MDTypography from "components/MDTypography";
+import MDAvatar from "components/MDAvatar";
+import MDProgress from "components/MDProgress";
+
+// @mui icons
+import Icon from "@mui/material/Icon";
+
+// Images
+import company1 from "assets/images/huawei-logo.png";
+
+export default function data() {
+  const Company = ({ image, name, company }) => (
+    <MDBox display="flex" alignItems="center" lineHeight={1}>
+      <MDAvatar src={image} name={name} size="sm" />
+      <MDBox ml={2} lineHeight={1}>
+        <MDTypography display="block" variant="button" fontWeight="medium">
+          {name}
+        </MDTypography>
+        <MDTypography variant="caption">{company}</MDTypography>
+      </MDBox>
+    </MDBox>
+  );
+
+  const Progress = ({ color, value }) => (
+    <MDBox display="flex" alignItems="center">
+      <MDTypography variant="caption" color="text" fontWeight="medium">
+        {value}%
+      </MDTypography>
+      <MDBox ml={1} width="7rem">
+        <MDProgress variant="gradient" color={color} value={value} />
+      </MDBox>
+    </MDBox>
+  );
+
+  return {
+    columns: [
+      {
+        Header: "Tiltle / Constructor",
+        accessor: "author",
+        width: "30%",
+        align: "left",
+      },
+      {
+        Header: "enrolled",
+        accessor: "enrolled",
+        align: "center",
+        width: "15%",
+      },
+      {
+        Header: "number of sessions",
+        accessor: "number_of_sessions",
+        align: "center",
+        width: "15%",
+      },
+      {
+        Header: "certified students",
+        accessor: "certified_students",
+        align: "center",
+        width: "25%",
+      },
+      { Header: "edit", accessor: "edit", align: "center" },
+      { Header: "delete", accessor: "delete", align: "center" },
+    ],
+
+    rows: [
+      {
+        author: <Company image={company1} name="HCIA - 5G" company="Huawei" />,
+        enrolled: (
+          <MDTypography
+            component="a"
+            variant="caption"
+            color="text"
+            fontWeight="medium"
+          >
+            {2}
+          </MDTypography>
+        ),
+        number_of_sessions: (
+          <MDTypography
+            component="a"
+            variant="caption"
+            color="text"
+            fontWeight="medium"
+          >
+            {3}
+          </MDTypography>
+        ),
+        certified_students: <Progress color="info" value={60} />,
+        edit: (
+          <MDTypography
+            component="a"
+            href="#"
+            variant="caption"
+            color="text"
+            fontWeight="medium"
+          >
+            <Icon fontSize="small">edit</Icon>
+          </MDTypography>
+        ),
+        delete: (
+          <MDTypography
+            component="a"
+            href="#"
+            variant="caption"
+            color="text"
+            fontWeight="medium"
+          >
+            <Icon fontSize="small" color="primary">
+              delete
+            </Icon>
+          </MDTypography>
+        ),
+      },
+    ],
+  };
+}

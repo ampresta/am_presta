@@ -6,7 +6,6 @@ import Card from "@mui/material/Card";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 
-
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
@@ -16,7 +15,6 @@ import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatist
 
 //component
 import PopularCoursesList from "examples/Lists/PopularCoursesList";
-
 
 // Data
 import authorsTableData from "layouts/dashboard/data/companiesTableData";
@@ -34,9 +32,6 @@ import axios from "axios";
 
 // Endpoints
 import { amCardsRoute } from "utils/APIRoutes";
-
-
-
 
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
@@ -177,10 +172,22 @@ function Dashboard() {
                   bgColor="info"
                   borderRadius="lg"
                   coloredShadow="info"
+                  display="flex"
+                  justifyContent="space-between"
                 >
                   <MDTypography variant="h6" color="white">
                     Companies
                   </MDTypography>
+                  <Link to={"/companies"}>
+                    <MDTypography
+                      sx={{ textDecoration: "underline" }}
+                      fontSize={14}
+                      fontWeight={"bold"}
+                      color="light"
+                    >
+                      Show All
+                    </MDTypography>
+                  </Link>
                 </MDBox>
                 <MDBox pt={2}>
                   <DataTable
@@ -192,18 +199,6 @@ function Dashboard() {
                   />
                 </MDBox>
               </Card>
-              <Link to={"/companies"}>
-                <MDTypography
-                  sx={{ textDecoration: "underline" }}
-                  align={"center"}
-                  fontSize={14}
-                  fontWeight={"bold"}
-                  mt={1.5}
-                  color="info"
-                >
-                  Show All
-                </MDTypography>
-              </Link>
             </Grid>
             <Grid item xs={12} md={6} lg={4}>
               <PopularCoursesList
