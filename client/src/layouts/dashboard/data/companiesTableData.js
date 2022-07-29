@@ -1,5 +1,6 @@
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
+import MDAvatar from "components/MDAvatar";
 import MDTypography from "components/MDTypography";
 
 // @mui icons
@@ -9,15 +10,45 @@ import Icon from "@mui/material/Icon";
 import axios from "axios";
 
 //Api Routes
+import { topCompaniesRoute } from "utils/APIRoutes";
+// React
 
-// Images
+import { useEffect, useState } from 'react';
 
-function Data() {
+function Data(props) {
 
+  const dateFormat = (timestamp) => {
+    return timestamp.split("T")[0].split("-").reverse().join(" / ")
+  }
+
+
+  const Author = ({ image, name, company }) => (
+    <MDBox display="flex" alignItems="center" lineHeight={1}>
+      <MDAvatar src={image} name={name} size="sm" />
+      <MDBox ml={2} lineHeight={1}>
+        <MDTypography display="block" variant="button" fontWeight="medium">
+          {name}
+        </MDTypography>
+        <MDTypography variant="caption">{company}</MDTypography>
+      </MDBox>
+    </MDBox>
+  );
+    
+  const [allCompanies, setAllCompanies] = useState([])
+
+  useEffect(() => {
+    const getAllCompanies = async () => {
+      const { data } = await axios.post(topCompaniesRoute)
+      setAllCompanies((prev) => data.companies)
+      console.log(data.companies);
+  }
+  
+    
+    getAllCompanies()
+  }, [])
 
   
-  
-   
+
   let table = {
     columns: [
       {
@@ -31,6 +62,38 @@ function Data() {
     ],
     rows: []
   }
+
+  allCompanies.map(company => (
+    table.rows.push(  
+    {
+      author: <Author image="" name="" company={company.name} />,
+      manager: (
+        <MDTypography
+          component="a"
+          href="#"
+          variant="caption"
+          color="text"
+          fontWeight="medium"
+        >
+           {company.Collaborateurs[0].nom} {company.Collaborateurs[0].prenom}
+        </MDTypography>
+      ),
+      date: (
+        <MDTypography
+          component="a"
+          href="#"
+          variant="caption"
+          color="text"
+          fontWeight="medium"
+        >
+          {dateFormat(company.createdAt)}
+        </MDTypography>
+      ),
+      }
+    )
+  )
+  )
+
   return table
 }
 

@@ -2,6 +2,7 @@ const Cours = require("../../models/Cours");
 const Societe = require("../../models/Societe");
 const Provider = require("../../models/Provider");
 const sequelize = require("sequelize");
+
 module.exports = async (req, res) => {
   const { model, length } = req.body;
   console.log(model);
