@@ -76,8 +76,8 @@ function Dashboard() {
           <Grid item xs={12} md={6} lg={4}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
-                color="dark"
-                icon="class"
+                color="info"
+                icon="business"
                 title="Total Companies"
                 count={companiesCount}
                 percentage={{
@@ -93,6 +93,7 @@ function Dashboard() {
               <ComplexStatisticsCard
                 icon="school"
                 title="Total Courses"
+                color="success"
                 count={coursesCount}
                 percentage={{
                   color: "success",
@@ -105,8 +106,8 @@ function Dashboard() {
           <Grid item xs={12} md={6} lg={4}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
-                color="success"
-                icon="store"
+                color="primary"
+                icon="handshake"
                 title="Total Partners"
                 count={partnersCount}
                 percentage={{
