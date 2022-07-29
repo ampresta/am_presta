@@ -4,7 +4,6 @@ import Grid from "@mui/material/Grid";
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 
-
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
@@ -34,17 +33,16 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 // Endpoints
-import { amCardsRoute, companiesRoute} from "utils/APIRoutes";
+import { amCardsRoute, companiesRoute } from "utils/APIRoutes";
 
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
 
-  const { columns, rows} = authorsTableData();
+  const { columns, rows } = authorsTableData();
 
   const [coursesCount, setCoursesCount] = useState(0);
   const [partnersCount, setPartnersCount] = useState(0);
   const [companiesCount, setCompaniesCount] = useState(0);
-  
 
   useEffect(() => {
     const fetchCards = async (model) => {
@@ -53,20 +51,20 @@ function Dashboard() {
         case "cours":
           setCoursesCount(data.count);
           break;
-        
+
         case "societe":
-          setCompaniesCount(data.count)
+          setCompaniesCount(data.count);
           break;
-        
+
         case "provider":
-          setPartnersCount(data.count)
+          setPartnersCount(data.count);
           break;
-      
+
         default:
           break;
       }
     };
-    
+
     fetchCards("cours").catch(console.error);
     fetchCards("societe").catch(console.error);
     fetchCards("provider").catch(console.error);
@@ -192,7 +190,14 @@ function Dashboard() {
                 </MDBox>
               </Card>
               <Link to={"/companies"}>
-                <MDTypography align={"center"} fontSize={14} mt={2}>
+                <MDTypography
+                  sx={{ textDecoration: "underline" }}
+                  align={"center"}
+                  fontSize={14}
+                  fontWeight={"bold"}
+                  mt={1.5}
+                  color="info"
+                >
                   Show All
                 </MDTypography>
               </Link>

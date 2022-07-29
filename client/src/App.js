@@ -16,6 +16,9 @@ import Icon from "@mui/material/Icon";
 // Material Dashboard 2 React themes
 import theme from "assets/theme";
 
+// Logo
+import AmpLogo from "assets/images/amp-logo.png";
+
 // Material Dashboard 2 React Dark Mode themes
 import themeDark from "assets/theme-dark";
 
@@ -109,8 +112,7 @@ export default function App() {
         <>
           <Sidenav
             color={sidenavColor}
-            //   brand={here logo}
-            brandName="AMPRESTA DASHBOARD"
+            brand={AmpLogo}
             routes={routes}
             onMouseEnter={handleOnMouseEnter}
             onMouseLeave={handleOnMouseLeave}

@@ -19,11 +19,11 @@ import { Link } from "react-router-dom";
 import Icon from "@mui/material/Icon";
 
 // Data
-import companiesTableData from "layouts/companies/data/companiesTableData";
+import partnersTableData from "layouts/partners/data/partnersTableData";
 import MDButton from "components/MDButton";
 
-function Companies() {
-  const { columns, rows } = companiesTableData();
+function Partners() {
+  const { columns, rows } = partnersTableData();
 
   return (
     <DashboardLayout>
@@ -43,18 +43,18 @@ function Companies() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Companies
+                  Partners
                 </MDTypography>
               </MDBox>
 
               <Grid container spacing={2}>
-                <Link to={"/companies/add"}>
+                <Link to={"/partners/add"}>
                   <MDBox ml={3} py={2} px={2} mt={3}>
                     <MDButton variant="gradient" color="dark" size="small">
                       <Icon fontSize="big" color="light">
                         add
                       </Icon>
-                      add company
+                      add partner
                     </MDButton>
                   </MDBox>
                 </Link>
@@ -98,4 +98,4 @@ function Companies() {
   );
 }
 
-export default Companies;
+export default Partners;

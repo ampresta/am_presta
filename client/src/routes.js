@@ -2,6 +2,7 @@ import Dashboard from "layouts/dashboard";
 import Tables from "layouts/tables";
 import Companies from "layouts/companies";
 import AddCompanies from "layouts/companies/add";
+import Partners from "layouts/partners";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -30,6 +31,14 @@ const routes = [
     icon: <Icon fontSize="small">school</Icon>,
     route: "/courses",
     component: <Tables />,
+  },
+  {
+    type: "collapse",
+    name: "Partners",
+    key: "partners",
+    icon: <Icon fontSize="small">school</Icon>,
+    route: "/partners",
+    component: <Partners />,
   },
   {
     name: "Add companies",

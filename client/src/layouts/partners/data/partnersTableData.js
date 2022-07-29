@@ -10,14 +10,13 @@ import Icon from "@mui/material/Icon";
 import company1 from "assets/images/huawei-logo.png";
 
 export default function data() {
-  const Author = ({ image, name, company }) => (
+  const Company = ({ image, name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDAvatar src={image} name={name} size="sm" />
       <MDBox ml={2} lineHeight={1}>
         <MDTypography display="block" variant="button" fontWeight="medium">
           {name}
         </MDTypography>
-        <MDTypography variant="caption">{company}</MDTypography>
       </MDBox>
     </MDBox>
   );
@@ -25,21 +24,25 @@ export default function data() {
   return {
     columns: [
       {
-        Header: "Company Name",
+        Header: "Partner Name",
         accessor: "author",
         width: "45%",
         align: "left",
       },
-      { Header: "manager", accessor: "manager", align: "center" },
-      { Header: "date", accessor: "date", align: "center" },
+      {
+        Header: "Number of added courses",
+        accessor: "Number_of_added_courses",
+        align: "center",
+        width: "30%",
+      },
       { Header: "edit", accessor: "edit", align: "center" },
       { Header: "delete", accessor: "delete", align: "center" },
     ],
 
     rows: [
       {
-        author: <Author image={company1} name="HCIA - 5G" company="Huawei" />,
-        manager: (
+        author: <Company image={company1} name="Huawei" />,
+        Number_of_added_courses: (
           <MDTypography
             component="a"
             href="#"
@@ -48,17 +51,6 @@ export default function data() {
             fontWeight="medium"
           >
             {2}
-          </MDTypography>
-        ),
-        date: (
-          <MDTypography
-            component="a"
-            href="#"
-            variant="caption"
-            color="text"
-            fontWeight="medium"
-          >
-            12 / 03 / 2022
           </MDTypography>
         ),
         edit: (
