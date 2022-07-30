@@ -72,8 +72,9 @@ export default function App() {
       display="flex"
       justifyContent="center"
       alignItems="center"
-      width="6.8rem"
-      height="1.8rem"
+      flexDirection="column"
+      height="6.8rem"
+      width="1.8rem"
       bgColor={darkMode ? "white" : "info"}
       shadow="sm"
       borderRadius="15px"
@@ -86,7 +87,11 @@ export default function App() {
       lineHeight={1}
     >
       <Icon fontSize="small">light_mode</Icon>
-      <Switch checked={darkMode} onChange={handleDarkMode} />
+      <Switch
+        checked={darkMode}
+        onChange={handleDarkMode}
+        sx={{ transform: "rotate(90deg)", m: "8px" }}
+      />
       <Icon fontSize="small">dark_mode</Icon>
     </MDBox>
   );

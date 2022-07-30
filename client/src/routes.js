@@ -1,7 +1,5 @@
 import Dashboard from "layouts/dashboard";
-import Tables from "layouts/tables";
 import Companies from "layouts/companies";
-import AddCompanies from "layouts/companies/add";
 import Partners from "layouts/partners";
 import Courses from "layouts/courses";
 
@@ -40,12 +38,6 @@ const routes = [
     icon: <Icon fontSize="small">handshake</Icon>,
     route: "/partners",
     component: <Partners />,
-  },
-  {
-    name: "Add companies",
-    key: "Add comapnies",
-    route: "/companies/add",
-    component: <AddCompanies />,
   },
 ];
 
