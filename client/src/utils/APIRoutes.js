@@ -1,4 +1,4 @@
-const host = `http://localhost:5000/api`;
+const host = `http://localhost:8000/api`;
 
 
 export const registerRoute = `${host}/register`;
