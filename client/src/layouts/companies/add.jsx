@@ -17,23 +17,87 @@ import { useState } from "react";
 // Axios
 import axios from "axios";
 
+//react-toastify
+import { ToastContainer, toast} from "react-toastify"
+import "react-toastify/dist/ReactToastify.css";
+import { registerRoute } from "utils/APIRoutes";
+
 function AddCompanies({ closeAddModel }) {
   const navigate = useNavigate();
 
-  const [name, setName] = useState("");
+  const toastOptions = {
+    position: "bottom-right",
+    autoClose: 8000,
+    pauseOnHover: true,
+    theme: "dark",
+  };
+
+  const [details, setDetails] = useState({
+    username: "",
+    f_name: "",
+    l_name: "",
+    comapany: "",
+    email: "",
+    password: "",
+    c_password: ""
+  });
 
   const handleSubmit = async (event) => {
-    console.log(name);
+    const {username, f_name, l_name, email, comapany, password } = details
     event.preventDefault();
-    const { data } = await axios.post("", { name: name });
-    if (data.status) {
-      navigate("/companies");
+    if (validateData()) {
+      const { data } = await axios.post(registerRoute, {
+        username,
+        email,
+        password, 
+        nom: f_name,
+        prenom: l_name,
+        societe: comapany
+      });
+      if (data.status) {
+        navigate("/dashboard");
+      } else {
+        toast.error(data.msg, toastOptions)
+      }
     }
+   
   };
 
   const handleChange = (event) => {
-    setName(event.target.value);
+    const key = event.target.name;
+    const value = event.target.value;
+    setDetails((prev) => { 
+      return {...prev, [key]: value}
+    });
   };
+
+  const validateData = () => {
+    const {username, f_name, l_name, email, comapany, password, c_password } = details
+    if (username.length < 3) {
+      toast.error("Username should be of length greater then 3", toastOptions)
+      return false
+    }
+    if (f_name.length < 3) {
+      return false
+    }
+    if (l_name.length < 3) {
+      return false
+    }
+    if (email.length === "") {
+      return false
+    }
+    if (comapany.length === "") {
+      return false
+    }
+    if (password.length < 8) {
+      return false
+    }
+    if (password !== c_password) {
+      toast.error("Password and Confirm password should be the same", toastOptions)
+      return false
+    }
+    return true
+  }
 
   return (
     <Card sx={{ mt: "50px" }}>
@@ -77,6 +141,7 @@ function AddCompanies({ closeAddModel }) {
               label="Username"
               variant="outlined"
               fullWidth
+              name="username"
               onChange={(e) => handleChange(e)}
             />
           </MDBox>
@@ -87,6 +152,7 @@ function AddCompanies({ closeAddModel }) {
                 type="text"
                 label="First Name"
                 variant="outlined"
+                name="f_name"
                 onChange={(e) => handleChange(e)}
                 fullWidth
               />
@@ -95,6 +161,7 @@ function AddCompanies({ closeAddModel }) {
               <MDInput
                 type="text"
                 label="Last Name"
+                name="l_name"
                 variant="outlined"
                 onChange={(e) => handleChange(e)}
                 fullWidth
@@ -106,6 +173,7 @@ function AddCompanies({ closeAddModel }) {
             <MDInput
               type="text"
               label="Company Name"
+              name="comapany"
               variant="outlined"
               fullWidth
               onChange={(e) => handleChange(e)}
@@ -117,6 +185,7 @@ function AddCompanies({ closeAddModel }) {
               type="email"
               label="Email"
               variant="outlined"
+              name="email"
               fullWidth
               onChange={(e) => handleChange(e)}
             />
@@ -128,6 +197,7 @@ function AddCompanies({ closeAddModel }) {
                 type="password"
                 label="Password"
                 variant="outlined"
+                name="password"
                 onChange={(e) => handleChange(e)}
                 fullWidth
               />
@@ -137,6 +207,7 @@ function AddCompanies({ closeAddModel }) {
                 type="password"
                 label="Confirm Password"
                 variant="outlined"
+                name="c_password"
                 onChange={(e) => handleChange(e)}
                 fullWidth
               />
@@ -144,14 +215,15 @@ function AddCompanies({ closeAddModel }) {
           </MDBox>
 
           <MDBox mt={4} mb={2} display="flex" justifyContent="center">
-            <MDButton
-              type="submit"
-              variant="gradient"
-              color="info"
-              sx={{ width: "30%", mr: "5px" }}
-            >
-              Submit
-            </MDButton>
+              <MDButton
+                type="submit"
+                variant="gradient"
+                color="info"
+                sx={{ width: "30%", mr: "5px" }}
+              >
+                Submit
+              </MDButton>
+            
             <MDButton
               type="reset"
               variant="gradient"
@@ -163,6 +235,7 @@ function AddCompanies({ closeAddModel }) {
           </MDBox>
         </MDBox>
       </MDBox>
+      <ToastContainer/>
     </Card>
   );
 }
