@@ -9,7 +9,30 @@ import Icon from "@mui/material/Icon";
 // Images
 import company1 from "assets/images/huawei-logo.png";
 
-export default function data() {
+//React hooks
+import { useState, useEffect } from "react";
+
+// Axios
+import axios from "axios"
+
+// Api Endpoint
+import { allPartnersRoute } from "utils/APIRoutes";
+
+
+
+export default function Data() {
+
+  const [allPartners, setAllPartners] = useState([])
+
+  useEffect(() => {
+    const getAllPartners = async () => {
+      const { data } = await axios.get(allPartnersRoute)
+      setAllPartners((prev) => data)
+  }
+    getAllPartners() 
+  }, [])
+
+
   const Company = ({ image, name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDAvatar src={image} name={name} size="sm" />
@@ -21,7 +44,7 @@ export default function data() {
     </MDBox>
   );
 
-  return {
+  let partners =   {
     columns: [
       {
         Header: "Partner Name",
@@ -39,9 +62,13 @@ export default function data() {
       { Header: "delete", accessor: "delete", align: "center" },
     ],
 
-    rows: [
+    rows: [],
+  };
+
+  allPartners.map(partner => (
+    partners.rows.push(
       {
-        author: <Company image={company1} name="Huawei" />,
+        author: <Company image={company1} name={partner.nom} />,
         Number_of_added_courses: (
           <MDTypography
             component="a"
@@ -78,6 +105,9 @@ export default function data() {
           </MDTypography>
         ),
       },
-    ],
-  };
+    )
+  ))
+
+  return partners
+
 }

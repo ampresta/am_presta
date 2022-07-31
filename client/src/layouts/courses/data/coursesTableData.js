@@ -10,7 +10,27 @@ import Icon from "@mui/material/Icon";
 // Images
 import company1 from "assets/images/huawei-logo.png";
 
-export default function data() {
+// React Hooks
+import { useState, useEffect } from "react"
+
+// Api Endpoint
+import { allCourssRoute } from "utils/APIRoutes";
+
+// Axios
+import axios from "axios"
+
+export default function Data() {
+
+  const [allCourses, setAllPartners] = useState([])
+
+  useEffect(() => {
+    const getAllCourses = async () => {
+      const { data } = await axios.get(allCourssRoute)
+      setAllPartners((prev) => data)
+  }
+    getAllCourses() 
+  }, [])
+
   const Company = ({ image, name, company }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDAvatar src={image} name={name} size="sm" />
@@ -34,7 +54,15 @@ export default function data() {
     </MDBox>
   );
 
-  return {
+  const handleProvider = (provider) => {
+    if (provider === null) {
+      return " "
+    } else {
+      return provider.nom
+    }
+  }
+
+  let courses = {
     columns: [
       {
         Header: "Tiltle / Constructor",
@@ -64,55 +92,63 @@ export default function data() {
       { Header: "delete", accessor: "delete", align: "center" },
     ],
 
-    rows: [
-      {
-        author: <Company image={company1} name="HCIA - 5G" company="Huawei" />,
-        enrolled: (
-          <MDTypography
-            component="a"
-            variant="caption"
-            color="text"
-            fontWeight="medium"
-          >
-            {2}
-          </MDTypography>
-        ),
-        number_of_sessions: (
-          <MDTypography
-            component="a"
-            variant="caption"
-            color="text"
-            fontWeight="medium"
-          >
-            {3}
-          </MDTypography>
-        ),
-        certified_students: <Progress color="info" value={60} />,
-        edit: (
-          <MDTypography
-            component="a"
-            href="#"
-            variant="caption"
-            color="text"
-            fontWeight="medium"
-          >
-            <Icon fontSize="small">edit</Icon>
-          </MDTypography>
-        ),
-        delete: (
-          <MDTypography
-            component="a"
-            href="#"
-            variant="caption"
-            color="text"
-            fontWeight="medium"
-          >
-            <Icon fontSize="small" color="primary">
-              delete
-            </Icon>
-          </MDTypography>
-        ),
-      },
-    ],
+    rows: [],
   };
+
+  allCourses.map(course => (
+    courses.rows.push({
+      author: <Company image={company1} name={ course.nom } company={handleProvider(course.Provider)} />,
+      enrolled: (
+        <MDTypography
+          component="a"
+          variant="caption"
+          color="text"
+          fontWeight="medium"
+        >
+          {2}
+        </MDTypography>
+      ),
+      number_of_sessions: (
+        <MDTypography
+          component="a"
+          variant="caption"
+          color="text"
+          fontWeight="medium"
+        >
+          {course.sessions}
+        </MDTypography>
+      ),
+      certified_students: <Progress color="info" value={60} />,
+      edit: (
+        <MDTypography
+          component="a"
+          href="#"
+          variant="caption"
+          color="text"
+          fontWeight="medium"
+        >
+          <Icon fontSize="small">edit</Icon>
+        </MDTypography>
+      ),
+      delete: (
+        <MDTypography
+          component="a"
+          href="#"
+          variant="caption"
+          color="text"
+          fontWeight="medium"
+        >
+          <Icon fontSize="small" color="primary">
+            delete
+          </Icon>
+        </MDTypography>
+      ),
+    })
+    )
+  );
+    
+
+
+  return courses;
+  
 }

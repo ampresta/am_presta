@@ -22,7 +22,6 @@ export default function Data() {
   useEffect(() => {
     const getAllCompanies = async () => {
       const { data } = await axios.get(allCompaniesRoute)
-      console.log(data.msg);
       setAllCompanies((prev) => data.msg)
   }
     getAllCompanies() 
