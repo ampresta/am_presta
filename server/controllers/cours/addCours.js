@@ -12,7 +12,7 @@ module.exports = async (req, res) => {
       ProviderId: provider,
       description: description,
     });
-    return res.json({ status: "done" });
+    return res.json({ status: True });
   } catch (err) {
     return res.send({ status: "error", err: err });
   }

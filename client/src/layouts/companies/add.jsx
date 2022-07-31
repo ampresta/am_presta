@@ -130,6 +130,7 @@ function AddCompanies({ closeAddModel }) {
       </MDBox>
 
       <MDBox pt={4} pb={3} px={10}>
+        
         <MDBox
           component="form"
           role="form"
