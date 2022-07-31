@@ -1,25 +1,19 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 // @mui material components
 import Badge from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
 
 export default styled(Badge)(({ theme, ownerState }) => {
   const { palette, typography, borders, functions } = theme;
-  const { color, circular, border, size, indicator, variant, container, children } = ownerState;
+  const {
+    color,
+    circular,
+    border,
+    size,
+    indicator,
+    variant,
+    container,
+    children,
+  } = ownerState;
 
   const { white, dark, gradients, badgeColors } = palette;
   const { size: fontSize, fontWeightBold } = typography;
@@ -86,7 +80,9 @@ export default styled(Badge)(({ theme, ownerState }) => {
     const backgroundValue = badgeColors[colorProp]
       ? badgeColors[colorProp].background
       : badgeColors.info.background;
-    let colorValue = badgeColors[colorProp] ? badgeColors[colorProp].text : badgeColors.info.text;
+    let colorValue = badgeColors[colorProp]
+      ? badgeColors[colorProp].text
+      : badgeColors.info.text;
 
     if (colorProp === "light") {
       colorValue = dark.main;
