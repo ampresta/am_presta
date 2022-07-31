@@ -89,53 +89,54 @@ function AddCourses({ closeAddModel }) {
 
 
   const handleSubmit = async (event) => {
-    const {nom, provider, description } = course
+    const { nom, provider, description } = course;
     event.preventDefault();
-
+    if (validateData()) {
       const { data } = await axios.post(addCourssRoute, {
         nom,
         provider: provider.id,
-        description
+        description,
       });
-    
-    
-      if (data.status) {
-        navigate("/dashboard");
-      } else {
-        toast.error(data.msg, toastOptions);
-      }
+    if (data.status) {
+      navigate("/dashboard");
+    } else {
+      toast.error(data.msg, toastOptions);
+    }
+    }
   };
 
   const handleChange = (event) => {
     const key = event.target.name;
     const value = event.target.value;
     setCourse((prev) => {
-      return { ...prev, [key]: value};
+      return { ...prev, [key]: value };
     });
   };
 
   const handleSelectedProvider = (event) => {
-    const provider = event.target.value
-    setCourse((prev) => ({ ...prev, provider }))
-    setSelectedProvider(provider)
+    const provider = event.target.value;
+    setCourse((prev) => ({ ...prev, provider }));
+    setSelectedProvider(provider);
   };
 
   const validateData = () => {
-    const { name, provider } = course;
-    console.log(name);
-    console.log(provider);
+    const { nom, provider } = course;
 
-    if (name.length === "") {
-      toast.error("Username should be of length greater then 3", toastOptions);
+
+    if (nom.length === 0) {
+      toast.error("Course name is required", toastOptions);
       return false;
     }
-    if (provider.name.length === "") {
-      toast.error("Username should be of length greater then 3", toastOptions);
+
+    if (provider.nom.length === 0) {
+      toast.error("Provider is required", toastOptions);
       return false;
     }
+    
     return true;
   };
 
+  
   return (
     <Card sx={{ mt: "50px" }}>
       <MDBox
@@ -179,6 +180,8 @@ function AddCourses({ closeAddModel }) {
                 label="Course Name"
                 variant="outlined"
                 fullWidth
+                success={handleChange({length: 0})}
+                error={!handleChange()}
                 name="nom"
                 onChange={(e) => handleChange(e)}
               />
