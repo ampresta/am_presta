@@ -18,7 +18,7 @@ import PopularCoursesList from "examples/Lists/PopularCoursesList";
 
 // Data
 import authorsTableData from "layouts/dashboard/data/companiesTableData";
-import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
+import Graph from "layouts/dashboard/data/reportsBarChartCompaniesData";
 import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
 import popularCoursesListData from "layouts/dashboard/data/popularCoursesListData";
 import DataTable from "examples/Tables/DataTable";
@@ -125,10 +125,10 @@ function Dashboard() {
               <MDBox mb={3}>
                 <ReportsBarChart
                   color="info"
-                  title="website views"
+                  title="Total companies"
                   description="Last Campaign Performance"
                   date="campaign sent 2 days ago"
-                  chart={reportsBarChartData}
+                  chart={Graph()}
                 />
               </MDBox>
             </Grid>
