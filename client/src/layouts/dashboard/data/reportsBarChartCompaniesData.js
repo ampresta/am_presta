@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { graphsRoute } from "utils/APIRoutes";
 
-const Graph = () => {
+const CompaniesGraph = () => {
   const [allCompaniesData, setAllCompaniesData] = useState([]);
 
   useEffect(() => {
@@ -27,4 +27,4 @@ const Graph = () => {
   return graph;
 };
 
-export default Graph;
+export default CompaniesGraph;
