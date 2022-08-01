@@ -25,7 +25,6 @@ import axios from "axios";
 //react-toastify
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { registerRoute } from "utils/APIRoutes";
 import { useEffect } from "react";
 import { allPartnersRoute } from "utils/APIRoutes";
 import { addCoursesRoute } from "utils/APIRoutes";
@@ -117,8 +116,6 @@ function AddCourses({ closeAddModel }) {
 
     return true;
   };
-
-  const names = ["Huawei", "Cisco", "Rachid", "Morad"];
 
   return (
     <Card sx={{ mt: "50px" }}>
