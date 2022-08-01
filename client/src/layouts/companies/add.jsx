@@ -52,7 +52,6 @@ function AddCompanies({ closeAddModel }) {
   }
 
   const handleSubmit = async (event) => {
-    console.log(event.target);
     const {username, f_name, l_name, email, comapany, password, image, id } = details
     event.preventDefault();
     if (validateData()) {
@@ -89,6 +88,10 @@ function AddCompanies({ closeAddModel }) {
       return {...prev, [key]: value}
     });
   };
+
+  const handleFileupload = event => {
+    setDetails(prev => ({...prev, image: event.target.files[0].name}))
+  }
 
   const validateData = () => {
     const {username, f_name, l_name, email, comapany, password, c_password } = details
@@ -154,6 +157,7 @@ function AddCompanies({ closeAddModel }) {
           component="form"
           role="form"
           onSubmit={(event) => handleSubmit(event)}
+          
         >
           <MDBox mb={2}>
             <MDInput
@@ -234,7 +238,7 @@ function AddCompanies({ closeAddModel }) {
             </MDBox>
           </MDBox>
 
-          <MDBox mb={2}>
+          {/* <MDBox mb={2}>
             <MDInput
               type="file"
               label="Logo"
@@ -243,7 +247,9 @@ function AddCompanies({ closeAddModel }) {
               fullWidth
               onChange={(e) => handleChange(e)}
             />
-          </MDBox>
+          </MDBox> */}
+
+          <input type="file" name="image" onChange={(e) => handleFileupload(e)}/>
 
           <MDBox mt={4} mb={2} display="flex" justifyContent="center">
               <MDButton

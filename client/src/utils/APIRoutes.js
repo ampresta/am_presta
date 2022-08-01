@@ -22,8 +22,6 @@ export const addPartnersRoute = `${baseURL}/provider/add`
 export const allCoursesRoute = `${baseURL}/cours/browse`
 export const addCoursesRoute = `${baseURL}/cours/add`
 
-// JWT testing
-export const jwtTestRoute = `${baseURL}/cours/browse`
 
 //Upload images
 export const uploadRoute = `${baseURL}/upload`
