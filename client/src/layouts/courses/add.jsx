@@ -18,7 +18,6 @@ import Select from "@mui/material/Select";
 
 //import UseState Hook
 import { useState } from "react";
-import { useTheme } from "@mui/material/styles";
 
 // Axios
 import axios from "axios";
@@ -31,11 +30,8 @@ import { useEffect } from "react";
 import { allPartnersRoute } from "utils/APIRoutes";
 import { addCourssRoute } from "utils/APIRoutes";
 
-
 function AddCourses({ closeAddModel }) {
   const navigate = useNavigate();
-
-  const theme = useTheme();
 
   const toastOptions = {
     position: "bottom-right",
