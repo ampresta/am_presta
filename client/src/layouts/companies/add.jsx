@@ -21,6 +21,8 @@ import axios from "axios";
 import { ToastContainer, toast} from "react-toastify"
 import "react-toastify/dist/ReactToastify.css";
 import { registerRoute } from "utils/APIRoutes";
+import { uploadRoute } from "utils/APIRoutes";
+import { companyIdBynameRoute } from "utils/APIRoutes";
 
 function AddCompanies({ closeAddModel }) {
   const navigate = useNavigate();
@@ -39,11 +41,19 @@ function AddCompanies({ closeAddModel }) {
     comapany: "",
     email: "",
     password: "",
-    c_password: ""
+    c_password: "",
+    image: "",
+    id: "",
   });
 
+  const getCompanyID = async (name) => {
+    const { data } = await axios.post(companyIdBynameRoute, {name})
+    setDetails(prev => ({...prev, id: data.id}))
+  }
+
   const handleSubmit = async (event) => {
-    const {username, f_name, l_name, email, comapany, password } = details
+    console.log(event.target);
+    const {username, f_name, l_name, email, comapany, password, image, id } = details
     event.preventDefault();
     if (validateData()) {
       const { data } = await axios.post(registerRoute, {
@@ -55,7 +65,16 @@ function AddCompanies({ closeAddModel }) {
         societe: comapany
       });
       if (data.status) {
-        navigate("/dashboard");
+        getCompanyID(comapany).then(data => console.log(data))
+        const imageData = await axios.post(uploadRoute, {
+          image,
+          id,
+          model: "societe"
+        });
+
+        console.log(imageData);
+        
+        // navigate("/dashboard");
       } else {
         toast.error(data.msg, toastOptions)
       }
@@ -213,6 +232,17 @@ function AddCompanies({ closeAddModel }) {
                 fullWidth
               />
             </MDBox>
+          </MDBox>
+
+          <MDBox mb={2}>
+            <MDInput
+              type="file"
+              label="Logo"
+              variant="outlined"
+              name="image"
+              fullWidth
+              onChange={(e) => handleChange(e)}
+            />
           </MDBox>
 
           <MDBox mt={4} mb={2} display="flex" justifyContent="center">

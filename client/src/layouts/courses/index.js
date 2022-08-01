@@ -27,7 +27,7 @@ import MDButton from "components/MDButton";
 
 function Courses() {
   const { columns, rows } = coursesTableData();
-  const [openAddModel, setOpenAddModel] = useState(false);
+  const [openAddModel, setOpenAddModel] = useState(false); 
 
   return (
     <DashboardLayout>

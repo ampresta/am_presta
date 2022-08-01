@@ -24,13 +24,14 @@ import MDButton from "components/MDButton";
 
 //Add companies component
 import AddCompanies from "./add";
-import authService from "services/auth.service";
 
 function Companies() {
   const { columns, rows } = companiesTableData();
   const [openAddModel, setOpenAddModel] = useState(false);
 
-  authService.login("abdoessordo", "123456789")
+  // authService.login("abdoessordo", "123456789")
+
+
   
   return (
     <DashboardLayout>

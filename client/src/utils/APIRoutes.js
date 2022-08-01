@@ -12,6 +12,7 @@ export const topCoursesRoute = `${baseURL}/dashboard/topcourses`;
 // Companies
 export const registerRoute = `${baseURL}/register`;
 export const allCompaniesRoute = `${baseURL}/societe/browse`;
+export const companyIdBynameRoute= `${baseURL}/societe/getIdByName`;
 
 // Partners
 export const allPartnersRoute = `${baseURL}/provider/browse`
@@ -23,3 +24,6 @@ export const addCoursesRoute = `${baseURL}/cours/add`
 
 // JWT testing
 export const jwtTestRoute = `${baseURL}/cours/browse`
+
+//Upload images
+export const uploadRoute = `${baseURL}/upload`

@@ -1,14 +1,12 @@
 import axios from "axios";
 import { loginRoute } from "utils/APIRoutes";
 
-
-
-
 const login = (username, password) => {
   return axios.post(loginRoute, {
       username,
       password,
-    })
+  },
+  )
       .then((response) => {
       if (response.data.accesstoken) {
         localStorage.setItem("user", JSON.stringify(response.data));
@@ -27,7 +25,6 @@ const getCurrentUser = () => {
 };
 
 const authService = {
-//   signup,
   login,
   logout,
   getCurrentUser,
