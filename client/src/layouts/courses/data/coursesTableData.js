@@ -28,9 +28,9 @@ export default function Data() {
     const config = {
       method: 'get',
       url: allCoursesRoute,
-      headers: { 
-        'Authorization': `Bearer ${authService.getCurrentUser()}`,
-      }
+      // headers: { 
+      //   'Authorization': `Bearer ${authService.getCurrentUser()}`,
+      // }
     };
 
     const getAllCourses = async () => {
