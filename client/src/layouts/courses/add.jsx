@@ -122,7 +122,6 @@ function AddCourses({ closeAddModel }) {
   const validateData = () => {
     const { nom, provider } = course;
 
-
     if (nom.length === 0) {
       toast.error("Course name is required", toastOptions);
       return false;
@@ -132,11 +131,10 @@ function AddCourses({ closeAddModel }) {
       toast.error("Provider is required", toastOptions);
       return false;
     }
-    
+
     return true;
   };
 
-  
   return (
     <Card sx={{ mt: "50px" }}>
       <MDBox
@@ -180,8 +178,6 @@ function AddCourses({ closeAddModel }) {
                 label="Course Name"
                 variant="outlined"
                 fullWidth
-                success={handleChange({length: 0})}
-                error={!handleChange()}
                 name="nom"
                 onChange={(e) => handleChange(e)}
               />
@@ -201,7 +197,6 @@ function AddCourses({ closeAddModel }) {
                   input={
                     <OutlinedInput id="select-multiple-chip" label="Provider" />
                   }
-
                   renderValue={(selected) => (
                     <Box sx={{ display: "flex", gap: 0.5, height: 32 }}>
                       <Chip key={selected.id} label={selected.name} />
@@ -213,7 +208,11 @@ function AddCourses({ closeAddModel }) {
                     <MenuItem
                       key={provider.id}
                       value={provider}
-                      style={getStyles(provider.name, selectedProvider.name, theme)}
+                      style={getStyles(
+                        provider.name,
+                        selectedProvider.name,
+                        theme
+                      )}
                     >
                       {provider.name}
                     </MenuItem>
