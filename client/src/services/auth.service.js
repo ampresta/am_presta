@@ -21,7 +21,12 @@ const logout = () => {
 };
 
 const getCurrentUser = () => {
-  return JSON.parse(localStorage.getItem("user")).accesstoken;
+  try {
+    return JSON.parse(localStorage.getItem("user")).accesstoken;
+  } catch {
+    return;
+  }
+
 };
 
 const authService = {

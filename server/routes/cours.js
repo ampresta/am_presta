@@ -12,6 +12,7 @@ router = Router();
 
 // router.use("/add", CheckSuperAdmin);
 // router.use("/browse", CheckSuperAdmin);
+
 router.post("/add", addCours);
 router.all("/browse", browseCourse);
 
