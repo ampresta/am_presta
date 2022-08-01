@@ -49,7 +49,7 @@ app.use("/api/cours", cours);
 app.use("/api/dashboard", dashboard);
 app.use("/api/provider", provider);
 
-app.post("/upload", upload.single("image"), handleUpload);
+app.post("/api/upload", upload.single("image"), handleUpload);
 
 // Listener
 app.listen(PORT, () => console.log(`Server listening on ${PORT}...`));

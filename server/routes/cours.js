@@ -6,7 +6,7 @@ const CheckSuperAdmin = require("../middlewares/checkSuperAdmin");
 router = Router();
 
 
-router.use(signedin);
+// router.use(signedin);
 // Please don't change the order
 // Super Admin Links
 
