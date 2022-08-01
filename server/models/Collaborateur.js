@@ -17,6 +17,9 @@ const Collaborateur = db.define("Collaborateur", {
     type: Sequelize.STRING,
     allowNull: false,
   },
+  image: {
+    type: Sequelize.STRING,
+  },
   email: {
     type: Sequelize.STRING,
     allowNull: true,
