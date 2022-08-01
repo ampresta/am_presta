@@ -18,8 +18,9 @@ import PopularCoursesList from "examples/Lists/PopularCoursesList";
 
 // Data
 import authorsTableData from "layouts/dashboard/data/companiesTableData";
-import Graph from "layouts/dashboard/data/reportsBarChartCompaniesData";
-import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
+import CompaniesGraph from "layouts/dashboard/data/reportsBarChartCompaniesData";
+import CoursesGraph from "layouts/dashboard/data/reportsLineChartCoursesData";
+import PartnersGraph from "layouts/dashboard/data/reportsLineChartPartnersData";
 import popularCoursesListData from "layouts/dashboard/data/popularCoursesListData";
 import DataTable from "examples/Tables/DataTable";
 
@@ -34,8 +35,6 @@ import axios from "axios";
 import { amCardsRoute } from "utils/APIRoutes";
 
 function Dashboard() {
-  const { sales, tasks } = reportsLineChartData;
-
   const { columns, rows } = authorsTableData();
 
   const [coursesCount, setCoursesCount] = useState(0);
@@ -128,7 +127,7 @@ function Dashboard() {
                   title="Total companies"
                   description="Last Campaign Performance"
                   date="campaign sent 2 days ago"
-                  chart={Graph()}
+                  chart={CompaniesGraph()}
                 />
               </MDBox>
             </Grid>
@@ -136,14 +135,14 @@ function Dashboard() {
               <MDBox mb={3}>
                 <ReportsLineChart
                   color="success"
-                  title="daily sales"
+                  title="Total Courses"
                   description={
                     <>
-                      (<strong>+15%</strong>) increase in today sales.
+                      (<strong>+15%</strong>) increase in this month.
                     </>
                   }
                   date="updated 4 min ago"
-                  chart={sales}
+                  chart={CoursesGraph()}
                 />
               </MDBox>
             </Grid>
@@ -151,10 +150,10 @@ function Dashboard() {
               <MDBox mb={3}>
                 <ReportsLineChart
                   color="primary"
-                  title="completed tasks"
+                  title="Total partners"
                   description="Last Campaign Performance"
                   date="just updated"
-                  chart={tasks}
+                  chart={PartnersGraph()}
                 />
               </MDBox>
             </Grid>
