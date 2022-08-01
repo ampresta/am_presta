@@ -29,7 +29,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { registerRoute } from "utils/APIRoutes";
 import { useEffect } from "react";
 import { allPartnersRoute } from "utils/APIRoutes";
-import { addCourssRoute } from "utils/APIRoutes";
+import { addCoursesRoute } from "utils/APIRoutes";
 
 
 function AddCourses({ closeAddModel }) {
@@ -79,7 +79,7 @@ function AddCourses({ closeAddModel }) {
     const { nom, provider, description } = course;
     event.preventDefault();
     if (validateData()) {
-      const { data } = await axios.post(addCourssRoute, {
+      const { data } = await axios.post(addCoursesRoute, {
         nom,
         provider: provider.id,
         description,
