@@ -64,16 +64,16 @@ function AddCompanies({ closeAddModel }) {
         societe: comapany
       });
       if (data.status) {
-        getCompanyID(comapany).then(data => console.log(data))
-        const imageData = await axios.post(uploadRoute, {
-          image,
-          id,
-          model: "societe"
-        });
+        // getCompanyID(comapany).then(data => console.log(data))
+        // const imageData = await axios.post(uploadRoute, {
+        //   image,
+        //   id,
+        //   model: "societe"
+        // });
 
-        console.log(imageData);
+        // console.log(imageData);
         
-        // navigate("/dashboard");
+        navigate("/dashboard");
       } else {
         toast.error(data.msg, toastOptions)
       }
@@ -90,6 +90,7 @@ function AddCompanies({ closeAddModel }) {
   };
 
   const handleFileupload = event => {
+    console.log(event.target.files[0]);
     setDetails(prev => ({...prev, image: event.target.files[0].name}))
   }
 
