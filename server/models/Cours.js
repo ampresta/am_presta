@@ -21,6 +21,9 @@ const Cours = db.define(
       type: Sequelize.STRING,
       allowNull: false,
     },
+    image: {
+      type: Sequelize.STRING,
+    },
   },
   {
     indexes: [
