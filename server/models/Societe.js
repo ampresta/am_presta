@@ -16,6 +16,9 @@ const Societe = db.define("Societe", {
     allowNull: false,
     unique: true,
   },
+  image: {
+    type: Sequelize.STRING,
+  },
 });
 
 Societe.hasMany(Departement);

@@ -5,8 +5,11 @@ const Provider = db.define("Provider", {
   nom: {
     type: Sequelize.STRING,
   },
+  image: {
+    type: Sequelize.STRING,
+  },
 });
-Provider.hasMany(Cours);
-Cours.belongsTo(Provider);
+Provider.Cours = Provider.hasMany(Cours);
+Cours.Provider = Cours.belongsTo(Provider);
 
 module.exports = Provider;
