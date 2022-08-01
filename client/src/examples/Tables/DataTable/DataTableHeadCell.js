@@ -18,7 +18,7 @@ function DataTableHeadCell({ width, children, sorted, align, ...rest }) {
     <MDBox
       component="th"
       width={width}
-      py={0.75}
+      py={0.72}
       px={3}
       sx={({ palette: { light }, borders: { borderWidth } }) => ({
         borderBottom: `${borderWidth[1]} solid ${light.main}`,

@@ -9,7 +9,7 @@ function DataTableBodyCell({ noBorder, align, children }) {
     <MDBox
       component="td"
       textAlign={align}
-      py={1.205}
+      py={1.16}
       px={3}
       sx={({
         palette: { light },
