@@ -5,7 +5,6 @@ import Card from "@mui/material/Card";
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-import MDInput from "components/MDInput";
 
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
@@ -53,7 +52,7 @@ function Partners() {
                 </MDBox>
 
                 <Grid container spacing={2}>
-                  <MDBox ml={3} py={2} px={2} mt={3}>
+                  <MDBox ml={3} py={1.9} px={2} mt={3}>
                     <MDButton
                       variant="gradient"
                       color="info"
@@ -68,34 +67,11 @@ function Partners() {
                   </MDBox>
                 </Grid>
 
-                <Grid container spacing={2}>
-                  <Grid xs={9.5} md={11}>
-                    <MDBox ml={3} py={2} px={2}>
-                      <MDInput
-                        variant="outlined"
-                        label="Search here..."
-                        fullWidth
-                      />
-                    </MDBox>
-                  </Grid>
-                  <Grid xs={1} md={1}>
-                    <MDBox py={2}>
-                      <MDButton variant="gradient" color="info">
-                        <Icon fontSize="big" color="light">
-                          refresh
-                        </Icon>
-                      </MDButton>
-                    </MDBox>
-                  </Grid>
-                </Grid>
-
-                <MDBox pt={3}>
+                <MDBox>
                   <DataTable
                     table={{ columns, rows }}
                     isSorted={false}
-                    entriesPerPage={false}
-                    showTotalEntries={false}
-                    noEndBorder
+                    canSearch
                   />
                 </MDBox>
               </Card>
