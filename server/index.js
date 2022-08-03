@@ -15,6 +15,7 @@ const provider = require("./routes/provider");
 const multer = require("multer");
 const handleUpload = require("./controllers/upload/handleUpload");
 const deleteInstances = require("./controllers/delete/deleteInstances");
+const collaborateur = require("./routes/collaborateur");
 //Database Setup
 try {
   db.authenticate();
@@ -49,7 +50,7 @@ app.use("/api/session", session);
 app.use("/api/cours", cours);
 app.use("/api/dashboard", dashboard);
 app.use("/api/provider", provider);
-
+app.use("/api/collab", collaborateur);
 app.post("/api/upload", upload.single("image"), handleUpload);
 app.post("/api/delete", deleteInstances);
 // Listener
