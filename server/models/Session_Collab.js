@@ -8,23 +8,20 @@ const Session_Collab = db.define("Session_Collab", {
 
   proof_fin: {
     type: Sequelize.STRING,
-    allowNull: false,
   },
   proof_certif: {
     type: Sequelize.STRING,
-    allowNull: false,
   },
   date_fin: {
     type: Sequelize.DATE,
-    allowNull: true,
   },
   score: {
     type: Sequelize.INTEGER,
-    allowNull: false,
   },
-  statut: {
-    type: Sequelize.BOOLEAN,
+  status: {
+    type: Sequelize.INTEGER,
     allowNull: false,
+    defaultValue: 0,
   },
 });
 

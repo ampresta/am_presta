@@ -132,7 +132,16 @@ export default function Data() {
           {course.sessions}
         </MDTypography>
       ),
-      certified_students: <Progress color="info" value={60} />,
+      certified_students: (
+        <Progress
+          color="info"
+          value={
+            course.collabs == 0
+              ? 0
+              : Math.floor(100 * (course.collabs_fin / course.collabs))
+          }
+        />
+      ),
       edit: (
         <MDTypography
           component="a"
