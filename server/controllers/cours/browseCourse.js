@@ -2,6 +2,7 @@ const Cours = require("../../models/Cours");
 const sequelize = require("sequelize");
 const Session = require("../../models/Session");
 const Provider = require("../../models/Provider");
+const Collaborateur = require("../../models/Collaborateur");
 module.exports = async (req, res) => {
   filters = {};
 
@@ -9,6 +10,11 @@ module.exports = async (req, res) => {
     {
       model: Session,
       attributes: [],
+      include: {
+        model: Collaborateur,
+        attributes: [],
+        through: { attributes: [] },
+      },
     },
     {
       model: Provider,
@@ -19,6 +25,10 @@ module.exports = async (req, res) => {
   filters.attributes = {
     include: [
       [sequelize.fn("count", sequelize.col("Sessions.id")), "sessions"],
+      [
+        sequelize.fn("count", sequelize.col("Sessions->Collaborateurs.id")),
+        "collabs",
+      ],
     ],
   };
   filters.group = ["Cours.id", "Provider.id"];
@@ -51,13 +61,13 @@ module.exports = async (req, res) => {
     console.log(filters);
     try {
       const cours = await Cours.findAll(filters); // Implementing search
-
       return res.json(cours);
     } catch (err) {
       console.log(err);
       return res.send({ status: "error" });
     }
   } else {
+    console.log(filters);
     const cours = await Cours.findAll(filters); // Implementing search
     return res.json(cours);
   }

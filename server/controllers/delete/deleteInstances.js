@@ -17,5 +17,5 @@ module.exports = async (req, res) => {
   }
   await Model.destroy({ where: { id } });
 
-  return res.send({ status: "deleted" });
+  return res.send({ status: true, msg: "deleted" });
 };

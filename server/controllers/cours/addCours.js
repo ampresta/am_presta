@@ -12,8 +12,9 @@ module.exports = async (req, res) => {
       ProviderId: provider,
       description: description,
     });
-    return res.json({ status: True });
+    return res.json({ status: true });
   } catch (err) {
-    return res.send({ status: "error", err: err });
+    console.log(err);
+    return res.send({ status: "error" });
   }
 };

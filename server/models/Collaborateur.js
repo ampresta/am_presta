@@ -1,5 +1,7 @@
 const Sequelize = require("sequelize");
 const db = require("../config/database");
+const Session = require("./Session");
+const Session_Collab = require("./Session_Collab");
 
 const Collaborateur = db.define(
   "Collaborateur",
@@ -40,4 +42,10 @@ const Collaborateur = db.define(
     paranoid: true,
   }
 );
+Session.belongsToMany(Collaborateur, {
+  through: Session_Collab,
+});
+Collaborateur.belongsToMany(Session, {
+  through: Session_Collab,
+});
 module.exports = Collaborateur;
