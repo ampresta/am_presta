@@ -44,7 +44,7 @@ function DataTable({
     : 5;
   const entries = entriesPerPage.entries
     ? entriesPerPage.entries.map((el) => el.toString())
-    : ["4", "7", "10"];
+    : ["5", "7", "10"];
   const columns = useMemo(() => table.columns, [table]);
   const data = useMemo(() => table.rows, [table]);
 
@@ -74,7 +74,7 @@ function DataTable({
   } = tableInstance;
 
   // Set the default value for the entries per page when component mounts
-  useEffect(() => setPageSize(defaultValue || 10), [defaultValue]);
+  useEffect(() => setPageSize(defaultValue || 5), [defaultValue]);
 
   // Set the entries per page value based on the select value
   const setEntriesPerPage = (value) => setPageSize(value);
@@ -106,6 +106,7 @@ function DataTable({
 
   // Search input value state
   const [search, setSearch] = useState(globalFilter);
+  console.log(search);
 
   // Search input state handle
   const onSearchChange = useAsyncDebounce((value) => {
@@ -226,10 +227,10 @@ function DataTable({
 
       <MDBox
         display="flex"
-        flexDirection={{ xs: "column", sm: "row" }}
-        justifyContent="space-between"
+        flexDirection={{ xs: "column", sm: "row-reverse" }}
+        justifyContent="space-around"
         alignItems={{ xs: "flex-start", sm: "center" }}
-        p={!showTotalEntries && pageOptions.length === 1 ? 0 : 2}
+        p={!showTotalEntries && pageOptions.length === 1 ? 0 : 1.85}
       >
         {showTotalEntries && (
           <MDBox mb={{ xs: 3, sm: 0 }}>
@@ -281,7 +282,7 @@ function DataTable({
 
 // Setting default values for the props of DataTable
 DataTable.defaultProps = {
-  entriesPerPage: { defaultValue: 5, entries: [4, 7, 10] },
+  entriesPerPage: { defaultValue: 5, entries: [5, 7, 10] },
   canSearch: false,
   showTotalEntries: true,
   pagination: { variant: "gradient", color: "info" },
