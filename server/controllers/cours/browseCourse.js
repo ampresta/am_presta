@@ -8,7 +8,7 @@ module.exports = async (req, res) => {
   filters.include = [
     {
       model: Session,
-      attributes: ["id"],
+      attributes: [],
     },
     {
       model: Provider,
@@ -18,16 +18,10 @@ module.exports = async (req, res) => {
 
   filters.attributes = {
     include: [
-      // [
-      //   sequelize.fn("similarity", sequelize.col("Cours.nom"), search),
-      //   "score",
-      // ],
-
       [sequelize.fn("count", sequelize.col("Sessions.id")), "sessions"],
     ],
   };
-
-  filters.group = ["Cours.id", "Sessions.id", "Provider.id"];
+  filters.group = ["Cours.id", "Provider.id"];
   if (req.method == "POST") {
     const { search, provider } = req.body;
 

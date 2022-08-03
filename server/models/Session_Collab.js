@@ -28,7 +28,11 @@ const Session_Collab = db.define("Session_Collab", {
   },
 });
 
-Session.belongsToMany(Collaborateur, { through: Session_Collab });
-Collaborateur.belongsToMany(Session, { through: Session_Collab });
+Session.Collab = Session.belongsToMany(Collaborateur, {
+  through: Session_Collab,
+});
+Collaborateur.Session = Collaborateur.belongsToMany(Session, {
+  through: Session_Collab,
+});
 
 module.exports = Session_Collab;
