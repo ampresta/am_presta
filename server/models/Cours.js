@@ -26,6 +26,16 @@ const Cours = db.define(
     },
   },
   {
+    hooks: {
+      beforeCreate: async (cours, options) => {
+        if (!cours.image) {
+          provider = await Provider.findOne({ id: cours.ProviderId });
+          cours.image = provider.image;
+        }
+      },
+    },
+  },
+  {
     indexes: [
       {
         name: "cours_trigram",
@@ -35,6 +45,10 @@ const Cours = db.define(
         operator: "gin_trgm_ops",
       },
     ],
+  },
+  {
+    Sequelize,
+    paranoid: true,
   }
 );
 Cours.hasMany(Quota);

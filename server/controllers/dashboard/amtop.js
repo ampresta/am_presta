@@ -1,16 +1,15 @@
 const sequelize = require("sequelize");
-const Collaborateur = require("../../models/Collaborateur");
-const Societe = require("../../models/Societe");
+const Cours = require("../../models/Cours");
+const Provider = require("../../models/Provider");
 module.exports = async (req, res) => {
-  companies = await Societe.findAll({
+  companies = await Cours.findAll({
     include: {
-      model: Collaborateur,
-      attributes: [],
+      model: Provider,
+      attributes: ["nom"],
     },
-    attributes: ["name", [db.fn("count", "CollaborateurId"), "count"]],
-    order: [sequelize.literal("count DESC")],
+    attributes: ["nom", "image"],
+    order: ["updatedAt"],
     limit: 3,
-    group: ["Societe.id"],
   });
 
   return res.send({

@@ -202,7 +202,7 @@ function Dashboard() {
             </Grid>
             <Grid item xs={12} md={6} lg={4}>
               <PopularCoursesList
-                title="popular courses"
+                title="Recent courses"
                 profiles={popularCoursesListData}
               />
             </Grid>
