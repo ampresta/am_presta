@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 const db = require("../config/database");
+const Provider = require("./Provider");
 const Quota = require("./Quota");
-
 const Cours = db.define(
   "Cours",
   {
@@ -29,8 +29,14 @@ const Cours = db.define(
     hooks: {
       beforeCreate: async (cours, options) => {
         if (!cours.image) {
-          provider = await Provider.findOne({ id: cours.ProviderId });
+          provider = await Provider.findOne({
+            where: { id: cours.ProviderId },
+          });
+
           cours.image = provider.image;
+          console.log("HEEEEEEELP");
+          console.log(cours.image);
+          console.log(provider);
         }
       },
     },
@@ -51,6 +57,10 @@ const Cours = db.define(
     paranoid: true,
   }
 );
+
+Provider.Cours = Provider.hasMany(Cours);
+Cours.Provider = Cours.belongsTo(Provider);
+
 Cours.hasMany(Quota);
 Quota.hasOne(Cours);
 module.exports = Cours;

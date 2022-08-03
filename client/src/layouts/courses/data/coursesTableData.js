@@ -11,7 +11,7 @@ import Icon from "@mui/material/Icon";
 import company1 from "assets/images/huawei-logo.png";
 
 // React Hooks
-import { useState, useEffect } from "react"
+import { useState, useEffect } from "react";
 
 // Api Endpoint
 import authService from "services/auth.service";
@@ -21,24 +21,23 @@ import { allCoursesRoute } from "utils/APIRoutes";
 // Axios
 
 export default function Data() {
-
-  const [allCourses, setAllPartners] = useState([])
+  const [allCourses, setAllPartners] = useState([]);
 
   useEffect(() => {
     const config = {
-      method: 'get',
+      method: "get",
       url: allCoursesRoute,
-      // headers: { 
+      // headers: {
       //   'Authorization': `Bearer ${authService.getCurrentUser()}`,
       // }
     };
 
     const getAllCourses = async () => {
-      const { data } = await axios(config)
-      setAllPartners(data)
-  }
-    getAllCourses() 
-  }, [])
+      const { data } = await axios(config);
+      setAllPartners(data);
+    };
+    getAllCourses();
+  }, []);
 
   const Company = ({ image, name, company }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
@@ -65,11 +64,11 @@ export default function Data() {
 
   const handleProvider = (provider) => {
     if (provider === null) {
-      return " "
+      return " ";
     } else {
-      return provider.nom
+      return provider.nom;
     }
-  }
+  };
 
   let courses = {
     columns: [
@@ -104,9 +103,15 @@ export default function Data() {
     rows: [],
   };
 
-  allCourses.map(course => (
+  allCourses.map((course) =>
     courses.rows.push({
-      author: <Company image={company1} name={ course.nom } company={handleProvider(course.Provider)} />,
+      author: (
+        <Company
+          image={company1}
+          name={course.nom}
+          company={handleProvider(course.Provider)}
+        />
+      ),
       enrolled: (
         <MDTypography
           component="a"
@@ -114,7 +119,7 @@ export default function Data() {
           color="text"
           fontWeight="medium"
         >
-          {2}
+          {course.collabs}
         </MDTypography>
       ),
       number_of_sessions: (
@@ -153,11 +158,7 @@ export default function Data() {
         </MDTypography>
       ),
     })
-    )
   );
-    
-
 
   return courses;
-  
 }

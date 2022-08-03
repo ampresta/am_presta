@@ -13,25 +13,21 @@ import company1 from "assets/images/huawei-logo.png";
 import { useState, useEffect } from "react";
 
 // Axios
-import axios from "axios"
+import axios from "axios";
 
 // Api Endpoint
 import { allPartnersRoute } from "utils/APIRoutes";
 
-
-
 export default function Data() {
-
-  const [allPartners, setAllPartners] = useState([])
+  const [allPartners, setAllPartners] = useState([]);
 
   useEffect(() => {
     const getAllPartners = async () => {
-      const { data } = await axios.get(allPartnersRoute)
-      setAllPartners((prev) => data)
-  }
-    getAllPartners() 
-  }, [])
-
+      const { data } = await axios.get(allPartnersRoute);
+      setAllPartners((prev) => data);
+    };
+    getAllPartners();
+  }, []);
 
   const Company = ({ image, name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
@@ -44,7 +40,7 @@ export default function Data() {
     </MDBox>
   );
 
-  let partners =   {
+  let partners = {
     columns: [
       {
         Header: "Partner Name",
@@ -65,49 +61,46 @@ export default function Data() {
     rows: [],
   };
 
-  allPartners.map(partner => (
-    partners.rows.push(
-      {
-        author: <Company image={company1} name={partner.nom} />,
-        Number_of_added_courses: (
-          <MDTypography
-            component="a"
-            href="#"
-            variant="caption"
-            color="text"
-            fontWeight="medium"
-          >
-            {2}
-          </MDTypography>
-        ),
-        edit: (
-          <MDTypography
-            component="a"
-            href="#"
-            variant="caption"
-            color="text"
-            fontWeight="medium"
-          >
-            <Icon fontSize="small">edit</Icon>
-          </MDTypography>
-        ),
-        delete: (
-          <MDTypography
-            component="a"
-            href="#"
-            variant="caption"
-            color="text"
-            fontWeight="medium"
-          >
-            <Icon fontSize="small" color="primary">
-              delete
-            </Icon>
-          </MDTypography>
-        ),
-      },
-    )
-  ))
+  allPartners.map((partner) =>
+    partners.rows.push({
+      author: <Company image={partner.image} name={partner.nom} />,
+      Number_of_added_courses: (
+        <MDTypography
+          component="a"
+          href="#"
+          variant="caption"
+          color="text"
+          fontWeight="medium"
+        >
+          {partner.course_num}
+        </MDTypography>
+      ),
+      edit: (
+        <MDTypography
+          component="a"
+          href="#"
+          variant="caption"
+          color="text"
+          fontWeight="medium"
+        >
+          <Icon fontSize="small">edit</Icon>
+        </MDTypography>
+      ),
+      delete: (
+        <MDTypography
+          component="a"
+          href="#"
+          variant="caption"
+          color="text"
+          fontWeight="medium"
+        >
+          <Icon fontSize="small" color="primary">
+            delete
+          </Icon>
+        </MDTypography>
+      ),
+    })
+  );
 
-  return partners
-
+  return partners;
 }
