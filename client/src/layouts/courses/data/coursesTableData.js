@@ -14,19 +14,28 @@ import company1 from "assets/images/huawei-logo.png";
 import { useState, useEffect } from "react"
 
 // Api Endpoint
-import { allCourssRoute } from "utils/APIRoutes";
+import authService from "services/auth.service";
+import axios from "axios";
+import { allCoursesRoute } from "utils/APIRoutes";
 
 // Axios
-import axios from "axios"
 
 export default function Data() {
 
   const [allCourses, setAllPartners] = useState([])
 
   useEffect(() => {
+    const config = {
+      method: 'get',
+      url: allCoursesRoute,
+      // headers: { 
+      //   'Authorization': `Bearer ${authService.getCurrentUser()}`,
+      // }
+    };
+
     const getAllCourses = async () => {
-      const { data } = await axios.get(allCourssRoute)
-      setAllPartners((prev) => data)
+      const { data } = await axios(config)
+      setAllPartners(data)
   }
     getAllCourses() 
   }, [])

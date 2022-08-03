@@ -1,22 +1,27 @@
-const host = `http://localhost:8000/api`;
+export const baseURL = `http://localhost:8000/api`;
 
-
-export const loginRoute = `${host}/login`;
+// Auth
+export const loginRoute = `${baseURL}/login`;
 
 // Dashboard
-export const amCardsRoute = `${host}/dashboard/amcards`;
-export const graphsRoute = `${host}/dashboard/amgraphs`;
-export const topCompaniesRoute = `${host}/dashboard/amtable`;
-export const topCoursesRoute = `${host}/dashboard/topcourses`;
+export const amCardsRoute = `${baseURL}/dashboard/amcards`;
+export const graphsRoute = `${baseURL}/dashboard/amgraphs`;
+export const topCompaniesRoute = `${baseURL}/dashboard/amtable`;
+export const topCoursesRoute = `${baseURL}/dashboard/topcourses`;
 
 // Companies
-export const registerRoute = `${host}/register`;
-export const allCompaniesRoute = `${host}/societe/browse`;
+export const registerRoute = `${baseURL}/register`;
+export const allCompaniesRoute = `${baseURL}/societe/browse`;
+export const companyIdBynameRoute= `${baseURL}/societe/getIdByName`;
 
 // Partners
-export const allPartnersRoute = `${host}/provider/browse`
-export const addPartnersRoute = `${host}/provider/add`
+export const allPartnersRoute = `${baseURL}/provider/browse`
+export const addPartnersRoute = `${baseURL}/provider/add`
 
 // Cours
-export const allCourssRoute = `${host}/cours/browse`
-export const addCourssRoute = `${host}/cours/add`
+export const allCoursesRoute = `${baseURL}/cours/browse`
+export const addCoursesRoute = `${baseURL}/cours/add`
+
+
+//Upload images
+export const uploadRoute = `${baseURL}/upload`

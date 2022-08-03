@@ -21,6 +21,8 @@ import axios from "axios";
 import { ToastContainer, toast} from "react-toastify"
 import "react-toastify/dist/ReactToastify.css";
 import { registerRoute } from "utils/APIRoutes";
+import { uploadRoute } from "utils/APIRoutes";
+import { companyIdBynameRoute } from "utils/APIRoutes";
 
 function AddCompanies({ closeAddModel }) {
   const navigate = useNavigate();
@@ -39,11 +41,18 @@ function AddCompanies({ closeAddModel }) {
     comapany: "",
     email: "",
     password: "",
-    c_password: ""
+    c_password: "",
+    image: "",
+    id: "",
   });
 
+  const getCompanyID = async (name) => {
+    const { data } = await axios.post(companyIdBynameRoute, {name})
+    setDetails(prev => ({...prev, id: data.id}))
+  }
+
   const handleSubmit = async (event) => {
-    const {username, f_name, l_name, email, comapany, password } = details
+    const {username, f_name, l_name, email, comapany, password, image, id } = details
     event.preventDefault();
     if (validateData()) {
       const { data } = await axios.post(registerRoute, {
@@ -55,6 +64,15 @@ function AddCompanies({ closeAddModel }) {
         societe: comapany
       });
       if (data.status) {
+        // getCompanyID(comapany).then(data => console.log(data))
+        // const imageData = await axios.post(uploadRoute, {
+        //   image,
+        //   id,
+        //   model: "societe"
+        // });
+
+        // console.log(imageData);
+        
         navigate("/dashboard");
       } else {
         toast.error(data.msg, toastOptions)
@@ -70,6 +88,11 @@ function AddCompanies({ closeAddModel }) {
       return {...prev, [key]: value}
     });
   };
+
+  const handleFileupload = event => {
+    console.log(event.target.files[0]);
+    setDetails(prev => ({...prev, image: event.target.files[0].name}))
+  }
 
   const validateData = () => {
     const {username, f_name, l_name, email, comapany, password, c_password } = details
@@ -135,6 +158,7 @@ function AddCompanies({ closeAddModel }) {
           component="form"
           role="form"
           onSubmit={(event) => handleSubmit(event)}
+          
         >
           <MDBox mb={2}>
             <MDInput
@@ -214,6 +238,19 @@ function AddCompanies({ closeAddModel }) {
               />
             </MDBox>
           </MDBox>
+
+          {/* <MDBox mb={2}>
+            <MDInput
+              type="file"
+              label="Logo"
+              variant="outlined"
+              name="image"
+              fullWidth
+              onChange={(e) => handleChange(e)}
+            />
+          </MDBox> */}
+
+          <input type="file" name="image" onChange={(e) => handleFileupload(e)}/>
 
           <MDBox mt={4} mb={2} display="flex" justifyContent="center">
               <MDButton

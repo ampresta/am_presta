@@ -10,17 +10,14 @@ import MDBox from "components/MDBox";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
-import Box from "@mui/material/Box";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import Chip from "@mui/material/Chip";
 
 //import UseState Hook
 import { useState } from "react";
-import { useTheme } from "@mui/material/styles";
 
 // Axios
 import axios from "axios";
@@ -28,27 +25,12 @@ import axios from "axios";
 //react-toastify
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { registerRoute } from "utils/APIRoutes";
 import { useEffect } from "react";
 import { allPartnersRoute } from "utils/APIRoutes";
-import { addCourssRoute } from "utils/APIRoutes";
-
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: 30 * 4.5,
-    },
-  },
-};
-
-function getStyles(provider, name, theme) {
-  return
-}
+import { addCoursesRoute } from "utils/APIRoutes";
 
 function AddCourses({ closeAddModel }) {
   const navigate = useNavigate();
-
-  const theme = useTheme();
 
   const toastOptions = {
     position: "bottom-right",
@@ -61,21 +43,22 @@ function AddCourses({ closeAddModel }) {
     nom: "",
     provider: {
       id: "",
-      name: ""
+      name: "",
     },
     description: "",
   });
 
   const [selectedProvider, setSelectedProvider] = useState({
     nom: "",
-    id: ""
+    id: "",
   });
 
-  const [providers, setProviders] = useState([{
-    id: "",
-    nom: ""
-  }])
-
+  const [providers, setProviders] = useState([
+    {
+      id: "",
+      nom: "",
+    },
+  ]);
 
   useEffect(() => {
     const getAllPartners = async () => {
@@ -87,21 +70,20 @@ function AddCourses({ closeAddModel }) {
     getAllPartners();
   }, []);
 
-
   const handleSubmit = async (event) => {
     const { nom, provider, description } = course;
     event.preventDefault();
     if (validateData()) {
-      const { data } = await axios.post(addCourssRoute, {
+      const { data } = await axios.post(addCoursesRoute, {
         nom,
         provider: provider.id,
         description,
       });
-    if (data.status) {
-      navigate("/dashboard");
-    } else {
-      toast.error(data.msg, toastOptions);
-    }
+      if (data.status) {
+        navigate("/dashboard");
+      } else {
+        toast.error(data.msg, toastOptions);
+      }
     }
   };
 
@@ -185,36 +167,22 @@ function AddCourses({ closeAddModel }) {
 
             <MDBox mb={2} ml={2} sx={{ width: "50%" }}>
               <FormControl sx={{ width: "100%" }}>
-                <InputLabel id="demo-multiple-chip-label">Provider</InputLabel>
+                <InputLabel id="demo-simple-select-label">Provider</InputLabel>
                 <Select
                   name="provider"
                   sx={{ height: 45 }}
-                  labelId="demo-multiple-chip-label"
-                  id="demo-multiple-chip"
-                  single="true"
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
                   value={selectedProvider.name}
+                  label="Age"
                   onChange={(e) => handleSelectedProvider(e)}
                   input={
                     <OutlinedInput id="select-multiple-chip" label="Provider" />
                   }
-                  renderValue={(selected) => (
-                    <Box sx={{ display: "flex", gap: 0.5, height: 32 }}>
-                      <Chip key={selected.id} label={selected.name} />
-                    </Box>
-                  )}
-                  MenuProps={MenuProps}
                 >
                   {providers.map((provider) => (
-                    <MenuItem
-                      key={provider.id}
-                      value={provider}
-                      style={getStyles(
-                        provider.name,
-                        selectedProvider.name,
-                        theme
-                      )}
-                    >
-                      {provider.name}
+                    <MenuItem key={provider.id} value={provider}>
+                      {provider.nom}
                     </MenuItem>
                   ))}
                 </Select>

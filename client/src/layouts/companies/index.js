@@ -29,6 +29,10 @@ function Companies() {
   const { columns, rows } = companiesTableData();
   const [openAddModel, setOpenAddModel] = useState(false);
 
+  // authService.login("abdoessordo", "123456789")
+
+
+  
   return (
     <DashboardLayout>
       <DashboardNavbar />
