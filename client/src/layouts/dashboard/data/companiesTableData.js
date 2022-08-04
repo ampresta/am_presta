@@ -7,21 +7,19 @@ import MDTypography from "components/MDTypography";
 import axios from "axios";
 
 //Api Routes
-import { topCompaniesRoute } from "utils/APIRoutes";
+import { topCompaniesRoute, baseURL } from "utils/APIRoutes";
 // React
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 function Data(props) {
-
   const dateFormat = (timestamp) => {
-    return timestamp.split("T")[0].split("-").reverse().join(" / ")
-  }
-
+    return timestamp.split("T")[0].split("-").reverse().join(" / ");
+  };
 
   const Author = ({ image, name, company }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
-      <MDAvatar src={image} name={name} size="sm" />
+      <MDAvatar src={`${baseURL}/${image}`} name={name} size="sm" />
       <MDBox ml={2} lineHeight={1}>
         <MDTypography display="block" variant="button" fontWeight="medium">
           {name}
@@ -30,18 +28,17 @@ function Data(props) {
       </MDBox>
     </MDBox>
   );
-    
-  const [allCompanies, setAllCompanies] = useState([])
+
+  const [allCompanies, setAllCompanies] = useState([]);
 
   useEffect(() => {
     const getAllCompanies = async () => {
-      const { data } = await axios.post(topCompaniesRoute)
-      setAllCompanies((prev) => data.companies)
-  }
-    getAllCompanies()
-  }, [])
+      const { data } = await axios.post(topCompaniesRoute);
+      setAllCompanies((prev) => data.companies);
+    };
+    getAllCompanies();
+  }, []);
 
-  
   let table = {
     columns: [
       {
@@ -53,12 +50,11 @@ function Data(props) {
       { Header: "manager", accessor: "manager", align: "center" },
       { Header: "date", accessor: "date", align: "center" },
     ],
-    rows: []
-  }
+    rows: [],
+  };
 
-  allCompanies.map(company => (
-    table.rows.push(  
-    {
+  allCompanies.map((company) =>
+    table.rows.push({
       author: <Author image="" name={company.name} company={company.name} />,
       manager: (
         <MDTypography
@@ -68,7 +64,7 @@ function Data(props) {
           color="text"
           fontWeight="medium"
         >
-           {company.Collaborateurs[0].nom} {company.Collaborateurs[0].prenom}
+          {company.Collaborateurs[0].nom} {company.Collaborateurs[0].prenom}
         </MDTypography>
       ),
       date: (
@@ -82,12 +78,10 @@ function Data(props) {
           {dateFormat(company.createdAt)}
         </MDTypography>
       ),
-      }
-    )
-  )
-  )
+    })
+  );
 
-  return table
+  return table;
 }
 
 export default Data;

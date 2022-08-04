@@ -16,7 +16,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 // Api Endpoint
-import { allPartnersRoute } from "utils/APIRoutes";
+import { baseURL, allPartnersRoute } from "utils/APIRoutes";
 
 export default function Data() {
   const [allPartners, setAllPartners] = useState([]);
@@ -31,7 +31,7 @@ export default function Data() {
 
   const Company = ({ image, name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
-      <MDAvatar src={image} name={name} size="sm" />
+      <MDAvatar src={`${baseURL}/${image}`} name={name} size="sm" />
       <MDBox ml={2} lineHeight={1}>
         <MDTypography display="block" variant="button" fontWeight="medium">
           {name}
