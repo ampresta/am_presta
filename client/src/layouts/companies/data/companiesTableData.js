@@ -7,34 +7,32 @@ import MDAvatar from "components/MDAvatar";
 import { allCompaniesRoute } from "utils/APIRoutes";
 
 //React Hook
-import { useState, useEffect } from "react"
+import { useState, useEffect } from "react";
 
 // Axios
-import axios from "axios"
+import axios from "axios";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
 
 export default function Data() {
-
-  const [allCompanies, setAllCompanies] = useState([])
+  const [allCompanies, setAllCompanies] = useState([]);
 
   useEffect(() => {
     const getAllCompanies = async () => {
-      const { data } = await axios.get(allCompaniesRoute)
-      setAllCompanies((prev) => data.msg)
-  }
-    getAllCompanies() 
-  }, [])
+      const { data } = await axios.get(allCompaniesRoute);
+      setAllCompanies((prev) => data.msg);
+    };
+    getAllCompanies();
+  }, []);
 
   const dateFormat = (timestamp) => {
-    return timestamp.split("T")[0].split("-").reverse().join(" / ")
-  }
-
+    return timestamp.split("T")[0].split("-").reverse().join(" / ");
+  };
 
   const Company = ({ image, name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
-      <MDAvatar src={image} name={name} size="sm" />  
+      <MDAvatar src={image} name={name} size="sm" />
       <MDBox ml={2} lineHeight={1}>
         <MDTypography display="block" variant="button" fontWeight="medium">
           {name}
@@ -60,9 +58,8 @@ export default function Data() {
     rows: [],
   };
 
-  allCompanies.map(company => (
-    companies.rows.push(
-  {
+  allCompanies.map((company) =>
+    companies.rows.push({
       author: <Company image="" name={company.name} />,
       manager: (
         <MDTypography
@@ -110,10 +107,8 @@ export default function Data() {
           </Icon>
         </MDTypography>
       ),
-    },
-    )
-  ))
+    })
+  );
 
- 
   return companies;
 }

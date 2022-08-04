@@ -16,6 +16,9 @@ module.exports = async (req, res) => {
     {
       model: Collaborateur,
       attributes: [],
+      through: {
+        attributes: [],
+      },
     },
   ];
 
@@ -24,8 +27,8 @@ module.exports = async (req, res) => {
       [sequelize.fn("count", sequelize.col("Collaborateurs.id")), "collabs"],
     ],
   };
-  filters.group = ["Session.id", "Provider.id"];
-  filters.where = { "Session.SocieteId": req.societe };
+  filters.group = ["Session.id", "Cour->Provider.id"];
+  filters.where = { SocieteId: req.societe };
   if (req.method == "POST") {
     const { search, provider } = req.body;
 
@@ -70,6 +73,6 @@ module.exports = async (req, res) => {
   } else {
     console.log(filters);
     const sessions = await Session.findAll(filters); // Implementing search
-    return res.json(sessions);
+    return res.send(sessions);
   }
 };
