@@ -1,6 +1,5 @@
-const Collaborateur = require("../../models/Collaborateur");
-const Session = require("../../models/Session");
-
+const db = require("../../config/database");
+const { Session } = db.models;
 module.exports = async (req, res) => {
   const { session, collab } = req.body;
   if (!session || !collab) {

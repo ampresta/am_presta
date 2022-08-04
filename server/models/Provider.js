@@ -1,19 +1,19 @@
 const { Sequelize } = require("sequelize");
-const db = require("../config/database");
-const Provider = db.define(
-  "Provider",
-  {
-    nom: {
-      type: Sequelize.STRING,
+const Provider = (db) => {
+  db.define(
+    "Provider",
+    {
+      nom: {
+        type: Sequelize.STRING,
+      },
+      image: {
+        type: Sequelize.STRING,
+      },
     },
-    image: {
-      type: Sequelize.STRING,
-    },
-  },
-  {
-    Sequelize,
-    paranoid: true,
-  }
-);
-
+    {
+      Sequelize,
+      paranoid: true,
+    }
+  );
+};
 module.exports = Provider;

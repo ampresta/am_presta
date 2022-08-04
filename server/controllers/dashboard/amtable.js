@@ -1,5 +1,5 @@
-const Collaborateur = require("../../models/Collaborateur");
-const Societe = require("../../models/Societe");
+const db = require("../../config/database");
+const { Societe, Collaborateur } = db.models;
 module.exports = async (req, res) => {
   companies = await Societe.findAll({
     limit: 3,

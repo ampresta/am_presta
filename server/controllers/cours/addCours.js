@@ -1,4 +1,5 @@
-Cours = require("../../models/Cours");
+const db = require("../../config/database");
+const { Cours } = db.models;
 module.exports = async (req, res) => {
   cours = req.body["nom"];
   provider = req.body["provider"];

@@ -1,5 +1,5 @@
-const Session = require("../../models/Session");
-
+const db = require("../../config/database");
+const { Session } = db.models;
 module.exports = async (req, res) => {
   const { cours, nom, datefin, datedebut } = req.body;
   if (!cours || !nom || !datedebut || !datefin) {

@@ -1,7 +1,6 @@
 const sequelize = require("../../config/database");
-const Cours = require("../../models/Cours");
-const Provider = require("../../models/Provider");
-
+const db = require("../../config/database");
+const { Cours, Provider } = db.models;
 module.exports = async (req, res) => {
   const providers = await Provider.findAll({
     group: ["Provider.id"],

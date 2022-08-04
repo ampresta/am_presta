@@ -1,5 +1,5 @@
-const Quota = require("../../models/Quota");
-
+const db = require("../../config/database");
+const { Quota } = db.models;
 module.exports = async (req, res) => {
   const { id, quota } = req.body;
   if (!id) {

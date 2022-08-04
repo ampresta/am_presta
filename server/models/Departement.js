@@ -1,27 +1,27 @@
 const Sequelize = require("sequelize");
-const db = require("../config/database");
-const Collaborateur = require("./Collaborateur");
+const Departement = (db) => {
+  db.define(
+    "Departement",
+    {
+      // Model attributes are defined here
+      id: {
+        type: Sequelize.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+      },
 
-const Departement = db.define(
-  "Departement",
-  {
-    // Model attributes are defined here
-    id: {
-      type: Sequelize.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
+      nom: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      ssss: {
+        type: Sequelize.STRING,
+      },
     },
-
-    nom: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
-  },
-  {
-    Sequelize,
-    paranoid: true,
-  }
-);
-Departement.hasMany(Collaborateur);
-Collaborateur.belongsTo(Departement);
+    {
+      Sequelize,
+      paranoid: true,
+    }
+  );
+};
 module.exports = Departement;

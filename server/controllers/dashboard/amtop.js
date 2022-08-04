@@ -1,6 +1,5 @@
-const sequelize = require("sequelize");
-const Cours = require("../../models/Cours");
-const Provider = require("../../models/Provider");
+const db = require("../../config/database");
+const { Cours, Provider } = db.models;
 module.exports = async (req, res) => {
   companies = await Cours.findAll({
     include: {

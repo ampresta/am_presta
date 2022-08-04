@@ -1,4 +1,5 @@
-const User = require("../../models/Users");
+const db = require("../../config/database");
+const { User } = db.models;
 const argon2 = require("argon2");
 const { sign } = require("jsonwebtoken");
 const GetType = require("./GetType");

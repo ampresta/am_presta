@@ -1,7 +1,6 @@
-const Societe = require("../../models/Societe");
 const sequelize = require("sequelize");
-const Collaborateur = require("../../models/Collaborateur");
-
+const db = require("../../config/database");
+const { Societe, Collaborateur } = db.models;
 module.exports = async (req, res) => {
   filters = {};
   filters.include = {

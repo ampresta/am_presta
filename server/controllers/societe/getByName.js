@@ -1,11 +1,10 @@
-const Societe = require("../../models/Societe");
-const sequelize = require("sequelize");
-
+const db = require("../../config/database");
+const { Societe } = db.models;
 module.exports = async (req, res) => {
-    const { name } = req.body;
-    if (!name) {
-        return res.sendStatus(403)
-    }
+  const { name } = req.body;
+  if (!name) {
+    return res.sendStatus(403);
+  }
   const id = await Societe.findOne({
     where: {
       name,
@@ -13,5 +12,5 @@ module.exports = async (req, res) => {
     attributes: ["id"],
   });
 
-  return id !== null ?  res.json(id) :  res.json({});
+  return id !== null ? res.json(id) : res.json({});
 };
