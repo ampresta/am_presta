@@ -1,9 +1,7 @@
-// react-router-dom components
-import { useNavigate } from "react-router-dom";
-
 // @mui material components
 import Card from "@mui/material/Card";
 import Icon from "@mui/material/Icon";
+import FormHelperText from "@mui/material/FormHelperText";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -17,20 +15,12 @@ import { useState } from "react";
 // Axios
 import axios from "axios";
 
-//react-toastify
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { addPartnersRoute } from "utils/APIRoutes";
 
 function AddPartner({ closeAddModel }) {
-  const navigate = useNavigate();
-
-  const toastOptions = {
-    position: "bottom-right",
-    autoClose: 8000,
-    pauseOnHover: true,
-    theme: "dark",
-  };
+  const [formErrors, setFormErrors] = useState({
+    nom: "",
+  });
 
   const [partner, setPartner] = useState({
     nom: "",
@@ -39,14 +29,16 @@ function AddPartner({ closeAddModel }) {
   const handleSubmit = async (event) => {
     const { nom } = partner;
     event.preventDefault();
-    if (validateData()) {
+    setFormErrors(validate(partner));
+    if (Object.keys(validate(partner)).length === 0) {
       const { data } = await axios.post(addPartnersRoute, {
         nom,
       });
       if (data.status) {
-        navigate("/dashboard");
+        closeAddModel(false);
+        window.location.reload();
       } else {
-        toast.error(data.msg, toastOptions);
+        alert(data.msg);
       }
     }
   };
@@ -59,15 +51,12 @@ function AddPartner({ closeAddModel }) {
     });
   };
 
-  const validateData = () => {
-    const { nom } = partner;
-
-    if (nom.length === 0) {
-      toast.error("Partner name is required", toastOptions);
-      return false;
+  const validate = (values) => {
+    const errors = {};
+    if (!values.nom) {
+      errors.coursename = "Partner Name is required !";
     }
-
-    return true;
+    return errors;
   };
 
   return (
@@ -114,7 +103,9 @@ function AddPartner({ closeAddModel }) {
               fullWidth
               name="nom"
               onChange={(e) => handleChange(e)}
+              error={formErrors.coursename}
             />
+            <FormHelperText error>{formErrors.coursename}</FormHelperText>
           </MDBox>
 
           <MDBox mt={4} mb={2} display="flex" justifyContent="center">
@@ -138,7 +129,6 @@ function AddPartner({ closeAddModel }) {
           </MDBox>
         </MDBox>
       </MDBox>
-      <ToastContainer />
     </Card>
   );
 }

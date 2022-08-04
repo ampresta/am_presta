@@ -1,9 +1,7 @@
-// react-router-dom components
-import { useNavigate } from "react-router-dom";
-
 // @mui material components
 import Card from "@mui/material/Card";
 import Icon from "@mui/material/Icon";
+import FormHelperText from "@mui/material/FormHelperText";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -11,34 +9,33 @@ import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
 
+import PasswordTest from "components/PasswordTest";
+
 //import UseState Hook
 import { useState } from "react";
 
 // Axios
 import axios from "axios";
 
-//react-toastify
-import { ToastContainer, toast} from "react-toastify"
-import "react-toastify/dist/ReactToastify.css";
 import { registerRoute } from "utils/APIRoutes";
-import { uploadRoute } from "utils/APIRoutes";
 import { companyIdBynameRoute } from "utils/APIRoutes";
 
 function AddCompanies({ closeAddModel }) {
-  const navigate = useNavigate();
-
-  const toastOptions = {
-    position: "bottom-right",
-    autoClose: 8000,
-    pauseOnHover: true,
-    theme: "dark",
-  };
+  const [formErrors, setFormErrors] = useState({
+    username: "",
+    f_name: "",
+    l_name: "",
+    company: "",
+    email: "",
+    password: "",
+    c_password: "",
+  });
 
   const [details, setDetails] = useState({
     username: "",
     f_name: "",
     l_name: "",
-    comapany: "",
+    company: "",
     email: "",
     password: "",
     c_password: "",
@@ -47,80 +44,73 @@ function AddCompanies({ closeAddModel }) {
   });
 
   const getCompanyID = async (name) => {
-    const { data } = await axios.post(companyIdBynameRoute, {name})
-    setDetails(prev => ({...prev, id: data.id}))
-  }
+    const { data } = await axios.post(companyIdBynameRoute, { name });
+    setDetails((prev) => ({ ...prev, id: data.id }));
+  };
 
   const handleSubmit = async (event) => {
-    const {username, f_name, l_name, email, comapany, password, image, id } = details
+    const { username, f_name, l_name, email, company, password, image, id } =
+      details;
     event.preventDefault();
-    if (validateData()) {
+    setFormErrors(validate(details));
+    if (Object.keys(validate(details)).length === 0) {
       const { data } = await axios.post(registerRoute, {
         username,
         email,
-        password, 
+        password,
         nom: f_name,
         prenom: l_name,
-        societe: comapany
+        societe: company,
       });
       if (data.status) {
-        // getCompanyID(comapany).then(data => console.log(data))
-        // const imageData = await axios.post(uploadRoute, {
-        //   image,
-        //   id,
-        //   model: "societe"
-        // });
-
-        // console.log(imageData);
-        
-        navigate("/dashboard");
+        closeAddModel(false);
+        window.location.reload();
       } else {
-        toast.error(data.msg, toastOptions)
+        alert(data.msg);
       }
     }
-   
   };
 
   const handleChange = (event) => {
     const key = event.target.name;
     const value = event.target.value;
-    setDetails((prev) => { 
-      return {...prev, [key]: value}
+    setDetails((prev) => {
+      return { ...prev, [key]: value };
     });
   };
 
-  const handleFileupload = event => {
+  const handleFileupload = (event) => {
     console.log(event.target.files[0]);
-    setDetails(prev => ({...prev, image: event.target.files[0].name}))
-  }
+    setDetails((prev) => ({ ...prev, image: event.target.files[0].name }));
+  };
 
-  const validateData = () => {
-    const {username, f_name, l_name, email, comapany, password, c_password } = details
-    if (username.length < 3) {
-      toast.error("Username should be of length greater then 3", toastOptions)
-      return false
+  const validate = (values) => {
+    const errors = {};
+    if (!values.username) {
+      errors.username = "Username is required !";
     }
-    if (f_name.length < 3) {
-      return false
+    if (!values.f_name) {
+      errors.f_name = "FirstName is required !";
     }
-    if (l_name.length < 3) {
-      return false
+    if (!values.l_name) {
+      errors.l_name = "LastName is required !";
     }
-    if (email.length === "") {
-      return false
+    if (!values.company) {
+      errors.company = "Company Name is required !";
     }
-    if (comapany.length === "") {
-      return false
+    if (!values.email) {
+      errors.email = "Email is required !";
     }
-    if (password.length < 8) {
-      return false
+    if (!values.password) {
+      errors.password = "Password is required !";
     }
-    if (password !== c_password) {
-      toast.error("Password and Confirm password should be the same", toastOptions)
-      return false
+    if (!values.c_password) {
+      errors.c_password = "Password Confirmation is required !";
+    } else if (values.password !== values.c_password) {
+      errors.c_password = "Passwords don't match !";
     }
-    return true
-  }
+    return errors;
+  };
 
   return (
     <Card sx={{ mt: "50px" }}>
@@ -153,12 +143,10 @@ function AddCompanies({ closeAddModel }) {
       </MDBox>
 
       <MDBox pt={4} pb={3} px={10}>
-        
         <MDBox
           component="form"
           role="form"
           onSubmit={(event) => handleSubmit(event)}
-          
         >
           <MDBox mb={2}>
             <MDInput
@@ -168,7 +156,9 @@ function AddCompanies({ closeAddModel }) {
               fullWidth
               name="username"
               onChange={(e) => handleChange(e)}
+              error={formErrors.username}
             />
+            <FormHelperText error>{formErrors.username}</FormHelperText>
           </MDBox>
 
           <MDBox display="flex">
@@ -180,7 +170,9 @@ function AddCompanies({ closeAddModel }) {
                 name="f_name"
                 onChange={(e) => handleChange(e)}
                 fullWidth
+                error={formErrors.f_name}
               />
+              <FormHelperText error>{formErrors.f_name}</FormHelperText>
             </MDBox>
             <MDBox mb={2} ml={2} sx={{ width: "50%" }}>
               <MDInput
@@ -190,7 +182,9 @@ function AddCompanies({ closeAddModel }) {
                 variant="outlined"
                 onChange={(e) => handleChange(e)}
                 fullWidth
+                error={formErrors.l_name}
               />
+              <FormHelperText error>{formErrors.l_name}</FormHelperText>
             </MDBox>
           </MDBox>
 
@@ -198,11 +192,13 @@ function AddCompanies({ closeAddModel }) {
             <MDInput
               type="text"
               label="Company Name"
-              name="comapany"
+              name="company"
               variant="outlined"
               fullWidth
               onChange={(e) => handleChange(e)}
+              error={formErrors.company}
             />
+            <FormHelperText error>{formErrors.company}</FormHelperText>
           </MDBox>
 
           <MDBox mb={2}>
@@ -213,7 +209,9 @@ function AddCompanies({ closeAddModel }) {
               name="email"
               fullWidth
               onChange={(e) => handleChange(e)}
+              error={formErrors.email}
             />
+            <FormHelperText error>{formErrors.email}</FormHelperText>
           </MDBox>
 
           <MDBox display="flex">
@@ -225,7 +223,10 @@ function AddCompanies({ closeAddModel }) {
                 name="password"
                 onChange={(e) => handleChange(e)}
                 fullWidth
+                error={formErrors.password}
               />
+              <PasswordTest password={details.password} />
+              <FormHelperText error>{formErrors.password}</FormHelperText>
             </MDBox>
             <MDBox mb={2} ml={2} sx={{ width: "50%" }}>
               <MDInput
@@ -235,33 +236,30 @@ function AddCompanies({ closeAddModel }) {
                 name="c_password"
                 onChange={(e) => handleChange(e)}
                 fullWidth
+                error={formErrors.c_password}
               />
+              <FormHelperText error>{formErrors.c_password}</FormHelperText>
             </MDBox>
           </MDBox>
 
-          {/* <MDBox mb={2}>
-            <MDInput
-              type="file"
-              label="Logo"
-              variant="outlined"
-              name="image"
-              fullWidth
-              onChange={(e) => handleChange(e)}
-            />
-          </MDBox> */}
-
-          <input type="file" name="image" onChange={(e) => handleFileupload(e)}/>
+          <MDInput
+            type="file"
+            variant="outlined"
+            name="image"
+            onChange={(e) => handleFileupload(e)}
+            fullWidth
+          />
 
           <MDBox mt={4} mb={2} display="flex" justifyContent="center">
-              <MDButton
-                type="submit"
-                variant="gradient"
-                color="info"
-                sx={{ width: "30%", mr: "5px" }}
-              >
-                Submit
-              </MDButton>
-            
+            <MDButton
+              type="submit"
+              variant="gradient"
+              color="info"
+              sx={{ width: "30%", mr: "5px" }}
+            >
+              Submit
+            </MDButton>
+
             <MDButton
               type="reset"
               variant="gradient"
@@ -273,7 +271,6 @@ function AddCompanies({ closeAddModel }) {
           </MDBox>
         </MDBox>
       </MDBox>
-      <ToastContainer/>
     </Card>
   );
 }

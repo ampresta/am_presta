@@ -1,9 +1,7 @@
-// react-router-dom components
-import { useNavigate } from "react-router-dom";
-
 // @mui material components
 import Card from "@mui/material/Card";
 import Icon from "@mui/material/Icon";
+import FormHelperText from "@mui/material/FormHelperText";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -22,22 +20,16 @@ import { useState } from "react";
 // Axios
 import axios from "axios";
 
-//react-toastify
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { useEffect } from "react";
 import { allPartnersRoute } from "utils/APIRoutes";
 import { addCoursesRoute } from "utils/APIRoutes";
 
 function AddCourses({ closeAddModel }) {
-  const navigate = useNavigate();
-
-  const toastOptions = {
-    position: "bottom-right",
-    autoClose: 8000,
-    pauseOnHover: true,
-    theme: "dark",
-  };
+  const [formErrors, setFormErrors] = useState({
+    coursename: "",
+    provider: "",
+    description: "",
+  });
 
   const [course, setCourse] = useState({
     nom: "",
@@ -73,16 +65,18 @@ function AddCourses({ closeAddModel }) {
   const handleSubmit = async (event) => {
     const { nom, provider, description } = course;
     event.preventDefault();
-    if (validateData()) {
+    setFormErrors(validate(course));
+    if (Object.keys(validate(course)).length === 0) {
       const { data } = await axios.post(addCoursesRoute, {
         nom,
         provider: provider.id,
         description,
       });
       if (data.status) {
-        navigate("/dashboard");
+        closeAddModel(false);
+        window.location.reload();
       } else {
-        toast.error(data.msg, toastOptions);
+        alert(data.msg);
       }
     }
   };
@@ -101,20 +95,18 @@ function AddCourses({ closeAddModel }) {
     setSelectedProvider(provider);
   };
 
-  const validateData = () => {
-    const { nom, provider } = course;
-
-    if (nom.length === 0) {
-      toast.error("Course name is required", toastOptions);
-      return false;
+  const validate = (values) => {
+    const errors = {};
+    if (!values.nom) {
+      errors.coursename = "Course Name is required !";
     }
-
-    if (provider.nom.length === 0) {
-      toast.error("Provider is required", toastOptions);
-      return false;
+    if (!values.provider.id) {
+      errors.provider = "Provider is required !";
     }
-
-    return true;
+    if (!values.description) {
+      errors.description = "Description is required !";
+    }
+    return errors;
   };
 
   return (
@@ -162,13 +154,18 @@ function AddCourses({ closeAddModel }) {
                 fullWidth
                 name="nom"
                 onChange={(e) => handleChange(e)}
+                error={formErrors.coursename}
               />
+              <FormHelperText error sx={{ ml: 2 }}>
+                {formErrors.coursename}
+              </FormHelperText>
             </MDBox>
 
             <MDBox mb={2} ml={2} sx={{ width: "50%" }}>
               <FormControl sx={{ width: "100%" }}>
                 <InputLabel id="demo-simple-select-label">Provider</InputLabel>
                 <Select
+                  error={formErrors.provider}
                   name="provider"
                   sx={{ height: 45 }}
                   labelId="demo-simple-select-label"
@@ -176,6 +173,13 @@ function AddCourses({ closeAddModel }) {
                   value={selectedProvider.name}
                   label="Age"
                   onChange={(e) => handleSelectedProvider(e)}
+                  MenuProps={{
+                    PaperProps: {
+                      style: {
+                        maxHeight: 150,
+                      },
+                    },
+                  }}
                   input={
                     <OutlinedInput id="select-multiple-chip" label="Provider" />
                   }
@@ -186,10 +190,10 @@ function AddCourses({ closeAddModel }) {
                     </MenuItem>
                   ))}
                 </Select>
+                <FormHelperText error>{formErrors.provider}</FormHelperText>
               </FormControl>
             </MDBox>
           </MDBox>
-
           <MDBox mb={2}>
             <MDInput
               type="text"
@@ -198,9 +202,10 @@ function AddCourses({ closeAddModel }) {
               name="description"
               fullWidth
               onChange={(e) => handleChange(e)}
+              error={formErrors.description}
             />
+            <FormHelperText error>{formErrors.description}</FormHelperText>
           </MDBox>
-
           <MDBox mt={4} mb={2} display="flex" justifyContent="center">
             <MDButton
               type="submit"
@@ -222,7 +227,6 @@ function AddCourses({ closeAddModel }) {
           </MDBox>
         </MDBox>
       </MDBox>
-      <ToastContainer />
     </Card>
   );
 }
