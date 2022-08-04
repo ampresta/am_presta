@@ -1,9 +1,6 @@
 const argon2 = require("argon2");
-const Collaborateur = require("../../models/Collaborateur");
-const Departement = require("../../models/Departement");
-const Societe = require("../../models/Societe");
-const User = require("../../models/Users");
-
+const db = require("../../config/database");
+const { Collaborateur, Societe, User } = db.models;
 module.exports = async (req, res) => {
   try {
     const { username, password, nom, prenom, societe } = req.body;

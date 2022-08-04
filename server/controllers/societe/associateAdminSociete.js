@@ -1,8 +1,9 @@
-db = require("../../config/database");
+const db = require("../../config/database");
+const { Collaborateur } = db.models;
 module.exports = async (req, res) => {
   const { societe, collab } = req.body;
   try {
-    collab = await db.finOne({ where: { id: collab } });
+    collab = await Collaborateur.finOne({ where: { id: collab } });
     collab.SocieteId = societe;
     collab.admin = true;
     await collab.save();

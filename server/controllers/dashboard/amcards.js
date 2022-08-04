@@ -1,6 +1,5 @@
-const Cours = require("../../models/Cours");
-const Societe = require("../../models/Societe");
-const Provider = require("../../models/Provider");
+const db = require("../../config/database");
+const { Cours, Societe, Provider } = db.models;
 module.exports = async (req, res) => {
   const { model } = req.body;
   if (model == "cours") {

@@ -6,56 +6,52 @@ module.exports = async (req, res) => {
 
   filters.include = [
     {
-      model: Session,
+      model: Cours,
       attributes: [],
       include: {
-        model: Collaborateur,
-        attributes: [],
-        through: { attributes: [] },
+        model: Provider,
+        attributes: ["nom"],
       },
     },
     {
-      model: Provider,
-      attributes: ["id", "nom"],
+      model: Collaborateur,
+      attributes: [],
     },
   ];
 
   filters.attributes = {
     include: [
-      [sequelize.fn("count", sequelize.col("Sessions.id")), "sessions"],
-      [
-        sequelize.fn("count", sequelize.col("Sessions->Collaborateurs.id")),
-        "collabs",
-      ],
-      [
-        sequelize.fn(
-          "sum",
-          sequelize.col("Sessions->Collaborateurs->Session_Collab.status")
-        ),
-        "collabs_fin",
-      ],
+      [sequelize.fn("count", sequelize.col("Collaborateurs.id")), "collabs"],
     ],
   };
-  filters.group = ["Cours.id", "Provider.id"];
+  filters.group = ["Session.id", "Provider.id"];
+  filters.where = { "Session.SocieteId": req.societe };
   if (req.method == "POST") {
     const { search, provider } = req.body;
 
     if (search) {
       filters.attributes.include.push([
-        sequelize.fn("similarity", sequelize.col("Cours.nom"), search),
+        sequelize.fn("similarity", sequelize.col("Session.nom"), search),
         "score",
       ]);
-      filters.where = [
+      search_filters = [
         sequelize.where(
-          sequelize.fn("similarity", sequelize.col("Cours.nom"), search),
+          sequelize.fn("similarity", sequelize.col("Session.nom"), search),
           { [sequelize.Op.gt]: 0.1 }
         ),
       ];
+
+      if (filters.where) {
+        filters.where = {
+          [sequelize.Op.and]: [filters.where, search_filters],
+        };
+      } else {
+        filters.where = search_filters;
+      }
     }
 
     if (provider) {
       if (filters.where) {
-        temp = filters.where;
         filters.where = {
           [sequelize.Op.and]: [filters.where, { ProviderId: provider }],
         };
@@ -65,15 +61,15 @@ module.exports = async (req, res) => {
     }
     console.log(filters);
     try {
-      const cours = await Cours.findAll(filters); // Implementing search
-      return res.json(cours);
+      const sessions = await Session.findAll(filters); // Implementing search
+      return res.json(sessions);
     } catch (err) {
       console.log(err);
       return res.send({ status: "error" });
     }
   } else {
     console.log(filters);
-    const cours = await Cours.findAll(filters); // Implementing search
-    return res.json(cours);
+    const sessions = await Session.findAll(filters); // Implementing search
+    return res.json(sessions);
   }
 };

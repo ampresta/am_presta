@@ -1,6 +1,5 @@
-const User = require("../../models/Users");
-const { verify, sign } = require("jsonwebtoken");
-
+const db = require("../../config/database");
+const { User } = db.models;
 module.exports = async (req, res) => {
   const jwt = req.cookies["jbid"];
   if (!jwt) {

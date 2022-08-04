@@ -1,5 +1,5 @@
-const Societe = require("../../models/Societe");
-
+const db = require("../../config/database");
+const { Societe } = db.models;
 module.exports = async (req, res) => {
   const { name } = req.body;
   if (!name) {
