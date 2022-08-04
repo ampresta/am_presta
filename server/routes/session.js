@@ -6,6 +6,6 @@ router = Router();
 
 router.post("/add", addSession);
 router.use("/browse", checkSociete);
-router.post("/browse", browseSession);
+router.all("/browse", browseSession);
 
 module.exports = router;
