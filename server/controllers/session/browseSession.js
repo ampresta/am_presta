@@ -6,14 +6,6 @@ module.exports = async (req, res) => {
 
   filters.include = [
     {
-      model: Cours,
-      attributes: [],
-      include: {
-        model: Provider,
-        attributes: ["nom"],
-      },
-    },
-    {
       model: Collaborateur,
       attributes: [],
       through: {
@@ -27,7 +19,7 @@ module.exports = async (req, res) => {
       [sequelize.fn("count", sequelize.col("Collaborateurs.id")), "collabs"],
     ],
   };
-  filters.group = ["Session.id", "Cour->Provider.id"];
+  filters.group = ["Session.id", "Cour.id", "Cour->Provider.id"];
   filters.where = { SocieteId: req.societe };
   if (req.method == "POST") {
     const { search, provider } = req.body;
@@ -54,13 +46,27 @@ module.exports = async (req, res) => {
     }
 
     if (provider) {
-      if (filters.where) {
-        filters.where = {
-          [sequelize.Op.and]: [filters.where, { ProviderId: provider }],
-        };
-      } else {
-        filters.where = { ProviderId: provider };
-      }
+      filters.include.push({
+        model: Cours,
+        required: true,
+        attributes: ["id", "image"],
+        include: {
+          model: Provider,
+          attributes: ["nom"],
+          where: {
+            id: provider,
+          },
+        },
+      });
+    } else {
+      filters.include.push({
+        model: Cours,
+        attributes: ["id"],
+        include: {
+          model: Provider,
+          attributes: ["nom"],
+        },
+      });
     }
     console.log(filters);
     try {
@@ -71,6 +77,14 @@ module.exports = async (req, res) => {
       return res.send({ status: "error" });
     }
   } else {
+    filters.include.push({
+      model: Cours,
+      attributes: ["id"],
+      include: {
+        model: Provider,
+        attributes: ["nom"],
+      },
+    });
     console.log(filters);
     const sessions = await Session.findAll(filters); // Implementing search
     return res.send(sessions);
