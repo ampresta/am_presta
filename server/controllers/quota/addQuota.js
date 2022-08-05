@@ -8,7 +8,7 @@ module.exports = async (req, res) => {
   try {
     Quota.create({
       SocieteId: societe,
-      CoursId: cours,
+      CourId: cours,
       quota: quota,
     });
     return res.json({ status: true, message: "Quota added" });

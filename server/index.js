@@ -15,7 +15,9 @@ const provider = require("./routes/provider");
 const multer = require("multer");
 const handleUpload = require("./controllers/upload/handleUpload");
 const deleteInstances = require("./controllers/delete/deleteInstances");
+
 const collaborateur = require("./routes/collaborateur");
+const quota = require("./routes/quota");
 //Database Setup
 try {
   db.authenticate();
@@ -46,6 +48,7 @@ app.use("/api/login", login);
 app.use("/api/register", register);
 app.use("/api/societe", societe);
 app.use("/api/dept", dept);
+app.use("/api/quota", quota);
 app.use("/api/session", session);
 app.use("/api/cours", cours);
 app.use("/api/dashboard", dashboard);
