@@ -3,7 +3,7 @@ const addSession = require("../controllers/session/addSession");
 const browseSession = require("../controllers/session/browseSession");
 const checkSociete = require("../middlewares/checkSociete");
 router = Router();
-
+router.use("/add", checkSociete);
 router.post("/add", addSession);
 router.use("/browse", checkSociete);
 router.all("/browse", browseSession);
