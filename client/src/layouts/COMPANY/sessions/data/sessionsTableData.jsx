@@ -1,0 +1,181 @@
+// Material Dashboard 2 React components
+import MDBox from "components/MDBox";
+import MDTypography from "components/MDTypography";
+import MDAvatar from "components/MDAvatar";
+import MDProgress from "components/MDProgress";
+
+// @mui icons
+import Icon from "@mui/material/Icon";
+
+// Images
+import company1 from "assets/images/huawei-logo.png";
+
+// React Hooks
+import { useState, useEffect } from "react";
+
+// Api Endpoint
+import authService from "services/auth.service";
+import axios from "axios";
+import { allCoursesRoute, baseURL } from "utils/APIRoutes";
+import { fontSize } from "@mui/system";
+
+// Axios
+
+export default function Data() {
+  const [allCourses, setAllPartners] = useState([]);
+
+  useEffect(() => {
+    const config = {
+      method: "get",
+      url: allCoursesRoute,
+      // headers: {
+      //   'Authorization': `Bearer ${authService.getCurrentUser()}`,
+      // }
+    };
+
+    const getAllCourses = async () => {
+      const { data } = await axios(config);
+      setAllPartners(data);
+    };
+    getAllCourses();
+  }, []);
+
+  const Company = ({ image, name, company }) => (
+    <MDBox display="flex" alignItems="center" lineHeight={1}>
+      <MDAvatar src={`${baseURL}/${image}`} name={name} size="sm" />
+      <MDBox ml={2} lineHeight={1}>
+        <MDTypography display="block" variant="button" fontWeight="medium">
+          {name}
+        </MDTypography>
+        <MDTypography variant="caption">{company}</MDTypography>
+      </MDBox>
+    </MDBox>
+  );
+
+  const Progress = ({ color, value }) => (
+    <MDBox display="flex" alignItems="center">
+      <MDTypography variant="caption" color="text" fontWeight="medium">
+        {value}%
+      </MDTypography>
+      <MDBox ml={1} width="7rem">
+        <MDProgress variant="gradient" color={color} value={value} />
+      </MDBox>
+    </MDBox>
+  );
+
+  const Period = (props) => (
+    <div style={{ display: "flex" }}>
+
+      <div className="keys" style={{marginRight: "0.5rem", textAlign: "right"}}>
+        <span style={{fontSize: "0.75rem", display: "block", fontWeight: "Bold"}}>From: </span >
+        <span style={{fontSize: "0.75rem", fontWeight: "Bold"}}>To: </span >
+      </div>
+      <div className="values" style={{color: "blue"}}>
+        <span style={{fontSize: "0.75rem", display: "block", fontWeight: "Bold"}}>2022-03-15 01:00:00</span >
+        <span style={{fontSize: "0.75rem", fontWeight: "Bold"}}>2022-03-15 01:00:00</span >
+      </div>
+    </div>
+  );
+
+  const handleProvider = (provider) => {
+    if (provider === null) {
+      return " ";
+    } else {
+      return provider.nom;
+    }
+  };
+
+  let sessions = {
+    columns: [
+      {
+        Header: "Tiltle / Constructor",
+        accessor: "author",
+        width: "30%",
+        align: "left",
+      },
+      {
+        Header: "enrolled",
+        accessor: "enrolled",
+        align: "center",
+        width: "15%",
+      },
+      {
+        Header: "certified students",
+        accessor: "certified_students",
+        align: "center",
+        width: "25%",
+      },
+      {
+        Header: "Period",
+        accessor: "period",
+        align: "center",
+        width: "15%",
+      },
+      { Header: "edit", accessor: "edit", align: "center" },
+      { Header: "delete", accessor: "delete", align: "center" },
+    ],
+
+    rows: [],
+  };
+
+  allCourses.map((course) =>
+    sessions.rows.push({
+      author: (
+        <Company
+          image={company1}
+          name={course.nom}
+          company={handleProvider(course.Provider)}
+        />
+      ),
+      enrolled: (
+        <MDTypography
+          component="a"
+          variant="caption"
+          color="text"
+          fontWeight="medium"
+        >
+          {course.collabs}
+        </MDTypography>
+      ),
+      certified_students: (
+        <Progress
+          color="info"
+          value={
+            course.collabs === 0
+              ? 0
+              : Math.floor(100 * (course.collabs_fin / course.collabs))
+          }
+        />
+      ),
+      period: (
+       <Period />
+      ),
+      edit: (
+        <MDTypography
+          component="a"
+          href="#"
+          variant="caption"
+          color="text"
+          fontWeight="medium"
+        >
+          <Icon fontSize="small">edit</Icon>
+        </MDTypography>
+      ),
+      delete: (
+        <MDTypography
+          component="a"
+          href="#"
+          variant="caption"
+          color="text"
+          fontWeight="medium"
+        >
+          <Icon fontSize="small" color="primary">
+            delete
+          </Icon>
+        </MDTypography>
+      ),
+    })
+  );
+
+  return sessions;
+}
