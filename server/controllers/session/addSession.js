@@ -7,7 +7,7 @@ module.exports = async (req, res) => {
     return res.sendStatus(403);
   }
   const q = Quota.count({
-    where: { [sequelize.Op.And]: { SocieteId: req.societe, CourId: cours } },
+    where: { [sequelize.Op.and]: { SocieteId: req.societe, CourId: cours } },
   });
   if (q == 0) {
     return res.send({
