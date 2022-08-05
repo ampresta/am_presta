@@ -17,10 +17,7 @@ import { useState } from "react";
 // Axios
 import axios from "axios";
 
-import {
-  registerRoute,
-  uploadRoute,
-} from "utils/APIRoutes";
+import { registerRoute, uploadRoute } from "utils/APIRoutes";
 
 function AddCompanies({ closeAddModel }) {
   const [formErrors, setFormErrors] = useState({
@@ -45,8 +42,6 @@ function AddCompanies({ closeAddModel }) {
 
   const [file, setFile] = useState(null);
 
-
-
   const handleSubmit = async (event) => {
     const { username, f_name, l_name, email, company, password } = details;
     event.preventDefault();
@@ -60,9 +55,8 @@ function AddCompanies({ closeAddModel }) {
         prenom: l_name,
         societe: company,
       });
-      const ID = data.id
+      const ID = data.id;
       if (data.status) {
-        // getCompanyID(company);
         const fd = new FormData();
         fd.append("image", file);
         fd.append("id", ID);
@@ -117,14 +111,14 @@ function AddCompanies({ closeAddModel }) {
     if (!values.email) {
       errors.email = "Email is required !";
     }
-    // if (!values.password) {
-    //   errors.password = "Password is required !";
-    // }
-    // if (!values.c_password) {
-    //   errors.c_password = "Password Confirmation is required !";
-    // } else if (values.password !== values.c_password) {
-    //   errors.c_password = "Passwords don't match !";
-    // }
+    if (!values.password) {
+      errors.password = "Password is required !";
+    }
+    if (!values.c_password) {
+      errors.c_password = "Password Confirmation is required !";
+    } else if (values.password !== values.c_password) {
+      errors.c_password = "Passwords don't match !";
+    }
     return errors;
   };
 
