@@ -11,5 +11,6 @@ module.exports = async (req, res) => {
     console.log(err);
     return res.sendStatus(403);
   }
-  return res.send({ status: true, msg: "Societe Created Successfully" });
+ 
+  return res.send({ status: true, msg: "Societe Created Successfully"});
 };

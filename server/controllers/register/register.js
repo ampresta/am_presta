@@ -38,8 +38,14 @@ module.exports = async (req, res) => {
         ],
       }
     );
+    const { id } = await Societe.findOne({
+      where: {
+        name: societe,
+      },
+      attributes: ["id"],
+    });
 
-    return res.send({ status: true, msg: "User Created Successfully" });
+    return res.send({ status: true, msg: "User Created Successfully", id });
   } catch (err) {
     return res.send({ msg: "error " + err });
   }

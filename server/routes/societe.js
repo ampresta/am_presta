@@ -6,6 +6,5 @@ const router = require("express").Router();
 
 router.post("/add", addSociete);
 router.all("/browse", browseSociete);
-router.post("/getIdByName", getByName);
 router.post("/assign", associateAdminSociete);
 module.exports = router;

@@ -17,8 +17,10 @@ import { useState } from "react";
 // Axios
 import axios from "axios";
 
-import { registerRoute } from "utils/APIRoutes";
-import { companyIdBynameRoute } from "utils/APIRoutes";
+import {
+  registerRoute,
+  uploadRoute,
+} from "utils/APIRoutes";
 
 function AddCompanies({ closeAddModel }) {
   const [formErrors, setFormErrors] = useState({
@@ -39,18 +41,14 @@ function AddCompanies({ closeAddModel }) {
     email: "",
     password: "",
     c_password: "",
-    image: "",
-    id: "",
   });
 
-  const getCompanyID = async (name) => {
-    const { data } = await axios.post(companyIdBynameRoute, { name });
-    setDetails((prev) => ({ ...prev, id: data.id }));
-  };
+  const [file, setFile] = useState(null);
+
+
 
   const handleSubmit = async (event) => {
-    const { username, f_name, l_name, email, company, password, image, id } =
-      details;
+    const { username, f_name, l_name, email, company, password } = details;
     event.preventDefault();
     setFormErrors(validate(details));
     if (Object.keys(validate(details)).length === 0) {
@@ -62,7 +60,26 @@ function AddCompanies({ closeAddModel }) {
         prenom: l_name,
         societe: company,
       });
+      const ID = data.id
       if (data.status) {
+        // getCompanyID(company);
+        const fd = new FormData();
+        fd.append("image", file);
+        fd.append("id", ID);
+        fd.append("model", "societe");
+
+        const config = {
+          method: "post",
+          url: uploadRoute,
+          headers: {
+            "content-Type": "multipart/form-data",
+          },
+          data: fd,
+        };
+
+        const { data } = await axios(config);
+        console.log(data);
+
         closeAddModel(false);
         window.location.reload();
       } else {
@@ -80,8 +97,7 @@ function AddCompanies({ closeAddModel }) {
   };
 
   const handleFileupload = (event) => {
-    console.log(event.target.files[0]);
-    setDetails((prev) => ({ ...prev, image: event.target.files[0].name }));
+    setFile(event.target.files[0]);
   };
 
   const validate = (values) => {
@@ -101,14 +117,14 @@ function AddCompanies({ closeAddModel }) {
     if (!values.email) {
       errors.email = "Email is required !";
     }
-    if (!values.password) {
-      errors.password = "Password is required !";
-    }
-    if (!values.c_password) {
-      errors.c_password = "Password Confirmation is required !";
-    } else if (values.password !== values.c_password) {
-      errors.c_password = "Passwords don't match !";
-    }
+    // if (!values.password) {
+    //   errors.password = "Password is required !";
+    // }
+    // if (!values.c_password) {
+    //   errors.c_password = "Password Confirmation is required !";
+    // } else if (values.password !== values.c_password) {
+    //   errors.c_password = "Passwords don't match !";
+    // }
     return errors;
   };
 
