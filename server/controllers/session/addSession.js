@@ -1,3 +1,4 @@
+const sequelize = require("sequelize");
 const db = require("../../config/database");
 const { Quota, Session } = db.models;
 module.exports = async (req, res) => {
@@ -5,9 +6,9 @@ module.exports = async (req, res) => {
   if (!nom || !datedebut || !datefin || !societe) {
     return res.sendStatus(403);
   }
-  const q = Quota.findAll({
-    where: { [sequelize.Op.and]: { SocieteId: req.societe, CourId: cours } },
-  }).count();
+  const q = Quota.count({
+    where: { [sequelize.Op.And]: { SocieteId: req.societe, CourId: cours } },
+  });
   if (q == 0) {
     return res.send({
       status: false,

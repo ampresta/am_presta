@@ -1,7 +1,7 @@
 const db = require("../../config/database");
 const { Quota } = db.models;
 module.exports = async (req, res) => {
-  const { quotas, societe, cours } = req.body;
+  const { quotas } = req.body;
   if (!quotas) {
     return res.sendStatus(403);
   }
