@@ -16,7 +16,7 @@ import { useState, useEffect } from "react";
 // Api Endpoint
 import authService from "services/auth.service";
 import axios from "axios";
-import { allCoursesRoute } from "utils/APIRoutes";
+import { allCoursesRoute, baseURL } from "utils/APIRoutes";
 
 // Axios
 
@@ -41,7 +41,7 @@ export default function Data() {
 
   const Company = ({ image, name, company }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
-      <MDAvatar src={image} name={name} size="sm" />
+      <MDAvatar src={`${baseURL}/${image}`} name={name} size="sm" />
       <MDBox ml={2} lineHeight={1}>
         <MDTypography display="block" variant="button" fontWeight="medium">
           {name}
@@ -136,7 +136,7 @@ export default function Data() {
         <Progress
           color="info"
           value={
-            course.collabs == 0
+            course.collabs === 0
               ? 0
               : Math.floor(100 * (course.collabs_fin / course.collabs))
           }
