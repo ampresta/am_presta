@@ -12,16 +12,18 @@ export const topCoursesRoute = `${baseURL}/dashboard/topcourses`;
 // Companies
 export const registerRoute = `${baseURL}/register`;
 export const allCompaniesRoute = `${baseURL}/societe/browse`;
-export const companyIdBynameRoute= `${baseURL}/societe/getIdByName`;
+export const companyIdBynameRoute = `${baseURL}/societe/getIdByName`;
 
 // Partners
-export const allPartnersRoute = `${baseURL}/provider/browse`
-export const addPartnersRoute = `${baseURL}/provider/add`
+export const allPartnersRoute = `${baseURL}/provider/browse`;
+export const addPartnersRoute = `${baseURL}/provider/add`;
 
 // Cours
-export const allCoursesRoute = `${baseURL}/cours/browse`
-export const addCoursesRoute = `${baseURL}/cours/add`
+export const allCoursesRoute = `${baseURL}/cours/browse`;
+export const addCoursesRoute = `${baseURL}/cours/add`;
 
+//DeleteInstances
+export const DeleteInstances = `${baseURL}/delete`;
 
 //Upload images
-export const uploadRoute = `${baseURL}/upload`
+export const uploadRoute = `${baseURL}/upload`;
