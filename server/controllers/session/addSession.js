@@ -2,8 +2,8 @@ const sequelize = require("sequelize");
 const db = require("../../config/database");
 const { Quota, Session } = db.models;
 module.exports = async (req, res) => {
-  const { cours, nom, datefin, datedebut, societe } = req.body;
-  if (!nom || !datedebut || !datefin || !societe) {
+  const { cours, nom, datefin, datedebut } = req.body;
+  if (!nom || !datedebut || !datefin || !cours) {
     return res.sendStatus(403);
   }
   const q = Quota.count({
