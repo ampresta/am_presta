@@ -6,4 +6,4 @@ const r = Router();
 
 r.post("/add", addQuota);
 r.post("/browse", modifyQuota);
-module.exports = r;
+module.exports = r; 

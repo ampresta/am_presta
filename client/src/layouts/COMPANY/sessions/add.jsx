@@ -8,8 +8,11 @@ import MDBox from "components/MDBox";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
-
-import PasswordTest from "components/PasswordTest";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
 //import UseState Hook
 import { useState } from "react";
@@ -17,63 +20,70 @@ import { useState } from "react";
 // Axios
 import axios from "axios";
 
-import { registerRoute, uploadRoute } from "utils/APIRoutes";
+import { useEffect } from "react";
+import { allCoursesRoute } from "utils/APIRoutes";
+import { addSessionsRoute } from "utils/APIRoutes";
 
-function AddCompanies({ closeAddModel }) {
+function AddSession({ closeAddModel }) {
   const [formErrors, setFormErrors] = useState({
-    username: "",
-    f_name: "",
-    l_name: "",
-    company: "",
-    email: "",
-    password: "",
-    c_password: "",
+    coursename: "",
+    provider: "",
+    description: "",
   });
 
-  const [details, setDetails] = useState({
-    username: "",
-    f_name: "",
-    l_name: "",
-    company: "",
-    email: "",
-    password: "",
-    c_password: "",
+  const [session, setSession] = useState({
+    nom: "",
+    course: {
+      id: "",
+      name: "",
+    },
+    company: {
+      id: "",
+      name: "",
+    },
+    dateDepart: "",
+    dateFin: "",
   });
 
-  const [file, setFile] = useState(null);
+  const [selectedCourse, setSelectedCourse] = useState({
+    nom: "",
+    id: "",
+  });
+
+
+  const [courses, setCourses] = useState([
+    {
+      id: "",
+      nom: "",
+    },
+  ]);
+
+
+
+  useEffect(() => {
+    const getAllData = async () => {
+        const { data } = await axios.get(allCoursesRoute);
+        let allCourses = [];
+        data.map((res) => allCourses.push({ id: res.id, nom: res.nom }));
+        setCourses(allCourses);
+        return;
+    };
+    getAllData();
+  }, []);
 
   const handleSubmit = async (event) => {
-    const { username, f_name, l_name, email, company, password } = details;
+    const { course, company, nom, dateDepart, dateFin } = session;
     event.preventDefault();
-    setFormErrors(validate(details));
-    if (Object.keys(validate(details)).length === 0) {
-      const { data } = await axios.post(registerRoute, {
-        username,
-        email,
-        password,
-        nom: f_name,
-        prenom: l_name,
-        societe: company,
+    setFormErrors(validate(session));
+    if (Object.keys(validate(session)).length === 0) {
+      const { data } = await axios.post(addSessionsRoute, {
+        nom,
+        datedebut: dateDepart,
+        datefin: dateFin,
+        cours: course.id,
+        societe: 1,
       });
-      const ID = data.id;
       if (data.status) {
-        const fd = new FormData();
-        fd.append("image", file);
-        fd.append("id", ID);
-        fd.append("model", "societe");
-
-        const config = {
-          method: "post",
-          url: uploadRoute,
-          headers: {
-            "content-Type": "multipart/form-data",
-          },
-          data: fd,
-        };
-
-        const { data } = await axios(config);
-        console.log(data);
-
         closeAddModel(false);
         window.location.reload();
       } else {
@@ -85,40 +95,29 @@ function AddCompanies({ closeAddModel }) {
   const handleChange = (event) => {
     const key = event.target.name;
     const value = event.target.value;
-    setDetails((prev) => {
+    setSession((prev) => {
       return { ...prev, [key]: value };
     });
   };
 
-  const handleFileupload = (event) => {
-    setFile(event.target.files[0]);
+  const handleSelectedCourse = (event) => {
+    const course = event.target.value;
+    setSession((prev) => ({ ...prev, course }));
+    setSelectedCourse(course);
   };
+
 
   const validate = (values) => {
     const errors = {};
-    if (!values.username) {
-      errors.username = "Username is required !";
-    }
-    if (!values.f_name) {
-      errors.f_name = "FirstName is required !";
-    }
-    if (!values.l_name) {
-      errors.l_name = "LastName is required !";
-    }
-    if (!values.company) {
-      errors.company = "Company Name is required !";
-    }
-    if (!values.email) {
-      errors.email = "Email is required !";
-    }
-    if (!values.password) {
-      errors.password = "Password is required !";
-    }
-    if (!values.c_password) {
-      errors.c_password = "Password Confirmation is required !";
-    } else if (values.password !== values.c_password) {
-      errors.c_password = "Passwords don't match !";
-    }
+    // if (!values.nom) {
+    //   errors.coursename = "Course Name is required !";
+    // }
+    // if (!values.provider.id) {
+    //   errors.provider = "Provider is required !";
+    // }
+    // if (!values.description) {
+    //   errors.description = "Description is required !";
+    // }
     return errors;
   };
 
@@ -138,7 +137,7 @@ function AddCompanies({ closeAddModel }) {
         mb={1}
       >
         <MDTypography variant="h6" color="white">
-          Company Register
+          Add Session
         </MDTypography>
 
         <MDButton
@@ -158,107 +157,82 @@ function AddCompanies({ closeAddModel }) {
           role="form"
           onSubmit={(event) => handleSubmit(event)}
         >
-          <MDBox mb={2}>
-            <MDInput
-              type="text"
-              label="Username"
-              variant="outlined"
-              fullWidth
-              name="username"
-              onChange={(e) => handleChange(e)}
-              error={formErrors.username}
-            />
-            <FormHelperText error>{formErrors.username}</FormHelperText>
+          <MDBox display="flex">
+            <MDBox mb={2} sx={{ width: "50%" }}>
+              <MDInput
+                type="text"
+                label="Nom de la Session"
+                variant="outlined"
+                name="nom"
+                fullWidth
+                onChange={(e) => handleChange(e)}
+                error={formErrors.description}
+              />
+              <FormHelperText error>{formErrors.description}</FormHelperText>
+            </MDBox>
+
+            <MDBox mb={2} ml={2} sx={{ width: "50%" }}>
+              <FormControl sx={{ width: "100%" }}>
+                <InputLabel id="demo-simple-select-label">Courses</InputLabel>
+                <Select
+                  error={formErrors.provider}
+                  name="course"
+                  sx={{ height: 45 }}
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={selectedCourse.name}
+                  label="Age"
+                  onChange={(e) => handleSelectedCourse(e)}
+                  MenuProps={{
+                    PaperProps: {
+                      style: {
+                        maxHeight: 150,
+                      },
+                    },
+                  }}
+                  input={
+                    <OutlinedInput id="select-multiple-chip" label="Provider" />
+                  }
+                >
+                  {courses.map((course) => (
+                    <MenuItem key={course.id} value={course}>
+                      {course.nom}
+                    </MenuItem>
+                  ))}
+                </Select>
+                <FormHelperText error>{formErrors.provider}</FormHelperText>
+              </FormControl>
+            </MDBox>
           </MDBox>
 
           <MDBox display="flex">
-            <MDBox mb={2} mr={2} sx={{ width: "50%" }}>
+            <MDBox mb={2} sx={{ width: "50%" }}>
               <MDInput
-                type="text"
-                label="First Name"
+                type="date"
+                label="Date Debut"
                 variant="outlined"
-                name="f_name"
-                onChange={(e) => handleChange(e)}
+                name="dateDepart"
                 fullWidth
-                error={formErrors.f_name}
+                onChange={(e) => handleChange(e)}
+                error={formErrors.description}
               />
-              <FormHelperText error>{formErrors.f_name}</FormHelperText>
+              <FormHelperText error>{formErrors.description}</FormHelperText>
             </MDBox>
-            <MDBox mb={2} ml={2} sx={{ width: "50%" }}>
+
+            <MDBox mb={2} sx={{ width: "50%" }}>
               <MDInput
-                type="text"
-                label="Last Name"
-                name="l_name"
+                type="date"
+                label="Date Fin"
                 variant="outlined"
-                onChange={(e) => handleChange(e)}
+                name="dateFin"
                 fullWidth
-                error={formErrors.l_name}
-              />
-              <FormHelperText error>{formErrors.l_name}</FormHelperText>
-            </MDBox>
-          </MDBox>
-
-          <MDBox mb={2}>
-            <MDInput
-              type="text"
-              label="Company Name"
-              name="company"
-              variant="outlined"
-              fullWidth
-              onChange={(e) => handleChange(e)}
-              error={formErrors.company}
-            />
-            <FormHelperText error>{formErrors.company}</FormHelperText>
-          </MDBox>
-
-          <MDBox mb={2}>
-            <MDInput
-              type="email"
-              label="Email"
-              variant="outlined"
-              name="email"
-              fullWidth
-              onChange={(e) => handleChange(e)}
-              error={formErrors.email}
-            />
-            <FormHelperText error>{formErrors.email}</FormHelperText>
-          </MDBox>
-
-          <MDBox display="flex">
-            <MDBox mb={2} mr={2} sx={{ width: "50%" }}>
-              <MDInput
-                type="password"
-                label="Password"
-                variant="outlined"
-                name="password"
                 onChange={(e) => handleChange(e)}
-                fullWidth
-                error={formErrors.password}
+                error={formErrors.description}
               />
-              <PasswordTest password={details.password} />
-              <FormHelperText error>{formErrors.password}</FormHelperText>
+              <FormHelperText error>{formErrors.description}</FormHelperText>
             </MDBox>
-            <MDBox mb={2} ml={2} sx={{ width: "50%" }}>
-              <MDInput
-                type="password"
-                label="Confirm Password"
-                variant="outlined"
-                name="c_password"
-                onChange={(e) => handleChange(e)}
-                fullWidth
-                error={formErrors.c_password}
-              />
-              <FormHelperText error>{formErrors.c_password}</FormHelperText>
-            </MDBox>
+          
           </MDBox>
-
-          <MDInput
-            type="file"
-            variant="outlined"
-            name="image"
-            onChange={(e) => handleFileupload(e)}
-            fullWidth
-          />
 
           <MDBox mt={4} mb={2} display="flex" justifyContent="center">
             <MDButton
@@ -285,4 +259,4 @@ function AddCompanies({ closeAddModel }) {
   );
 }
 
-export default AddCompanies;
+export default AddSession;
