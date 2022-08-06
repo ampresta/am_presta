@@ -17,6 +17,14 @@ module.exports = async (req, res) => {
   filters.attributes = {
     include: [
       [sequelize.fn("count", sequelize.col("Collaborateurs.id")), "collabs"],
+
+      [
+        sequelize.fn(
+          "sum",
+          sequelize.col("Collaborateurs->Session_Collab.status")
+        ),
+        "collabs_fin",
+      ],
     ],
   };
   filters.group = ["Session.id", "Cour.id", "Cour->Provider.id"];
