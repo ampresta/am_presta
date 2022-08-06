@@ -7,9 +7,6 @@ import MDProgress from "components/MDProgress";
 // @mui icons
 import Icon from "@mui/material/Icon";
 
-// Images
-import company1 from "assets/images/huawei-logo.png";
-
 // React Hooks
 import { useState, useEffect } from "react";
 
@@ -80,15 +77,6 @@ export default function Data() {
   );
 
   
-  const handleProvider = (provider) => {
-    if (provider === null) {
-      return " ";
-    } else {
-      return provider.nom;
-    }
-  };
-
-
   let sessions = {
     columns: [
       {
