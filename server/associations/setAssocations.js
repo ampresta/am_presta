@@ -48,8 +48,8 @@ module.exports = (db) => {
   Provider.Cours = Provider.hasMany(Cours);
   Cours.Provider = Cours.belongsTo(Provider);
   // Cours Quota
-  Cours.hasMany(Quota);
-  Quota.belongsTo(Cours);
+  Provider.hasMany(Quota);
+  Quota.belongsTo(Provider);
   // Session Cours
   Session.belongsTo(Cours);
   Cours.hasMany(Session);
