@@ -2,6 +2,7 @@ import Dashboard from "layouts/dashboard";
 import Companies from "layouts/companies";
 import Partners from "layouts/partners";
 import Courses from "layouts/courses";
+import Sessions from "layouts/COMPANY/sessions";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -38,6 +39,15 @@ const routes = [
     icon: <Icon fontSize="small">handshake</Icon>,
     route: "/partners",
     component: <Partners />,
+  },
+
+  {
+    type: "collapse",
+    name: "Sessions",
+    key: "sessions",
+    icon: <Icon fontSize="small">business</Icon>,
+    route: "/company/sessions",
+    component: <Sessions />,
   },
 ];
 

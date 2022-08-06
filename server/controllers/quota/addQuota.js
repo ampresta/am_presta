@@ -1,18 +1,22 @@
 const db = require("../../config/database");
 const { Quota } = db.models;
 module.exports = async (req, res) => {
-  const { quota, societe, cours } = req.body;
-  if (!cours || !quota || !societe) {
+  const { quotas } = req.body;
+  if (!quotas) {
     return res.sendStatus(403);
   }
   try {
-    Quota.create({
-      SocieteId: societe,
-      CourId: cours,
-      quota: quota,
-    });
-    return res.json({ status: true, message: "Quota added" });
+    for (quota of quotas) {
+      console.log(quota);
+
+      Quota.create({
+        SocieteId: quota.societe,
+        ProviderId: quota.provider,
+        quota: quota.quota,
+      });
+    }
   } catch {
-    return res.sendStatus(403);
+    return res.send({ status: false, msg: "Shiiitee" });
   }
+  return res.send({ status: true, msg: "Done" });
 };

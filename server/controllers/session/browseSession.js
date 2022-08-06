@@ -17,6 +17,14 @@ module.exports = async (req, res) => {
   filters.attributes = {
     include: [
       [sequelize.fn("count", sequelize.col("Collaborateurs.id")), "collabs"],
+
+      [
+        sequelize.fn(
+          "sum",
+          sequelize.col("Collaborateurs->Session_Collab.status")
+        ),
+        "collabs_fin",
+      ],
     ],
   };
   filters.group = ["Session.id", "Cour.id", "Cour->Provider.id"];
@@ -49,7 +57,7 @@ module.exports = async (req, res) => {
       filters.include.push({
         model: Cours,
         required: true,
-        attributes: ["id", "image"],
+        attributes: ["id", "image", "nom"],
         include: {
           model: Provider,
           attributes: ["nom"],
@@ -61,7 +69,7 @@ module.exports = async (req, res) => {
     } else {
       filters.include.push({
         model: Cours,
-        attributes: ["id"],
+        attributes: ["id", "image", "nom"],
         include: {
           model: Provider,
           attributes: ["nom"],
@@ -79,7 +87,7 @@ module.exports = async (req, res) => {
   } else {
     filters.include.push({
       model: Cours,
-      attributes: ["id"],
+      attributes: ["id", "image", "nom"],
       include: {
         model: Provider,
         attributes: ["nom"],

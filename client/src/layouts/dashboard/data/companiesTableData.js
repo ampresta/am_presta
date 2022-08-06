@@ -55,7 +55,7 @@ function Data(props) {
 
   allCompanies.map((company) =>
     table.rows.push({
-      author: <Author image="" name={company.name} company={company.name} />,
+      author: <Author image={company.image} name={company.name} company={company.name} />,
       manager: (
         <MDTypography
           component="a"

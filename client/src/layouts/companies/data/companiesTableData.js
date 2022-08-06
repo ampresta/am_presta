@@ -4,7 +4,7 @@ import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
 
 // Endpoint
-import { allCompaniesRoute } from "utils/APIRoutes";
+import { allCompaniesRoute, baseURL } from "utils/APIRoutes";
 
 //React Hook
 import { useState, useEffect } from "react";
@@ -14,6 +14,7 @@ import axios from "axios";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
+import { dateFormat } from "utils/Helper";
 
 export default function Data() {
   const [allCompanies, setAllCompanies] = useState([]);
@@ -26,13 +27,10 @@ export default function Data() {
     getAllCompanies();
   }, []);
 
-  const dateFormat = (timestamp) => {
-    return timestamp.split("T")[0].split("-").reverse().join(" / ");
-  };
 
   const Company = ({ image, name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
-      <MDAvatar src={image} name={name} size="sm" />
+      <MDAvatar src={`${baseURL}/${image}`} name={name} size="sm" />
       <MDBox ml={2} lineHeight={1}>
         <MDTypography display="block" variant="button" fontWeight="medium">
           {name}
@@ -60,7 +58,7 @@ export default function Data() {
 
   allCompanies.map((company) =>
     companies.rows.push({
-      author: <Company image="" name={company.name} />,
+      author: <Company image={company.image} name={company.name} />,
       manager: (
         <MDTypography
           component="a"

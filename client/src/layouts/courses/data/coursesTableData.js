@@ -15,8 +15,7 @@ import { useState, useEffect } from "react";
 
 // Api Endpoint
 import axios from "axios";
-import { allCoursesRoute } from "utils/APIRoutes";
-import { DeleteInstances } from "utils/APIRoutes";
+import { allCoursesRoute, baseURL, DeleteInstances } from "utils/APIRoutes";
 import MDButton from "components/MDButton";
 
 // ConfirmPoppup component
@@ -50,7 +49,7 @@ export default function Data() {
 
   const Company = ({ image, name, company }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
-      <MDAvatar src={image} name={name} size="sm" />
+      <MDAvatar src={`${baseURL}/${image}`} name={name} size="sm" />
       <MDBox ml={2} lineHeight={1}>
         <MDTypography display="block" variant="button" fontWeight="medium">
           {name}

@@ -38,8 +38,11 @@ module.exports = async (req, res) => {
         ],
       }
     );
-
-    return res.send({ status: true, msg: "User Created Successfully" });
+    return res.send({
+      status: true,
+      msg: "User Created Successfully",
+      id: user.id,
+    });
   } catch (err) {
     return res.send({ msg: "error " + err });
   }

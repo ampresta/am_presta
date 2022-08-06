@@ -16,13 +16,14 @@ module.exports = async (req, res) => {
     },
     {
       model: Provider,
-      attributes: ["id", "nom"],
-    },
-    {
-      model: Quota,
       required: true,
-      where: { SocieteId: req.societe },
-      attributes: ["quota"],
+      attributes: ["id", "nom"],
+      include: {
+        model: Quota,
+        required: true,
+        where: { SocieteId: req.societe },
+        attributes: ["quota"],
+      },
     },
   ];
 
@@ -42,7 +43,7 @@ module.exports = async (req, res) => {
       ],
     ],
   };
-  filters.group = ["Cours.id", "Provider.id", "Quota.id"];
+  filters.group = ["Cours.id", "Provider.id", "Provider->Quota.id"];
   if (req.method == "POST") {
     const { search, provider } = req.body;
 
