@@ -14,13 +14,19 @@ export const registerRoute = `${baseURL}/register`;
 export const allCompaniesRoute = `${baseURL}/societe/browse`;
 
 // Partners
-export const allPartnersRoute = `${baseURL}/provider/browse`
-export const addPartnersRoute = `${baseURL}/provider/add`
+export const allPartnersRoute = `${baseURL}/provider/browse`;
+export const addPartnersRoute = `${baseURL}/provider/add`;
 
 // Cours
 export const allCoursesRoute = `${baseURL}/cours/browse`
 export const addCoursesRoute = `${baseURL}/cours/add`
+export const allCompanyCoursesRoute = `${baseURL}/cours/browsesoc`
 
+// Sessions
+export const allSessionsRoute = `${baseURL}/session/browse`
+export const addSessionsRoute = `${baseURL}/session/add`
+//DeleteInstances
+export const DeleteInstances = `${baseURL}/delete`;
 
 //Upload images
-export const uploadRoute = `${baseURL}/upload`
+export const uploadRoute = `${baseURL}/upload`;

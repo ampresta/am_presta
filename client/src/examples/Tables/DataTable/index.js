@@ -106,7 +106,6 @@ function DataTable({
 
   // Search input value state
   const [search, setSearch] = useState(globalFilter);
-  console.log(search);
 
   // Search input state handle
   const onSearchChange = useAsyncDebounce((value) => {

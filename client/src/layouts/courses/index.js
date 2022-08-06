@@ -5,6 +5,7 @@ import Card from "@mui/material/Card";
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
+import MDButton from "components/MDButton";
 
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
@@ -22,10 +23,10 @@ import { useState } from "react";
 
 // Data
 import coursesTableData from "layouts/courses/data/coursesTableData";
-import MDButton from "components/MDButton";
 
 function Courses() {
-  const { columns, rows } = coursesTableData();
+  const { columns, rows, confirmation } = coursesTableData();
+
   const [openAddModel, setOpenAddModel] = useState(false);
 
   return (
@@ -78,6 +79,8 @@ function Courses() {
         </MDBox>
       )}
       {openAddModel && <AddCompanies closeAddModel={setOpenAddModel} />}
+
+      {confirmation}
     </DashboardLayout>
   );
 }

@@ -7,37 +7,32 @@ import MDProgress from "components/MDProgress";
 // @mui icons
 import Icon from "@mui/material/Icon";
 
-// Images
-import company1 from "assets/images/huawei-logo.png";
-
 // React Hooks
 import { useState, useEffect } from "react";
 
 // Api Endpoint
 import authService from "services/auth.service";
 import axios from "axios";
-import { allCoursesRoute, baseURL } from "utils/APIRoutes";
-import { fontSize } from "@mui/system";
-
-// Axios
+import { allSessionsRoute, baseURL } from "utils/APIRoutes";
+import { dateFormat } from "utils/Helper";
 
 export default function Data() {
-  const [allCourses, setAllPartners] = useState([]);
+  const [allSessions, setAllSessions] = useState([]);
 
   useEffect(() => {
     const config = {
       method: "get",
-      url: allCoursesRoute,
+      url: allSessionsRoute,
       // headers: {
       //   'Authorization': `Bearer ${authService.getCurrentUser()}`,
       // }
     };
 
-    const getAllCourses = async () => {
+    const getAllSessions = async () => {
       const { data } = await axios(config);
-      setAllPartners(data);
+      setAllSessions(data);
     };
-    getAllCourses();
+    getAllSessions();
   }, []);
 
   const Company = ({ image, name, company }) => (
@@ -63,34 +58,50 @@ export default function Data() {
     </MDBox>
   );
 
-  const Period = (props) => (
+  const Period = ({ debut, fin }) => (
     <div style={{ display: "flex" }}>
-
-      <div className="keys" style={{marginRight: "0.5rem", textAlign: "right"}}>
-        <span style={{fontSize: "0.75rem", display: "block", fontWeight: "Bold"}}>From: </span >
-        <span style={{fontSize: "0.75rem", fontWeight: "Bold"}}>To: </span >
+      <div
+        className="keys"
+        style={{ marginRight: "0.5rem", textAlign: "right  " }}
+      >
+        <span
+          style={{ fontSize: "0.75rem", display: "block", fontWeight: "Bold" }}
+        >
+          From:{" "}
+        </span>
+        <span style={{ fontSize: "0.75rem", fontWeight: "Bold" }}>To: </span>
       </div>
-      <div className="values" style={{color: "blue"}}>
-        <span style={{fontSize: "0.75rem", display: "block", fontWeight: "Bold"}}>2022-03-15 01:00:00</span >
-        <span style={{fontSize: "0.75rem", fontWeight: "Bold"}}>2022-03-15 01:00:00</span >
+      <div className="values" style={{ color: "blue" }}>
+        <span
+          style={{ fontSize: "0.75rem", display: "block", fontWeight: "Bold" }}
+        >
+          {dateFormat(debut)}
+        </span>
+        <span style={{ fontSize: "0.75rem", fontWeight: "Bold" }}>
+          {dateFormat(fin)}
+        </span>
       </div>
     </div>
   );
 
-  const handleProvider = (provider) => {
-    if (provider === null) {
-      return " ";
-    } else {
-      return provider.nom;
-    }
-  };
-
   let sessions = {
     columns: [
       {
-        Header: "Tiltle / Constructor",
+        Header: "Session Name",
         accessor: "author",
         width: "30%",
+        align: "left",
+      },
+      {
+        Header: "Cours",
+        accessor: "cours",
+        width: "15%",
+        align: "left",
+      },
+      {
+        Header: "Provider",
+        accessor: "provider",
+        width: "15%",
         align: "left",
       },
       {
@@ -118,14 +129,34 @@ export default function Data() {
     rows: [],
   };
 
-  allCourses.map((course) =>
+  allSessions.map((session) =>
     sessions.rows.push({
       author: (
         <Company
-          image={company1}
-          name={course.nom}
-          company={handleProvider(course.Provider)}
+          image={session.Cour.image}
+          name={session.nom}
+          // company={handleProvider(session.Provider)}
         />
+      ),
+      cours: (
+        <MDTypography
+          component="a"
+          variant="caption"
+          color="text"
+          fontWeight="medium"
+        >
+          {session.Cour.nom}
+        </MDTypography>
+      ),
+      provider: (
+        <MDTypography
+          component="a"
+          variant="caption"
+          color="text"
+          fontWeight="medium"
+        >
+          {session.Cour.Provider.nom}
+        </MDTypography>
       ),
       enrolled: (
         <MDTypography
@@ -134,22 +165,20 @@ export default function Data() {
           color="text"
           fontWeight="medium"
         >
-          {course.collabs}
+          {session.collabs}
         </MDTypography>
       ),
       certified_students: (
         <Progress
           color="info"
           value={
-            course.collabs === 0
+            session.collabs == 0
               ? 0
-              : Math.floor(100 * (course.collabs_fin / course.collabs))
+              : Math.floor(100 * (session.collabs_fin / session.collabs))
           }
         />
       ),
-      period: (
-       <Period />
-      ),
+      period: <Period debut={session.datedebut} fin={session.datefin} />,
       edit: (
         <MDTypography
           component="a"

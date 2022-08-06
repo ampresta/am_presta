@@ -22,7 +22,7 @@ import sessionsTableData from "layouts/COMPANY/sessions/data/sessionsTableData";
 import MDButton from "components/MDButton";
 
 //Add companies component
-import AddCompanies from "./add";
+import AddSession from "./add";
 
 function Sessions() {
   const { columns, rows } = sessionsTableData();
@@ -79,7 +79,7 @@ function Sessions() {
           </Grid>
         </MDBox>
       )}
-      {openAddModel && <AddCompanies closeAddModel={setOpenAddModel} />}
+      {openAddModel && <AddSession closeAddModel={setOpenAddModel} />}
     </DashboardLayout>
   );
 }

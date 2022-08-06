@@ -34,7 +34,7 @@ require("dotenv").config();
 
 // FILE STORAGE
 const STORAGE = multer.diskStorage({
-  destination: (req, file, cb) => {
+  destination: (req, file, cb) => { 
     cb(null, "./media");
   },
   filename: (req, file, cb) => {

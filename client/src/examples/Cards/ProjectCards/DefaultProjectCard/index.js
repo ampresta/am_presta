@@ -1,18 +1,3 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 // react-router-dom components
 import { Link } from "react-router-dom";
 
@@ -30,44 +15,24 @@ import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
 import MDAvatar from "components/MDAvatar";
 
-function DefaultProjectCard({ image, label, title, description, action, authors }) {
-  const renderAuthors = authors.map(({ image: media, name }) => (
-    <Tooltip key={name} title={name} placement="bottom">
-      <MDAvatar
-        src={media}
-        alt={name}
-        size="xs"
-        sx={({ borders: { borderWidth }, palette: { white } }) => ({
-          border: `${borderWidth[2]} solid ${white.main}`,
-          cursor: "pointer",
-          position: "relative",
-          ml: -1.25,
-
-          "&:hover, &:focus": {
-            zIndex: "10",
-          },
-        })}
-      />
-    </Tooltip>
-  ));
-
+function DefaultProjectCard({ image, title, description, action, authors }) {
   return (
     <Card
       sx={{
         display: "flex",
         flexDirection: "column",
         backgroundColor: "transparent",
-        boxShadow: "none",
         overflow: "visible",
       }}
     >
-      <MDBox position="relative" width="100.25%" shadow="xl" borderRadius="xl">
+      <MDBox position="relative" width="100%" shadow="xxl" borderRadius="xl">
         <CardMedia
           src={image}
           component="img"
           title={title}
+          display="flex"
           sx={{
-            maxWidth: "100%",
+            width: "100%",
             margin: 0,
             boxShadow: ({ boxShadows: { md } }) => md,
             objectFit: "cover",
@@ -75,11 +40,8 @@ function DefaultProjectCard({ image, label, title, description, action, authors 
           }}
         />
       </MDBox>
-      <MDBox mt={1} mx={0.5}>
-        <MDTypography variant="button" fontWeight="regular" color="text" textTransform="capitalize">
-          {label}
-        </MDTypography>
-        <MDBox mb={1}>
+      <MDBox mt={1} mx={1} p={1} >
+        <MDBox mb={1} display="flex" justifyContent="center">
           {action.type === "internal" ? (
             <MDTypography
               component={Link}
@@ -102,17 +64,25 @@ function DefaultProjectCard({ image, label, title, description, action, authors 
             </MDTypography>
           )}
         </MDBox>
+        <MDTypography
+          variant="button"
+          fontWeight="medium"
+          color="text"
+          textTransform="capitalize"
+        >
+          {"Quota :"}
+        </MDTypography>
         <MDBox mb={3} lineHeight={0}>
           <MDTypography variant="button" fontWeight="light" color="text">
             {description}
           </MDTypography>
         </MDBox>
-        <MDBox display="flex" justifyContent="space-between" alignItems="center">
+        <MDBox display="flex" justifyContent="center" pb={2}>
           {action.type === "internal" ? (
             <MDButton
               component={Link}
               to={action.route}
-              variant="outlined"
+              variant="contained"
               size="small"
               color={action.color}
             >
@@ -124,14 +94,13 @@ function DefaultProjectCard({ image, label, title, description, action, authors 
               href={action.route}
               target="_blank"
               rel="noreferrer"
-              variant="outlined"
+              variant="contained"
               size="small"
               color={action.color}
             >
               {action.label}
             </MDButton>
           )}
-          <MDBox display="flex">{renderAuthors}</MDBox>
         </MDBox>
       </MDBox>
     </Card>
