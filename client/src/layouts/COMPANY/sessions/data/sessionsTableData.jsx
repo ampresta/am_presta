@@ -16,8 +16,6 @@ import axios from "axios";
 import { allSessionsRoute, baseURL } from "utils/APIRoutes";
 import { dateFormat } from "utils/Helper";
 
-// Axios
-
 export default function Data() {
   const [allSessions, setAllSessions] = useState([]);
 
