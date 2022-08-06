@@ -1,7 +1,11 @@
 const { Router } = require("express");
-const AddCollabToCourse = require("../controllers/collaborator/AddCollabToCourse");
-const FinishCollabCourse = require("../controllers/collaborator/FinishCollabCourse");
-router = Router();
-router.post("/add", AddCollabToCourse);
-router.post("/finish", FinishCollabCourse);
+const AddCollabToSession = require("../controllers/collaborator/AddCollabToSession");
+const FinishCollabSession = require("../controllers/collaborator/FinishCollabSession");
+const RequestCours = require("../controllers/collaborator/RequestCours");
+const checkCollaborateur = require("../middlewares/checkCollaborateur");
+const router = Router();
+router.post("/addsession", AddCollabToSession);
+router.post("/finishsession", FinishCollabSession);
+router.use("/sendrequest", checkCollaborateur);
+router.post("/sendrequest", RequestCours);
 module.exports = router;
