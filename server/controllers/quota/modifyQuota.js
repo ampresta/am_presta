@@ -1,8 +1,9 @@
 const db = require("../../config/database");
 const { Quota } = db.models;
 module.exports = async (req, res) => {
-  const { id, quota } = req.body;
-  if (!id) {
+  const { quotas } = req.body;
+
+  if (!quotas) {
     return res.json({ status: false, message: "No parameters passed" });
   }
   try {
