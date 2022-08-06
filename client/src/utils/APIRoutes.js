@@ -20,6 +20,7 @@ export const addPartnersRoute = `${baseURL}/provider/add`
 // Cours
 export const allCoursesRoute = `${baseURL}/cours/browse`
 export const addCoursesRoute = `${baseURL}/cours/add`
+export const allCompanyCoursesRoute = `${baseURL}/cours/browsesoc`
 
 // Sessions
 export const allSessionsRoute = `${baseURL}/session/browse`

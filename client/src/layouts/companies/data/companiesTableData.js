@@ -14,6 +14,7 @@ import axios from "axios";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
+import { dateFormat } from "utils/Helper";
 
 export default function Data() {
   const [allCompanies, setAllCompanies] = useState([]);
@@ -26,9 +27,6 @@ export default function Data() {
     getAllCompanies();
   }, []);
 
-  const dateFormat = (timestamp) => {
-    return timestamp.split("T")[0].split("-").reverse().join(" / ");
-  };
 
   const Company = ({ image, name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>

@@ -18,6 +18,7 @@ import authService from "services/auth.service";
 import axios from "axios";
 import { allSessionsRoute, baseURL } from "utils/APIRoutes";
 import { fontSize } from "@mui/system";
+import { dateFormat } from "utils/Helper";
 
 // Axios
 
@@ -72,12 +73,13 @@ export default function Data() {
         <span style={{fontSize: "0.75rem", fontWeight: "Bold"}}>To: </span >
       </div>
       <div className="values" style={{color: "blue"}}>
-        <span style={{fontSize: "0.75rem", display: "block", fontWeight: "Bold"}}>2022-03-15 01:00:00</span >
-        <span style={{fontSize: "0.75rem", fontWeight: "Bold"}}>2022-03-15 01:00:00</span >
+        <span style={{fontSize: "0.75rem", display: "block", fontWeight: "Bold"}}>{dateFormat(debut)}</span >
+        <span style={{fontSize: "0.75rem", fontWeight: "Bold"}}>{dateFormat(fin)}</span >
       </div>
     </div>
   );
 
+  
   const handleProvider = (provider) => {
     if (provider === null) {
       return " ";
@@ -85,6 +87,7 @@ export default function Data() {
       return provider.nom;
     }
   };
+
 
   let sessions = {
     columns: [
@@ -97,7 +100,13 @@ export default function Data() {
       {
         Header: "Cours",
         accessor: "cours",
-        width: "30%",
+        width: "15%",
+        align: "left",
+      },
+      {
+        Header: "Provider",
+        accessor: "provider",
+        width: "15%",
         align: "left",
       },
       {
@@ -129,12 +138,22 @@ export default function Data() {
     sessions.rows.push({
       author: (
         <Company
-          image={company1}
+          image={session.Cour.image}
           name={session.nom}
           // company={handleProvider(session.Provider)}
         />
       ),
       cours: (
+        <MDTypography
+        component="a"
+        variant="caption"
+        color="text"
+        fontWeight="medium"
+      >
+        {session.Cour.nom}
+      </MDTypography>
+      ),
+      provider: (
         <MDTypography
         component="a"
         variant="caption"

@@ -21,8 +21,7 @@ import { useState } from "react";
 import axios from "axios";
 
 import { useEffect } from "react";
-import { allCoursesRoute } from "utils/APIRoutes";
-import { addSessionsRoute } from "utils/APIRoutes";
+import { allCompanyCoursesRoute, addSessionsRoute } from "utils/APIRoutes";
 
 function AddSession({ closeAddModel }) {
   const [formErrors, setFormErrors] = useState({
@@ -62,7 +61,7 @@ function AddSession({ closeAddModel }) {
 
   useEffect(() => {
     const getAllData = async () => {
-        const { data } = await axios.get(allCoursesRoute);
+        const { data } = await axios.get(allCompanyCoursesRoute);
         let allCourses = [];
         data.map((res) => allCourses.push({ id: res.id, nom: res.nom }));
         setCourses(allCourses);
