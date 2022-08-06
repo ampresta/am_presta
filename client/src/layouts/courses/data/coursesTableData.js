@@ -14,30 +14,38 @@ import company1 from "assets/images/huawei-logo.png";
 import { useState, useEffect } from "react";
 
 // Api Endpoint
-import authService from "services/auth.service";
 import axios from "axios";
-import { allCoursesRoute, baseURL } from "utils/APIRoutes";
+import { allCoursesRoute, baseURL, DeleteInstances } from "utils/APIRoutes";
+import MDButton from "components/MDButton";
 
-// Axios
+// ConfirmPoppup component
+import ConfirmPopup from "components/ConfirmPopup";
 
 export default function Data() {
-  const [allCourses, setAllPartners] = useState([]);
+  const [allCourses, setAllCourses] = useState([]);
+  const [confirmModel, setConfirmModel] = useState(false);
+  const [tempCourseId, setTempCourseId] = useState(0);
 
   useEffect(() => {
-    const config = {
-      method: "get",
-      url: allCoursesRoute,
-      // headers: {
-      //   'Authorization': `Bearer ${authService.getCurrentUser()}`,
-      // }
-    };
-
     const getAllCourses = async () => {
-      const { data } = await axios(config);
-      setAllPartners(data);
+      const { data } = await axios.get(allCoursesRoute);
+      setAllCourses(data);
     };
     getAllCourses();
   }, []);
+
+  const handleDelete = async (id) => {
+    const { data } = await axios.post(DeleteInstances, {
+      model: "cours",
+      id: id,
+    });
+    if (data.status) {
+      setAllCourses(allCourses.filter((course) => course.id !== id));
+      setConfirmModel(!confirmModel);
+    } else {
+      alert(data.msg);
+    }
+  };
 
   const Company = ({ image, name, company }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
@@ -101,6 +109,15 @@ export default function Data() {
     ],
 
     rows: [],
+
+    confirmation: confirmModel && (
+      <ConfirmPopup
+        title={"Are you sure you want to delete this course ?"}
+        onConfirmPopup={() => setConfirmModel(!confirmModel)}
+        handleDetele={handleDelete}
+        IdCourse={tempCourseId}
+      />
+    ),
   };
 
   allCourses.map((course) =>
@@ -136,7 +153,7 @@ export default function Data() {
         <Progress
           color="info"
           value={
-            course.collabs === 0
+            course.collabs == 0
               ? 0
               : Math.floor(100 * (course.collabs_fin / course.collabs))
           }
@@ -154,17 +171,24 @@ export default function Data() {
         </MDTypography>
       ),
       delete: (
-        <MDTypography
-          component="a"
-          href="#"
-          variant="caption"
-          color="text"
-          fontWeight="medium"
+        <MDButton
+          variant="outlined"
+          onClick={() => {
+            setConfirmModel(!confirmModel);
+            setTempCourseId(course.id);
+          }}
         >
-          <Icon fontSize="small" color="primary">
-            delete
-          </Icon>
-        </MDTypography>
+          <MDTypography
+            component="a"
+            variant="caption"
+            color="text"
+            fontWeight="medium"
+          >
+            <Icon fontSize="small" color="primary">
+              delete
+            </Icon>
+          </MDTypography>
+        </MDButton>
       ),
     })
   );
