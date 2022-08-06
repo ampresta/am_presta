@@ -11,7 +11,7 @@ module.exports = async (req, res) => {
 
       Quota.create({
         SocieteId: quota.societe,
-        CourId: quota.cours,
+        ProviderId: quota.provider,
         quota: quota.quota,
       });
     }

@@ -2,14 +2,22 @@ const db = require("../../config/database");
 const { Quota } = db.models;
 module.exports = async (req, res) => {
   const { quotas } = req.body;
-
   if (!quotas) {
-    return res.json({ status: false, message: "No parameters passed" });
+    return res.sendStatus(403);
   }
   try {
-    Quota.update({ quota: quota }, { where: { id: id } });
-    return res.json({ status: true, message: "update Done" });
+    for (quota of quotas) {
+      console.log(quota);
+
+      Quota.update(
+        {
+          quota: quota.quota,
+        },
+        { where: { SocieteId: quota.societe, CourId: quota.cours } }
+      );
+    }
   } catch {
-    return res.json({ status: false, message: "error in update" });
+    return res.send({ status: false, msg: "Shiiitee" });
   }
+  return res.send({ status: true, msg: "Done" });
 };
