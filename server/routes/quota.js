@@ -5,5 +5,5 @@ const modifyQuota = require("../controllers/quota/modifyQuota");
 const r = Router();
 
 r.post("/add", addQuota);
-r.post("/browse", modifyQuota);
+r.post("/modify", modifyQuota);
 module.exports = r;
