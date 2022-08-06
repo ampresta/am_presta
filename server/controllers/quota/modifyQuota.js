@@ -13,7 +13,7 @@ module.exports = async (req, res) => {
         {
           quota: quota.quota,
         },
-        { where: { SocieteId: quota.societe, CourId: quota.cours } }
+        { where: { SocieteId: quota.societe, ProviderId: quota.provider } }
       );
     }
   } catch {
