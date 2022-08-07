@@ -4,7 +4,7 @@ import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
 
 // Endpoint
-import { allCompaniesRoute, baseURL } from "utils/APIRoutes";
+import { allCompaniesRoute, baseURL, DeleteInstances } from "utils/APIRoutes";
 
 //React Hook
 import { useState, useEffect } from "react";
@@ -16,8 +16,14 @@ import axios from "axios";
 import Icon from "@mui/material/Icon";
 import { dateFormat } from "utils/Helper";
 
+// ConfirmPoppup component
+import ConfirmPopup from "components/ConfirmPopup";
+import MDButton from "components/MDButton";
+
 export default function Data() {
   const [allCompanies, setAllCompanies] = useState([]);
+  const [confirmModel, setConfirmModel] = useState(false);
+  const [tempCompanyId, setTempCompanyId] = useState(0);
 
   useEffect(() => {
     const getAllCompanies = async () => {
@@ -27,6 +33,18 @@ export default function Data() {
     getAllCompanies();
   }, []);
 
+  const handleDelete = async (id) => {
+    const { data } = await axios.post(DeleteInstances, {
+      model: "societe",
+      id: id,
+    });
+    if (data.status) {
+      setAllCompanies(allCompanies.filter((company) => company.id !== id));
+      setConfirmModel(!confirmModel);
+    } else {
+      alert(data.msg);
+    }
+  };
 
   const Company = ({ image, name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
@@ -44,16 +62,25 @@ export default function Data() {
       {
         Header: "Company Name",
         accessor: "author",
-        width: "45%",
+        width: "40%",
         align: "left",
       },
       { Header: "manager", accessor: "manager", align: "center" },
-      { Header: "date", accessor: "date", align: "center" },
-      { Header: "edit", accessor: "edit", align: "center" },
-      { Header: "delete", accessor: "delete", align: "center" },
+      { Header: "date", accessor: "date", align: "center", width: "25%" },
+      { Header: "edit", accessor: "edit", align: "center", width: "3%" },
+      { Header: "delete", accessor: "delete", align: "center", width: "3%" },
     ],
 
     rows: [],
+
+    confirmation: confirmModel && (
+      <ConfirmPopup
+        title={"Are you sure you want to delete this course ?"}
+        onConfirmPopup={() => setConfirmModel(!confirmModel)}
+        handleDetele={handleDelete}
+        IdCourse={tempCompanyId}
+      />
+    ),
   };
 
   allCompanies.map((company) =>
@@ -62,7 +89,6 @@ export default function Data() {
       manager: (
         <MDTypography
           component="a"
-          href="#"
           variant="caption"
           color="text"
           fontWeight="medium"
@@ -73,7 +99,6 @@ export default function Data() {
       date: (
         <MDTypography
           component="a"
-          href="#"
           variant="caption"
           color="text"
           fontWeight="medium"
@@ -84,7 +109,6 @@ export default function Data() {
       edit: (
         <MDTypography
           component="a"
-          href="#"
           variant="caption"
           color="text"
           fontWeight="medium"
@@ -93,17 +117,24 @@ export default function Data() {
         </MDTypography>
       ),
       delete: (
-        <MDTypography
-          component="a"
-          href="#"
-          variant="caption"
-          color="text"
-          fontWeight="medium"
+        <MDButton
+          variant="outlined"
+          onClick={() => {
+            setConfirmModel(!confirmModel);
+            setTempCompanyId(company.id);
+          }}
         >
-          <Icon fontSize="small" color="primary">
-            delete
-          </Icon>
-        </MDTypography>
+          <MDTypography
+            component="a"
+            variant="caption"
+            color="text"
+            fontWeight="medium"
+          >
+            <Icon fontSize="small" color="primary">
+              delete
+            </Icon>
+          </MDTypography>
+        </MDButton>
       ),
     })
   );

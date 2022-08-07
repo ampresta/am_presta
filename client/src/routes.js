@@ -2,7 +2,8 @@ import Dashboard from "layouts/dashboard";
 import Companies from "layouts/companies";
 import Partners from "layouts/partners";
 import Courses from "layouts/courses";
-import Sessions from "layouts/COMPANY/sessions";
+import Sessions from "layouts/sessions";
+import Quota from "layouts/quota";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -41,13 +42,21 @@ const routes = [
     route: "/partners",
     component: <Partners />,
   },
+  {
+    type: "collapse",
+    name: "Quota",
+    key: "quota",
+    icon: <Icon fontSize="small">key</Icon>,
+    route: "/quota",
+    component: <Quota />,
+  },
 
   {
     type: "collapse",
     name: "Sessions",
     key: "sessions",
     icon: <Icon fontSize="small">business</Icon>,
-    route: "/company/sessions",
+    route: "/sessions",
     component: <Sessions />,
   },
   {

@@ -24,7 +24,6 @@ function Data(props) {
         <MDTypography display="block" variant="button" fontWeight="medium">
           {name}
         </MDTypography>
-        <MDTypography variant="caption">{company}</MDTypography>
       </MDBox>
     </MDBox>
   );
@@ -55,7 +54,13 @@ function Data(props) {
 
   allCompanies.map((company) =>
     table.rows.push({
-      author: <Author image={company.image} name={company.name} company={company.name} />,
+      author: (
+        <Author
+          image={company.image}
+          name={company.name}
+          company={company.name}
+        />
+      ),
       manager: (
         <MDTypography
           component="a"

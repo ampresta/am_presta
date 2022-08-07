@@ -6,9 +6,6 @@ import MDAvatar from "components/MDAvatar";
 // @mui icons
 import Icon from "@mui/material/Icon";
 
-// Images
-import company1 from "assets/images/huawei-logo.png";
-
 //React hooks
 import { useState, useEffect } from "react";
 
@@ -16,10 +13,16 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 // Api Endpoint
-import { baseURL, allPartnersRoute } from "utils/APIRoutes";
+import { baseURL, allPartnersRoute, DeleteInstances } from "utils/APIRoutes";
+
+// ConfirmPoppup component
+import ConfirmPopup from "components/ConfirmPopup";
+import MDButton from "components/MDButton";
 
 export default function Data() {
   const [allPartners, setAllPartners] = useState([]);
+  const [confirmModel, setConfirmModel] = useState(false);
+  const [tempPartnerId, setTempPartnerId] = useState(0);
 
   useEffect(() => {
     const getAllPartners = async () => {
@@ -28,6 +31,19 @@ export default function Data() {
     };
     getAllPartners();
   }, []);
+
+  const handleDelete = async (id) => {
+    const { data } = await axios.post(DeleteInstances, {
+      model: "provider",
+      id: id,
+    });
+    if (data.status) {
+      setAllPartners(allPartners.filter((course) => course.id !== id));
+      setConfirmModel(!confirmModel);
+    } else {
+      alert(data.msg);
+    }
+  };
 
   const Company = ({ image, name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
@@ -54,50 +70,48 @@ export default function Data() {
         align: "center",
         width: "30%",
       },
-      { Header: "edit", accessor: "edit", align: "center" },
-      { Header: "delete", accessor: "delete", align: "center" },
+      { Header: "edit", accessor: "edit", align: "center", width: "3%" },
+      { Header: "delete", accessor: "delete", align: "center", width: "3%" },
     ],
 
     rows: [],
+    confirmation: confirmModel && (
+      <ConfirmPopup
+        title={"Are you sure you want to delete this course ?"}
+        onConfirmPopup={() => setConfirmModel(!confirmModel)}
+        handleDetele={handleDelete}
+        IdCourse={tempPartnerId}
+      />
+    ),
   };
 
   allPartners.map((partner) =>
     partners.rows.push({
       author: <Company image={partner.image} name={partner.nom} />,
       Number_of_added_courses: (
-        <MDTypography
-          component="a"
-          href="#"
-          variant="caption"
-          color="text"
-          fontWeight="medium"
-        >
+        <MDTypography variant="caption" color="text" fontWeight="medium">
           {partner.course_num}
         </MDTypography>
       ),
       edit: (
-        <MDTypography
-          component="a"
-          href="#"
-          variant="caption"
-          color="text"
-          fontWeight="medium"
-        >
+        <MDTypography variant="caption" color="text" fontWeight="medium">
           <Icon fontSize="small">edit</Icon>
         </MDTypography>
       ),
       delete: (
-        <MDTypography
-          component="a"
-          href="#"
-          variant="caption"
-          color="text"
-          fontWeight="medium"
+        <MDButton
+          variant="text"
+          onClick={() => {
+            setConfirmModel(!confirmModel);
+            setTempPartnerId(partner.id);
+          }}
         >
-          <Icon fontSize="small" color="primary">
-            delete
-          </Icon>
-        </MDTypography>
+          <MDTypography variant="caption" color="text" fontWeight="medium">
+            <Icon fontSize="small" color="primary">
+              delete
+            </Icon>
+          </MDTypography>
+        </MDButton>
       ),
     })
   );

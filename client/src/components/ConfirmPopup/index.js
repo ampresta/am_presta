@@ -19,7 +19,7 @@ const ConfirmPopup = ({ title, onConfirmPopup, handleDetele, IdCourse }) => {
         mx: "25%",
         borderRadius: "12px",
         position: "fixed",
-        top: "35%",
+        top: "40%",
         backgroundColor: "rgb(0,0,0, 0.3)",
       }}
     >
