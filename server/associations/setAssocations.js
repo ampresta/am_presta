@@ -1,6 +1,7 @@
 module.exports = (db) => {
   // Session Collab
   const {
+    Request,
     ChallengeCollab,
     Session,
     Session_Collab,
@@ -60,6 +61,10 @@ module.exports = (db) => {
   SuperAdmin.User = SuperAdmin.belongsTo(User);
   User.SuperAdmin = User.hasOne(SuperAdmin);
   // Requests
-  Collaborateur.belongsToMany(Cours, { through: "Requests" });
-  Cours.belongsToMany(Collaborateur, { through: "Requests" });
+  Collaborateur.belongsToMany(Cours, { through: Request });
+  Cours.belongsToMany(Collaborateur, { through: Request });
+  Collaborateur.hasMany(Request);
+  Request.belongsTo(Collaborateur);
+  Cours.hasMany(Request);
+  Request.belongsTo(Cours);
 };
