@@ -25,9 +25,10 @@ import { allCompanyCoursesRoute, addSessionsRoute } from "utils/APIRoutes";
 
 function AddSession({ closeAddModel }) {
   const [formErrors, setFormErrors] = useState({
-    coursename: "",
-    provider: "",
-    description: "",
+    nom: "",
+    course: "",
+    dateDepart: "",
+    dateFin: "",
   });
 
   const [session, setSession] = useState({
@@ -49,7 +50,6 @@ function AddSession({ closeAddModel }) {
     id: "",
   });
 
-
   const [courses, setCourses] = useState([
     {
       id: "",
@@ -57,15 +57,13 @@ function AddSession({ closeAddModel }) {
     },
   ]);
 
-
-
   useEffect(() => {
     const getAllData = async () => {
-        const { data } = await axios.get(allCompanyCoursesRoute);
-        let allCourses = [];
-        data.map((res) => allCourses.push({ id: res.id, nom: res.nom }));
-        setCourses(allCourses);
-        return;
+      const { data } = await axios.get(allCompanyCoursesRoute);
+      let allCourses = [];
+      data.map((res) => allCourses.push({ id: res.id, nom: res.nom }));
+      setCourses(allCourses);
+      return;
     };
     getAllData();
   }, []);
@@ -91,6 +89,8 @@ function AddSession({ closeAddModel }) {
     }
   };
 
+  console.log(formErrors);
+
   const handleChange = (event) => {
     const key = event.target.name;
     const value = event.target.value;
@@ -105,18 +105,20 @@ function AddSession({ closeAddModel }) {
     setSelectedCourse(course);
   };
 
-
   const validate = (values) => {
     const errors = {};
-    // if (!values.nom) {
-    //   errors.coursename = "Course Name is required !";
-    // }
-    // if (!values.provider.id) {
-    //   errors.provider = "Provider is required !";
-    // }
-    // if (!values.description) {
-    //   errors.description = "Description is required !";
-    // }
+    if (!values.nom) {
+      errors.nom = "Session Name is required !";
+    }
+    if (!values.course.name) {
+      errors.course = "Course Name is required !";
+    }
+    if (!values.dateDepart) {
+      errors.dateDepart = "Start Date is required !";
+    }
+    if (!values.dateFin) {
+      errors.dateFin = "End Date is required !";
+    }
     return errors;
   };
 
@@ -160,21 +162,22 @@ function AddSession({ closeAddModel }) {
             <MDBox mb={2} sx={{ width: "50%" }}>
               <MDInput
                 type="text"
-                label="Nom de la Session"
+                label="Session Name"
                 variant="outlined"
                 name="nom"
                 fullWidth
                 onChange={(e) => handleChange(e)}
-                error={formErrors.description}
+                error={formErrors.nom}
               />
-              <FormHelperText error>{formErrors.description}</FormHelperText>
+              <FormHelperText error>{formErrors.nom}</FormHelperText>
             </MDBox>
 
             <MDBox mb={2} ml={2} sx={{ width: "50%" }}>
               <FormControl sx={{ width: "100%" }}>
-                <InputLabel id="demo-simple-select-label">Courses</InputLabel>
+                <InputLabel id="demo-simple-select-label">
+                  Course Name
+                </InputLabel>
                 <Select
-                  error={formErrors.provider}
                   name="course"
                   sx={{ height: 45 }}
                   labelId="demo-simple-select-label"
@@ -190,7 +193,11 @@ function AddSession({ closeAddModel }) {
                     },
                   }}
                   input={
-                    <OutlinedInput id="select-multiple-chip" label="Provider" />
+                    <OutlinedInput
+                      id="select-multiple-chip"
+                      label="Course Name"
+                      error={formErrors.course}
+                    />
                   }
                 >
                   {courses.map((course) => (
@@ -199,7 +206,7 @@ function AddSession({ closeAddModel }) {
                     </MenuItem>
                   ))}
                 </Select>
-                <FormHelperText error>{formErrors.provider}</FormHelperText>
+                <FormHelperText error>{formErrors.course}</FormHelperText>
               </FormControl>
             </MDBox>
           </MDBox>
@@ -208,17 +215,19 @@ function AddSession({ closeAddModel }) {
             <MDBox mb={2} sx={{ width: "50%" }}>
               <MDInput
                 type="date"
-                label="Date Debut"
+                label="Start Date"
                 variant="outlined"
                 name="dateDepart"
                 fullWidth
                 onChange={(e) => handleChange(e)}
-                error={formErrors.description}
+                InputLabelProps={{
+                  shrink: true,
+                }}
               />
-              <FormHelperText error>{formErrors.description}</FormHelperText>
+              <FormHelperText error>{formErrors.dateDepart}</FormHelperText>
             </MDBox>
 
-            <MDBox mb={2} sx={{ width: "50%" }}>
+            <MDBox mb={2} ml={2} sx={{ width: "50%" }}>
               <MDInput
                 type="date"
                 label="Date Fin"
@@ -226,11 +235,12 @@ function AddSession({ closeAddModel }) {
                 name="dateFin"
                 fullWidth
                 onChange={(e) => handleChange(e)}
-                error={formErrors.description}
+                InputLabelProps={{
+                  shrink: true,
+                }}
               />
-              <FormHelperText error>{formErrors.description}</FormHelperText>
+              <FormHelperText error>{formErrors.dateFin}</FormHelperText>
             </MDBox>
-          
           </MDBox>
 
           <MDBox mt={4} mb={2} display="flex" justifyContent="center">

@@ -19,7 +19,7 @@ import DefaultProjectCard from "./components/DefaultProjectCard";
 import { useState } from "react";
 
 // Images
-import Huawei from "assets/images/huawei-logo.png";
+import Oracle from "assets/images/oracle-logo.jpg";
 
 function Overview() {
   const [openAddModel, setOpenAddModel] = useState(false);
@@ -51,13 +51,9 @@ function Overview() {
                   <Grid container spacing={2}>
                     <Grid item xs={12} md={6} xl={3}>
                       <DefaultProjectCard
-                        image={Huawei}
+                        image={Oracle}
                         title="Huawei"
-                        action={{
-                          color: "info",
-                          label: "EDIT Quota",
-                        }}
-                        closeAddModel={setOpenAddModel}
+                        openAddModel={setOpenAddModel}
                       />
                     </Grid>
                   </Grid>
@@ -67,7 +63,7 @@ function Overview() {
           </Grid>
         </MDBox>
       )}
-      {openAddModel && <AddQuota closeAddModel={setOpenAddModel} />}
+      {openAddModel && <AddQuota openAddModel={setOpenAddModel} />}
     </DashboardLayout>
   );
 }
