@@ -70,6 +70,7 @@ export default function Data() {
     </MDBox>
   );
 
+
   const handleProvider = (provider) => {
     if (provider === null) {
       return " ";
@@ -124,7 +125,7 @@ export default function Data() {
     courses.rows.push({
       author: (
         <Company
-          image={company1}
+          image={course.image}
           name={course.nom}
           company={handleProvider(course.Provider)}
         />

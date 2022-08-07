@@ -23,6 +23,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import { allPartnersRoute } from "utils/APIRoutes";
 import { addCoursesRoute } from "utils/APIRoutes";
+import { uploadRoute } from "utils/APIRoutes";
 
 function AddCourses({ closeAddModel }) {
   const [formErrors, setFormErrors] = useState({
@@ -30,6 +31,8 @@ function AddCourses({ closeAddModel }) {
     provider: "",
     description: "",
   });
+
+  const [file, setFile] = useState(null);
 
   const [course, setCourse] = useState({
     nom: "",
@@ -72,7 +75,26 @@ function AddCourses({ closeAddModel }) {
         provider: provider.id,
         description,
       });
+      const ID = data.id;
       if (data.status) {
+        if (file !== null) {
+          const fd = new FormData();
+          fd.append("image", file);
+          fd.append("id", ID);
+          fd.append("model", "cours");
+
+          const config = {
+            method: "post",
+            url: uploadRoute,
+            headers: {
+              "content-Type": "multipart/form-data",
+            },
+            data: fd,
+          };
+
+          const { data } = await axios(config);
+        }
+
         closeAddModel(false);
         window.location.reload();
       } else {
@@ -93,6 +115,10 @@ function AddCourses({ closeAddModel }) {
     const provider = event.target.value;
     setCourse((prev) => ({ ...prev, provider }));
     setSelectedProvider(provider);
+  };
+
+  const handleFileupload = (event) => {
+    setFile(event.target.files[0]);
   };
 
   const validate = (values) => {
@@ -206,6 +232,15 @@ function AddCourses({ closeAddModel }) {
             />
             <FormHelperText error>{formErrors.description}</FormHelperText>
           </MDBox>
+
+          <MDInput
+            type="file"
+            variant="outlined"
+            name="image"
+            onChange={(e) => handleFileupload(e)}
+            fullWidth
+          />
+
           <MDBox mt={4} mb={2} display="flex" justifyContent="center">
             <MDButton
               type="submit"
