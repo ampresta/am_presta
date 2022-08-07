@@ -6,6 +6,7 @@ import Sessions from "layouts/COMPANY/sessions";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
+import Register from "layouts/register";
 
 const routes = [
   {
@@ -48,6 +49,22 @@ const routes = [
     icon: <Icon fontSize="small">business</Icon>,
     route: "/company/sessions",
     component: <Sessions />,
+  },
+  {
+    type: "collapse",
+    name: "Login",
+    key: "login",
+    icon: <Icon fontSize="small">business</Icon>,
+    route: "/login",
+    component: <Sessions />,
+  },
+  {
+    type: "collapse",
+    name: "Register",
+    key: "register",
+    icon: <Icon fontSize="small">business</Icon>,
+    route: "/register",
+    component: <Register />,
   },
 ];
 
