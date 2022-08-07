@@ -1,19 +1,22 @@
 const sequelize = require("sequelize");
 const db = require("../../config/database");
-const { Collaborateur, Cours } = db.models;
+const { Collaborateur, Cours, Request } = db.models;
 module.exports = async (req, res) => {
-  collabs = await Collaborateur.findAll({
-    include: {
-      model: Cours,
-      required: true,
-      attributes: ["id"],
-      through: {
-        attributes: ["createdAt", "CourId", "CollaborateurId"],
+  collabs = await Request.findAll({
+    include: [
+      {
+        model: Cours,
+        required: true,
+        attributes: ["id", "nom"],
       },
-    },
-    where: {
-      SocieteId: req.societe,
-    },
+      {
+        model: Collaborateur,
+        required: true,
+        where: {
+          SocieteId: req.societe,
+        },
+      },
+    ],
     // group: [
     //   "Collaborateur.id",
     //   "Cours.id",
