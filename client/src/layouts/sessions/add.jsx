@@ -21,34 +21,36 @@ import { useState } from "react";
 import axios from "axios";
 
 import { useEffect } from "react";
-import { allPartnersRoute } from "utils/APIRoutes";
-import { addCoursesRoute } from "utils/APIRoutes";
-import { uploadRoute } from "utils/APIRoutes";
+import { allCompanyCoursesRoute, addSessionsRoute } from "utils/APIRoutes";
 
-function AddCourses({ closeAddModel }) {
+function AddSession({ closeAddModel }) {
   const [formErrors, setFormErrors] = useState({
-    coursename: "",
-    provider: "",
-    description: "",
+    nom: "",
+    course: "",
+    dateDepart: "",
+    dateFin: "",
   });
 
-  const [file, setFile] = useState(null);
-
-  const [course, setCourse] = useState({
+  const [session, setSession] = useState({
     nom: "",
-    provider: {
+    course: {
       id: "",
       name: "",
     },
-    description: "",
+    company: {
+      id: "",
+      name: "",
+    },
+    dateDepart: "",
+    dateFin: "",
   });
 
-  const [selectedProvider, setSelectedProvider] = useState({
+  const [selectedCourse, setSelectedCourse] = useState({
     nom: "",
     id: "",
   });
 
-  const [providers, setProviders] = useState([
+  const [courses, setCourses] = useState([
     {
       id: "",
       nom: "",
@@ -56,45 +58,29 @@ function AddCourses({ closeAddModel }) {
   ]);
 
   useEffect(() => {
-    const getAllPartners = async () => {
-      const { data } = await axios.get(allPartnersRoute);
-      let temp = [];
-      data.map((provider) => temp.push({ id: provider.id, nom: provider.nom }));
-      setProviders(temp);
+    const getAllData = async () => {
+      const { data } = await axios.get(allCompanyCoursesRoute);
+      let allCourses = [];
+      data.map((res) => allCourses.push({ id: res.id, nom: res.nom }));
+      setCourses(allCourses);
+      return;
     };
-    getAllPartners();
+    getAllData();
   }, []);
 
   const handleSubmit = async (event) => {
-    const { nom, provider, description } = course;
+    const { course, company, nom, dateDepart, dateFin } = session;
     event.preventDefault();
-    setFormErrors(validate(course));
-    if (Object.keys(validate(course)).length === 0) {
-      const { data } = await axios.post(addCoursesRoute, {
+    setFormErrors(validate(session));
+    if (Object.keys(validate(session)).length === 0) {
+      const { data } = await axios.post(addSessionsRoute, {
         nom,
-        provider: provider.id,
-        description,
+        datedebut: dateDepart,
+        datefin: dateFin,
+        cours: course.id,
+        societe: 1,
       });
-      const ID = data.id;
       if (data.status) {
-        if (file !== null) {
-          const fd = new FormData();
-          fd.append("image", file);
-          fd.append("id", ID);
-          fd.append("model", "cours");
-
-          const config = {
-            method: "post",
-            url: uploadRoute,
-            headers: {
-              "content-Type": "multipart/form-data",
-            },
-            data: fd,
-          };
-
-          const { data } = await axios(config);
-        }
-
         closeAddModel(false);
         window.location.reload();
       } else {
@@ -103,34 +89,35 @@ function AddCourses({ closeAddModel }) {
     }
   };
 
+  console.log(formErrors);
+
   const handleChange = (event) => {
     const key = event.target.name;
     const value = event.target.value;
-    setCourse((prev) => {
+    setSession((prev) => {
       return { ...prev, [key]: value };
     });
   };
 
-  const handleSelectedProvider = (event) => {
-    const provider = event.target.value;
-    setCourse((prev) => ({ ...prev, provider }));
-    setSelectedProvider(provider);
-  };
-
-  const handleFileupload = (event) => {
-    setFile(event.target.files[0]);
+  const handleSelectedCourse = (event) => {
+    const course = event.target.value;
+    setSession((prev) => ({ ...prev, course }));
+    setSelectedCourse(course);
   };
 
   const validate = (values) => {
     const errors = {};
     if (!values.nom) {
-      errors.coursename = "Course Name is required !";
+      errors.nom = "Session Name is required !";
     }
-    if (!values.provider.id) {
-      errors.provider = "Provider is required !";
+    if (!values.course.name) {
+      errors.course = "Course Name is required !";
     }
-    if (!values.description) {
-      errors.description = "Description is required !";
+    if (!values.dateDepart) {
+      errors.dateDepart = "Start Date is required !";
+    }
+    if (!values.dateFin) {
+      errors.dateFin = "End Date is required !";
     }
     return errors;
   };
@@ -151,7 +138,7 @@ function AddCourses({ closeAddModel }) {
         mb={1}
       >
         <MDTypography variant="h6" color="white">
-          Add Course
+          Add Session
         </MDTypography>
 
         <MDButton
@@ -172,33 +159,32 @@ function AddCourses({ closeAddModel }) {
           onSubmit={(event) => handleSubmit(event)}
         >
           <MDBox display="flex">
-            <MDBox mb={2} mr={2} s sx={{ width: "50%" }}>
+            <MDBox mb={2} sx={{ width: "50%" }}>
               <MDInput
                 type="text"
-                label="Course Name"
+                label="Session Name"
                 variant="outlined"
-                fullWidth
                 name="nom"
+                fullWidth
                 onChange={(e) => handleChange(e)}
-                error={formErrors.coursename}
+                error={formErrors.nom}
               />
-              <FormHelperText error sx={{ ml: 2 }}>
-                {formErrors.coursename}
-              </FormHelperText>
+              <FormHelperText error>{formErrors.nom}</FormHelperText>
             </MDBox>
 
             <MDBox mb={2} ml={2} sx={{ width: "50%" }}>
               <FormControl sx={{ width: "100%" }}>
-                <InputLabel id="demo-simple-select-label">Provider</InputLabel>
+                <InputLabel id="demo-simple-select-label">
+                  Course Name
+                </InputLabel>
                 <Select
-                  error={formErrors.provider}
-                  name="provider"
+                  name="course"
                   sx={{ height: 45 }}
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  value={selectedProvider.name}
+                  value={selectedCourse.name}
                   label="Age"
-                  onChange={(e) => handleSelectedProvider(e)}
+                  onChange={(e) => handleSelectedCourse(e)}
                   MenuProps={{
                     PaperProps: {
                       style: {
@@ -207,39 +193,55 @@ function AddCourses({ closeAddModel }) {
                     },
                   }}
                   input={
-                    <OutlinedInput id="select-multiple-chip" label="Provider" />
+                    <OutlinedInput
+                      id="select-multiple-chip"
+                      label="Course Name"
+                      error={formErrors.course}
+                    />
                   }
                 >
-                  {providers.map((provider) => (
-                    <MenuItem key={provider.id} value={provider}>
-                      {provider.nom}
+                  {courses.map((course) => (
+                    <MenuItem key={course.id} value={course}>
+                      {course.nom}
                     </MenuItem>
                   ))}
                 </Select>
-                <FormHelperText error>{formErrors.provider}</FormHelperText>
+                <FormHelperText error>{formErrors.course}</FormHelperText>
               </FormControl>
             </MDBox>
           </MDBox>
-          <MDBox mb={2}>
-            <MDInput
-              type="text"
-              label="Description"
-              variant="outlined"
-              name="description"
-              fullWidth
-              onChange={(e) => handleChange(e)}
-              error={formErrors.description}
-            />
-            <FormHelperText error>{formErrors.description}</FormHelperText>
-          </MDBox>
 
-          <MDInput
-            type="file"
-            variant="outlined"
-            name="image"
-            onChange={(e) => handleFileupload(e)}
-            fullWidth
-          />
+          <MDBox display="flex">
+            <MDBox mb={2} sx={{ width: "50%" }}>
+              <MDInput
+                type="date"
+                label="Start Date"
+                variant="outlined"
+                name="dateDepart"
+                fullWidth
+                onChange={(e) => handleChange(e)}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+              <FormHelperText error>{formErrors.dateDepart}</FormHelperText>
+            </MDBox>
+
+            <MDBox mb={2} ml={2} sx={{ width: "50%" }}>
+              <MDInput
+                type="date"
+                label="Date Fin"
+                variant="outlined"
+                name="dateFin"
+                fullWidth
+                onChange={(e) => handleChange(e)}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+              <FormHelperText error>{formErrors.dateFin}</FormHelperText>
+            </MDBox>
+          </MDBox>
 
           <MDBox mt={4} mb={2} display="flex" justifyContent="center">
             <MDButton
@@ -266,4 +268,4 @@ function AddCourses({ closeAddModel }) {
   );
 }
 
-export default AddCourses;
+export default AddSession;

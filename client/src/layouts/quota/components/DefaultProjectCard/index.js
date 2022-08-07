@@ -6,7 +6,6 @@ import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 
 import Collapse from "@mui/material/Collapse";
-import CardContent from "@mui/material/CardContent";
 import IconButton from "@mui/material/IconButton";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { styled } from "@mui/material/styles";
@@ -34,7 +33,7 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-function DefaultProjectCard({ image, title, action, closeAddModel }) {
+function DefaultProjectCard({ image, title, openAddModel }) {
   const [expanded, setExpanded] = useState(false);
 
   const { columns, rows } = QuotaListData();
@@ -52,62 +51,68 @@ function DefaultProjectCard({ image, title, action, closeAddModel }) {
         overflow: "visible",
       }}
     >
-      <MDBox width="100%" shadow="xxl" borderRadius="xl">
+      <MDBox shadow="xxl" borderRadius="xl">
         <CardMedia
           src={image}
           component="img"
           title={title}
-          display="flex"
           sx={{
             width: "100%",
             margin: 0,
             boxShadow: ({ boxShadows: { xs } }) => xs,
-            objectFit: "cover",
-            objectPosition: "center",
+            mb: 0.3,
           }}
         />
       </MDBox>
-      <MDBox mt={1} mx={1} p={1}>
-        <MDBox mb={3} display="flex" justifyContent="center">
-          <MDTypography variant="h5" textTransform="capitalize">
+      <MDBox mx={1} px={2}>
+        <MDBox mb={2} display="flex" justifyContent="center">
+          <MDTypography variant="text" textTransform="capitalize">
             {title}
           </MDTypography>
         </MDBox>
 
-        <MDBox display="flex" justifyContent="center" pb={2}>
+        <MDBox display="flex" justifyContent="space-between" mb={0.5}>
           <MDButton
             variant="contained"
             size="small"
-            color={action.color}
-            onClick={() => closeAddModel(true)}
+            color="info"
+            onClick={() => openAddModel(true)}
+            sx={{ height: 20 }}
           >
-            {action.label}
+            <MDTypography variant="text" color>
+              Edit Quota
+            </MDTypography>
           </MDButton>
           <ExpandMore
             expand={expanded}
             onClick={handleExpandClick}
             aria-expanded={expanded}
             aria-label="show more"
-            sx={{ color: "#2b85eb" }}
+            sx={{ color: "#2b85eb", zIndex: 999 }}
           >
             <ExpandMoreIcon />
           </ExpandMore>
         </MDBox>
       </MDBox>
 
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
+      <MDBox
+        sx={{
+          position: "absolute",
+          width: "100%",
+          boxShadow: ({ boxShadows: { xxl } }) => xxl,
+        }}
+      >
+        <Collapse in={expanded} timeout={500}>
           <MDBox>
             <DataTable
               table={{ columns, rows }}
               isSorted={false}
-              noEndBorder
               showTotalEntries={false}
               entriesPerPage={false}
             />
           </MDBox>
-        </CardContent>
-      </Collapse>
+        </Collapse>
+      </MDBox>
     </Card>
   );
 }
@@ -116,20 +121,7 @@ function DefaultProjectCard({ image, title, action, closeAddModel }) {
 DefaultProjectCard.propTypes = {
   image: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  action: PropTypes.shape({
-    color: PropTypes.oneOf([
-      "primary",
-      "secondary",
-      "info",
-      "success",
-      "warning",
-      "error",
-      "light",
-      "dark",
-      "white",
-    ]).isRequired,
-    label: PropTypes.string.isRequired,
-  }).isRequired,
+  openAddModel: PropTypes.func.isRequired,
 };
 
 export default DefaultProjectCard;

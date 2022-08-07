@@ -3,7 +3,6 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
 import MDProgress from "components/MDProgress";
-import MDButton from "components/MDButton";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -17,6 +16,7 @@ import { useState, useEffect } from "react";
 // Api Endpoint
 import axios from "axios";
 import { allCoursesRoute, baseURL, DeleteInstances } from "utils/APIRoutes";
+import MDButton from "components/MDButton";
 
 // ConfirmPoppup component
 import ConfirmPopup from "components/ConfirmPopup";
@@ -70,7 +70,6 @@ export default function Data() {
     </MDBox>
   );
 
-
   const handleProvider = (provider) => {
     if (provider === null) {
       return " ";
@@ -105,8 +104,8 @@ export default function Data() {
         align: "center",
         width: "25%",
       },
-      { Header: "edit", accessor: "edit", align: "center", width: "3%" },
-      { Header: "delete", accessor: "delete", align: "center", width: "3%" },
+      { Header: "edit", accessor: "edit", align: "center" },
+      { Header: "delete", accessor: "delete", align: "center" },
     ],
 
     rows: [],
@@ -125,18 +124,28 @@ export default function Data() {
     courses.rows.push({
       author: (
         <Company
-          image={course.image}
+          image={company1}
           name={course.nom}
           company={handleProvider(course.Provider)}
         />
       ),
       enrolled: (
-        <MDTypography variant="caption" color="text" fontWeight="medium">
+        <MDTypography
+          component="a"
+          variant="caption"
+          color="text"
+          fontWeight="medium"
+        >
           {course.collabs}
         </MDTypography>
       ),
       number_of_sessions: (
-        <MDTypography variant="caption" color="text" fontWeight="medium">
+        <MDTypography
+          component="a"
+          variant="caption"
+          color="text"
+          fontWeight="medium"
+        >
           {course.sessions}
         </MDTypography>
       ),
@@ -152,6 +161,7 @@ export default function Data() {
       ),
       edit: (
         <MDTypography
+          component="a"
           href="#"
           variant="caption"
           color="text"
@@ -162,13 +172,18 @@ export default function Data() {
       ),
       delete: (
         <MDButton
-          variant="text"
+          variant="outlined"
           onClick={() => {
             setConfirmModel(!confirmModel);
             setTempCourseId(course.id);
           }}
         >
-          <MDTypography variant="caption" color="text" fontWeight="medium">
+          <MDTypography
+            component="a"
+            variant="caption"
+            color="text"
+            fontWeight="medium"
+          >
             <Icon fontSize="small" color="primary">
               delete
             </Icon>

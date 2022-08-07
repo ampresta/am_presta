@@ -228,7 +228,7 @@ function DataTable({
         display="flex"
         flexDirection={{ xs: "column", sm: "row-reverse" }}
         justifyContent="space-around"
-        alignItems={{ xs: "flex-start", sm: "center" }}
+        alignItems={{ xs: "center", sm: "center" }}
         p={!showTotalEntries && pageOptions.length === 1 ? 0 : 1.85}
       >
         {showTotalEntries && (

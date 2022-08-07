@@ -8,13 +8,20 @@ module.exports = async (req, res) => {
     return res.sendStatus(403);
   }
   try {
-    Cours.create({
+    const coursObj = await Cours.create({
       nom: cours,
       ProviderId: provider,
       description: description,
     });
-    return res.json({ status: true });
+    return res.json({
+      status: true,
+      msg: "Course added",
+      id: coursObj.id,
+    });
   } catch (err) {
+    console.log("##############################");
+    console.log("##############################");
+    console.log("##############################");
     console.log(err);
     return res.send({ status: "error" });
   }

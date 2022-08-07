@@ -18,7 +18,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import { allPartnersRoute } from "utils/APIRoutes";
 
-function AddQuota({ closeAddModel }) {
+function AddQuota({ openAddModel }) {
   const [formErrors, setFormErrors] = useState({
     coursename: "",
     provider: "",
@@ -90,7 +90,7 @@ function AddQuota({ closeAddModel }) {
           color="dark"
           size="small"
           iconOnly
-          onClick={() => closeAddModel(false)}
+          onClick={() => openAddModel(false)}
         >
           <Icon fontSize="small">close</Icon>
         </MDButton>

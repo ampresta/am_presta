@@ -6,18 +6,9 @@ export default function Data() {
     { provider: "Huawei", quantite: "3" },
     { provider: "Cisco", quantite: "5" },
     { provider: "Oracle", quantite: "10" },
-    { provider: "Juniper", quantite: "8" },
-    { provider: "Juniper", quantite: "8" },
-    { provider: "Juniper", quantite: "8" },
-    { provider: "Juniper", quantite: "8" },
-    { provider: "Juniper", quantite: "8" },
-    { provider: "Juniper", quantite: "8" },
-    { provider: "Juniper", quantite: "8" },
-    { provider: "Juniper", quantite: "8" },
-    { provider: "Juniper", quantite: "8" },
-    { provider: "Juniper", quantite: "8" },
-    { provider: "Juniper", quantite: "8" },
-    { provider: "Juniper", quantite: "8" },
+    { provider: "Cisco", quantite: "5" },
+    { provider: "Oracle", quantite: "10" },
+    
   ];
 
   let table = {
