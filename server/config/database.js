@@ -16,6 +16,7 @@ console.log("All models were synchronized successfully.");
 sequelize.query("CREATE EXTENSION IF NOT EXISTS pg_trgm", { raw: true });
 // initialize db
 models = [
+  require("../models/Request"),
   require("../models/Challenge"),
   require("../models/Challenge_collab"),
   require("../models/Collaborateur"),
