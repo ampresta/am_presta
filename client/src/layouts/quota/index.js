@@ -49,6 +49,7 @@ function Overview() {
 
                 <MDBox p={3}>
                   <Grid container spacing={2}>
+                    {/* //////////////  maper hadi  ////////////// */}
                     <Grid item xs={12} md={6} xl={3}>
                       <DefaultProjectCard
                         image={Oracle}
@@ -56,10 +57,9 @@ function Overview() {
                         openAddModel={setOpenAddModel}
                       />
                     </Grid>
+                    {/* ////////////////////////////////////////// */}
                   </Grid>
                 </MDBox>
-
-                
               </Card>
             </Grid>
           </Grid>
