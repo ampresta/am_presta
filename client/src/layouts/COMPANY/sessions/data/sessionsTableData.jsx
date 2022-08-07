@@ -59,19 +59,16 @@ export default function Data() {
   );
 
   const Period = ({ debut, fin }) => (
-    <div style={{ display: "flex" }}>
-      <div
-        className="keys"
-        style={{ marginRight: "0.5rem", textAlign: "right  " }}
-      >
+    <MDBox style={{ display: "flex" }}>
+      <MDBox style={{ marginRight: "0.5rem", textAlign: "right  " }}>
         <span
           style={{ fontSize: "0.75rem", display: "block", fontWeight: "Bold" }}
         >
           From:{" "}
         </span>
         <span style={{ fontSize: "0.75rem", fontWeight: "Bold" }}>To: </span>
-      </div>
-      <div className="values" style={{ color: "blue" }}>
+      </MDBox>
+      <MDBox color="info" variant="gradiant">
         <span
           style={{ fontSize: "0.75rem", display: "block", fontWeight: "Bold" }}
         >
@@ -80,8 +77,8 @@ export default function Data() {
         <span style={{ fontSize: "0.75rem", fontWeight: "Bold" }}>
           {dateFormat(fin)}
         </span>
-      </div>
-    </div>
+      </MDBox>
+    </MDBox>
   );
 
   let sessions = {
@@ -131,13 +128,7 @@ export default function Data() {
 
   allSessions.map((session) =>
     sessions.rows.push({
-      author: (
-        <Company
-          image={session.Cour.image}
-          name={session.nom}
-          // company={handleProvider(session.Provider)}
-        />
-      ),
+      author: <Company image={session.Cour.image} name={session.nom} />,
       cours: (
         <MDTypography
           component="a"

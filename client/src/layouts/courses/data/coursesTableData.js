@@ -3,6 +3,7 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
 import MDProgress from "components/MDProgress";
+import MDButton from "components/MDButton";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -16,7 +17,6 @@ import { useState, useEffect } from "react";
 // Api Endpoint
 import axios from "axios";
 import { allCoursesRoute, baseURL, DeleteInstances } from "utils/APIRoutes";
-import MDButton from "components/MDButton";
 
 // ConfirmPoppup component
 import ConfirmPopup from "components/ConfirmPopup";
@@ -104,8 +104,8 @@ export default function Data() {
         align: "center",
         width: "25%",
       },
-      { Header: "edit", accessor: "edit", align: "center" },
-      { Header: "delete", accessor: "delete", align: "center" },
+      { Header: "edit", accessor: "edit", align: "center", width: "3%" },
+      { Header: "delete", accessor: "delete", align: "center", width: "3%" },
     ],
 
     rows: [],
@@ -172,7 +172,7 @@ export default function Data() {
       ),
       delete: (
         <MDButton
-          variant="outlined"
+          variant="text"
           onClick={() => {
             setConfirmModel(!confirmModel);
             setTempCourseId(course.id);

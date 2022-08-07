@@ -25,7 +25,7 @@ import partnersTableData from "layouts/partners/data/partnersTableData";
 import MDButton from "components/MDButton";
 
 function Partners() {
-  const { columns, rows } = partnersTableData();
+  const { columns, rows, confirmation } = partnersTableData();
   const [openAddModel, setOpenAddModel] = useState(false);
 
   return (
@@ -80,6 +80,7 @@ function Partners() {
         </MDBox>
       )}
       {openAddModel && <AddPartner closeAddModel={setOpenAddModel} />}
+      {confirmation}
     </DashboardLayout>
   );
 }

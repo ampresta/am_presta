@@ -25,10 +25,8 @@ import MDButton from "components/MDButton";
 import AddCompanies from "./add";
 
 function Companies() {
-  const { columns, rows } = companiesTableData();
+  const { columns, rows, confirmation } = companiesTableData();
   const [openAddModel, setOpenAddModel] = useState(false);
-
-  // authService.login("abdoessordo", "123456789")
 
   return (
     <DashboardLayout>
@@ -82,6 +80,7 @@ function Companies() {
         </MDBox>
       )}
       {openAddModel && <AddCompanies closeAddModel={setOpenAddModel} />}
+      {confirmation}
     </DashboardLayout>
   );
 }
