@@ -59,4 +59,7 @@ module.exports = (db) => {
   // SuperAdmin User
   SuperAdmin.User = SuperAdmin.belongsTo(User);
   User.SuperAdmin = User.hasOne(SuperAdmin);
+  // Requests
+  Collaborateur.belongsToMany(Cours, { through: "Requests" });
+  Cours.belongsToMany(Collaborateur, { through: "Requests" });
 };
