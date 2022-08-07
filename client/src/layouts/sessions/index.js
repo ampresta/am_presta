@@ -5,6 +5,7 @@ import Card from "@mui/material/Card";
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
+import MDButton from "components/MDButton";
 
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
@@ -19,14 +20,14 @@ import Icon from "@mui/material/Icon";
 
 // Data
 import sessionsTableData from "layouts/sessions/data/sessionsTableData";
-import MDButton from "components/MDButton";
 
 //Add companies component
 import AddSession from "./add";
 
 function Sessions() {
-  const { columns, rows } = sessionsTableData();
+  const { columns, rows, ProvidersFilter } = sessionsTableData();
   const [openAddModel, setOpenAddModel] = useState(false);
+  const [openFilter, setOpenFilter] = useState(false);
 
   // authService.login("abdoessordo", "123456789")
 
@@ -53,8 +54,8 @@ function Sessions() {
                   </MDTypography>
                 </MDBox>
 
-                <Grid container spacing={2}>
-                  <MDBox ml={3} py={1.9} px={2} mt={3}>
+                <Grid container spacing={2} display="flex" alignItems="center">
+                  <MDBox ml={3} pt={2} px={2} mt={3}>
                     <MDButton
                       variant="gradient"
                       color="info"
@@ -65,7 +66,21 @@ function Sessions() {
                       add Session
                     </MDButton>
                   </MDBox>
+
+                  <MDBox pt={2} px={2} mt={3}>
+                    <MDButton
+                      variant="gradient"
+                      color="info"
+                      size="small"
+                      onClick={() => setOpenFilter(!openFilter)}
+                      iconOnly
+                    >
+                      <Icon>search</Icon>
+                    </MDButton>
+                  </MDBox>
                 </Grid>
+
+                {openFilter && ProvidersFilter}
 
                 <MDBox>
                   <DataTable

@@ -1,8 +1,10 @@
-// Material Dashboard 2 React components
+// @mui material components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
 import MDProgress from "components/MDProgress";
+import Grid from "@mui/material/Grid";
+import MDButton from "components/MDButton";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -13,11 +15,17 @@ import { useState, useEffect } from "react";
 // Api Endpoint
 import authService from "services/auth.service";
 import axios from "axios";
-import { allSessionsRoute, baseURL } from "utils/APIRoutes";
+import { allSessionsRoute, baseURL, allPartnersRoute } from "utils/APIRoutes";
 import { dateFormat } from "utils/Helper";
 
 export default function Data() {
   const [allSessions, setAllSessions] = useState([]);
+  const [providers, setProviders] = useState([
+    {
+      id: "",
+      nom: "",
+    },
+  ]);
 
   useEffect(() => {
     const config = {
@@ -33,6 +41,16 @@ export default function Data() {
       setAllSessions(data);
     };
     getAllSessions();
+  }, []);
+
+  useEffect(() => {
+    const getAllPartners = async () => {
+      const { data } = await axios.get(allPartnersRoute);
+      let temp = [];
+      data.map((provider) => temp.push({ id: provider.id, nom: provider.nom }));
+      setProviders(temp);
+    };
+    getAllPartners();
   }, []);
 
   const Company = ({ image, name, company }) => (
@@ -68,7 +86,7 @@ export default function Data() {
         </span>
         <span style={{ fontSize: "0.75rem", fontWeight: "Bold" }}>To: </span>
       </MDBox>
-      <MDBox color="info" variant="gradiant">
+      <MDBox color="info" variant="gradient">
         <span
           style={{ fontSize: "0.75rem", display: "block", fontWeight: "Bold" }}
         >
@@ -124,6 +142,25 @@ export default function Data() {
     ],
 
     rows: [],
+
+    ProvidersFilter: (
+      <Grid container mt={1} rowSpacing={1}>
+        {providers.map((provider) => (
+          <Grid item xs={1.5} ml={3} key={provider.id}>
+            <MDButton
+              variant="outlined"
+              size="small"
+              color="success"
+              sx={{ width: "100%" }}
+              href={`https://www.google.com/search?q=${provider.nom}`}
+              target="_blank"
+            >
+              {provider.nom}
+            </MDButton>
+          </Grid>
+        ))}
+      </Grid>
+    ),
   };
 
   allSessions.map((session) =>

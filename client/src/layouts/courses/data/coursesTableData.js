@@ -130,22 +130,12 @@ export default function Data() {
         />
       ),
       enrolled: (
-        <MDTypography
-          component="a"
-          variant="caption"
-          color="text"
-          fontWeight="medium"
-        >
+        <MDTypography variant="caption" color="text" fontWeight="medium">
           {course.collabs}
         </MDTypography>
       ),
       number_of_sessions: (
-        <MDTypography
-          component="a"
-          variant="caption"
-          color="text"
-          fontWeight="medium"
-        >
+        <MDTypography variant="caption" color="text" fontWeight="medium">
           {course.sessions}
         </MDTypography>
       ),
@@ -161,7 +151,6 @@ export default function Data() {
       ),
       edit: (
         <MDTypography
-          component="a"
           href="#"
           variant="caption"
           color="text"
@@ -178,12 +167,7 @@ export default function Data() {
             setTempCourseId(course.id);
           }}
         >
-          <MDTypography
-            component="a"
-            variant="caption"
-            color="text"
-            fontWeight="medium"
-          >
+          <MDTypography variant="caption" color="text" fontWeight="medium">
             <Icon fontSize="small" color="primary">
               delete
             </Icon>
