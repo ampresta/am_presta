@@ -26,6 +26,10 @@ const Collaborateur = (db) => {
         type: Sequelize.STRING,
         allowNull: true,
       },
+      email_institu: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
       admin: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
