@@ -72,7 +72,6 @@ function AddCompanies({ closeAddModel }) {
         };
 
         const { data } = await axios(config);
-        console.log(data);
 
         closeAddModel(false);
         window.location.reload();

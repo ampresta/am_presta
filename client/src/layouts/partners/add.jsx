@@ -16,6 +16,7 @@ import { useState } from "react";
 import axios from "axios";
 
 import { addPartnersRoute } from "utils/APIRoutes";
+import { uploadRoute } from "utils/APIRoutes";
 
 function AddPartner({ closeAddModel }) {
   const [formErrors, setFormErrors] = useState({
@@ -26,6 +27,8 @@ function AddPartner({ closeAddModel }) {
     nom: "",
   });
 
+  const [file, setFile] = useState(null);
+
   const handleSubmit = async (event) => {
     const { nom } = partner;
     event.preventDefault();
@@ -34,7 +37,23 @@ function AddPartner({ closeAddModel }) {
       const { data } = await axios.post(addPartnersRoute, {
         nom,
       });
+      const ID = data.id;
       if (data.status) {
+        const fd = new FormData();
+        fd.append("image", file);
+        fd.append("id", ID);
+        fd.append("model", "provider");
+
+        const config = {
+          method: "post",
+          url: uploadRoute,
+          headers: {
+            "content-Type": "multipart/form-data",
+          },
+          data: fd,
+        };
+
+        const { data } = await axios(config);
         closeAddModel(false);
         window.location.reload();
       } else {
@@ -49,6 +68,10 @@ function AddPartner({ closeAddModel }) {
     setPartner((prev) => {
       return { ...prev, [key]: value };
     });
+  };
+
+  const handleFileupload = (event) => {
+    setFile(event.target.files[0]);
   };
 
   const validate = (values) => {
@@ -107,6 +130,14 @@ function AddPartner({ closeAddModel }) {
             />
             <FormHelperText error>{formErrors.coursename}</FormHelperText>
           </MDBox>
+
+          <MDInput
+            type="file"
+            variant="outlined"
+            name="image"
+            onChange={(e) => handleFileupload(e)}
+            fullWidth
+          />
 
           <MDBox mt={4} mb={2} display="flex" justifyContent="center">
             <MDButton
