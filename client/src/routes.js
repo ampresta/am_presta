@@ -2,7 +2,7 @@ import Dashboard from "layouts/dashboard";
 import Companies from "layouts/companies";
 import Partners from "layouts/partners";
 import Courses from "layouts/courses";
-import Sessions from "layouts/COMPANY/sessions";
+import Sessions from "layouts/sessions";
 import Quota from "layouts/quota";
 
 // @mui icons
