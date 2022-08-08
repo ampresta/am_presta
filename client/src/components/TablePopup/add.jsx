@@ -73,21 +73,23 @@ function AddSession({ closeAddModel }) {
     event.preventDefault();
     setFormErrors(validate(session));
     if (Object.keys(validate(session)).length === 0) {
-      const { data } = await axios.post(addSessionsRoute, {
-        nom,
-        datedebut: dateDepart,
-        datefin: dateFin,
-        cours: course.id,
-        societe: 1,
-      });
-      if (data.status) {
-        closeAddModel(false);
-        window.location.reload();
-      } else {
-        alert(data.msg);
-      }
+    const { data } = await axios.post(addSessionsRoute, {
+      nom,
+      datedebut: dateDepart,
+      datefin: dateFin,
+      cours: course.id,
+      societe: 1,
+    });
+    if (data.status) {
+      closeAddModel(false);
+      window.location.reload();
+    } else {
+      alert(data.msg);
+    }
     }
   };
+
+  console.log(formErrors);
 
   const handleChange = (event) => {
     const key = event.target.name;
@@ -105,18 +107,18 @@ function AddSession({ closeAddModel }) {
 
   const validate = (values) => {
     const errors = {};
-    // if (!values.nom) {
-    //   errors.nom = "Session Name is required !";
-    // }
-    // if (!values.course.name) {
-    //   errors.course = "Course Name is required !";
-    // }
-    // if (!values.dateDepart) {
-    //   errors.dateDepart = "Start Date is required !";
-    // }
-    // if (!values.dateFin) {
-    //   errors.dateFin = "End Date is required !";
-    // }
+    if (!values.nom) {
+      errors.nom = "Session Name is required !";
+    }
+    if (!values.course.name) {
+      errors.course = "Course Name is required !";
+    }
+    if (!values.dateDepart) {
+      errors.dateDepart = "Start Date is required !";
+    }
+    if (!values.dateFin) {
+      errors.dateFin = "End Date is required !";
+    }
     return errors;
   };
 

@@ -10,7 +10,7 @@ import MDButton from "components/MDButton";
 // @mui icons
 import Icon from "@mui/material/Icon";
 
-const ConfirmPopup = ({ title, onConfirmPopup, handleDetele, IdCourse }) => {
+const ConfirmPopup = ({ title, onConfirmPopup, handleDetele, Id_Item }) => {
   return (
     <MDBox
       sx={{
@@ -52,7 +52,7 @@ const ConfirmPopup = ({ title, onConfirmPopup, handleDetele, IdCourse }) => {
                 variant="gradient"
                 color="info"
                 size="small"
-                onClick={() => handleDetele(IdCourse)}
+                onClick={() => handleDetele(Id_Item)}
               >
                 Confirm
               </MDButton>

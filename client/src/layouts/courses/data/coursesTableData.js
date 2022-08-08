@@ -8,9 +8,6 @@ import MDButton from "components/MDButton";
 // @mui icons
 import Icon from "@mui/material/Icon";
 
-// Images
-import company1 from "assets/images/huawei-logo.png";
-
 // React Hooks
 import { useState, useEffect } from "react";
 
@@ -70,7 +67,6 @@ export default function Data() {
     </MDBox>
   );
 
-
   const handleProvider = (provider) => {
     if (provider === null) {
       return " ";
@@ -116,7 +112,7 @@ export default function Data() {
         title={"Are you sure you want to delete this course ?"}
         onConfirmPopup={() => setConfirmModel(!confirmModel)}
         handleDetele={handleDelete}
-        IdCourse={tempCourseId}
+        Id_Item={tempCourseId}
       />
     ),
   };

@@ -12,14 +12,23 @@ import Icon from "@mui/material/Icon";
 // React Hooks
 import { useState, useEffect } from "react";
 
-// Api Endpoint
-import authService from "services/auth.service";
 import axios from "axios";
-import { allSessionsRoute, baseURL, allPartnersRoute } from "utils/APIRoutes";
+import {
+  allSessionsRoute,
+  baseURL,
+  allPartnersRoute,
+  DeleteInstances,
+} from "utils/APIRoutes";
+
+// ConfirmPoppup component
+import ConfirmPopup from "components/ConfirmPopup";
+
 import { dateFormat } from "utils/Helper";
 
 export default function Data() {
   const [allSessions, setAllSessions] = useState([]);
+  const [tempSessionId, setTempSessionId] = useState(0);
+  const [confirmModel, setConfirmModel] = useState(false);
   const [providers, setProviders] = useState([
     {
       id: "",
@@ -52,6 +61,19 @@ export default function Data() {
     };
     getAllPartners();
   }, []);
+
+  const handleDelete = async (id) => {
+    const { data } = await axios.post(DeleteInstances, {
+      model: "Session",
+      id: id,
+    });
+    if (data.status) {
+      setAllSessions(allSessions.filter((session) => session.id !== id));
+      setConfirmModel(!confirmModel);
+    } else {
+      alert(data.msg);
+    }
+  };
 
   const Company = ({ image, name, company }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
@@ -86,7 +108,7 @@ export default function Data() {
         </span>
         <span style={{ fontSize: "0.75rem", fontWeight: "Bold" }}>To: </span>
       </MDBox>
-      <MDBox color="info" variant="gradient">
+      <MDBox color="info" variant="gradient" sx={{ backgroundColor: "none" }}>
         <span
           style={{ fontSize: "0.75rem", display: "block", fontWeight: "Bold" }}
         >
@@ -142,6 +164,15 @@ export default function Data() {
     ],
 
     rows: [],
+
+    confirmation: confirmModel && (
+      <ConfirmPopup
+        title={"Are you sure you want to delete this session ?"}
+        onConfirmPopup={() => setConfirmModel(!confirmModel)}
+        handleDetele={handleDelete}
+        Id_Item={tempSessionId}
+      />
+    ),
 
     ProvidersFilter: (
       <Grid container mt={1} rowSpacing={1}>
@@ -208,28 +239,24 @@ export default function Data() {
       ),
       period: <Period debut={session.datedebut} fin={session.datefin} />,
       edit: (
-        <MDTypography
-          component="a"
-          href="#"
-          variant="caption"
-          color="text"
-          fontWeight="medium"
-        >
+        <MDTypography variant="caption" color="text" fontWeight="medium">
           <Icon fontSize="small">edit</Icon>
         </MDTypography>
       ),
       delete: (
-        <MDTypography
-          component="a"
-          href="#"
-          variant="caption"
-          color="text"
-          fontWeight="medium"
+        <MDButton
+          variant="text"
+          onClick={() => {
+            setConfirmModel(!confirmModel);
+            setTempSessionId(session.id);
+          }}
         >
-          <Icon fontSize="small" color="primary">
-            delete
-          </Icon>
-        </MDTypography>
+          <MDTypography variant="caption" color="text" fontWeight="medium">
+            <Icon fontSize="small" color="primary">
+              delete
+            </Icon>
+          </MDTypography>
+        </MDButton>
       ),
     })
   );

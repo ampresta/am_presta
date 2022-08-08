@@ -3,7 +3,11 @@ const Request = (db) => {
   db.define(
     "Request",
     {
-      // Model attributes are defined here
+      id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
     },
     {
       Sequelize,

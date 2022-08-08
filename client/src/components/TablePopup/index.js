@@ -17,24 +17,25 @@ import { useState } from "react";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
-import FilterAltIcon from "@mui/icons-material/FilterAlt";
 
 // Data
-import sessionsTableData from "layouts/sessions/data/sessionsTableData";
+import sessionsTableData from "components/TablePopup/data/sessionsTableData";
 
 //Add companies component
 import AddSession from "./add";
 
-function Sessions() {
-  const { columns, rows, confirmation, ProvidersFilter } = sessionsTableData();
+function Sessions(props) {
+  const { cours, collab } = props;
+  const { ProvidersFilter, columns, rows, SubmitButton } = sessionsTableData(
+    cours,
+    collab
+  );
   const [openAddModel, setOpenAddModel] = useState(false);
   const [openFilter, setOpenFilter] = useState(false);
-
   // authService.login("abdoessordo", "123456789")
-
+  console.log(SubmitButton);
   return (
     <DashboardLayout>
-      <DashboardNavbar />
       {!openAddModel && (
         <MDBox pt={6} pb={1}>
           <Grid container spacing={6}>
@@ -51,7 +52,7 @@ function Sessions() {
                   coloredShadow="info"
                 >
                   <MDTypography variant="h6" color="white">
-                    Sessions List
+                    Choose a Session
                   </MDTypography>
                 </MDBox>
 
@@ -68,6 +69,16 @@ function Sessions() {
                     </MDButton>
                   </MDBox>
 
+                  <MDBox ml={3} pt={2} px={2} mt={3}>
+                    <MDButton
+                      variant="gradient"
+                      color="success"
+                      size="small"
+                      onClick={SubmitButton}
+                    >
+                      Submit
+                    </MDButton>
+                  </MDBox>
                   <MDBox pt={2} px={2} mt={3}>
                     <MDButton
                       variant="gradient"
@@ -76,7 +87,7 @@ function Sessions() {
                       onClick={() => setOpenFilter(!openFilter)}
                       iconOnly
                     >
-                      <FilterAltIcon />
+                      <Icon>search</Icon>
                     </MDButton>
                   </MDBox>
                 </Grid>
@@ -96,7 +107,6 @@ function Sessions() {
         </MDBox>
       )}
       {openAddModel && <AddSession closeAddModel={setOpenAddModel} />}
-      {confirmation}
     </DashboardLayout>
   );
 }

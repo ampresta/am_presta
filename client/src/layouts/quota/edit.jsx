@@ -47,7 +47,7 @@ function AddQuota({ openAddModel }) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     // setFormErrors(validate(course));
-    
+
     // if (Object.keys(validate(course)).length === 0) {
     const quotas = [];
     providers.map((provider) =>
@@ -61,7 +61,6 @@ function AddQuota({ openAddModel }) {
       quotas,
     });
     if (data.status) {
-      console.log();
       openAddModel(false);
       window.location.reload();
     } else {

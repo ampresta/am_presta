@@ -1,5 +1,5 @@
 const db = require("../../config/database");
-const { Societe, Provider, Cours, Collaborateur } = db.models;
+const { Request, Societe, Provider, Cours, Collaborateur, Session } = db.models;
 module.exports = async (req, res) => {
   const { model, id } = req.body;
   if (model == "cours") {
@@ -10,6 +10,10 @@ module.exports = async (req, res) => {
     Model = Provider;
   } else if (model == "Collaborateur") {
     Model = Collaborateur;
+  } else if (model == "Request") {
+    Model = Request;
+  } else if (model == "Session") {
+    Model = Session;
   } else {
     return res.sendStatus(404);
   }
