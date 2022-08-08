@@ -10,6 +10,7 @@ import SignUp from "layouts/authentication/sign-up";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
+import Logout from "layouts/authentication/logout";
 
 const routes = [
   {
@@ -79,11 +80,11 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Register",
-    key: "register",
+    name: "Logout",
+    key: "Logout",
     icon: <Icon fontSize="small">lock</Icon>,
-    route: "/register",
-    component: <SignUp />,
+    route: "/logout",
+    component: <Logout />,
   },
 ];
 

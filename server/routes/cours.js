@@ -7,7 +7,7 @@ const browseCoursSoc = require("../controllers/cours/browseCoursSoc");
 const checkSociete = require("../middlewares/checkSociete");
 router = Router();
 
-// router.use(signedin);
+router.use(signedin);
 // Please don't change the order
 // Super Admin Links
 

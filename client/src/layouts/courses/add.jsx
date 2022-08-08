@@ -24,6 +24,7 @@ import { useEffect } from "react";
 import { allPartnersRoute } from "utils/APIRoutes";
 import { addCoursesRoute } from "utils/APIRoutes";
 import { uploadRoute } from "utils/APIRoutes";
+import authService from "services/auth.service";
 
 function AddCourses({ closeAddModel }) {
   const [formErrors, setFormErrors] = useState({
@@ -70,11 +71,19 @@ function AddCourses({ closeAddModel }) {
     event.preventDefault();
     setFormErrors(validate(course));
     if (Object.keys(validate(course)).length === 0) {
-      const { data } = await axios.post(addCoursesRoute, {
-        nom,
-        provider: provider.id,
-        description,
-      });
+      const config = {
+        method: "post",
+        url: addCoursesRoute,
+        headers: {
+          Authorization: `Bearer ${authService.getCurrentUser()}`,
+        },
+        data: {
+          nom,
+          provider: provider.id,
+          description,
+        },
+      };
+      const { data } = await axios(config);
       console.log(data);
       const ID = data.id;
       console.log(ID);

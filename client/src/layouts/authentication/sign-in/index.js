@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // react-router-dom components
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // @mui material components
 import Card from "@mui/material/Card";
@@ -25,9 +25,41 @@ import BasicLayout from "layouts/authentication/components/BasicLayout";
 
 // Images
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
+import axios from "axios";
+import { loginRoute } from "utils/APIRoutes";
+import authService from "services/auth.service";
 
 function Basic() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (authService.getCurrentUser()) {
+      navigate("/dahsboard");
+    }
+  }, []);
+
   const [rememberMe, setRememberMe] = useState(false);
+  const [formDetails, setFromDetail] = useState({
+    username: "",
+    password: "",
+  });
+
+  const handleSubmit = (event) => {
+    const { username, password } = formDetails;
+    event.preventDefault();
+    const res = authService.login(username, password);
+    res.then((data) => {
+      if (data.status) {
+        navigate("/dashboard");
+      }
+    });
+  };
+
+  const handleChange = (event) => {
+    const key = event.target.name;
+    const value = event.target.value;
+    setFromDetail((prev) => ({ ...prev, [key]: value }));
+  };
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
@@ -48,7 +80,7 @@ function Basic() {
           <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
             Sign in
           </MDTypography>
-          <Grid
+          {/* <Grid
             container
             spacing={3}
             justifyContent="center"
@@ -84,16 +116,22 @@ function Basic() {
                 <GoogleIcon color="inherit" />
               </MDTypography>
             </Grid>
-          </Grid>
+          </Grid> */}
         </MDBox>
         <MDBox pt={4} pb={3} px={3}>
-          <MDBox component="form" role="form">
+          <MDBox
+            component="form"
+            role="form"
+            onSubmit={(event) => handleSubmit(event)}
+          >
             <MDBox mb={2}>
               <MDInput
-                type="email"
-                label="Email"
+                type="text"
+                label="username"
                 fullWidth
+                name="username"
                 variant="standard"
+                onChange={(event) => handleChange(event)}
               />
             </MDBox>
             <MDBox mb={2}>
@@ -101,7 +139,9 @@ function Basic() {
                 type="password"
                 label="Password"
                 fullWidth
+                name="password"
                 variant="standard"
+                onChange={(event) => handleChange(event)}
               />
             </MDBox>
             <MDBox display="flex" alignItems="center" ml={-1}>
@@ -117,7 +157,7 @@ function Basic() {
               </MDTypography>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" color="info" fullWidth>
+              <MDButton type="submit" variant="gradient" color="info" fullWidth>
                 sign in
               </MDButton>
             </MDBox>

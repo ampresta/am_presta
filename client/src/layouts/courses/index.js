@@ -19,12 +19,20 @@ import Icon from "@mui/material/Icon";
 import AddCompanies from "./add";
 
 // Hook
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // Data
 import coursesTableData from "layouts/courses/data/coursesTableData";
+import authService from "services/auth.service";
+import { useNavigate } from "react-router-dom";
 
 function Courses() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!authService.getCurrentUser()) {
+      navigate("/login");
+    }
+  }, []);
   const { columns, rows, confirmation } = coursesTableData();
 
   const [openAddModel, setOpenAddModel] = useState(false);
