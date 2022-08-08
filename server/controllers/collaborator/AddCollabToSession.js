@@ -32,6 +32,6 @@ module.exports = async (req, res) => {
     return res.send({ status: true, msg: "Collab Added" });
   } catch (err) {
     console.log(err);
-    return res.send({ status: false, msg: "Something Wrong" });
+    return res.send({ status: false, msg: "Check your quota" });
   }
 };

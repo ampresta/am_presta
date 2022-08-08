@@ -23,11 +23,15 @@ import sessionsTableData from "layouts/requests/data/requestsTableData";
 
 //Add companies component
 import AddSession from "./add";
+// import Sessions from "layouts/sessions";
+import { List } from "@mui/material";
 
-function Sessions() {
-  const { columns, rows } = sessionsTableData();
+function Requests() {
+  const { columns, rows, confirmation, sessions } = sessionsTableData();
   const [openAddModel, setOpenAddModel] = useState(false);
-  const [openFilter, setOpenFilter] = useState(false);
+
+  const [openListModel, setOpenListModel] = useState(false);
+  // const [openFilter, setOpenFilter] = useState(false);
 
   // authService.login("abdoessordo", "123456789")
 
@@ -53,7 +57,7 @@ function Sessions() {
                     Sessions List
                   </MDTypography>
                 </MDBox>
-                
+
                 <MDBox>
                   <DataTable
                     table={{ columns, rows }}
@@ -66,9 +70,13 @@ function Sessions() {
           </Grid>
         </MDBox>
       )}
-      {openAddModel && <AddSession closeAddModel={setOpenAddModel} />}
+      {/*{openAddModel && <AddSession closeAddModel={setOpenAddModel} />}*/}
+
+      {/* {openListModel && <Sessions closeAddModel={setOpenListModel} />} */}
+      {confirmation}
+      {sessions}
     </DashboardLayout>
   );
 }
 
-export default Sessions;
+export default Requests;
