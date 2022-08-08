@@ -70,7 +70,6 @@ export default function Data() {
     </MDBox>
   );
 
-
   const handleProvider = (provider) => {
     if (provider === null) {
       return " ";

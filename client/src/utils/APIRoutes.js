@@ -18,15 +18,21 @@ export const allPartnersRoute = `${baseURL}/provider/browse`;
 export const addPartnersRoute = `${baseURL}/provider/add`;
 
 // Cours
-export const allCoursesRoute = `${baseURL}/cours/browse`
-export const addCoursesRoute = `${baseURL}/cours/add`
-export const allCompanyCoursesRoute = `${baseURL}/cours/browsesoc`
+export const allCoursesRoute = `${baseURL}/cours/browse`;
+export const addCoursesRoute = `${baseURL}/cours/add`;
+export const allCompanyCoursesRoute = `${baseURL}/cours/browsesoc`;
 
 // Sessions
-export const allSessionsRoute = `${baseURL}/session/browse`
-export const addSessionsRoute = `${baseURL}/session/add`
+export const allSessionsRoute = `${baseURL}/session/browse`;
+export const addSessionsRoute = `${baseURL}/session/add`;
+export const SessionsofSociete = `${baseURL}/session/browsesoc`;
+
 //DeleteInstances
 export const DeleteInstances = `${baseURL}/delete`;
+
+// Requests
+export const allRequestsRoute = `${baseURL}/societe/browserequests`;
+export const AcceptRequestRoute = `${baseURL}/collab/addsession`;
 
 //Upload images
 export const uploadRoute = `${baseURL}/upload`;
