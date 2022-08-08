@@ -16,13 +16,27 @@ import AddQuota from "./edit";
 import DefaultProjectCard from "./components/DefaultProjectCard";
 
 // Hook
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // Images
-import Oracle from "assets/images/oracle-logo.jpg";
+// import Oracle from "assets/images/oracle-logo.jpg";
+import axios from "axios";
+import { AllQuotaSocRoute } from "utils/APIRoutes";
 
 function Overview() {
   const [openAddModel, setOpenAddModel] = useState(false);
+  const [allCompanies, setAllCompanies] = useState([]);
+
+  useEffect(() => {
+    const getAllCompanies = async () => {
+      const { data } = await axios.get(AllQuotaSocRoute);
+      setAllCompanies((prev) => data.msg);
+      return;
+    };
+
+    getAllCompanies();
+  }, []);
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -49,17 +63,19 @@ function Overview() {
 
                 <MDBox p={3}>
                   <Grid container spacing={2}>
-                    <Grid item xs={12} md={6} xl={3}>
-                      <DefaultProjectCard
-                        image={Oracle}
-                        title="Huawei"
-                        openAddModel={setOpenAddModel}
-                      />
-                    </Grid>
+                    {allCompanies.map((company) => (
+                      <Grid item xs={12} md={6} xl={3} key={company.id}>
+                        <DefaultProjectCard
+                          companyID={company.id}
+                          image={company.image}
+                          title={company.name}
+                          openAddModel={setOpenAddModel}
+                          quota={company.Quota}
+                        />
+                      </Grid>
+                    ))}
                   </Grid>
                 </MDBox>
-
-                
               </Card>
             </Grid>
           </Grid>

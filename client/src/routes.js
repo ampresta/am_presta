@@ -5,10 +5,11 @@ import Courses from "layouts/courses";
 import Sessions from "layouts/sessions";
 import Quota from "layouts/quota";
 import Requests from "layouts/requests";
+import SignIn from "layouts/authentication/sign-in";
+import SignUp from "layouts/authentication/sign-up";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
-import Register from "layouts/register";
 
 const routes = [
   {
@@ -74,7 +75,7 @@ const routes = [
     key: "login",
     icon: <Icon fontSize="small">business</Icon>,
     route: "/login",
-    component: <Sessions />,
+    component: <SignIn />,
   },
   {
     type: "collapse",
@@ -82,7 +83,7 @@ const routes = [
     key: "register",
     icon: <Icon fontSize="small">business</Icon>,
     route: "/register",
-    component: <Register />,
+    component: <SignUp />,
   },
 ];
 

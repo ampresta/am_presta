@@ -21,6 +21,7 @@ import DataTable from "examples/Tables/DataTable";
 
 //import QuotaData
 import QuotaListData from "../../data/QuotaListData";
+import { baseURL } from "utils/APIRoutes";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -33,15 +34,14 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-function DefaultProjectCard({ image, title, openAddModel }) {
+function DefaultProjectCard({ image, title, openAddModel, quota, companyID }) {
   const [expanded, setExpanded] = useState(false);
 
-  const { columns, rows } = QuotaListData();
+  const { columns, rows } = QuotaListData(quota);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
   return (
     <Card
       sx={{
@@ -53,11 +53,12 @@ function DefaultProjectCard({ image, title, openAddModel }) {
     >
       <MDBox shadow="xxl" borderRadius="xl">
         <CardMedia
-          src={image}
+          src={`${baseURL}/${image}`}
           component="img"
           title={title}
           sx={{
             width: "100%",
+            height: "260px",
             margin: 0,
             boxShadow: ({ boxShadows: { xs } }) => xs,
             mb: 0.3,
@@ -65,8 +66,12 @@ function DefaultProjectCard({ image, title, openAddModel }) {
         />
       </MDBox>
       <MDBox mx={1} px={2}>
-        <MDBox mb={2} display="flex" justifyContent="center">
-          <MDTypography variant="text" textTransform="capitalize">
+        <MDBox mt={1} mb={2} display="flex" justifyContent="center">
+          <MDTypography
+            variant="h6"
+            textTransform="capitalize"
+            textAlign="center"
+          >
             {title}
           </MDTypography>
         </MDBox>
@@ -76,10 +81,13 @@ function DefaultProjectCard({ image, title, openAddModel }) {
             variant="contained"
             size="small"
             color="info"
-            onClick={() => openAddModel(true)}
+            onClick={() => {
+              localStorage.setItem("companyID", companyID);
+              openAddModel(true);
+            }}
             sx={{ height: 20 }}
           >
-            <MDTypography variant="text" color>
+            <MDTypography variant="text" color="light">
               Edit Quota
             </MDTypography>
           </MDButton>
@@ -117,7 +125,7 @@ function DefaultProjectCard({ image, title, openAddModel }) {
   );
 }
 
-// Typechecking props for the DefaultProjectCard
+//Typechecking props for the DefaultProjectCard
 DefaultProjectCard.propTypes = {
   image: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,

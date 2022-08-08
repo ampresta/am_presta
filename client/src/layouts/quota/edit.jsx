@@ -17,54 +17,73 @@ import axios from "axios";
 
 import { useEffect } from "react";
 import { allPartnersRoute } from "utils/APIRoutes";
+import { AddQuotaRoute } from "utils/APIRoutes";
 
 function AddQuota({ openAddModel }) {
   const [formErrors, setFormErrors] = useState({
-    coursename: "",
-    provider: "",
-    description: "",
+    field: "",
   });
 
   const [providers, setProviders] = useState([
     {
       id: "",
       nom: "",
+      quota: "",
     },
   ]);
-
-  const [Quota, setQuota] = useState([{}]);
 
   useEffect(() => {
     const getAllPartners = async () => {
       const { data } = await axios.get(allPartnersRoute);
       let temp = [];
-      data.map((provider) => temp.push({ id: provider.id, nom: provider.nom }));
+      data.map((provider) =>
+        temp.push({ id: provider.id, nom: provider.nom, quota: "" })
+      );
       setProviders(temp);
     };
     getAllPartners();
   }, []);
 
-  const handleChange = (event) => {
-    const key = event.target.name;
-    const value = event.target.value;
-    setQuota((prev) => {
-      return { ...prev, [key]: value };
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    // setFormErrors(validate(course));
+    
+    // if (Object.keys(validate(course)).length === 0) {
+    const quotas = [];
+    providers.map((provider) =>
+      quotas.push({
+        provider: provider.id,
+        societe: localStorage.getItem("companyID"),
+        quota: provider.quota,
+      })
+    );
+    const { data } = await axios.post(AddQuotaRoute, {
+      quotas,
     });
+    if (data.status) {
+      console.log();
+      openAddModel(false);
+      window.location.reload();
+    } else {
+      alert(data.msg);
+    }
   };
 
-  //   const validate = (values) => {
-  //     const errors = {};
-  //     if (!values.nom) {
-  //       errors.coursename = "Course Name is required !";
-  //     }
-  //     if (!values.provider.id) {
-  //       errors.provider = "Provider is required !";
-  //     }
-  //     if (!values.description) {
-  //       errors.description = "Description is required !";
-  //     }
-  //     return errors;
-  //   };
+  const handleChange = (index, event) => {
+    const quota = event.target.value;
+    const values = [...providers];
+    values[index].quota = quota;
+    setProviders(values);
+  };
+
+  // const validate = (values) => {
+  //   const errors = {};
+  //   if (!values.field) {
+  //     errors.field = "This field is required !";
+  //   }
+
+  //   return errors;
+  // };
 
   return (
     <Card sx={{ mt: "50px" }}>
@@ -100,43 +119,43 @@ function AddQuota({ openAddModel }) {
         <MDBox
           component="form"
           role="form"
-          //   onSubmit={(event) => handleSubmit(event)}
+          onSubmit={(event) => handleSubmit(event)}
         >
-          {providers.map((provider) => (
-            <MDBox display="flex" key={provider.id}>
-              <MDBox mb={2} mr={2} s sx={{ width: "50%" }}>
-                <MDInput
-                  type="text"
-                  value={provider.nom}
-                  variant="outlined"
-                  fullWidth
-                  name="nom"
-                  InputProps={{
-                    readOnly: true,
-                  }}
-                  onChange={(e) => handleChange(e)}
-                  //   error={formErrors.coursename}
-                />
-                {/* <FormHelperText error sx={{ ml: 2 }}>
+          {providers.map((provider, index) => {
+            return (
+              <MDBox display="flex" key={provider.id}>
+                <MDBox mb={2} mr={2} s sx={{ width: "50%" }}>
+                  <MDInput
+                    type="text"
+                    value={provider.nom}
+                    variant="outlined"
+                    fullWidth
+                    InputProps={{
+                      readOnly: true,
+                    }}
+                    //   error={formErrors.coursename}
+                  />
+                  {/* <FormHelperText error sx={{ ml: 2 }}>
               {formErrors.coursename}
             </FormHelperText> */}
-              </MDBox>
+                </MDBox>
 
-              <MDBox mb={2} ml={2} sx={{ width: "50%" }}>
-                <MDInput
-                  type="number"
-                  label="Quantity"
-                  variant="outlined"
-                  fullWidth
-                  name="quantity"
-                  onChange={(e) => handleChange(e)}
-                />
-                {/* <FormHelperText error sx={{ ml: 2 }}>
+                <MDBox mb={2} ml={2} sx={{ width: "50%" }}>
+                  <MDInput
+                    type="number"
+                    label="Quantity"
+                    variant="outlined"
+                    fullWidth
+                    name="quota"
+                    onChange={(event) => handleChange(index, event)}
+                  />
+                  {/* <FormHelperText error sx={{ ml: 2 }}>
               {formErrors.coursename}
             </FormHelperText> */}
+                </MDBox>
               </MDBox>
-            </MDBox>
-          ))}
+            );
+          })}
 
           <MDBox mt={4} mb={2} display="flex" justifyContent="center">
             <MDButton
