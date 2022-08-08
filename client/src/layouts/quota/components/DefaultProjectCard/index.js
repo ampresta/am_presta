@@ -58,7 +58,7 @@ function DefaultProjectCard({ image, title, openAddModel, quota, companyID }) {
           title={title}
           sx={{
             width: "100%",
-            height: "225px",
+            height: "260px",
             margin: 0,
             boxShadow: ({ boxShadows: { xs } }) => xs,
             mb: 0.3,
@@ -66,7 +66,7 @@ function DefaultProjectCard({ image, title, openAddModel, quota, companyID }) {
         />
       </MDBox>
       <MDBox mx={1} px={2}>
-        <MDBox mb={2} display="flex" justifyContent="center">
+        <MDBox mt={1} mb={2} display="flex" justifyContent="center">
           <MDTypography
             variant="h6"
             textTransform="capitalize"
