@@ -75,7 +75,9 @@ function AddCourses({ closeAddModel }) {
         provider: provider.id,
         description,
       });
+      console.log(data);
       const ID = data.id;
+      console.log(ID);
       if (data.status) {
         if (file !== null) {
           const fd = new FormData();

@@ -13,16 +13,13 @@ module.exports = async (req, res) => {
       ProviderId: provider,
       description: description,
     });
+    console.log(coursObj);
     return res.json({
       status: true,
       msg: "Course added",
       id: coursObj.id,
     });
   } catch (err) {
-    console.log("##############################");
-    console.log("##############################");
-    console.log("##############################");
-    console.log(err);
     return res.send({ status: "error" });
   }
 };

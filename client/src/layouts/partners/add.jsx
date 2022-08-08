@@ -37,7 +37,10 @@ function AddPartner({ closeAddModel }) {
       const { data } = await axios.post(addPartnersRoute, {
         nom,
       });
+      console.log(data);
       const ID = data.id;
+      console.log(ID);
+
       if (data.status) {
         const fd = new FormData();
         fd.append("image", file);
