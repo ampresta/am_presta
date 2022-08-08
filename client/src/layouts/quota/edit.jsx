@@ -25,6 +25,8 @@ function AddQuota({ openAddModel }) {
     description: "",
   });
 
+  const [formDet, setFormDet] = useState({});
+
   const [providers, setProviders] = useState([
     {
       id: "",
@@ -32,7 +34,12 @@ function AddQuota({ openAddModel }) {
     },
   ]);
 
-  const [Quota, setQuota] = useState([{}]);
+  const [Quota, setQuota] = useState([
+    {
+      name: "",
+      quota: "",
+    },
+  ]);
 
   useEffect(() => {
     const getAllPartners = async () => {
@@ -47,9 +54,12 @@ function AddQuota({ openAddModel }) {
   const handleChange = (event) => {
     const key = event.target.name;
     const value = event.target.value;
-    setQuota((prev) => {
-      return { ...prev, [key]: value };
-    });
+
+    // setQuota((prev) => {
+    //   return { ...prev, {key: value} };
+    // });
+    const test = Document.
+    console.log();
   };
 
   //   const validate = (values) => {
@@ -102,41 +112,43 @@ function AddQuota({ openAddModel }) {
           role="form"
           //   onSubmit={(event) => handleSubmit(event)}
         >
-          {providers.map((provider) => (
-            <MDBox display="flex" key={provider.id}>
-              <MDBox mb={2} mr={2} s sx={{ width: "50%" }}>
-                <MDInput
-                  type="text"
-                  value={provider.nom}
-                  variant="outlined"
-                  fullWidth
-                  name="nom"
-                  InputProps={{
-                    readOnly: true,
-                  }}
-                  onChange={(e) => handleChange(e)}
-                  //   error={formErrors.coursename}
-                />
-                {/* <FormHelperText error sx={{ ml: 2 }}>
+          {providers.map((provider) => {
+            return (
+              <MDBox display="flex" key={provider.id}>
+                <MDBox mb={2} mr={2} s sx={{ width: "50%" }}>
+                  <MDInput
+                    type="text"
+                    value={provider.nom}
+                    variant="outlined"
+                    fullWidth
+                    name={provider.name}
+                    InputProps={{
+                      readOnly: true,
+                    }}
+                    onChange={(e) => handleChange(e)}
+                    //   error={formErrors.coursename}
+                  />
+                  {/* <FormHelperText error sx={{ ml: 2 }}>
               {formErrors.coursename}
             </FormHelperText> */}
-              </MDBox>
+                </MDBox>
 
-              <MDBox mb={2} ml={2} sx={{ width: "50%" }}>
-                <MDInput
-                  type="number"
-                  label="Quantity"
-                  variant="outlined"
-                  fullWidth
-                  name="quantity"
-                  onChange={(e) => handleChange(e)}
-                />
-                {/* <FormHelperText error sx={{ ml: 2 }}>
+                <MDBox mb={2} ml={2} sx={{ width: "50%" }}>
+                  <MDInput
+                    type="number"
+                    label="Quantity"
+                    variant="outlined"
+                    fullWidth
+                    name={provider.nom}
+                    onChange={(e) => handleChange(e)}
+                  />
+                  {/* <FormHelperText error sx={{ ml: 2 }}>
               {formErrors.coursename}
             </FormHelperText> */}
+                </MDBox>
               </MDBox>
-            </MDBox>
-          ))}
+            );
+          })}
 
           <MDBox mt={4} mb={2} display="flex" justifyContent="center">
             <MDButton

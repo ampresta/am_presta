@@ -1,16 +1,7 @@
 // Material Dashboard 2 React components
 import MDTypography from "components/MDTypography";
 
-export default function Data() {
-  const QuotaList = [
-    { provider: "Huawei", quantite: "3" },
-    { provider: "Cisco", quantite: "5" },
-    { provider: "Oracle", quantite: "10" },
-    { provider: "Cisco", quantite: "5" },
-    { provider: "Oracle", quantite: "10" },
-    
-  ];
-
+export default function Data(QuotaList) {
   let table = {
     columns: [
       {
@@ -28,17 +19,16 @@ export default function Data() {
     ],
     rows: [],
   };
-
   QuotaList.map((quota) =>
     table.rows.push({
       provider: (
         <MDTypography variant="caption" color="text" fontWeight="medium">
-          {quota.provider}
+          {quota.Provider.nom}
         </MDTypography>
       ),
       quantity: (
         <MDTypography variant="caption" color="text" fontWeight="medium">
-          {quota.quantite}
+          {quota.quota}
         </MDTypography>
       ),
     })

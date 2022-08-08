@@ -21,6 +21,7 @@ import DataTable from "examples/Tables/DataTable";
 
 //import QuotaData
 import QuotaListData from "../../data/QuotaListData";
+import { baseURL } from "utils/APIRoutes";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -33,15 +34,15 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-function DefaultProjectCard({ image, title, openAddModel }) {
+function DefaultProjectCard({ image, title, openAddModel, quota }) {
+  
   const [expanded, setExpanded] = useState(false);
 
-  const { columns, rows } = QuotaListData();
+  const { columns, rows } = QuotaListData(quota);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
   return (
     <Card
       sx={{
@@ -53,7 +54,7 @@ function DefaultProjectCard({ image, title, openAddModel }) {
     >
       <MDBox shadow="xxl" borderRadius="xl">
         <CardMedia
-          src={image}
+          src={`${baseURL}/${image}`}
           component="img"
           title={title}
           sx={{
@@ -117,7 +118,7 @@ function DefaultProjectCard({ image, title, openAddModel }) {
   );
 }
 
-// Typechecking props for the DefaultProjectCard
+//Typechecking props for the DefaultProjectCard
 DefaultProjectCard.propTypes = {
   image: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,

@@ -25,6 +25,11 @@ export const allCompanyCoursesRoute = `${baseURL}/cours/browsesoc`
 // Sessions
 export const allSessionsRoute = `${baseURL}/session/browse`
 export const addSessionsRoute = `${baseURL}/session/add`
+
+// Quota
+export const AllQuotaRoute = `${baseURL}/quota/browse`
+export const AllQuotaSocRoute = `${baseURL}/quota/browsesoc`
+
 //DeleteInstances
 export const DeleteInstances = `${baseURL}/delete`;
 
