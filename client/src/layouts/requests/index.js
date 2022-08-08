@@ -23,8 +23,6 @@ import sessionsTableData from "layouts/requests/data/requestsTableData";
 
 //Add companies component
 import AddSession from "./add";
-// import Sessions from "layouts/sessions";
-import { List } from "@mui/material";
 
 function Requests() {
   const { columns, rows, confirmation, sessions } = sessionsTableData();
@@ -54,7 +52,7 @@ function Requests() {
                   coloredShadow="info"
                 >
                   <MDTypography variant="h6" color="white">
-                    Sessions List
+                    Requests List
                   </MDTypography>
                 </MDBox>
 
@@ -70,7 +68,6 @@ function Requests() {
           </Grid>
         </MDBox>
       )}
-      {/*{openAddModel && <AddSession closeAddModel={setOpenAddModel} />}*/}
 
       {/* {openListModel && <Sessions closeAddModel={setOpenListModel} />} */}
       {confirmation}

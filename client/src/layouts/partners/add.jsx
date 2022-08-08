@@ -118,7 +118,7 @@ function AddPartner({ closeAddModel }) {
           role="form"
           onSubmit={(event) => handleSubmit(event)}
         >
-          <MDBox mb={2} mr={2}>
+          <MDBox mb={2}>
             <MDInput
               type="text"
               label="Partner Name"

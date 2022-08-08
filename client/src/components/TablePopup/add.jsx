@@ -73,23 +73,20 @@ function AddSession({ closeAddModel }) {
     event.preventDefault();
     setFormErrors(validate(session));
     if (Object.keys(validate(session)).length === 0) {
-    const { data } = await axios.post(addSessionsRoute, {
-      nom,
-      datedebut: dateDepart,
-      datefin: dateFin,
-      cours: course.id,
-      societe: 1,
-    });
-    if (data.status) {
-      closeAddModel(false);
-      window.location.reload();
-    } else {
-      alert(data.msg);
-    }
+      const { data } = await axios.post(addSessionsRoute, {
+        nom,
+        datedebut: dateDepart,
+        datefin: dateFin,
+        cours: course.id,
+        societe: 1,
+      });
+      if (data.status) {
+        closeAddModel(false);
+      } else {
+        alert(data.msg);
+      }
     }
   };
-
-  console.log(formErrors);
 
   const handleChange = (event) => {
     const key = event.target.name;
@@ -110,7 +107,7 @@ function AddSession({ closeAddModel }) {
     if (!values.nom) {
       errors.nom = "Session Name is required !";
     }
-    if (!values.course.name) {
+    if (!values.course.id) {
       errors.course = "Course Name is required !";
     }
     if (!values.dateDepart) {
