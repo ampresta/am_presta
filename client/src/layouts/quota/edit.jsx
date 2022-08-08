@@ -21,9 +21,7 @@ import { AddQuotaRoute } from "utils/APIRoutes";
 
 function AddQuota({ openAddModel }) {
   const [formErrors, setFormErrors] = useState({
-    coursename: "",
-    provider: "",
-    description: "",
+    field: "",
   });
 
   const [providers, setProviders] = useState([
@@ -49,7 +47,7 @@ function AddQuota({ openAddModel }) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     // setFormErrors(validate(course));
-
+    
     // if (Object.keys(validate(course)).length === 0) {
     const quotas = [];
     providers.map((provider) =>
@@ -78,19 +76,14 @@ function AddQuota({ openAddModel }) {
     setProviders(values);
   };
 
-  //   const validate = (values) => {
-  //     const errors = {};
-  //     if (!values.nom) {
-  //       errors.coursename = "Course Name is required !";
-  //     }
-  //     if (!values.provider.id) {
-  //       errors.provider = "Provider is required !";
-  //     }
-  //     if (!values.description) {
-  //       errors.description = "Description is required !";
-  //     }
-  //     return errors;
-  //   };
+  // const validate = (values) => {
+  //   const errors = {};
+  //   if (!values.field) {
+  //     errors.field = "This field is required !";
+  //   }
+
+  //   return errors;
+  // };
 
   return (
     <Card sx={{ mt: "50px" }}>

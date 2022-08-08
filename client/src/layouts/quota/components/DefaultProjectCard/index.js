@@ -87,7 +87,7 @@ function DefaultProjectCard({ image, title, openAddModel, quota, companyID }) {
             }}
             sx={{ height: 20 }}
           >
-            <MDTypography variant="text" color>
+            <MDTypography variant="text" color="light">
               Edit Quota
             </MDTypography>
           </MDButton>
