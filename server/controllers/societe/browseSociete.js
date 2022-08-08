@@ -1,6 +1,6 @@
 const sequelize = require("sequelize");
 const db = require("../../config/database");
-const { Societe, Collaborateur } = db.models;
+const { Societe, Collaborateur, Quota, Provider } = db.models;
 module.exports = async (req, res) => {
   filters = {};
   filters.include = {
@@ -10,6 +10,7 @@ module.exports = async (req, res) => {
       admin: true,
     },
   };
+
   if (req.method === "POST") {
     const { search } = req.body;
 

@@ -17,6 +17,7 @@ import axios from "axios";
 
 import { useEffect } from "react";
 import { allPartnersRoute } from "utils/APIRoutes";
+import { AddQuotaRoute } from "utils/APIRoutes";
 
 function AddQuota({ openAddModel }) {
   const [formErrors, setFormErrors] = useState({
@@ -25,18 +26,10 @@ function AddQuota({ openAddModel }) {
     description: "",
   });
 
-  const [formDet, setFormDet] = useState({});
-
   const [providers, setProviders] = useState([
     {
       id: "",
       nom: "",
-    },
-  ]);
-
-  const [Quota, setQuota] = useState([
-    {
-      name: "",
       quota: "",
     },
   ]);
@@ -45,21 +38,44 @@ function AddQuota({ openAddModel }) {
     const getAllPartners = async () => {
       const { data } = await axios.get(allPartnersRoute);
       let temp = [];
-      data.map((provider) => temp.push({ id: provider.id, nom: provider.nom }));
+      data.map((provider) =>
+        temp.push({ id: provider.id, nom: provider.nom, quota: "" })
+      );
       setProviders(temp);
     };
     getAllPartners();
   }, []);
 
-  const handleChange = (event) => {
-    const key = event.target.name;
-    const value = event.target.value;
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    // setFormErrors(validate(course));
 
-    // setQuota((prev) => {
-    //   return { ...prev, {key: value} };
-    // });
-    const test = Document.
-    console.log();
+    // if (Object.keys(validate(course)).length === 0) {
+    const quotas = [];
+    providers.map((provider) =>
+      quotas.push({
+        provider: provider.id,
+        societe: localStorage.getItem("companyID"),
+        quota: provider.quota,
+      })
+    );
+    const { data } = await axios.post(AddQuotaRoute, {
+      quotas,
+    });
+    if (data.status) {
+      console.log();
+      // closeAddModel(false);
+      // window.location.reload();
+    } else {
+      alert(data.msg);
+    }
+  };
+
+  const handleChange = (index, event) => {
+    const quota = event.target.value;
+    const values = [...providers];
+    values[index].quota = quota;
+    setProviders(values);
   };
 
   //   const validate = (values) => {
@@ -110,9 +126,9 @@ function AddQuota({ openAddModel }) {
         <MDBox
           component="form"
           role="form"
-          //   onSubmit={(event) => handleSubmit(event)}
+          onSubmit={(event) => handleSubmit(event)}
         >
-          {providers.map((provider) => {
+          {providers.map((provider, index) => {
             return (
               <MDBox display="flex" key={provider.id}>
                 <MDBox mb={2} mr={2} s sx={{ width: "50%" }}>
@@ -121,11 +137,9 @@ function AddQuota({ openAddModel }) {
                     value={provider.nom}
                     variant="outlined"
                     fullWidth
-                    name={provider.name}
                     InputProps={{
                       readOnly: true,
                     }}
-                    onChange={(e) => handleChange(e)}
                     //   error={formErrors.coursename}
                   />
                   {/* <FormHelperText error sx={{ ml: 2 }}>
@@ -139,8 +153,8 @@ function AddQuota({ openAddModel }) {
                     label="Quantity"
                     variant="outlined"
                     fullWidth
-                    name={provider.nom}
-                    onChange={(e) => handleChange(e)}
+                    name="quota"
+                    onChange={(event) => handleChange(index, event)}
                   />
                   {/* <FormHelperText error sx={{ ml: 2 }}>
               {formErrors.coursename}

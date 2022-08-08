@@ -66,6 +66,7 @@ function Overview() {
                     {allCompanies.map((company) => (
                       <Grid item xs={12} md={6} xl={3} key={company.id}>
                         <DefaultProjectCard
+                          companyID={company.id}
                           image={company.image}
                           title={company.name}
                           openAddModel={setOpenAddModel}

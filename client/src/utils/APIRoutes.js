@@ -29,6 +29,7 @@ export const addSessionsRoute = `${baseURL}/session/add`
 // Quota
 export const AllQuotaRoute = `${baseURL}/quota/browse`
 export const AllQuotaSocRoute = `${baseURL}/quota/browsesoc`
+export const AddQuotaRoute = `${baseURL}/quota/add`
 
 //DeleteInstances
 export const DeleteInstances = `${baseURL}/delete`;
