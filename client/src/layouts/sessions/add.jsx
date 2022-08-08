@@ -89,8 +89,6 @@ function AddSession({ closeAddModel }) {
     }
   };
 
-  console.log(formErrors);
-
   const handleChange = (event) => {
     const key = event.target.name;
     const value = event.target.value;
@@ -110,7 +108,7 @@ function AddSession({ closeAddModel }) {
     if (!values.nom) {
       errors.nom = "Session Name is required !";
     }
-    if (!values.course.name) {
+    if (!values.course.id) {
       errors.course = "Course Name is required !";
     }
     if (!values.dateDepart) {

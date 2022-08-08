@@ -73,19 +73,19 @@ function AddSession({ closeAddModel }) {
     event.preventDefault();
     setFormErrors(validate(session));
     if (Object.keys(validate(session)).length === 0) {
-      const { data } = await axios.post(addSessionsRoute, {
-        nom,
-        datedebut: dateDepart,
-        datefin: dateFin,
-        cours: course.id,
-        societe: 1,
-      });
-      if (data.status) {
-        closeAddModel(false);
-        window.location.reload();
-      } else {
-        alert(data.msg);
-      }
+    const { data } = await axios.post(addSessionsRoute, {
+      nom,
+      datedebut: dateDepart,
+      datefin: dateFin,
+      cours: course.id,
+      societe: 1,
+    });
+    if (data.status) {
+      closeAddModel(false);
+      window.location.reload();
+    } else {
+      alert(data.msg);
+    }
     }
   };
 
