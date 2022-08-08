@@ -64,8 +64,8 @@ function AddQuota({ openAddModel }) {
     });
     if (data.status) {
       console.log();
-      // closeAddModel(false);
-      // window.location.reload();
+      openAddModel(false);
+      window.location.reload();
     } else {
       alert(data.msg);
     }

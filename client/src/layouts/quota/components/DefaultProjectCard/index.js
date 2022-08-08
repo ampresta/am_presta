@@ -58,6 +58,7 @@ function DefaultProjectCard({ image, title, openAddModel, quota, companyID }) {
           title={title}
           sx={{
             width: "100%",
+            height: "225px",
             margin: 0,
             boxShadow: ({ boxShadows: { xs } }) => xs,
             mb: 0.3,
@@ -66,7 +67,11 @@ function DefaultProjectCard({ image, title, openAddModel, quota, companyID }) {
       </MDBox>
       <MDBox mx={1} px={2}>
         <MDBox mb={2} display="flex" justifyContent="center">
-          <MDTypography variant="text" textTransform="capitalize">
+          <MDTypography
+            variant="h6"
+            textTransform="capitalize"
+            textAlign="center"
+          >
             {title}
           </MDTypography>
         </MDBox>
@@ -77,7 +82,7 @@ function DefaultProjectCard({ image, title, openAddModel, quota, companyID }) {
             size="small"
             color="info"
             onClick={() => {
-              localStorage.setItem("companyID", companyID)
+              localStorage.setItem("companyID", companyID);
               openAddModel(true);
             }}
             sx={{ height: 20 }}

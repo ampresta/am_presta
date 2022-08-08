@@ -17,6 +17,7 @@ import { useState } from "react";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
 
 // Data
 import sessionsTableData from "layouts/sessions/data/sessionsTableData";
@@ -75,7 +76,7 @@ function Sessions() {
                       onClick={() => setOpenFilter(!openFilter)}
                       iconOnly
                     >
-                      <Icon>search</Icon>
+                      <FilterAltIcon />
                     </MDButton>
                   </MDBox>
                 </Grid>
