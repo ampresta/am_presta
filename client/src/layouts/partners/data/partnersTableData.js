@@ -77,10 +77,10 @@ export default function Data() {
     rows: [],
     confirmation: confirmModel && (
       <ConfirmPopup
-        title={"Are you sure you want to delete this course ?"}
+        title={"Are you sure you want to delete this provider ?"}
         onConfirmPopup={() => setConfirmModel(!confirmModel)}
         handleDetele={handleDelete}
-        IdCourse={tempPartnerId}
+        Id_Item={tempPartnerId}
       />
     ),
   };

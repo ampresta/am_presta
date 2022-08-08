@@ -26,7 +26,7 @@ import sessionsTableData from "layouts/sessions/data/sessionsTableData";
 import AddSession from "./add";
 
 function Sessions() {
-  const { columns, rows, ProvidersFilter } = sessionsTableData();
+  const { columns, rows, confirmation, ProvidersFilter } = sessionsTableData();
   const [openAddModel, setOpenAddModel] = useState(false);
   const [openFilter, setOpenFilter] = useState(false);
 
@@ -96,6 +96,7 @@ function Sessions() {
         </MDBox>
       )}
       {openAddModel && <AddSession closeAddModel={setOpenAddModel} />}
+      {confirmation}
     </DashboardLayout>
   );
 }
