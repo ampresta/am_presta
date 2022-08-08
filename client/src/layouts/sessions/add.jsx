@@ -105,18 +105,18 @@ function AddSession({ closeAddModel }) {
 
   const validate = (values) => {
     const errors = {};
-    if (!values.nom) {
-      errors.nom = "Session Name is required !";
-    }
-    if (!values.course.id) {
-      errors.course = "Course Name is required !";
-    }
-    if (!values.dateDepart) {
-      errors.dateDepart = "Start Date is required !";
-    }
-    if (!values.dateFin) {
-      errors.dateFin = "End Date is required !";
-    }
+    // if (!values.nom) {
+    //   errors.nom = "Session Name is required !";
+    // }
+    // if (!values.course.name) {
+    //   errors.course = "Course Name is required !";
+    // }
+    // if (!values.dateDepart) {
+    //   errors.dateDepart = "Start Date is required !";
+    // }
+    // if (!values.dateFin) {
+    //   errors.dateFin = "End Date is required !";
+    // }
     return errors;
   };
 

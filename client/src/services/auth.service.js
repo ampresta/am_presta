@@ -1,13 +1,14 @@
 import axios from "axios";
+import { useState } from "react";
 import { loginRoute } from "utils/APIRoutes";
 
 const login = (username, password) => {
-  return axios.post(loginRoute, {
+  return axios
+    .post(loginRoute, {
       username,
       password,
-  },
-  )
-      .then((response) => {
+    })
+    .then((response) => {
       if (response.data.accesstoken) {
         localStorage.setItem("user", JSON.stringify(response.data));
       }
@@ -24,10 +25,11 @@ const getCurrentUser = () => {
   try {
     return JSON.parse(localStorage.getItem("user")).accesstoken;
   } catch {
-    return;
+    return false;
   }
-
 };
+
+
 
 const authService = {
   login,
