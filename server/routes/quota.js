@@ -5,6 +5,9 @@ const modifyQuota = require("../controllers/quota/modifyQuota");
 const browseQuotaBySoc = require("../controllers/societe/browseQuotaBySoc");
 
 const r = Router();
+const signedin = require("../middlewares/signedin");
+
+router.use(signedin);
 
 r.post("/add", addQuota);
 
