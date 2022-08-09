@@ -13,18 +13,13 @@ import { dateFormat } from "utils/Helper";
 
 // Api Endpoint
 import axios from "axios";
-import {
-  allRequestsRoute,
-  AcceptRequestRoute,
-  baseURL,
-  DeleteInstances,
-} from "utils/APIRoutes";
+import { allRequestsRoute, baseURL, DeleteInstances } from "utils/APIRoutes";
 
 // ConfirmPoppup component
 import ConfirmPopup from "components/ConfirmPopup";
 
-// Sessions
-import Sessions from "components/TablePopup";
+// ChooseSession
+import ChooseSession from "examples/ChooseSession";
 
 export default function Data() {
   // temp data for static display
@@ -39,13 +34,12 @@ export default function Data() {
   useEffect(() => {
     const getAllRequests = async () => {
       const { data } = await axios.get(allRequestsRoute);
-      console.log(data);
       setAllRequests(data);
     };
     getAllRequests();
   }, []);
+
   const handleDelete = async (id) => {
-    console.log(DeleteInstances);
     const { data } = await axios.post(DeleteInstances, {
       model: "Request",
       id: id,
@@ -58,35 +52,48 @@ export default function Data() {
     }
   };
 
-  const Company = ({ image, name, cours_name }) => (
+  const Company = ({ image, name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDAvatar src={`${baseURL}/${image}`} name={name} size="sm" />
       <MDBox ml={2} lineHeight={1}>
         <MDTypography display="block" variant="button" fontWeight="medium">
           {name}
         </MDTypography>
-        <MDTypography variant="caption">{cours_name}</MDTypography>
       </MDBox>
+    </MDBox>
+  );
+
+  const Collaborator = ({ collab_name }) => (
+    <MDBox>
+      <MDTypography display="block" variant="caption" fontWeight="medium">
+        {collab_name}
+      </MDTypography>
     </MDBox>
   );
 
   let sessions = {
     columns: [
       {
-        Header: "Collaborator Name",
+        Header: "Course Request",
         accessor: "author",
-        width: "30%",
+        width: "25%",
         align: "left",
+      },
+      {
+        Header: "Collaborator Name",
+        accessor: "collaborator",
+        width: "20%",
+        align: "center",
       },
       {
         Header: "Request Date",
         accessor: "enrolled",
         align: "center",
-        width: "30%",
+        width: "25%",
       },
       {
-        Header: "Action",
-        accessor: "date",
+        Header: "Actions",
+        accessor: "actions",
         align: "center",
         width: "30%",
       },
@@ -95,19 +102,19 @@ export default function Data() {
     rows: [],
     confirmation: confirmModel && (
       <ConfirmPopup
-        title={"Are you sure you want to delete this Request ?"}
+        title={"Are you sure you want to delete this request ?"}
         onConfirmPopup={() => setConfirmModel(!confirmModel)}
         handleDetele={handleDelete}
-        IdCourse={tempCourseId}
+        Id_Item={tempCourseId}
       />
     ),
     sessions: SessionModel && (
-      <Sessions
+      <ChooseSession
         cours={confirmCourseId}
         collab={collabId}
         onConfirmPopup={() => setSessionModel(!SessionModel)}
         handleDetele={handleDelete}
-        IdCourse={tempCourseId}
+        Id_Item={tempCourseId}
       />
     ),
   };
@@ -115,10 +122,11 @@ export default function Data() {
   allRequests.map((request) =>
     sessions.rows.push({
       author: (
-        <Company
-          image={request.Collaborateur.image}
-          name={`${request.Collaborateur.nom} ${request.Collaborateur.prenom}`}
-          cours_name={request.Cour.nom}
+        <Company image={request.Collaborateur.image} name={request.Cour.nom} />
+      ),
+      collaborator: (
+        <Collaborator
+          collab_name={`${request.Collaborateur.nom} ${request.Collaborateur.prenom}`}
         />
       ),
       enrolled: (
@@ -131,7 +139,7 @@ export default function Data() {
           {dateFormat(request.createdAt)}
         </MDTypography>
       ),
-      date: (
+      actions: (
         <>
           <MDButton
             variant="text"

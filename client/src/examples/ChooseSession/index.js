@@ -16,7 +16,7 @@ import { useState } from "react";
 import Icon from "@mui/material/Icon";
 
 // Data
-import sessionsTableData from "components/TablePopup/data/sessionsTableData";
+import sessionsTableData from "examples/ChooseSession/data/sessionsTableData";
 
 //Add companies component
 import AddSession from "./add";
