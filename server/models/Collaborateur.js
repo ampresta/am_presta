@@ -42,6 +42,7 @@ const Collaborateur = (db) => {
     {
       Sequelize,
       paranoid: true,
+      deletedAt: "deletedAt",
     }
   );
 };
