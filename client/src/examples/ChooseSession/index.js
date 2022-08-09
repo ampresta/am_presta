@@ -7,9 +7,6 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
 
-// Material Dashboard 2 React example components
-import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import DataTable from "examples/Tables/DataTable";
 
 //import UseState
@@ -19,44 +16,58 @@ import { useState } from "react";
 import Icon from "@mui/material/Icon";
 
 // Data
-import sessionsTableData from "components/TablePopup/data/sessionsTableData";
+import sessionsTableData from "examples/ChooseSession/data/sessionsTableData";
 
 //Add companies component
 import AddSession from "./add";
 
 function Sessions(props) {
   const { cours, collab } = props;
-  const { ProvidersFilter, columns, rows, SubmitButton } = sessionsTableData(
-    cours,
-    collab
-  );
+  const { columns, rows, SubmitButton } = sessionsTableData(cours, collab);
+
   const [openAddModel, setOpenAddModel] = useState(false);
-  const [openFilter, setOpenFilter] = useState(false);
-  // authService.login("abdoessordo", "123456789")
-  console.log(SubmitButton);
+
   return (
-    <DashboardLayout>
+    <>
       {!openAddModel && (
         <MDBox pt={6} pb={1}>
           <Grid container spacing={6}>
             <Grid item xs={12}>
               <Card>
                 <MDBox
-                  mx={2}
-                  mt={-3}
-                  py={3}
-                  px={2}
+                  display="flex"
+                  justifyContent="space-between"
+                  alignItems="center"
                   variant="gradient"
                   bgColor="info"
                   borderRadius="lg"
                   coloredShadow="info"
+                  p={3}
+                  mx={2}
+                  mt={-3}
+                  mb={1}
                 >
                   <MDTypography variant="h6" color="white">
                     Choose a Session
                   </MDTypography>
+
+                  <MDButton
+                    variant="gradient"
+                    color="dark"
+                    size="small"
+                    iconOnly
+                    // onClick={() => setOpenAddModel(true)}
+                  >
+                    <Icon fontSize="small">close</Icon>
+                  </MDButton>
                 </MDBox>
 
-                <Grid container spacing={2} display="flex" alignItems="center">
+                <Grid
+                  container
+                  spacing={2}
+                  display="flex"
+                  justifyContent="space-between"
+                >
                   <MDBox ml={3} pt={2} px={2} mt={3}>
                     <MDButton
                       variant="gradient"
@@ -69,36 +80,25 @@ function Sessions(props) {
                     </MDButton>
                   </MDBox>
 
-                  <MDBox ml={3} pt={2} px={2} mt={3}>
+                  <MDBox pt={2} px={5} mt={3}>
                     <MDButton
                       variant="gradient"
                       color="success"
                       size="small"
+                      sx={{ width: 100 }}
                       onClick={SubmitButton}
                     >
                       Submit
                     </MDButton>
                   </MDBox>
-                  <MDBox pt={2} px={2} mt={3}>
-                    <MDButton
-                      variant="gradient"
-                      color="info"
-                      size="small"
-                      onClick={() => setOpenFilter(!openFilter)}
-                      iconOnly
-                    >
-                      <Icon>search</Icon>
-                    </MDButton>
-                  </MDBox>
                 </Grid>
 
-                {openFilter && ProvidersFilter}
-
-                <MDBox>
+                <MDBox pt={3}>
                   <DataTable
                     table={{ columns, rows }}
                     isSorted={false}
-                    canSearch
+                    entriesPerPage={false}
+                    showTotalEntries={false}
                   />
                 </MDBox>
               </Card>
@@ -107,7 +107,7 @@ function Sessions(props) {
         </MDBox>
       )}
       {openAddModel && <AddSession closeAddModel={setOpenAddModel} />}
-    </DashboardLayout>
+    </>
   );
 }
 

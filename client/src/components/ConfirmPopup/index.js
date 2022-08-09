@@ -19,7 +19,7 @@ const ConfirmPopup = ({ title, onConfirmPopup, handleDetele, Id_Item }) => {
         mx: "25%",
         borderRadius: "12px",
         position: "fixed",
-        top: "40%",
+        top: "35%",
         backgroundColor: "rgb(0,0,0, 0.3)",
       }}
     >

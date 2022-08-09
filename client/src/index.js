@@ -5,6 +5,12 @@ import App from "App";
 
 // Material Dashboard 2 React Context Provider
 import { MaterialUIControllerProvider } from "context";
+import axios from "axios";
+import authService from "services/auth.service";
+
+axios.defaults.headers.common[
+  "Authorization"
+] = `Bearer ${authService.getCurrentUser()}`;
 
 ReactDOM.render(
   <BrowserRouter>

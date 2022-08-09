@@ -4,6 +4,10 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { getType } from "utils/APIRoutes";
 import authService from "services/auth.service";
+
+import { refreshRoute } from "utils/APIRoutes";
+
+
 function Dashboard() {
   const [amdash, setAmdash] = useState(false);
   const [loading, setloading] = useState(false);
@@ -22,8 +26,10 @@ function Dashboard() {
       setloading(true);
       console.log(data);
     };
+
     gettype();
   }, []);
   return <>{loading && (amdash ? <AmDash /> : <SocDash />)}</>;
+
 }
 export default Dashboard;

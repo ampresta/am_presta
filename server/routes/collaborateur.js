@@ -4,6 +4,9 @@ const FinishCollabSession = require("../controllers/collaborator/FinishCollabSes
 const RequestCours = require("../controllers/collaborator/RequestCours");
 const checkCollaborateur = require("../middlewares/checkCollaborateur");
 const router = Router();
+const signedin = require("../middlewares/signedin");
+
+router.use(signedin);
 router.post("/addsession", AddCollabToSession);
 router.post("/finishsession", FinishCollabSession);
 router.use("/sendrequest", checkCollaborateur);

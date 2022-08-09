@@ -15,12 +15,14 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
 //import UseState Hook
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // Axios
 import axios from "axios";
 
-import { useEffect } from "react";
+// Material Dashboard 2 React contexts
+import { useMaterialUIController, setUpdater } from "context";
+
 import { allCompanyCoursesRoute, addSessionsRoute } from "utils/APIRoutes";
 
 function AddSession({ closeAddModel }) {
@@ -57,6 +59,10 @@ function AddSession({ closeAddModel }) {
     },
   ]);
 
+  const [controller, dispatch] = useMaterialUIController();
+
+  const { updater } = controller;
+
   useEffect(() => {
     const getAllData = async () => {
       const { data } = await axios.get(allCompanyCoursesRoute);
@@ -82,14 +88,12 @@ function AddSession({ closeAddModel }) {
       });
       if (data.status) {
         closeAddModel(false);
-        window.location.reload();
+        setUpdater(dispatch, !updater);
       } else {
         alert(data.msg);
       }
     }
   };
-
-  console.log(formErrors);
 
   const handleChange = (event) => {
     const key = event.target.name;
@@ -110,7 +114,7 @@ function AddSession({ closeAddModel }) {
     if (!values.nom) {
       errors.nom = "Session Name is required !";
     }
-    if (!values.course.name) {
+    if (!values.course.id) {
       errors.course = "Course Name is required !";
     }
     if (!values.dateDepart) {
