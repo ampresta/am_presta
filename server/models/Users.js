@@ -20,8 +20,8 @@ const User = (db) => {
       Sequelize,
       paranoid: true,
 
+      deletedAt: "deletedAt",
       // If you want to give a custom name to the deletedAt column
-      deletedAt: "destroyTime",
     }
   );
 };
