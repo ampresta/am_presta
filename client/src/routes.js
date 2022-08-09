@@ -6,7 +6,6 @@ import Sessions from "layouts/sessions";
 import Quota from "layouts/quota";
 import Requests from "layouts/requests";
 import SignIn from "layouts/authentication/sign-in";
-import SignUp from "layouts/authentication/sign-up";
 
 // @mui icons
 import Icon from "@mui/material/Icon";

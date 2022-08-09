@@ -18,18 +18,25 @@ import { allCoursesRoute, baseURL, DeleteInstances } from "utils/APIRoutes";
 // ConfirmPoppup component
 import ConfirmPopup from "components/ConfirmPopup";
 
+// Material Dashboard 2 React contexts
+import { useMaterialUIController } from "context";
+
 export default function Data() {
   const [allCourses, setAllCourses] = useState([]);
   const [confirmModel, setConfirmModel] = useState(false);
   const [tempCourseId, setTempCourseId] = useState(0);
 
+  const [controller] = useMaterialUIController();
+
+  const { updater } = controller;
+  
   useEffect(() => {
     const getAllCourses = async () => {
       const { data } = await axios.get(allCoursesRoute);
       setAllCourses(data);
     };
     getAllCourses();
-  }, []);
+  }, [updater]);
 
   const handleDelete = async (id) => {
     const { data } = await axios.post(DeleteInstances, {

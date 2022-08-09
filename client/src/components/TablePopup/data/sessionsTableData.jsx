@@ -2,46 +2,35 @@
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
-import MDProgress from "components/MDProgress";
-import Grid from "@mui/material/Grid";
-import MDButton from "components/MDButton";
-
-// @mui icons
-import Icon from "@mui/material/Icon";
 
 // React Hooks
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 // Api Endpoint
-import authService from "services/auth.service";
 import axios from "axios";
-import { allSessionsRoute, baseURL, allPartnersRoute } from "utils/APIRoutes";
-import { dateFormat } from "utils/Helper";
-import {SessionsofSociete} from "utils/APIRoutes";
-import {AcceptRequestRoute} from "utils/APIRoutes";
+import { baseURL } from "utils/APIRoutes";
+import { SessionsofSociete } from "utils/APIRoutes";
+import { AcceptRequestRoute } from "utils/APIRoutes";
 
-export default function Data(cours,collab) {
+export default function Data(cours, collab) {
+  let navigate = useNavigate();
+
   const [allSessions, setAllSessions] = useState([]);
   const [checked, setChecked] = useState(0);
-  const [providers, setProviders] = useState([
-    {
-      id: "",
-      nom: "",
-    },
-  ]);
 
   useEffect(() => {
-
     const getAllSessions = async () => {
-      const { data } = await axios.post(SessionsofSociete,
-	      {
-		      cours
-	      });
-    console.log(allSessions);
+      const { data } = await axios.post(SessionsofSociete, {
+        cours,
+      });
+      console.log(allSessions);
       setAllSessions(data);
     };
     getAllSessions();
-  },[]);
+  }, []);
+
+  console.log(allSessions);
 
   const Company = ({ image, name, company }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
@@ -54,16 +43,15 @@ export default function Data(cours,collab) {
       </MDBox>
     </MDBox>
   );
-const InputCheckBox= ({id})=>{
-	const handleCheckboxChange=(e)=> {
-  if(e.target.checked){
-	  setChecked(id);
-  }
-}
+  const InputCheckBox = ({ id }) => {
+    const handleCheckboxChange = (e) => {
+      if (e.target.checked) {
+        setChecked(id);
+      }
+    };
 
-  return <input type="checkbox" onClick={handleCheckboxChange} />
-
-}
+    return <input type="checkbox" onClick={handleCheckboxChange} />;
+  };
   let sessions = {
     columns: [
       {
@@ -81,57 +69,33 @@ const InputCheckBox= ({id})=>{
     ],
 
     rows: [],
+  };
 
-   };
-
-sessions.SubmitButton  = async ()=>{
-console.log(collab,checked);	
+  sessions.SubmitButton = async () => {
+    console.log(collab, checked);
     const { data } = await axios.post(AcceptRequestRoute, {
-	    session:checked,
-     	 collab:collab,
-	    request:true
-    })
-	console.log(data)
+      session: checked,
+      collab: collab,
+      request: true,
+    });
+    console.log(data);
     if (data.status) {
-	    console.log("done")
-      // setAllRequests(allRequests.filter((course) => course.id !== id));
-      // setConfirmModel(!confirmModel);
+      navigate("/sessions");
     } else {
       alert(data.msg);
     }
-	}
- if (allSessions.length===0){
-	 sessions.rows.push({author:"No records"})
- }
-	else{
-  allSessions.map((session) =>
-    sessions.rows.push({
-      author: <Company image={session.Cour.image} name={session.nom} />,
-      cours: (
-        <MDTypography
-          component="a"
-          variant="caption"
-          color="text"
-          fontWeight="medium"
-        >
-          {session.Cour.nom}
-        </MDTypography>
-      ),
-      provider: (
-        <MDTypography
-          component="a"
-          variant="caption"
-          color="text"
-          fontWeight="medium"
-        >
-          {session.Cour.Provider.nom}
-        </MDTypography>
-      ),
-      check: (
-     <InputCheckBox id={session.id}></InputCheckBox> 
-      ),
-    })
-  );}
+  };
+
+  if (allSessions.length === 0) {
+    sessions.rows.push({ author: "No Sessions Available" });
+  } else {
+    allSessions.map((session) =>
+      sessions.rows.push({
+        check: <InputCheckBox id={session.id}></InputCheckBox>,
+        author: <Company image={session.Cour.image} name={session.nom} />,
+      })
+    );
+  }
 
   return sessions;
 }
