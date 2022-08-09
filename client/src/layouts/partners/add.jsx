@@ -15,8 +15,10 @@ import { useState } from "react";
 // Axios
 import axios from "axios";
 
-import { addPartnersRoute } from "utils/APIRoutes";
-import { uploadRoute } from "utils/APIRoutes";
+// Material Dashboard 2 React contexts
+import { useMaterialUIController, setUpdater } from "context";
+
+import { addPartnersRoute, uploadRoute } from "utils/APIRoutes";
 
 function AddPartner({ closeAddModel }) {
   const [formErrors, setFormErrors] = useState({
@@ -29,6 +31,10 @@ function AddPartner({ closeAddModel }) {
 
   const [file, setFile] = useState(null);
 
+  const [controller, dispatch] = useMaterialUIController();
+
+  const { updater } = controller;
+
   const handleSubmit = async (event) => {
     const { nom } = partner;
     event.preventDefault();
@@ -37,9 +43,7 @@ function AddPartner({ closeAddModel }) {
       const { data } = await axios.post(addPartnersRoute, {
         nom,
       });
-      console.log(data);
       const ID = data.id;
-      console.log(ID);
 
       if (data.status) {
         const fd = new FormData();
@@ -56,9 +60,10 @@ function AddPartner({ closeAddModel }) {
           data: fd,
         };
 
-        const { data } = await axios(config);
+        await axios(config);
+
         closeAddModel(false);
-        window.location.reload();
+        setUpdater(dispatch, !updater);
       } else {
         alert(data.msg);
       }

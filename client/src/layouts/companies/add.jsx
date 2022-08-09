@@ -17,6 +17,9 @@ import { useState } from "react";
 // Axios
 import axios from "axios";
 
+// Material Dashboard 2 React contexts
+import { useMaterialUIController, setUpdater } from "context";
+
 import { registerRoute, uploadRoute } from "utils/APIRoutes";
 
 function AddCompanies({ closeAddModel }) {
@@ -41,6 +44,10 @@ function AddCompanies({ closeAddModel }) {
   });
 
   const [file, setFile] = useState(null);
+
+  const [controller, dispatch] = useMaterialUIController();
+
+  const { updater } = controller;
 
   const handleSubmit = async (event) => {
     const { username, f_name, l_name, email, company, password } = details;
@@ -71,10 +78,10 @@ function AddCompanies({ closeAddModel }) {
           data: fd,
         };
 
-        const { data } = await axios(config);
+        await axios(config);
 
         closeAddModel(false);
-        window.location.reload();
+        setUpdater(dispatch, !updater);
       } else {
         alert(data.msg);
       }

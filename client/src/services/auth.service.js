@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useState } from "react";
 import { loginRoute } from "utils/APIRoutes";
 
 const login = (username, password) => {
@@ -29,13 +28,10 @@ const getCurrentUser = () => {
   }
 };
 
-
-
 const authService = {
   login,
   logout,
   getCurrentUser,
 };
-
 
 export default authService;

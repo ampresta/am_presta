@@ -15,12 +15,14 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
 //import UseState Hook
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // Axios
 import axios from "axios";
 
-import { useEffect } from "react";
+// Material Dashboard 2 React contexts
+import { useMaterialUIController, setUpdater } from "context";
+
 import { allCompanyCoursesRoute, addSessionsRoute } from "utils/APIRoutes";
 
 function AddSession({ closeAddModel }) {
@@ -68,6 +70,12 @@ function AddSession({ closeAddModel }) {
     getAllData();
   }, []);
 
+  console.log(courses);
+
+  const [controller, dispatch] = useMaterialUIController();
+
+  const { updater } = controller;
+
   const handleSubmit = async (event) => {
     const { course, company, nom, dateDepart, dateFin } = session;
     event.preventDefault();
@@ -82,7 +90,7 @@ function AddSession({ closeAddModel }) {
       });
       if (data.status) {
         closeAddModel(false);
-        window.location.reload();
+        setUpdater(dispatch, !updater);
       } else {
         alert(data.msg);
       }
@@ -105,18 +113,18 @@ function AddSession({ closeAddModel }) {
 
   const validate = (values) => {
     const errors = {};
-    // if (!values.nom) {
-    //   errors.nom = "Session Name is required !";
-    // }
-    // if (!values.course.name) {
-    //   errors.course = "Course Name is required !";
-    // }
-    // if (!values.dateDepart) {
-    //   errors.dateDepart = "Start Date is required !";
-    // }
-    // if (!values.dateFin) {
-    //   errors.dateFin = "End Date is required !";
-    // }
+    if (!values.nom) {
+      errors.nom = "Session Name is required !";
+    }
+    if (!values.course.id) {
+      errors.course = "Course Name is required !";
+    }
+    if (!values.dateDepart) {
+      errors.dateDepart = "Start Date is required !";
+    }
+    if (!values.dateFin) {
+      errors.dateFin = "End Date is required !";
+    }
     return errors;
   };
 
