@@ -27,12 +27,12 @@ module.exports = async (req, res) => {
       const refreshtoken = sign(
         { user_id: user.id, type },
         process.env.JWT_REFRESH_SALT,
-        { expiresIn: "5m" }
+        { expiresIn: "7d" }
       );
 
       res.cookie("jbid", refreshtoken, { httpOnly: true });
       accesstoken = sign({ user_id: user.id, type }, process.env.JWTSALT, {
-        expiresIn: "10s",
+        expiresIn: "15min",
       });
       return res.json({ status: true, accesstoken, type });
     }

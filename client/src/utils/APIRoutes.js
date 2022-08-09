@@ -2,6 +2,7 @@ export const baseURL = `http://localhost:8000/api`;
 
 // Auth
 export const loginRoute = `${baseURL}/login`;
+export const refreshRoute = `${baseURL}/login/refreshtoken`;
 
 // Dashboard
 export const amCardsRoute = `${baseURL}/dashboard/amcards`;

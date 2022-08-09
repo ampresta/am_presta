@@ -34,6 +34,7 @@ import axios from "axios";
 // Endpoints
 import { amCardsRoute } from "utils/APIRoutes";
 import authService from "services/auth.service";
+import { refreshRoute } from "utils/APIRoutes";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -70,6 +71,13 @@ function Dashboard() {
     fetchCards("cours").catch(console.error);
     fetchCards("societe").catch(console.error);
     fetchCards("provider").catch(console.error);
+    const getRefresh = async () => {
+      const { data } = await axios.get(refreshRoute, {
+        withCredentials: true,
+      });
+      console.log(data);
+    };
+    getRefresh();
   });
 
   return (

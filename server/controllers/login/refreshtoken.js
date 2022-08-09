@@ -1,3 +1,4 @@
+const { verify, sign } = require("jsonwebtoken");
 const db = require("../../config/database");
 const { User } = db.models;
 module.exports = async (req, res) => {
@@ -11,13 +12,21 @@ module.exports = async (req, res) => {
     if (!user_) {
       return res.send({ status: false, msg: "No user" });
     }
-    accesstoken = sign(payload, process.env.JWTSALT, {
-      expiresIn: "15m",
-    });
+    accesstoken = sign(
+      { user_id: payload.id, type: payload.type },
+      process.env.JWTSALT,
+      {
+        expiresIn: "15m",
+      }
+    );
 
-    refreshtoken = sign(payload, process.env.JWT_REFRESH_SALT, {
-      expiresIn: "7d",
-    });
+    refreshtoken = sign(
+      { user_id: payload.id, type: payload.type },
+      process.env.JWT_REFRESH_SALT,
+      {
+        expiresIn: "7d",
+      }
+    );
     res.cookie("jbid", refreshtoken, { httpOnly: true });
     return res.json({ accesstoken: accesstoken });
   } catch (err) {

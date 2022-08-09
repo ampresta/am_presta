@@ -17,28 +17,19 @@ import { allCoursesRoute, baseURL, DeleteInstances } from "utils/APIRoutes";
 
 // ConfirmPoppup component
 import ConfirmPopup from "components/ConfirmPopup";
-import authService from "services/auth.service";
 
 export default function Data() {
   const [allCourses, setAllCourses] = useState([]);
   const [confirmModel, setConfirmModel] = useState(false);
   const [tempCourseId, setTempCourseId] = useState(0);
 
- useEffect(() => {
-   const config = {
-     method: "get",
-     url: allCoursesRoute,
-     headers: {
-       Authorization: `Bearer ${authService.getCurrentUser()}`,
-     },
-   };
-
-   const getAllCourses = async () => {
-     const { data } = await axios(config);
-     setAllCourses(data);
-   };
-   getAllCourses();
- }, []);
+  useEffect(() => {
+    const getAllCourses = async () => {
+      const { data } = await axios.get(allCoursesRoute);
+      setAllCourses(data);
+    };
+    getAllCourses();
+  }, []);
 
   const handleDelete = async (id) => {
     const { data } = await axios.post(DeleteInstances, {
