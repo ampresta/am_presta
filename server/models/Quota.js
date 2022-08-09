@@ -14,6 +14,7 @@ const Quota = (db) => {
     {
       Sequelize,
       paranoid: true,
+      deletedAt: "deletedAt",
     }
   );
 };

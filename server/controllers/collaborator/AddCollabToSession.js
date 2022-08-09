@@ -1,7 +1,7 @@
 const db = require("../../config/database");
-const { Cours, Collaborateur, Session, Quota, Provider } = db.models;
+const { Cours, Collaborateur, Request, Session, Quota, Provider } = db.models;
 module.exports = async (req, res) => {
-  const { session, collab } = req.body;
+  const { session, collab, request } = req.body;
   if (!session || !collab) {
     return res.sendStatus(403);
   }
@@ -29,6 +29,16 @@ module.exports = async (req, res) => {
     });
     const collabo = await Collaborateur.findByPk(collab);
     sess.addCollaborateur(collabo);
+    if (request) {
+      Request.destroy({
+        where: {
+          CourId: sess.CourId,
+          CollaborateurId: collab,
+        },
+      });
+    }
+    console.log(sess);
+
     return res.send({ status: true, msg: "Collab Added" });
   } catch (err) {
     console.log(err);

@@ -25,6 +25,7 @@ const Session = (db) => {
     {
       Sequelize,
       paranoid: true,
+      deletedAt: "deletedAt",
     }
   );
 };

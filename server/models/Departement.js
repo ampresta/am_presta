@@ -21,6 +21,7 @@ const Departement = (db) => {
     {
       Sequelize,
       paranoid: true,
+      deletedAt: "deletedAt",
     }
   );
 };

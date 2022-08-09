@@ -25,6 +25,7 @@ const Challenge = (db) => {
     {
       Sequelize,
       paranoid: true,
+      deletedAt: "deletedAt",
     }
   );
 };

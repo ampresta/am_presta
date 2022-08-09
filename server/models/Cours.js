@@ -53,6 +53,7 @@ const Cours = (db) => {
     {
       Sequelize,
       paranoid: true,
+      deletedAt: "deletedAt",
     }
   );
 };
