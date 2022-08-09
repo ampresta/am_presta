@@ -9,7 +9,7 @@ module.exports = (req, res, next) => {
   }
   try {
     payload = verify(token, process.env.JWTSALT);
-    if (payload.type === "superadmin") {
+    if (payload.type === "Superadmin") {
       return next();
     } else {
       console.log(payload);
