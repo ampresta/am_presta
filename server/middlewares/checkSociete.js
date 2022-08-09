@@ -10,6 +10,7 @@ module.exports = (req, res, next) => {
   try {
     payload = verify(token, process.env.JWTSALT);
     if (payload.type === "Societe") {
+      req.societe = payload.user_id;
       return next();
     } else {
       console.log(payload);
