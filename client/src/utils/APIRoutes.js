@@ -2,7 +2,11 @@ export const baseURL = `http://localhost:8000/api`;
 
 // Auth
 export const loginRoute = `${baseURL}/login`;
+
+export const getType = `${baseURL}/gettype`;
+
 export const refreshRoute = `${baseURL}/login/refreshtoken`;
+
 
 // Dashboard
 export const amCardsRoute = `${baseURL}/dashboard/amcards`;
@@ -29,13 +33,10 @@ export const allSessionsRoute = `${baseURL}/session/browse`;
 export const addSessionsRoute = `${baseURL}/session/add`;
 export const SessionsofSociete = `${baseURL}/session/browsesoc`;
 
-
-
 // Quota
-export const AllQuotaRoute = `${baseURL}/quota/browse`
-export const AllQuotaSocRoute = `${baseURL}/quota/browsesoc`
-export const AddQuotaRoute = `${baseURL}/quota/add`
-
+export const AllQuotaRoute = `${baseURL}/quota/browse`;
+export const AllQuotaSocRoute = `${baseURL}/quota/browsesoc`;
+export const AddQuotaRoute = `${baseURL}/quota/add`;
 
 //DeleteInstances
 export const DeleteInstances = `${baseURL}/delete`;

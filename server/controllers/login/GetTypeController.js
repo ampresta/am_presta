@@ -1,5 +1,7 @@
 const db = require("../../config/database");
 const { SuperAdmin, Collaborateur } = db.models;
+const { verify } = require("jsonwebtoken");
+
 module.exports = async (req, res) => {
   if (!req.headers.authorization) {
     return res.send({ msg: "no header" });
@@ -11,8 +13,8 @@ module.exports = async (req, res) => {
   try {
     payload = verify(token, process.env.JWTSALT);
     user = payload.user_id;
-    const collab = await Collaborateur.findOne({ where: { UserId: user_id } });
-    const superadmin = await SuperAdmin.findOne({ where: { UserId: user_id } });
+    const collab = await Collaborateur.findOne({ where: { UserId: user } });
+    const superadmin = await SuperAdmin.findOne({ where: { UserId: user } });
     if (collab) {
       if (collab.admin) {
         type = "Societe";
@@ -28,6 +30,7 @@ module.exports = async (req, res) => {
     }
     return res.send({ status: true, type });
   } catch (err) {
+    console.log(err);
     return res.send({ status: false, err });
   }
 };
