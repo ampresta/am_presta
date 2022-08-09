@@ -6,6 +6,9 @@ const browseSociete = require("../controllers/societe/browseSociete");
 const CreateCollabsforSociete = require("../controllers/societe/CreateCollabsforSociete");
 const checkSociete = require("../middlewares/checkSociete");
 const router = require("express").Router();
+const signedin = require("../middlewares/signedin");
+
+router.use(signedin);
 
 router.post("/add", addSociete);
 router.all("/browse", browseSociete);

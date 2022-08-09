@@ -1,11 +1,11 @@
 const { Router } = require("express");
 const addCours = require("../controllers/cours/addCours");
 const browseCourse = require("../controllers/cours/browseCourse");
-const signedin = require("../middlewares/signedin");
 const CheckSuperAdmin = require("../middlewares/checkSuperAdmin");
 const browseCoursSoc = require("../controllers/cours/browseCoursSoc");
 const checkSociete = require("../middlewares/checkSociete");
 router = Router();
+const signedin = require("../middlewares/signedin");
 
 router.use(signedin);
 // Please don't change the order

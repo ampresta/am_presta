@@ -20,6 +20,9 @@ import { useState } from "react";
 // Axios
 import axios from "axios";
 
+// Material Dashboard 2 React contexts
+import { useMaterialUIController, setUpdater } from "context";
+
 import { useEffect } from "react";
 import { allPartnersRoute } from "utils/APIRoutes";
 import { addCoursesRoute } from "utils/APIRoutes";
@@ -56,6 +59,10 @@ function AddCourses({ closeAddModel }) {
     },
   ]);
 
+  const [controller, dispatch] = useMaterialUIController();
+
+  const { updater } = controller;
+
   useEffect(() => {
     const getAllPartners = async () => {
       const { data } = await axios.get(allPartnersRoute);
@@ -83,10 +90,11 @@ function AddCourses({ closeAddModel }) {
           description,
         },
       };
+
       const { data } = await axios(config);
-      console.log(data);
+
       const ID = data.id;
-      console.log(ID);
+
       if (data.status) {
         if (file !== null) {
           const fd = new FormData();
@@ -103,11 +111,11 @@ function AddCourses({ closeAddModel }) {
             data: fd,
           };
 
-          const { data } = await axios(config);
+          await axios(config);
         }
 
         closeAddModel(false);
-        window.location.reload();
+        setUpdater(dispatch, !updater);
       } else {
         alert(data.msg);
       }

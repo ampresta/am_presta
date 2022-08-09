@@ -32,7 +32,7 @@ module.exports = async (req, res) => {
 
       res.cookie("jbid", refreshtoken, { httpOnly: true });
       accesstoken = sign({ user_id: user.id, type }, process.env.JWTSALT, {
-        expiresIn: "10m",
+        expiresIn: "15min",
       });
       return res.json({ status: true, accesstoken, type });
     }

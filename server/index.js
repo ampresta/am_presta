@@ -28,7 +28,7 @@ try {
 }
 
 // Middleware
-app.use(cors());
+app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 app.use(morgan("tiny"));
 app.use(express.json());
 require("dotenv").config();

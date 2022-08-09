@@ -5,7 +5,7 @@ import Card from "@mui/material/Card";
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-import MDButton from "components/MDButton";
+import MDButton from "components/MDButton"; 
 
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
@@ -15,23 +15,12 @@ import DataTable from "examples/Tables/DataTable";
 //import UseState
 import { useState } from "react";
 
-// @mui icons
-import Icon from "@mui/material/Icon";
-
 // Data
 import sessionsTableData from "layouts/requests/data/requestsTableData";
-
-//Add companies component
-import AddSession from "./add";
-// import Sessions from "layouts/sessions";
-import { List } from "@mui/material";
 
 function Requests() {
   const { columns, rows, confirmation, sessions } = sessionsTableData();
   const [openAddModel, setOpenAddModel] = useState(false);
-
-  const [openListModel, setOpenListModel] = useState(false);
-  // const [openFilter, setOpenFilter] = useState(false);
 
   // authService.login("abdoessordo", "123456789")
 
@@ -54,7 +43,7 @@ function Requests() {
                   coloredShadow="info"
                 >
                   <MDTypography variant="h6" color="white">
-                    Sessions List
+                    Requests List
                   </MDTypography>
                 </MDBox>
 
@@ -70,7 +59,6 @@ function Requests() {
           </Grid>
         </MDBox>
       )}
-      {/*{openAddModel && <AddSession closeAddModel={setOpenAddModel} />}*/}
 
       {/* {openListModel && <Sessions closeAddModel={setOpenListModel} />} */}
       {confirmation}

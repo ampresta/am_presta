@@ -2,6 +2,7 @@
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
+import MDButton from "components/MDButton";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -17,12 +18,18 @@ import { baseURL, allPartnersRoute, DeleteInstances } from "utils/APIRoutes";
 
 // ConfirmPoppup component
 import ConfirmPopup from "components/ConfirmPopup";
-import MDButton from "components/MDButton";
+
+// Material Dashboard 2 React contexts
+import { useMaterialUIController } from "context";
 
 export default function Data() {
   const [allPartners, setAllPartners] = useState([]);
   const [confirmModel, setConfirmModel] = useState(false);
   const [tempPartnerId, setTempPartnerId] = useState(0);
+
+  const [controller] = useMaterialUIController();
+
+  const { updater } = controller;
 
   useEffect(() => {
     const getAllPartners = async () => {
@@ -30,7 +37,7 @@ export default function Data() {
       setAllPartners((prev) => data);
     };
     getAllPartners();
-  }, []);
+  }, [updater]);
 
   const handleDelete = async (id) => {
     const { data } = await axios.post(DeleteInstances, {

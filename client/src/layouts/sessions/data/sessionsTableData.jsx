@@ -23,6 +23,9 @@ import {
 // ConfirmPoppup component
 import ConfirmPopup from "components/ConfirmPopup";
 
+// Material Dashboard 2 React contexts
+import { useMaterialUIController } from "context";
+
 import { dateFormat } from "utils/Helper";
 
 export default function Data() {
@@ -35,6 +38,10 @@ export default function Data() {
       nom: "",
     },
   ]);
+
+  const [controller] = useMaterialUIController();
+
+  const { updater } = controller;
 
   useEffect(() => {
     const config = {
@@ -50,7 +57,7 @@ export default function Data() {
       setAllSessions(data);
     };
     getAllSessions();
-  }, []);
+  }, [updater]);
 
   useEffect(() => {
     const getAllPartners = async () => {

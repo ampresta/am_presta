@@ -4,6 +4,9 @@ const browseSession = require("../controllers/session/browseSession");
 const browseSessionSoc = require("../controllers/session/browseSessionSoc");
 const checkSociete = require("../middlewares/checkSociete");
 const router = Router();
+const signedin = require("../middlewares/signedin");
+
+router.use(signedin);
 router.use("/browsesoc", checkSociete);
 router.post("/browsesoc", browseSessionSoc);
 router.use("/add", checkSociete);

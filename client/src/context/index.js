@@ -42,6 +42,9 @@ function reducer(state, action) {
     case "DARKMODE": {
       return { ...state, darkMode: action.value };
     }
+    case "FORCEUPDATE": {
+      return { ...state, updater: action.value };
+    }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
     }
@@ -61,6 +64,7 @@ function MaterialUIControllerProvider({ children }) {
     direction: "ltr",
     layout: "dashboard",
     darkMode: false,
+    updater: false,
   };
 
   const [controller, dispatch] = useReducer(reducer, initialState);
@@ -108,6 +112,9 @@ const setDirection = (dispatch, value) =>
 const setLayout = (dispatch, value) => dispatch({ type: "LAYOUT", value });
 const setDarkMode = (dispatch, value) => dispatch({ type: "DARKMODE", value });
 
+const setUpdater = (dispatch, value) =>
+  dispatch({ type: "FORCEUPDATE", value });
+
 export {
   MaterialUIControllerProvider,
   useMaterialUIController,
@@ -121,4 +128,5 @@ export {
   setDirection,
   setLayout,
   setDarkMode,
+  setUpdater,
 };
