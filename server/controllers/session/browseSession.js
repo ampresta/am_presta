@@ -61,6 +61,7 @@ module.exports = async (req, res) => {
         include: {
           model: Provider,
           attributes: ["nom"],
+          required: true,
           where: {
             id: provider,
           },
@@ -69,9 +70,11 @@ module.exports = async (req, res) => {
     } else {
       filters.include.push({
         model: Cours,
+        required: true,
         attributes: ["id", "image", "nom"],
         include: {
           model: Provider,
+          required: true,
           attributes: ["nom"],
         },
       });
@@ -93,7 +96,7 @@ module.exports = async (req, res) => {
         attributes: ["nom"],
       },
     });
-    console.log(filters);
+    // console.log(filters);
     const sessions = await Session.findAll(filters); // Implementing search
     return res.send(sessions);
   }

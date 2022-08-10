@@ -18,7 +18,7 @@ import Select from "@mui/material/Select";
 import { useState, useEffect } from "react";
 
 // Axios
-import axios from "axios";
+import axios from "services/authAxios";
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setUpdater } from "context";
@@ -52,25 +52,24 @@ function AddSession({ closeAddModel }) {
     id: "",
   });
 
-  const [courses, setCourses] = useState([
-    {
-      id: "",
-      nom: "",
-    },
-  ]);
+  const [courses, setCourses] = useState([]);
+	
 
+  const [loading, setLoading] = useState(false);
+	
   useEffect(() => {
     const getAllData = async () => {
       const { data } = await axios.get(allCompanyCoursesRoute);
-      let allCourses = [];
-      data.map((res) => allCourses.push({ id: res.id, nom: res.nom }));
-      setCourses(allCourses);
-      return;
+	    console.log("jat l3rossa")
+      // let allCourses = [];
+      // data.map((res) => allCourses.push({ id: res.id, nom: res.nom }));
+      console.log(data.cours);
+	    setCourses(data.cours);
+	    setLoading(true)
     };
     getAllData();
   }, []);
 
-  console.log(courses);
 
   const [controller, dispatch] = useMaterialUIController();
 
@@ -86,7 +85,7 @@ function AddSession({ closeAddModel }) {
         datedebut: dateDepart,
         datefin: dateFin,
         cours: course.id,
-        societe: 1,
+        
       });
       if (data.status) {
         closeAddModel(false);
@@ -127,7 +126,13 @@ function AddSession({ closeAddModel }) {
     }
     return errors;
   };
-
+const courses_inchallah = loading ? 
+                (courses.map((course) => (
+			   <MenuItem key={course.id} value={course}>
+                      {course.nom}
+                    </MenuItem>
+                  )))
+    : <span> No Courses </span>
   return (
     <Card sx={{ mt: "50px" }}>
       <MDBox
@@ -206,11 +211,7 @@ function AddSession({ closeAddModel }) {
                     />
                   }
                 >
-                  {courses.map((course) => (
-                    <MenuItem key={course.id} value={course}>
-                      {course.nom}
-                    </MenuItem>
-                  ))}
+	  {courses_inchallah}
                 </Select>
                 <FormHelperText error>{formErrors.course}</FormHelperText>
               </FormControl>
