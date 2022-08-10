@@ -7,6 +7,7 @@ module.exports = async (req, res) => {
   filters.include = [
     {
       model: Session,
+
       attributes: [],
       include: {
         model: Collaborateur,

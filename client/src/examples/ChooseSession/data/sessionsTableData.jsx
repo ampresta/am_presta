@@ -13,11 +13,18 @@ import { baseURL } from "utils/APIRoutes";
 import { SessionsofSociete } from "utils/APIRoutes";
 import { AcceptRequestRoute } from "utils/APIRoutes";
 
+// Material Dashboard 2 React contexts
+import { useMaterialUIController } from "context";
+
 export default function Data(cours, collab) {
   let navigate = useNavigate();
 
   const [allSessions, setAllSessions] = useState([]);
   const [checked, setChecked] = useState(0);
+
+  const [controller] = useMaterialUIController();
+
+  const { updater } = controller;
 
   useEffect(() => {
     const getAllSessions = async () => {
@@ -28,7 +35,7 @@ export default function Data(cours, collab) {
       setAllSessions(data);
     };
     getAllSessions();
-  }, []);
+  }, [updater]);
 
   console.log(allSessions);
 

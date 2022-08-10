@@ -5,6 +5,7 @@ import Courses from "layouts/courses";
 import Sessions from "layouts/sessions";
 import Quota from "layouts/quota";
 import Requests from "layouts/requests";
+import Departments from "layouts/departments";
 import SignIn from "layouts/authentication/sign-in";
 
 // @mui icons
@@ -68,6 +69,14 @@ const routes = [
     icon: <Icon fontSize="small">help</Icon>,
     route: "/requests",
     component: <Requests />,
+  },
+  {
+    type: "collapse",
+    name: "Departments",
+    key: "departments",
+    icon: <Icon fontSize="small">apartment</Icon>,
+    route: "/departments",
+    component: <Departments />,
   },
   {
     type: "collapse",

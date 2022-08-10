@@ -2,6 +2,9 @@ export const baseURL = `http://127.0.0.1:8000/api`;
 
 // Auth
 export const loginRoute = `${baseURL}/login`;
+
+export const getType = `${baseURL}/gettype`;
+
 export const refreshRoute = `${baseURL}/login/refreshtoken`;
 
 // Dashboard
@@ -24,7 +27,6 @@ export const addCoursesRoute = `${baseURL}/cours/add`;
 export const allCompanyCoursesRoute = `${baseURL}/cours/browsesoc`;
 
 // Sessions
-
 export const allSessionsRoute = `${baseURL}/session/browse`;
 export const addSessionsRoute = `${baseURL}/session/add`;
 export const SessionsofSociete = `${baseURL}/session/browsesoc`;
@@ -33,6 +35,10 @@ export const SessionsofSociete = `${baseURL}/session/browsesoc`;
 export const AllQuotaRoute = `${baseURL}/quota/browse`;
 export const AllQuotaSocRoute = `${baseURL}/quota/browsesoc`;
 export const AddQuotaRoute = `${baseURL}/quota/add`;
+
+// Departments
+export const allDepartmentsRoute = `${baseURL}/departement/browseDept`;
+export const addDepartementRoute = `${baseURL}/departement/addDept`;
 
 //DeleteInstances
 export const DeleteInstances = `${baseURL}/delete`;

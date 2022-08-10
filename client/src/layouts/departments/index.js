@@ -5,24 +5,28 @@ import Card from "@mui/material/Card";
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-import MDButton from "components/MDButton"; 
 
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import DataTable from "examples/Tables/DataTable";
 
-//import UseState
+//import Hook
 import { useState } from "react";
 
+// @mui icons
+import Icon from "@mui/material/Icon";
+
+//import Add component
+import AddDepartement from "./add";
+
 // Data
-import sessionsTableData from "layouts/requests/data/requestsTableData";
+import departementsTableData from "layouts/departments/data/departmentsTableData";
+import MDButton from "components/MDButton";
 
-function Requests() {
-  const { columns, rows, confirmation, sessions } = sessionsTableData();
+function Partners() {
+  const { columns, rows, confirmation } = departementsTableData();
   const [openAddModel, setOpenAddModel] = useState(false);
-
-  // authService.login("abdoessordo", "123456789")
 
   return (
     <DashboardLayout>
@@ -43,9 +47,25 @@ function Requests() {
                   coloredShadow="info"
                 >
                   <MDTypography variant="h6" color="white">
-                    Requests List
+                    Partners
                   </MDTypography>
                 </MDBox>
+
+                <Grid container spacing={2}>
+                  <MDBox ml={3} py={1.9} px={2} mt={3}>
+                    <MDButton
+                      variant="gradient"
+                      color="info"
+                      size="small"
+                      onClick={setOpenAddModel}
+                    >
+                      <Icon fontSize="big" color="light">
+                        add
+                      </Icon>
+                      add department
+                    </MDButton>
+                  </MDBox>
+                </Grid>
 
                 <MDBox>
                   <DataTable
@@ -59,12 +79,10 @@ function Requests() {
           </Grid>
         </MDBox>
       )}
-
-      {/* {openListModel && <Sessions closeAddModel={setOpenListModel} />} */}
+      {openAddModel && <AddDepartement closeAddModel={setOpenAddModel} />}
       {confirmation}
-      {sessions}
     </DashboardLayout>
   );
 }
 
-export default Requests;
+export default Partners;

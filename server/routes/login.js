@@ -7,8 +7,9 @@ const refreshtoken = require("../controllers/login/refreshtoken");
 router.use(cookieParser());
 
 // Routing
+//
+//
 router.post("/", login);
-router.get("/refreshtoken", refreshtoken)
+router.get("/refreshtoken", refreshtoken);
 
-module.exports=router;
-
+module.exports = router;

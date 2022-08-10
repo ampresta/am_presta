@@ -37,7 +37,7 @@ module.exports = async (req, res) => {
       });
       
       accesstoken = sign({ user_id: user.id, type }, process.env.JWTSALT, {
-        expiresIn: "15min",
+        expiresIn: "30s",
       });
       return res.json({ status: true, accesstoken, type });
     }

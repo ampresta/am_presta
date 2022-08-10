@@ -1,24 +1,22 @@
 const { verify } = require("jsonwebtoken");
 module.exports = (req, res, next) => {
-  req.collab = 2;
-  return next();
-  // if (!req.headers.authorization) {
-  //   return res.send({ msg: "no header" });
-  // }
-  // token = req.headers.authorization.split(" ")[1];
-  // if (!token) {
-  //   return res.sendStatus(403);
-  // }
-  // try {
-  //   payload = verify(token, process.env.JWTSALT);
-  //   if (payload.type === "collab") {
-  //     req.collab = payload.id;
-  //     return next();
-  //   } else {
-  //     console.log(payload);
-  //     return res.send({ status: false, msg: "Not a Collaborator" });
-  //   }
-  // } catch (err) {
-  //   return res.send({ msg: "stuck in middleware", err });
-  // }
+  if (!req.headers.authorization) {
+    return res.send({ msg: "no header" });
+  }
+  token = req.headers.authorization.split(" ")[1];
+  if (!token) {
+    return res.sendStatus(403);
+  }
+  try {
+    payload = verify(token, process.env.JWTSALT);
+    if (payload.type === "Collab") {
+      req.collab = payload.user_id;
+      return next();
+    } else {
+      console.log(payload);
+      return res.send({ status: false, msg: "Not a Collaborator" });
+    }
+  } catch (err) {
+    return res.send({ msg: "stuck in middleware", err });
+  }
 };

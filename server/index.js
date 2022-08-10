@@ -18,6 +18,7 @@ const deleteInstances = require("./controllers/delete/deleteInstances");
 
 const collaborateur = require("./routes/collaborateur");
 const quota = require("./routes/quota");
+const GetTypeController = require("./controllers/login/GetTypeController");
 //Database Setup
 try {
   db.authenticate();
@@ -27,14 +28,19 @@ try {
 }
 
 // Middleware
-app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
+app.use(
+  cors({
+    origin: "http://127.0.0.1:3000",
+    credentials: true,
+  })
+);
 app.use(morgan("tiny"));
 app.use(express.json());
 require("dotenv").config();
 
 // FILE STORAGE
 const STORAGE = multer.diskStorage({
-  destination: (req, file, cb) => { 
+  destination: (req, file, cb) => {
     cb(null, "./media");
   },
   filename: (req, file, cb) => {
@@ -44,6 +50,8 @@ const STORAGE = multer.diskStorage({
 const upload = multer({ storage: STORAGE });
 
 // Routing
+
+app.get("/api/gettype", GetTypeController);
 app.use("/api/login", login);
 app.use("/api/register", register);
 app.use("/api/societe", societe);
