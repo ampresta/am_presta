@@ -14,6 +14,8 @@ module.exports = async (req, res) => {
     Model = Request;
   } else if (model == "Session") {
     Model = Session;
+  } else if (model == "Departements") {
+    Model = Departement;
   } else {
     return res.sendStatus(404);
   }
