@@ -90,6 +90,7 @@ module.exports = async (req, res) => {
   } else {
     filters.include.push({
       model: Cours,
+      required: true,
       attributes: ["id", "image", "nom"],
       include: {
         model: Provider,
