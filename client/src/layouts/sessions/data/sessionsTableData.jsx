@@ -12,7 +12,7 @@ import Icon from "@mui/material/Icon";
 // React Hooks
 import { useState, useEffect } from "react";
 
-// import axios from "axios";
+// import axios from "services/authAxios";
 import axios from "services/authAxios";
 import {
   allSessionsRoute,

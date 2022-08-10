@@ -5,7 +5,7 @@ import App from "App";
 
 // Material Dashboard 2 React Context Provider
 import { MaterialUIControllerProvider } from "context";
-import axios from "axios";
+import axios from "services/authAxios";
 import authService from "services/auth.service";
 
 ReactDOM.render(

@@ -53,7 +53,6 @@ const routes = [
     route: "/quota",
     component: <Quota />,
   },
-
   {
     type: "collapse",
     name: "Sessions",

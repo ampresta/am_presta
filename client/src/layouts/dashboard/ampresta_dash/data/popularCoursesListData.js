@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "services/authAxios";
 
 import { baseURL, topCoursesRoute } from "utils/APIRoutes";
 

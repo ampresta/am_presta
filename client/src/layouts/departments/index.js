@@ -47,7 +47,7 @@ function Partners() {
                   coloredShadow="info"
                 >
                   <MDTypography variant="h6" color="white">
-                    Partners
+                    Departments
                   </MDTypography>
                 </MDBox>
 
