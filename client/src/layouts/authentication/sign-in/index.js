@@ -51,7 +51,7 @@ function Basic() {
     res.then((data) => {
       if (data.status) {
         
-        // navigate("/dashboard");
+        navigate("/dashboard");
       }
     });
   };
