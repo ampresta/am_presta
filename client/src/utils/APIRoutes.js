@@ -7,7 +7,6 @@ export const getType = `${baseURL}/gettype`;
 
 export const refreshRoute = `${baseURL}/login/refreshtoken`;
 
-
 // Dashboard
 export const amCardsRoute = `${baseURL}/dashboard/amcards`;
 export const graphsRoute = `${baseURL}/dashboard/amgraphs`;
