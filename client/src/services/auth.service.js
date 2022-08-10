@@ -3,10 +3,16 @@ import { loginRoute } from "utils/APIRoutes";
 
 const login = (username, password) => {
   return axios
-    .post(loginRoute, {
-      username,
-      password,
-    })
+    .post(
+      loginRoute,
+      {
+        username,
+        password,
+      },
+      {
+        withCredentials: true,
+      }
+    )
     .then((response) => {
       if (response.data.accesstoken) {
         localStorage.setItem("user", JSON.stringify(response.data));
