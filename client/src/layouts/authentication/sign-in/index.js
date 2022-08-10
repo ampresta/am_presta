@@ -25,7 +25,7 @@ import BasicLayout from "layouts/authentication/components/BasicLayout";
 
 // Images
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
-import axios from "axios";
+import axios from "services/authAxios";
 import { loginRoute } from "utils/APIRoutes";
 import authService from "services/auth.service";
 

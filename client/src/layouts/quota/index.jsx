@@ -20,7 +20,7 @@ import { useEffect, useState } from "react";
 
 // Images
 // import Oracle from "assets/images/oracle-logo.jpg";
-import axios from "axios";
+import axios from "services/authAxios";
 import { AllQuotaSocRoute } from "utils/APIRoutes";
 
 function Overview() {
@@ -30,6 +30,7 @@ function Overview() {
   useEffect(() => {
     const getAllCompanies = async () => {
       const { data } = await axios.get(AllQuotaSocRoute);
+	    console.log(data);
       setAllCompanies((prev) => data.msg);
       return;
     };

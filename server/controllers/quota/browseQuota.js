@@ -5,9 +5,11 @@ module.exports = async (req, res) => {
     include: [
       {
         model: Societe,
+        required: true,
       },
       {
         model: Provider,
+        required: true,
       },
     ],
   });

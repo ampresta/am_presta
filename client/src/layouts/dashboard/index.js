@@ -1,14 +1,11 @@
 import SocDash from "./soc_dash";
 import AmDash from "./ampresta_dash";
-import axios from "axios";
+import axios from "services/authAxios";
 import React, { useState, useEffect } from "react";
 import { getType } from "utils/APIRoutes";
 import authService from "services/auth.service";
 
-import { refreshRoute } from "utils/APIRoutes";
-
-
-function Dashboard() {
+  function Dashboard() {
   const [amdash, setAmdash] = useState(false);
   const [loading, setloading] = useState(false);
   useEffect(() => {
@@ -30,6 +27,5 @@ function Dashboard() {
     gettype();
   }, []);
   return <>{loading && (amdash ? <AmDash /> : <SocDash />)}</>;
-
 }
 export default Dashboard;

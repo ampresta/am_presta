@@ -18,7 +18,7 @@ import Select from "@mui/material/Select";
 import { useState } from "react";
 
 // Axios
-import axios from "axios";
+import axios from "services/authAxios";
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setUpdater } from "context";
@@ -81,9 +81,9 @@ function AddCourses({ closeAddModel }) {
       const config = {
         method: "post",
         url: addCoursesRoute,
-        headers: {
-          Authorization: `Bearer ${authService.getCurrentUser()}`,
-        },
+        // headers: {
+        //   Authorization: `Bearer ${authService.getCurrentUser()}`,
+        // },
         data: {
           nom,
           provider: provider.id,

@@ -12,7 +12,9 @@ import Icon from "@mui/material/Icon";
 import { useState, useEffect } from "react";
 
 // Api Endpoint
-import axios from "axios";
+// import axios from "services/authAxios";
+
+import axios from "services/authAxios";
 import { allCoursesRoute, baseURL, DeleteInstances } from "utils/APIRoutes";
 
 // ConfirmPoppup component
@@ -29,7 +31,7 @@ export default function Data() {
   const [controller] = useMaterialUIController();
 
   const { updater } = controller;
-  
+
   useEffect(() => {
     const getAllCourses = async () => {
       const { data } = await axios.get(allCoursesRoute);

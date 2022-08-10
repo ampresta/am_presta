@@ -13,8 +13,7 @@ import { useState, useEffect } from "react";
 import { useMaterialUIController } from "context";
 
 // Axios
-import axios from "axios";
-
+import axios from "services/authAxios";
 // @mui icons
 import Icon from "@mui/material/Icon";
 import { dateFormat } from "utils/Helper";

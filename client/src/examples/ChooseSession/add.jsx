@@ -18,7 +18,7 @@ import Select from "@mui/material/Select";
 import { useState, useEffect } from "react";
 
 // Axios
-import axios from "axios";
+import axios from "services/authAxios";
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setUpdater } from "context";

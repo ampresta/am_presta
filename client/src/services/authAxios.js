@@ -19,10 +19,21 @@ axiosAuth.interceptors.request.use(
 axiosAuth.interceptors.response.use(
   async function (response) {
     const { data } = response;
-    if (!data.status && data.err.name === "TokenExpiredError") {
-      const data = await axiosAuth.get(refreshRoute);
-      console.log("eee");
-      console.log(data);
+    try {
+      if (!data.status && data.err !== null) {
+        if (data.err.name === "TokenExpiredError") {
+          console.log("I'am here");
+          const data = await axiosAuth.get(refreshRoute);
+          console.log(data.data);
+          if (data.data.accesstoken) {
+            localStorage.removeItem("user");
+            localStorage.setItem("user", JSON.stringify(data.data));
+          }
+        }
+      }
+    } catch (err) {
+      console.log(err);
+      return response;
     }
     return response;
   },
@@ -31,4 +42,3 @@ axiosAuth.interceptors.response.use(
   }
 );
 export default axiosAuth;
-

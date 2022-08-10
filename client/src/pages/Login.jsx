@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import axios from "axios";
+import axios from "services/authAxios";
 import { loginRoute } from "../utils/APIRoutes";
 
 function Login() {
@@ -52,18 +52,12 @@ function Login() {
 
   const handleValidation = () => {
     if (username === "") {
-      toast.error(
-        "Username is required",
-        toastOptions
-      );
+      toast.error("Username is required", toastOptions);
       return false;
     }
 
     if (password === "") {
-      toast.error(
-        "Password is required",
-        toastOptions
-      );
+      toast.error("Password is required", toastOptions);
       return false;
     }
 
@@ -92,7 +86,6 @@ function Login() {
           <button type="submit">Login</button>
           <span>
             Don't have an acocunt ? <Link to="/login">Register</Link>
-
           </span>
         </form>
       </FormContainer>
