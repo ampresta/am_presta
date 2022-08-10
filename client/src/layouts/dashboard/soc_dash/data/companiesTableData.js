@@ -4,7 +4,7 @@ import MDAvatar from "components/MDAvatar";
 import MDTypography from "components/MDTypography";
 
 // axios
-import axios from "axios";
+import axios from "services/authAxios";
 
 //Api Routes
 import { topCompaniesRoute, baseURL } from "utils/APIRoutes";

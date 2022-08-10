@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "services/authAxios";
 import { useEffect, useState } from "react";
 import { graphsRoute } from "utils/APIRoutes";
 

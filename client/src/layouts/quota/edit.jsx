@@ -13,7 +13,7 @@ import MDTypography from "components/MDTypography";
 import { useState } from "react";
 
 // Axios
-import axios from "axios";
+import axios from "services/authAxios";
 
 import { useEffect } from "react";
 import { allPartnersRoute } from "utils/APIRoutes";

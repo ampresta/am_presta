@@ -12,7 +12,7 @@ import { useState, useEffect } from "react";
 import { dateFormat } from "utils/Helper";
 
 // Api Endpoint
-import axios from "axios";
+import axios from "services/authAxios";
 import { allRequestsRoute, baseURL, DeleteInstances } from "utils/APIRoutes";
 
 // ConfirmPoppup component

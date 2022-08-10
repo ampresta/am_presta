@@ -10,7 +10,7 @@ import Icon from "@mui/material/Icon";
 import { useState, useEffect } from "react";
 
 // Axios
-import axios from "axios";
+import axios from "services/authAxios";
 
 // Api Endpoint
 import { allDepartmentsRoute, DeleteInstances } from "utils/APIRoutes";

@@ -8,7 +8,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 // Api Endpoint
-import axios from "axios";
+import axios from "services/authAxios";
 import { baseURL } from "utils/APIRoutes";
 import { SessionsofSociete } from "utils/APIRoutes";
 import { AcceptRequestRoute } from "utils/APIRoutes";

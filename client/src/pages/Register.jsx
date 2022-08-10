@@ -4,7 +4,7 @@ import styled from "styled-components";
 // import Logo from "../assets/logo.svg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import axios from "axios";
+import axios from "services/authAxios";
 import { registerRoute } from "../utils/APIRoutes";
 
 function Register() {
