@@ -4,17 +4,11 @@ const { Societe, Collaborateur, Quota, Provider } = db.models;
 module.exports = async (req, res) => {
   filters = {};
   filters.include = {
-    model: Collaborateur,
-    attributes: ["nom", "prenom"],
-    where: {
-      admin: true,
-    },
-  };
-  filters.include = {
     model: Quota,
     attributes: ["quota"],
     include: {
       model: Provider,
+      required: true,
       attributes: ["nom"],
     },
   };

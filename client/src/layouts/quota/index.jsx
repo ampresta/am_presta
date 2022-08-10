@@ -30,6 +30,7 @@ function Overview() {
   useEffect(() => {
     const getAllCompanies = async () => {
       const { data } = await axios.get(AllQuotaSocRoute);
+	    console.log(data);
       setAllCompanies((prev) => data.msg);
       return;
     };

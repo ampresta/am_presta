@@ -13,7 +13,7 @@ module.exports = async (req, res) => {
       return res.send({ status: false, msg: "No user" });
     }
     accesstoken = sign(
-      { user_id: payload.id, type: payload.type },
+      { user_id: payload.user_id, type: payload.type },
       process.env.JWTSALT,
       {
         expiresIn: "15m",
@@ -27,7 +27,11 @@ module.exports = async (req, res) => {
         expiresIn: "7d",
       }
     );
-    res.cookie("jbid", refreshtoken, { httpOnly: true });
+    res.cookie("jbid", refreshtoken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
+    });
     return res.json({ accesstoken: accesstoken });
   } catch (err) {
     console.log(err);

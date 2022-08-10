@@ -24,6 +24,9 @@ const Cours = (db) => {
       },
     },
     {
+      Sequelize,
+      paranoid: true,
+      deletedAt: "deletedAt",
       hooks: {
         beforeCreate: async (cours, options) => {
           if (!cours.image) {
@@ -49,11 +52,6 @@ const Cours = (db) => {
           operator: "gin_trgm_ops",
         },
       ],
-    },
-    {
-      Sequelize,
-      paranoid: true,
-      deletedAt: "deletedAt",
     }
   );
 };
