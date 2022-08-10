@@ -50,8 +50,8 @@ function Basic() {
     const res = authService.login(username, password);
     res.then((data) => {
       if (data.status) {
-        console.log(res);
-        navigate("/dashboard");
+        
+        // navigate("/dashboard");
       }
     });
   };
