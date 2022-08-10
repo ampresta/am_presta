@@ -73,14 +73,14 @@ module.exports = async (req, res) => {
     console.log(filters);
     try {
       const cours = await Cours.findAll(filters); // Implementing search
-      return res.json(cours);
+      return res.send({ status: true, cours });
     } catch (err) {
       console.log(err);
-      return res.send({ status: "error" });
+      return res.send({ status: false });
     }
   } else {
     console.log(filters);
     const cours = await Cours.findAll(filters); // Implementing search
-    return res.json(cours);
+    return res.send({ status: true, cours });
   }
 };
