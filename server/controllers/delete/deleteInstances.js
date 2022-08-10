@@ -19,14 +19,20 @@ module.exports = async (req, res) => {
   } else {
     return res.sendStatus(404);
   }
+  const associations = Model.associations;
   try {
-    Object.keys(Model.associations).forEach((key) => {
-      console.log(key);
-    });
-    // await Model.destroy({ where: { id } });
+    // Object.keys(associations).forEach((key) => {
+    //   if (associations[key].options.onDelete === "CASCADE") {
+    //     // associations[key].destroy(wher)
+    //     console.log(associations[key].options);
+    //   }
+    // });
+
+    await Model.destroy({ where: { id } });
 
     return res.send({ status: true, msg: "deleted" });
   } catch (err) {
+    console.log(err);
     return res.send({ status: false, err });
   }
 };

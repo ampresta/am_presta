@@ -17,6 +17,7 @@ module.exports = async (req, res) => {
     },
     {
       model: Provider,
+      required: true,
       attributes: ["id", "nom", "image"],
     },
   ];
