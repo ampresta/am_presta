@@ -22,9 +22,7 @@ module.exports = (db) => {
     through: Session_Collab,
   });
   // Departement Collab
-  Departement.hasMany(Collaborateur, {
-    onDelete: "CASCADE",
-  });
+  Departement.hasMany(Collaborateur);
   Collaborateur.belongsTo(Departement);
   // Societe Departement
   Societe.hasMany(Departement, {
