@@ -1,4 +1,4 @@
-const { Op } = require("sequelize");
+const { col, fn } = require("sequelize");
 const sequelize = require("../../config/database");
 const db = require("../../config/database");
 const { Cours, Provider } = db.models;
@@ -15,7 +15,7 @@ module.exports = async (req, res) => {
       },
     ],
     attributes: {
-      include: [[sequelize.fn("count", "Cours.id"), "course_num"]],
+      include: [[fn("count", col("Cours.id")), "course_num"]],
     },
   }); // Implementing search
   return res.json(providers);
