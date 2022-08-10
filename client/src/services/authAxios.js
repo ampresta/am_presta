@@ -31,4 +31,3 @@ axiosAuth.interceptors.response.use(
   }
 );
 export default axiosAuth;
-

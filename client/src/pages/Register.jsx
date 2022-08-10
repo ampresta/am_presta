@@ -107,7 +107,6 @@ function Register() {
       <FormContainer>
         <form onSubmit={(event) => handleSubmit(event)}>
           <div className="brand">
-
             <h1>snappy</h1>
           </div>
           <input

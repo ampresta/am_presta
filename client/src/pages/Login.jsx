@@ -52,18 +52,12 @@ function Login() {
 
   const handleValidation = () => {
     if (username === "") {
-      toast.error(
-        "Username is required",
-        toastOptions
-      );
+      toast.error("Username is required", toastOptions);
       return false;
     }
 
     if (password === "") {
-      toast.error(
-        "Password is required",
-        toastOptions
-      );
+      toast.error("Password is required", toastOptions);
       return false;
     }
 
@@ -92,7 +86,6 @@ function Login() {
           <button type="submit">Login</button>
           <span>
             Don't have an acocunt ? <Link to="/login">Register</Link>
-
           </span>
         </form>
       </FormContainer>

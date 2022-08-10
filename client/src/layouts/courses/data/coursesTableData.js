@@ -29,7 +29,7 @@ export default function Data() {
   const [controller] = useMaterialUIController();
 
   const { updater } = controller;
-  
+
   useEffect(() => {
     const getAllCourses = async () => {
       const { data } = await axios.get(allCoursesRoute);
