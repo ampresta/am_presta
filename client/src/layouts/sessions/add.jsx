@@ -53,30 +53,23 @@ function AddSession({ closeAddModel }) {
   });
 
   const [courses, setCourses] = useState([]);
-	
 
-  const [loading, setLoading] = useState(false);
-	
   useEffect(() => {
     const getAllData = async () => {
       const { data } = await axios.get(allCompanyCoursesRoute);
-	    console.log("jat l3rossa")
-      // let allCourses = [];
-      // data.map((res) => allCourses.push({ id: res.id, nom: res.nom }));
+      console.log("jat l3rossa");
       console.log(data.cours);
-	    setCourses(data.cours);
-	    setLoading(true)
+      setCourses(data.cours);
     };
     getAllData();
   }, []);
-
 
   const [controller, dispatch] = useMaterialUIController();
 
   const { updater } = controller;
 
   const handleSubmit = async (event) => {
-    const { course, company, nom, dateDepart, dateFin } = session;
+    const { course, nom, dateDepart, dateFin } = session;
     event.preventDefault();
     setFormErrors(validate(session));
     if (Object.keys(validate(session)).length === 0) {
@@ -85,7 +78,6 @@ function AddSession({ closeAddModel }) {
         datedebut: dateDepart,
         datefin: dateFin,
         cours: course.id,
-        
       });
       if (data.status) {
         closeAddModel(false);
@@ -126,13 +118,20 @@ function AddSession({ closeAddModel }) {
     }
     return errors;
   };
-const courses_inchallah = loading ? 
-                (courses.map((course) => (
-			   <MenuItem key={course.id} value={course}>
-                      {course.nom}
-                    </MenuItem>
-                  )))
-    : <span> No Courses </span>
+
+  const courses_ToBe_Selected =
+    courses.length !== 0 ? (
+      courses.map((course) => (
+        <MenuItem key={course.id} value={course}>
+          {course.nom}
+        </MenuItem>
+      ))
+    ) : (
+      <MDTypography variant="text" sx={{ color: "#2b85eb" }}>
+        No Courses !
+      </MDTypography>
+    );
+
   return (
     <Card sx={{ mt: "50px" }}>
       <MDBox
@@ -211,7 +210,7 @@ const courses_inchallah = loading ?
                     />
                   }
                 >
-	  {courses_inchallah}
+                  {courses_ToBe_Selected}
                 </Select>
                 <FormHelperText error>{formErrors.course}</FormHelperText>
               </FormControl>
