@@ -26,6 +26,7 @@ axiosAuth.interceptors.response.use(
           const data = await axiosAuth.get(refreshRoute);
           console.log(data.data);
           if (data.data.accesstoken) {
+            localStorage.removeItem("user");
             localStorage.setItem("user", JSON.stringify(data.data));
           }
         }
