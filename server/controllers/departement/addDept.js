@@ -2,12 +2,12 @@ const db = require("../../config/database");
 const { Departement } = db.models;
 module.exports = async (req, res) => {
   try {
-    const { nom, societe } = req.body;
+    const { nom } = req.body;
 
-    if (!nom || !societe) {
+    if (!nom) {
       return res.sendStatus(403);
     }
-    const departement = await Departement.create({ nom, id: societe });
+    const departement = await Departement.create({ nom, id: req.societe });
   } catch (err) {
     console.log(err);
     return res.sendStatus(403);
