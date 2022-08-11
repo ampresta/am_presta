@@ -57,7 +57,7 @@ function Courses() {
         );
         columns = [
           "nom",
-          "providerID",
+          "provider",
           "description",
           "collabs",
           "sessions",
@@ -151,7 +151,10 @@ function Courses() {
                       variant="gradient"
                       color="info"
                       size="small"
-                      onClick={() => navigate("/csv")}
+                      onClick={() => {
+                        localStorage.setItem("uploadType", "courses");
+                        navigate("/csv");
+                      }}
                     >
                       upload csv
                     </MDButton>

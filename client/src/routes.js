@@ -79,7 +79,7 @@ const routes = [
     component: <Departments />,
   },
   {
-    type: "collapse",
+    // type: "collapse",
     name: "csv",
     key: "csv",
     icon: <Icon fontSize="small">apartment</Icon>,

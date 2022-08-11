@@ -24,9 +24,52 @@ import AddPartner from "./add";
 import partnersTableData from "layouts/partners/data/partnersTableData";
 import MDButton from "components/MDButton";
 
+import Papa from "papaparse";
+import { useNavigate } from "react-router-dom";
+
 function Partners() {
-  const { columns, rows, confirmation } = partnersTableData();
+  const navigate = useNavigate();
+  const { columns, rows, confirmation, rawData } = partnersTableData();
   const [openAddModel, setOpenAddModel] = useState(false);
+
+  console.log(rawData);
+
+  const handleDownload = (title, type) => {
+    if (rawData.length > 0) {
+      let data = [];
+      let columns = [];
+      if (type === "export") {
+        rawData.map((row) =>
+          data.push({
+            id: row.id,
+            nom: row.nom,
+            course_num: row.course_num,
+            createdAt: row.createdAt,
+          })
+        );
+        columns = ["id", "nom", "course_num", "createdAt"];
+      }
+      if (type === "template") {
+        columns = ["nom"];
+        let blank = {};
+        columns.map((header) => (blank.header = ""));
+        data.push(blank);
+      }
+
+      const csv = Papa.unparse(data, {
+        header: true,
+        delimiter: ", ",
+        columns: columns,
+      });
+      const blob = new Blob([csv]);
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob, { type: "text/plain" });
+      a.download = `${title}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+  };
 
   return (
     <DashboardLayout>
@@ -63,6 +106,43 @@ function Partners() {
                         add
                       </Icon>
                       add partner
+                    </MDButton>
+                  </MDBox>
+                  <MDBox ml={3} py={1.9} px={2} mt={3}>
+                    <MDButton
+                      variant="gradient"
+                      color="info"
+                      size="small"
+                      onClick={() => handleDownload("allProviders", "export")}
+                    >
+                      Export
+                    </MDButton>
+                  </MDBox>
+
+                  <MDBox ml={3} py={1.9} px={2} mt={3}>
+                    <MDButton
+                      variant="gradient"
+                      color="info"
+                      size="small"
+                      onClick={() =>
+                        handleDownload("addProviderTemplate", "template")
+                      }
+                    >
+                      Download Template
+                    </MDButton>
+                  </MDBox>
+
+                  <MDBox ml={3} py={1.9} px={2} mt={3}>
+                    <MDButton
+                      variant="gradient"
+                      color="info"
+                      size="small"
+                      onClick={() => {
+                        localStorage.setItem("uploadType", "providers");
+                        navigate("/csv");
+                      }}
+                    >
+                      upload csv
                     </MDButton>
                   </MDBox>
                 </Grid>

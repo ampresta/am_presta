@@ -13,7 +13,6 @@ import { useState, useEffect } from "react";
 import { useMaterialUIController } from "context";
 
 // Axios
-import axios from "services/authAxios";
 // @mui icons
 import Icon from "@mui/material/Icon";
 import { dateFormat } from "utils/Helper";
@@ -21,6 +20,7 @@ import { dateFormat } from "utils/Helper";
 // ConfirmPoppup component
 import ConfirmPopup from "components/ConfirmPopup";
 import MDButton from "components/MDButton";
+import axiosAuth from "services/authAxios";
 
 export default function Data() {
   const [allCompanies, setAllCompanies] = useState([]);
@@ -33,14 +33,14 @@ export default function Data() {
 
   useEffect(() => {
     const getAllCompanies = async () => {
-      const { data } = await axios.get(allCompaniesRoute);
+      const { data } = await axiosAuth.get(allCompaniesRoute);
       setAllCompanies((prev) => data.msg);
     };
     getAllCompanies();
   }, [updater]);
 
   const handleDelete = async (id) => {
-    const { data } = await axios.post(DeleteInstances, {
+    const { data } = await axiosAuth.post(DeleteInstances, {
       model: "societe",
       id: id,
     });
