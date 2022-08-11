@@ -7,6 +7,5 @@ const checkSociete = require("../middlewares/checkSociete");
 
 router.use(checkSociete);
 router.post("/add", addDept);
-router.get("/browse", browseDept);
 
 module.exports = router;

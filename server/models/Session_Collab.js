@@ -6,15 +6,6 @@ const Session_Collab = (db) => {
     {
       // Model attributes are defined here
 
-      proof_fin: {
-        type: Sequelize.STRING,
-      },
-      proof_certif: {
-        type: Sequelize.STRING,
-      },
-      date_fin: {
-        type: Sequelize.DATE,
-      },
       score: {
         type: Sequelize.INTEGER,
       },

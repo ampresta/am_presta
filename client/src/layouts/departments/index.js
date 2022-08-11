@@ -12,7 +12,7 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import DataTable from "examples/Tables/DataTable";
 
 //import Hook
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -23,11 +23,12 @@ import AddDepartement from "./add";
 // Data
 import departementsTableData from "layouts/departments/data/departmentsTableData";
 import MDButton from "components/MDButton";
+import { allDepartmentsRoute } from "utils/APIRoutes";
+import axios from "services/authAxios";
 
-function Partners() {
+function Departments() {
   const { columns, rows, confirmation } = departementsTableData();
   const [openAddModel, setOpenAddModel] = useState(false);
-
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -85,4 +86,4 @@ function Partners() {
   );
 }
 
-export default Partners;
+export default Departments;

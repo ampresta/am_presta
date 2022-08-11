@@ -14,13 +14,21 @@ module.exports = (db) => {
     Challenge,
     Cours,
     SuperAdmin,
+    Proof,
   } = db.models;
+
+  // Session Collabs
   Session.belongsToMany(Collaborateur, {
     through: Session_Collab,
   });
   Collaborateur.belongsToMany(Session, {
     through: Session_Collab,
   });
+  // Session_Collab Proof
+  Session_Collab.hasMany(Proof);
+  Proof.belongsTo(Session_Collab, { as: "certifs" });
+  Session_Collab.hasMany(Proof);
+  Proof.belongsTo(Session_Collab, { as: "fincourse" });
   // Departement Collab
   Departement.hasMany(Collaborateur);
   Collaborateur.belongsTo(Departement);

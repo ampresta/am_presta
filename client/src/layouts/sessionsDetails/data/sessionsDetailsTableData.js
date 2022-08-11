@@ -7,26 +7,32 @@ import MDAvatar from "components/MDAvatar";
 import { useState, useEffect } from "react";
 
 // Axios
-import axiosAuth from "services/authAxios";
+import axios from "services/authAxios";
 
 // Api Endpoint
-import { baseURL, allSessionsRoute } from "utils/APIRoutes";
+import { baseURL, SessionGraph, SessionCollab } from "utils/APIRoutes";
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController } from "context";
 
 export default function Data() {
-  const [allSessions, setAllSessions] = useState([]);
+  const [allCollabs, setAllCollabs] = useState([]);
+  const [graph, setGraph] = useState([]);
 
   const [controller] = useMaterialUIController();
   const { updater } = controller;
 
   useEffect(() => {
-    const getAllSessions = async () => {
-      const { data } = await axiosAuth.get(allSessionsRoute);
-      setAllSessions((prev) => data);
+    const getGraph = async () => {
+      const { data } = await axios.get(SessionGraph);
+      setGraph(data);
     };
-    getAllSessions();
+    const getCollab = async () => {
+      const { data } = await axios.get(SessionCollab);
+      setAllCollabs(data);
+    };
+    getGraph();
+    getCollab();
   }, [updater]);
 
   const Company = ({ image, name }) => (
@@ -53,7 +59,7 @@ export default function Data() {
     rows: [],
   };
 
-  allSessions.map((session) =>
+  graph.map((session) =>
     sessionsDetails.rows.push({
       author: <Company image={session.Cour.image} name={session.nom} />,
     })

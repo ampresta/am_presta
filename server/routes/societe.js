@@ -1,3 +1,4 @@
+const browseDept = require("../controllers/departement/browseDept");
 const addSociete = require("../controllers/societe/addSociete");
 const associateAdminSociete = require("../controllers/societe/associateAdminSociete");
 const browseCollab = require("../controllers/societe/browseCollab");
@@ -14,12 +15,12 @@ router.post("/add", addSociete);
 router.all("/browse", browseSociete);
 router.post("/assign", associateAdminSociete);
 
-router.use("/addcollab", checkSociete);
+router.use(checkSociete);
 router.post("/addcollab", CreateCollabsforSociete);
 
-router.use("/browserequests", checkSociete);
 router.get("/browserequests", browseRequests);
 
-router.use("/browsecollabs", checkSociete);
 router.get("/browsecollabs", browseCollab);
+
+router.all("/browsedepts", browseDept);
 module.exports = router;

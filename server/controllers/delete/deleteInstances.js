@@ -1,5 +1,13 @@
 const db = require("../../config/database");
-const { Request, Societe, Provider, Cours, Collaborateur, Session } = db.models;
+const {
+  Departement,
+  Request,
+  Societe,
+  Provider,
+  Cours,
+  Collaborateur,
+  Session,
+} = db.models;
 module.exports = async (req, res) => {
   const { model, id } = req.body;
   if (model == "cours") {
@@ -14,12 +22,12 @@ module.exports = async (req, res) => {
     Model = Request;
   } else if (model == "Session") {
     Model = Session;
-  } else if (model == "Departements") {
+  } else if (model == "Departement") {
     Model = Departement;
   } else {
     return res.sendStatus(404);
   }
-  const associations = Model.associations;
+  // const associations = Model.associations;
   try {
     // Object.keys(associations).forEach((key) => {
     //   if (associations[key].options.onDelete === "CASCADE") {

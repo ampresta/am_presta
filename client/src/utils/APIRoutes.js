@@ -37,8 +37,8 @@ export const AllQuotaSocRoute = `${baseURL}/quota/browsesoc`;
 export const AddQuotaRoute = `${baseURL}/quota/add`;
 
 // Departments
-export const allDepartmentsRoute = `${baseURL}/departement/browseDept`;
-export const addDepartementRoute = `${baseURL}/departement/addDept`;
+export const allDepartmentsRoute = `${baseURL}/societe/browsedepts`;
+export const addDepartementRoute = `${baseURL}/dept/add`;
 
 //DeleteInstances
 export const DeleteInstances = `${baseURL}/delete`;
@@ -49,3 +49,6 @@ export const AcceptRequestRoute = `${baseURL}/collab/addsession`;
 
 //Upload images
 export const uploadRoute = `${baseURL}/upload`;
+// Session Details
+export const SessionGraph = `${baseURL}/session/graph`;
+export const SessionCollabRoute = `${baseURL}/session/collab`;

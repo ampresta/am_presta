@@ -33,8 +33,7 @@ export default function Data() {
   useEffect(() => {
     const getAllDepartements = async () => {
       const { data } = await axios.get(allDepartmentsRoute);
-      console.log(data);
-      setAllDepartements((prev) => data);
+      setAllDepartements(data.data);
     };
     getAllDepartements();
   }, [updater]);
@@ -104,12 +103,12 @@ export default function Data() {
       author: <Company name={department.nom} />,
       Number_of_students: (
         <MDTypography variant="caption" color="text" fontWeight="medium">
-          {12}
+          {department.collab_count}
         </MDTypography>
       ),
       Number_of_challenges: (
         <MDTypography variant="caption" color="text" fontWeight="medium">
-          {12}
+          {department.challenge_count}
         </MDTypography>
       ),
       edit: (

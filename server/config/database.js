@@ -18,6 +18,7 @@ sequelize.query("CREATE EXTENSION IF NOT EXISTS pg_trgm", { raw: true });
 models = [
   require("../models/Request"),
   require("../models/Challenge"),
+  require("../models/Proofs"),
   require("../models/Challenge_collab"),
   require("../models/Collaborateur"),
   require("../models/Departement"),
@@ -31,7 +32,6 @@ models = [
   require("../models/Cours"),
 ];
 for (model of models) {
-  console.log(model);
   model(sequelize);
 }
 // Set Associations

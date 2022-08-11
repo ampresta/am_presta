@@ -1,12 +1,41 @@
-const sequelize = require("../../config/database");
+const sequelize = require("sequelize");
 const db = require("../../config/database");
-const { Departement } = db.models;
+const { Departement, Challenge, Collaborateur } = db.models;
 module.exports = async (req, res) => {
-  const departements = await Departement.findAll({
-    group: ["Departement.id"],
-    includeIgnoreAttributes: false,
-    Where: { SocieteId: req.societe },
-  }); // Implementing search
+  try {
+    const departements = await Departement.findAll({
+      include: [
+        {
+          model: Collaborateur,
+          attributes: [],
+        },
+        {
+          model: Challenge,
+          attributes: [],
+          through: {
+            attributes: [],
+          },
+        },
+      ],
+      attributes: {
+        include: [
+          [
+            sequelize.fn("count", sequelize.col("Collaborateurs.id")),
+            "collab_count",
+          ],
+          [
+            sequelize.fn("count", sequelize.col("Challenges.id")),
+            "challenge_count",
+          ],
+        ],
+      },
+      where: { SocieteId: req.societe },
+      group: ["Departement.id"],
+    }); // Implementing search
+    return res.send({ status: true, data: departements });
+  } catch (err) {
+    console.log(err);
 
-  return res.json(departements);
+    return res.send({ status: false });
+  }
 };

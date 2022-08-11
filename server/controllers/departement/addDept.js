@@ -7,7 +7,10 @@ module.exports = async (req, res) => {
     if (!nom) {
       return res.sendStatus(403);
     }
-    const departement = await Departement.create({ nom, id: req.societe });
+    const departement = await Departement.create({
+      nom,
+      SocieteId: req.societe,
+    });
   } catch (err) {
     console.log(err);
     return res.sendStatus(403);

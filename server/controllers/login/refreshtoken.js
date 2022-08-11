@@ -17,7 +17,7 @@ module.exports = async (req, res) => {
       { user_id: payload.user_id, type: payload.type },
       process.env.JWTSALT,
       {
-        expiresIn: "15s",
+        expiresIn: "15m",
       }
     );
 
