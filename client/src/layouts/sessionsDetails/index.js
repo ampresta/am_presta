@@ -12,13 +12,13 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import DataTable from "examples/Tables/DataTable";
 import PieChart from "examples/Charts/PieChart";
-// import DefaultDoughnutChart from "examples/Charts/DoughnutCharts/DefaultDoughnutChart";
 
 // Data
 import sessionsDetailsTableData from "layouts/sessionsDetails/data/sessionsDetailsTableData";
 
 // static huawei image
 import huawei from "assets/images/huawei-logo.png";
+import MDBadge from "components/MDBadge";
 
 function Partners() {
   const { columns, rows } = sessionsDetailsTableData();
@@ -38,20 +38,26 @@ function Partners() {
           <Grid container spacing={2} rowSpacing={2}>
             <Grid item xs={12} md={7} lg={9}>
               <Card>
+                <MDAvatar
+                  src={huawei}
+                  size="xl"
+                  sx={{
+                    border: "3.5px solid #227be9",
+                    ml: 4,
+                    mt: 1,
+                  }}
+                />
                 <MDBox
                   mx={2}
-                  mt={-3}
+                  mt={-6}
                   py={3}
                   px={2}
                   variant="gradient"
                   bgColor="info"
                   borderRadius="lg"
                   coloredShadow="info"
-                  display="flex"
-                  alignItems="center"
                 >
-                  <MDAvatar src={huawei} size="xl" />
-                  <MDTypography variant="h6" color="white" ml={2}>
+                  <MDTypography variant="h6" color="white" ml={11}>
                     HCIA - Big Data
                   </MDTypography>
                 </MDBox>
@@ -69,10 +75,34 @@ function Partners() {
               <MDBox>
                 <Card>
                   <PieChart
-                    title="Session Results"
+                    icon={{ color: "info", component: "pie_chart" }}
+                    title="Session Stats"
                     date="just updated"
                     chart={data}
                   />
+                  <MDBox
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                  >
+                    <MDBox>
+                      <MDBadge color="success" />
+                      &nbsp;
+                      <MDTypography variant="caption">Success</MDTypography>
+                    </MDBox>
+                    <MDBox>
+                      <MDBadge color="primary" />
+                      &nbsp;
+                      <MDTypography variant="caption">Failure</MDTypography>
+                    </MDBox>
+                    <MDBox>
+                      <MDBadge color="dark" />
+                      &nbsp;
+                      <MDTypography variant="caption">
+                        Not completed
+                      </MDTypography>
+                    </MDBox>
+                  </MDBox>
                 </Card>
               </MDBox>
             </Grid>

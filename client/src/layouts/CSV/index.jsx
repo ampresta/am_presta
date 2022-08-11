@@ -5,6 +5,7 @@ import { addCoursesRoute } from "utils/APIRoutes";
 import { addPartnersRoute } from "utils/APIRoutes";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { registerRoute } from "utils/APIRoutes";
 
 // Allowed extensions for input file
 const allowedExtensions = ["csv"];
@@ -26,8 +27,12 @@ const Csv = () => {
         break;
 
       case "providers":
-        console.log("uploading courses");
         addProvider(data);
+        break;
+
+      case "companies":
+        console.log("uploading courses");
+        addCompany(data);
         break;
 
       default:
@@ -51,6 +56,24 @@ const Csv = () => {
       const { data } = await axiosAuth.post(addPartnersRoute, provider);
     });
     navigate("/partners");
+  };
+
+  const addCompany = (DATA) => {
+    DATA.map(async (company) => {
+      if (company[" confirm_password"] === company[" password"]) {
+        const { data } = await axiosAuth.post(registerRoute, {
+          username: company.username,
+          nom: company[" first_name"],
+          prenom: company[" last_name"],
+          societe: company[" company_name"],
+          email: company[" email"],
+          password: company[" password"],
+        });
+      } else {
+        console.log("password and confirm password dont match");
+      }
+    });
+    navigate("/companies");
   };
 
   const handleFileChange = (e) => {

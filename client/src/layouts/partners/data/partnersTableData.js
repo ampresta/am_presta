@@ -93,37 +93,40 @@ export default function Data() {
 
     rawData: allPartners,
   };
-
-  allPartners.map((partner) =>
-    partners.rows.push({
-      author: <Company image={partner.image} name={partner.nom} />,
-      Number_of_added_courses: (
-        <MDTypography variant="caption" color="text" fontWeight="medium">
-          {partner.course_num}
-        </MDTypography>
-      ),
-      edit: (
-        <MDTypography variant="caption" color="text" fontWeight="medium">
-          <Icon fontSize="small">edit</Icon>
-        </MDTypography>
-      ),
-      delete: (
-        <MDButton
-          variant="text"
-          onClick={() => {
-            setConfirmModel(!confirmModel);
-            setTempPartnerId(partner.id);
-          }}
-        >
+  try {
+    allPartners.map((partner) =>
+      partners.rows.push({
+        author: <Company image={partner.image} name={partner.nom} />,
+        Number_of_added_courses: (
           <MDTypography variant="caption" color="text" fontWeight="medium">
-            <Icon fontSize="small" color="primary">
-              delete
-            </Icon>
+            {partner.course_num}
           </MDTypography>
-        </MDButton>
-      ),
-    })
-  );
+        ),
+        edit: (
+          <MDTypography variant="caption" color="text" fontWeight="medium">
+            <Icon fontSize="small">edit</Icon>
+          </MDTypography>
+        ),
+        delete: (
+          <MDButton
+            variant="text"
+            onClick={() => {
+              setConfirmModel(!confirmModel);
+              setTempPartnerId(partner.id);
+            }}
+          >
+            <MDTypography variant="caption" color="text" fontWeight="medium">
+              <Icon fontSize="small" color="primary">
+                delete
+              </Icon>
+            </MDTypography>
+          </MDButton>
+        ),
+      })
+    );
+  } catch (error) {}
+
+  
 
   return partners;
 }

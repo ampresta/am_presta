@@ -21,7 +21,7 @@ function PieChart({ icon, title, description, height, chart }) {
   const { data, options } = configs(chart.labels || [], chart.datasets || {});
 
   const renderChart = (
-    <MDBox py={2} pr={2} pl={icon.component ? 1 : 2}>
+    <MDBox py={4} pl={3} pr={3}>
       {title || description ? (
         <MDBox display="flex" px={description ? 1 : 0} pt={description ? 1 : 0}>
           {icon.component && (
@@ -42,7 +42,7 @@ function PieChart({ icon, title, description, height, chart }) {
               <Icon fontSize="medium">{icon.component}</Icon>
             </MDBox>
           )}
-          <MDBox mt={icon.component ? -2 : 0}>
+          <MDBox mt={-2}>
             {title && <MDTypography variant="h6">{title}</MDTypography>}
             <MDBox mb={2}>
               <MDTypography component="div" variant="button" color="text">
@@ -71,7 +71,7 @@ PieChart.defaultProps = {
   icon: { color: "info", component: "" },
   title: "",
   description: "",
-  height: "18rem",
+  height: "17rem",
 };
 
 // Typechecking props for the PieChart

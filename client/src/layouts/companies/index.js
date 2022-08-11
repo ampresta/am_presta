@@ -24,9 +24,65 @@ import MDButton from "components/MDButton";
 //Add companies component
 import AddCompanies from "./add";
 
+import Papa from "papaparse";
+import { useNavigate } from "react-router-dom";
+
 function Companies() {
-  const { columns, rows, confirmation } = companiesTableData();
+  const navigate = useNavigate()
+  const { columns, rows, confirmation, rawData } = companiesTableData();
   const [openAddModel, setOpenAddModel] = useState(false);
+
+  const handleDownload = (title, type) => {
+    if (rawData.length > 0) {
+      let data = [];
+      let columns = [];
+      if (type === "export") {
+        rawData.map((row) =>
+          data.push({
+            id: row.id,
+            company_name: row.name,
+            admin_first_name: row.Collaborateurs[0].nom,
+            admin_last_name: row.Collaborateurs[0].prenom,
+            createdAt: row.createdAt,
+          })
+        );
+        columns = [
+          "id",
+          "company_name",
+          "admin_first_name",
+          "admin_last_name",
+          "createdAt",
+        ];
+      }
+      if (type === "template") {
+        columns = [
+          "username",
+          "first_name",
+          "last_name",
+          "company_name",
+          "email",
+          "password",
+          "confirm_password",
+        ];
+        let blank = {};
+        columns.map((header) => (blank.header = ""));
+        data.push(blank);
+      }
+
+      const csv = Papa.unparse(data, {
+        header: true,
+        delimiter: ", ",
+        columns: columns,
+      });
+      const blob = new Blob([csv]);
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob, { type: "text/plain" });
+      a.download = `${title}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+  };
 
   return (
     <DashboardLayout>
@@ -70,7 +126,7 @@ function Companies() {
                       variant="gradient"
                       color="info"
                       size="small"
-                      // onClick={() => handleDownload("allCourses", "export")}
+                      onClick={() => handleDownload("allCompanies", "export")}
                     >
                       Export
                     </MDButton>
@@ -81,9 +137,9 @@ function Companies() {
                       variant="gradient"
                       color="info"
                       size="small"
-                      // onClick={() =>
-                        // handleDownload("addCourseTemplate", "template")
-                      // }
+                      onClick={() =>
+                        handleDownload("addCompanyTemplate", "template")
+                      }
                     >
                       Download Template
                     </MDButton>
@@ -94,7 +150,10 @@ function Companies() {
                       variant="gradient"
                       color="info"
                       size="small"
-                      // onClick={() => navigate("/csv")}
+                      onClick={() => {
+                        localStorage.setItem("uploadType", "companies");
+                        navigate("/csv");
+                      }}
                     >
                       upload csv
                     </MDButton>

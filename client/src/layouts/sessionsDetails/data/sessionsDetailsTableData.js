@@ -2,6 +2,7 @@
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
+import MDBadge from "components/MDBadge";
 
 //React hooks
 import { useState, useEffect } from "react";
@@ -14,6 +15,8 @@ import { baseURL, SessionGraph, SessionCollab } from "utils/APIRoutes";
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController } from "context";
+import { dateFormat } from "utils/Helper";
+import MDButton from "components/MDButton";
 
 export default function Data() {
   const [allCollabs, setAllCollabs] = useState([]);
@@ -51,8 +54,32 @@ export default function Data() {
       {
         Header: "Collborators",
         accessor: "author",
-        width: "45%",
+        width: "20%",
         align: "left",
+      },
+      {
+        Header: "fin cours",
+        accessor: "fin_cours",
+        width: "20%",
+        align: "center",
+      },
+      {
+        Header: "fin session",
+        accessor: "fin_session",
+        width: "20%",
+        align: "center",
+      },
+      {
+        Header: "status",
+        accessor: "status",
+        width: "10%",
+        align: "center",
+      },
+      {
+        Header: "proof",
+        accessor: "proof",
+        width: "10%",
+        align: "center",
       },
     ],
 
@@ -61,7 +88,21 @@ export default function Data() {
 
   graph.map((session) =>
     sessionsDetails.rows.push({
-      author: <Company image={session.Cour.image} name={session.nom} />,
+      author: <Company image={session.Cour.image} name={"Smhamad rachid"} />,
+      fin_cours: (
+        <MDTypography variant="caption" color="text" fontWeight="medium">
+          {dateFormat("20-08-2022")}
+        </MDTypography>
+      ),
+      fin_session: (
+        <MDTypography variant="caption" color="text" fontWeight="medium">
+          {dateFormat("31-08-2022")}
+        </MDTypography>
+      ),
+      status: (
+        <MDBadge badgeContent="Actif" color="success" size="lg" gradiant />
+      ),
+      proof: <MDButton color="info">proof</MDButton>,
     })
   );
 
