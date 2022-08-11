@@ -57,7 +57,7 @@ function Courses() {
         );
         columns = [
           "nom",
-          "provider",
+          "providerID",
           "description",
           "collabs",
           "sessions",
