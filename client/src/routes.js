@@ -11,6 +11,7 @@ import SignIn from "layouts/authentication/sign-in";
 // @mui icons
 import Icon from "@mui/material/Icon";
 import Logout from "layouts/authentication/logout";
+import Csv from "layouts/CSV";
 
 const routes = [
   {
@@ -76,6 +77,14 @@ const routes = [
     icon: <Icon fontSize="small">apartment</Icon>,
     route: "/departments",
     component: <Departments />,
+  },
+  {
+    type: "collapse",
+    name: "csv",
+    key: "csv",
+    icon: <Icon fontSize="small">apartment</Icon>,
+    route: "/csv",
+    component: <Csv />,
   },
   {
     type: "collapse",
