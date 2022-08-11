@@ -8,11 +8,11 @@ import Requests from "layouts/requests";
 import Departments from "layouts/departments";
 import SessionsDetails from "layouts/sessionsDetails";
 import SignIn from "layouts/authentication/sign-in";
+import Logout from "layouts/authentication/logout";
+import Csv from "layouts/CSV";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
-import Logout from "layouts/authentication/logout";
-import Csv from "layouts/CSV";
 
 const routes = [
   {
