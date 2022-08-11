@@ -11,6 +11,6 @@ module.exports = (req, res, next) => {
     payload = verify(token, process.env.JWTSALT);
     return next();
   } catch (err) {
-    return res.send({ msg: "stuck in middleware", err });
+    return res.sendStatus(401);
   }
 };

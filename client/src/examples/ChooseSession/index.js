@@ -70,7 +70,7 @@ function Sessions({ cours, collab }) {
                     }
                   >
                     <Icon fontSize="small">arrow_back</Icon>
-                    Back
+                    &nbsp;&nbsp; Back
                   </MDButton>
                 </MDBox>
 

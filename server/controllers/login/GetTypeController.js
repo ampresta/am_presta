@@ -31,6 +31,6 @@ module.exports = async (req, res) => {
     return res.send({ status: true, type });
   } catch (err) {
     console.log(err);
-    return res.send({ status: false, err });
+    return res.sendStatus(401);
   }
 };
