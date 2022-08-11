@@ -6,6 +6,7 @@ import Sessions from "layouts/sessions";
 import Quota from "layouts/quota";
 import Requests from "layouts/requests";
 import Departments from "layouts/departments";
+import SessionsDetails from "layouts/sessionsDetails";
 import SignIn from "layouts/authentication/sign-in";
 
 // @mui icons
@@ -80,6 +81,13 @@ const routes = [
   },
   {
     type: "collapse",
+    name: "details",
+    key: "details",
+    icon: <Icon fontSize="small">check</Icon>,
+    route: "/sessions/details",
+    component: <SessionsDetails />,
+  },
+  {
     name: "csv",
     key: "csv",
     icon: <Icon fontSize="small">apartment</Icon>,
