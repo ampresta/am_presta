@@ -18,7 +18,6 @@ const deleteInstances = require("./controllers/delete/deleteInstances");
 
 const collaborateur = require("./routes/collaborateur");
 const quota = require("./routes/quota");
-const csv = require("./routes/csv");
 const GetTypeController = require("./controllers/login/GetTypeController");
 //Database Setup
 try {
@@ -65,7 +64,6 @@ app.use("/api/cours", cours);
 app.use("/api/dashboard", dashboard);
 app.use("/api/provider", provider);
 app.use("/api/collab", collaborateur);
-app.use("/api/csv", csv);
 app.post("/api/upload", upload.single("image"), handleUpload);
 app.post("/api/delete", deleteInstances);
 app.use("/api/media", express.static("media"));

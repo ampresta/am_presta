@@ -40,38 +40,48 @@ function Courses() {
 
   const [openAddModel, setOpenAddModel] = useState(false);
 
-  const handleDownload = (title) => {
+  const handleDownload = (title, type) => {
     if (rawData.length > 0) {
-      const data = [];
-      rawData.map((row) =>
-        data.push({
-          nom: row.nom,
-          provider: row.Provider.nom,
-          description: row.description,
-          collabs: row.collabs,
-          sessions: row.sessions,
-          createdAt: row.createdAt,
-        })
-      );
-      console.log(data);
-      const csv = Papa.unparse(data, {
-        header: true,
-        delimiter: ", ",
-        columns: [
+      let data = [];
+      let columns = [];
+      if (type === "export") {
+        rawData.map((row) =>
+          data.push({
+            nom: row.nom,
+            provider: row.Provider.nom,
+            description: row.description,
+            collabs: row.collabs,
+            sessions: row.sessions,
+            createdAt: row.createdAt,
+          })
+        );
+        columns = [
           "nom",
           "provider",
           "description",
           "collabs",
           "sessions",
           "createdAt",
-        ],
+        ];
+      }
+      if (type === "template") {
+        columns = ["nom", "provider", "description"];
+        let blank = {};
+        columns.map((header) => blank.header = "");
+        data.push(blank);
+      }
+
+      const csv = Papa.unparse(data, {
+        header: true,
+        delimiter: ", ",
+        columns: columns,
       });
       const blob = new Blob([csv]);
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob, { type: 'text/plain' });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob, { type: "text/plain" });
       a.download = `${title}.csv`;
       document.body.appendChild(a);
-      a.click()
+      a.click();
       document.body.removeChild(a);
     }
   };
@@ -117,7 +127,7 @@ function Courses() {
                       variant="gradient"
                       color="info"
                       size="small"
-                      onClick={handleDownload}
+                      onClick={() => handleDownload("allCourses", "export")}
                     >
                       Export
                     </MDButton>
@@ -128,7 +138,9 @@ function Courses() {
                       variant="gradient"
                       color="info"
                       size="small"
-                      onClick={handleDownload}
+                      onClick={() =>
+                        handleDownload("addCourseTemplate", "template")
+                      }
                     >
                       Download Template
                     </MDButton>
