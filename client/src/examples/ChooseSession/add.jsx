@@ -67,7 +67,7 @@ function AddSession({ closeAddModel }) {
   }, []);
 
   const handleSubmit = async (event) => {
-    const { course, company, nom, dateDepart, dateFin } = session;
+    const { course, nom, dateDepart, dateFin } = session;
     event.preventDefault();
     setFormErrors(validate(session));
     if (Object.keys(validate(session)).length === 0) {

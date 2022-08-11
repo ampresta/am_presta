@@ -30,9 +30,6 @@ function reducer(state, action) {
     case "FIXED_NAVBAR": {
       return { ...state, fixedNavbar: action.value };
     }
-    case "OPEN_CONFIGURATOR": {
-      return { ...state, openConfigurator: action.value };
-    }
     case "DIRECTION": {
       return { ...state, direction: action.value };
     }
@@ -41,6 +38,9 @@ function reducer(state, action) {
     }
     case "DARKMODE": {
       return { ...state, darkMode: action.value };
+    }
+    case "REQUESTMODEL": {
+      return { ...state, openRequestModel: action.value };
     }
     case "FORCEUPDATE": {
       return { ...state, updater: action.value };
@@ -60,11 +60,11 @@ function MaterialUIControllerProvider({ children }) {
     sidenavColor: "info",
     transparentNavbar: true,
     fixedNavbar: true,
-    openConfigurator: false,
     direction: "ltr",
     layout: "dashboard",
     darkMode: false,
     updater: false,
+    openRequestModel: false,
   };
 
   const [controller, dispatch] = useReducer(reducer, initialState);
@@ -105,8 +105,6 @@ const setTransparentNavbar = (dispatch, value) =>
   dispatch({ type: "TRANSPARENT_NAVBAR", value });
 const setFixedNavbar = (dispatch, value) =>
   dispatch({ type: "FIXED_NAVBAR", value });
-const setOpenConfigurator = (dispatch, value) =>
-  dispatch({ type: "OPEN_CONFIGURATOR", value });
 const setDirection = (dispatch, value) =>
   dispatch({ type: "DIRECTION", value });
 const setLayout = (dispatch, value) => dispatch({ type: "LAYOUT", value });
@@ -114,6 +112,9 @@ const setDarkMode = (dispatch, value) => dispatch({ type: "DARKMODE", value });
 
 const setUpdater = (dispatch, value) =>
   dispatch({ type: "FORCEUPDATE", value });
+
+const setOpenRequestModel = (dispatch, value) =>
+  dispatch({ type: "REQUESTMODEL", value });
 
 export {
   MaterialUIControllerProvider,
@@ -124,9 +125,9 @@ export {
   setSidenavColor,
   setTransparentNavbar,
   setFixedNavbar,
-  setOpenConfigurator,
   setDirection,
   setLayout,
   setDarkMode,
   setUpdater,
+  setOpenRequestModel,
 };
