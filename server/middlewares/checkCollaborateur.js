@@ -17,6 +17,6 @@ module.exports = (req, res, next) => {
       return res.send({ status: false, msg: "Not a Collaborator" });
     }
   } catch (err) {
-    return res.send({ msg: "stuck in middleware", err });
+    return res.sendStatus(401);
   }
 };

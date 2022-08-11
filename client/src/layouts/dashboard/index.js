@@ -5,15 +5,15 @@ import React, { useState, useEffect } from "react";
 import { getType } from "utils/APIRoutes";
 import authService from "services/auth.service";
 
-  function Dashboard() {
+function Dashboard() {
   const [amdash, setAmdash] = useState(false);
   const [loading, setloading] = useState(false);
   useEffect(() => {
     const gettype = async () => {
       const { data } = await axios.get(getType, {
-        headers: {
-          Authorization: `Bearer ${authService.getCurrentUser()}`,
-        },
+        // headers: {
+        //   Authorization: `Bearer ${authService.getCurrentUser()}`,
+        // },
       });
       if (data.status) {
         if (data.type === "Superadmin") {
