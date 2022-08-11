@@ -87,6 +87,8 @@ export default function Data() {
         Id_Item={tempCompanyId}
       />
     ),
+
+    rawData: allCompanies,
   };
 
   allCompanies.map((company) =>

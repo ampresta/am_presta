@@ -8,7 +8,7 @@ const checkSociete = require("../middlewares/checkSociete");
 const router = require("express").Router();
 const signedin = require("../middlewares/signedin");
 
-router.use(signedin);
+// router.use(signedin);
 
 router.post("/add", addSociete);
 router.all("/browse", browseSociete);
