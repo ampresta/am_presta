@@ -18,6 +18,7 @@ const deleteInstances = require("./controllers/delete/deleteInstances");
 
 const collaborateur = require("./routes/collaborateur");
 const quota = require("./routes/quota");
+const csv = require("./routes/csv");
 const GetTypeController = require("./controllers/login/GetTypeController");
 //Database Setup
 try {
@@ -28,12 +29,14 @@ try {
 }
 
 // Middleware
-app.use(
-  cors({
-    origin: "http://127.0.0.1:3000",
-    credentials: true,
-  })
-);
+// app.use(
+//   cors({
+//     origin: "http://127.0.0.1:3000",
+//     credentials: true,
+//   })
+// );
+app.use(cors({ credentials: true, origin: "http://127.0.0.1:3000" }));
+
 app.use(morgan("tiny"));
 app.use(express.json());
 require("dotenv").config();
@@ -62,6 +65,7 @@ app.use("/api/cours", cours);
 app.use("/api/dashboard", dashboard);
 app.use("/api/provider", provider);
 app.use("/api/collab", collaborateur);
+app.use("/api/csv", csv);
 app.post("/api/upload", upload.single("image"), handleUpload);
 app.post("/api/delete", deleteInstances);
 app.use("/api/media", express.static("media"));

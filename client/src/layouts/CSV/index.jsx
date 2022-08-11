@@ -58,7 +58,7 @@ const Csv = () => {
   };
 
   return (
-    <div>
+    <div style={{ marginLeft: "50%" }}>
       <label htmlFor="csvInput" style={{ display: "block" }}>
         Enter CSV File
       </label>
@@ -66,6 +66,7 @@ const Csv = () => {
         onChange={handleFileChange}
         id="csvInput"
         name="file"
+        accept=".csv"
         type="File"
       />
       <div>
