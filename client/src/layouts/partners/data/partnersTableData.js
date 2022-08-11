@@ -90,6 +90,8 @@ export default function Data() {
         Id_Item={tempPartnerId}
       />
     ),
+
+    rawData: allPartners,
   };
 
   allPartners.map((partner) =>

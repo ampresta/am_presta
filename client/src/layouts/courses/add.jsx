@@ -18,7 +18,7 @@ import Select from "@mui/material/Select";
 import { useState } from "react";
 
 // Axios
-import axios from "services/authAxios";
+import axiosAuth from "services/authAxios";
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setUpdater } from "context";
@@ -65,7 +65,7 @@ function AddCourses({ closeAddModel }) {
 
   useEffect(() => {
     const getAllPartners = async () => {
-      const { data } = await axios.get(allPartnersRoute);
+      const { data } = await axiosAuth.get(allPartnersRoute);
       let temp = [];
       data.map((provider) => temp.push({ id: provider.id, nom: provider.nom }));
       setProviders(temp);
@@ -78,21 +78,11 @@ function AddCourses({ closeAddModel }) {
     event.preventDefault();
     setFormErrors(validate(course));
     if (Object.keys(validate(course)).length === 0) {
-      const config = {
-        method: "post",
-        url: addCoursesRoute,
-        // headers: {
-        //   Authorization: `Bearer ${authService.getCurrentUser()}`,
-        // },
-        data: {
-          nom,
-          provider: provider.id,
-          description,
-        },
-      };
-
-      const { data } = await axios(config);
-
+      const { data } = await axiosAuth.post(addCoursesRoute, {
+        nom,
+        provider: provider.id,
+        description,
+      });
       const ID = data.id;
 
       if (data.status) {
@@ -111,7 +101,7 @@ function AddCourses({ closeAddModel }) {
             data: fd,
           };
 
-          await axios(config);
+          await axiosAuth(config);
         }
 
         closeAddModel(false);

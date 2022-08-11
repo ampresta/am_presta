@@ -65,6 +65,40 @@ function Companies() {
                       add company
                     </MDButton>
                   </MDBox>
+                  <MDBox ml={3} py={1.9} px={2} mt={3}>
+                    <MDButton
+                      variant="gradient"
+                      color="info"
+                      size="small"
+                      // onClick={() => handleDownload("allCourses", "export")}
+                    >
+                      Export
+                    </MDButton>
+                  </MDBox>
+
+                  <MDBox ml={3} py={1.9} px={2} mt={3}>
+                    <MDButton
+                      variant="gradient"
+                      color="info"
+                      size="small"
+                      // onClick={() =>
+                        // handleDownload("addCourseTemplate", "template")
+                      // }
+                    >
+                      Download Template
+                    </MDButton>
+                  </MDBox>
+
+                  <MDBox ml={3} py={1.9} px={2} mt={3}>
+                    <MDButton
+                      variant="gradient"
+                      color="info"
+                      size="small"
+                      // onClick={() => navigate("/csv")}
+                    >
+                      upload csv
+                    </MDButton>
+                  </MDBox>
                 </Grid>
 
                 <MDBox>

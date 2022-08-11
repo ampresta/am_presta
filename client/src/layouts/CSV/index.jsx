@@ -2,25 +2,55 @@ import React, { useState } from "react";
 import Papa from "papaparse";
 import axiosAuth from "services/authAxios";
 import { addCoursesRoute } from "utils/APIRoutes";
+import { addPartnersRoute } from "utils/APIRoutes";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 // Allowed extensions for input file
 const allowedExtensions = ["csv"];
 
 const Csv = () => {
-  const [data, setData] = useState([]);
+  const navigate = useNavigate();
+  const uploadType = localStorage.getItem("uploadType");
 
   const [error, setError] = useState("");
 
   const [file, setFile] = useState("");
 
-  const addCourses = () => {
-    data.map((course) => {
-      const { data } = axiosAuth.post(addCoursesRoute, {
+  useEffect(() => {}, []);
+
+  const upload = (data) => {
+    switch (uploadType) {
+      case "courses":
+        addCourses(data);
+        break;
+
+      case "providers":
+        console.log("uploading courses");
+        addProvider(data);
+        break;
+
+      default:
+        break;
+    }
+  };
+
+  const addCourses = (DATA) => {
+    DATA.map(async (course) => {
+      const { data } = await axiosAuth.post(addCoursesRoute, {
         nom: course.nom,
-        provider: course[" provider"],
+        provider: course[" providerID"],
         description: course[" description"],
       });
     });
+    navigate("/courses");
+  };
+
+  const addProvider = (DATA) => {
+    DATA.map(async (provider) => {
+      const { data } = await axiosAuth.post(addPartnersRoute, provider);
+    });
+    navigate("/partners");
   };
 
   const handleFileChange = (e) => {
@@ -38,6 +68,7 @@ const Csv = () => {
       setFile(inputFile);
     }
   };
+
   const handleParse = () => {
     if (!file) return setError("Enter a valid file");
 
@@ -47,8 +78,7 @@ const Csv = () => {
       const csv = Papa.parse(target.result, { header: true });
       const parsedData = csv?.data;
       parsedData.splice(-1);
-      setData(parsedData);
-      addCourses();
+      upload(parsedData);
     };
     reader.readAsText(file);
   };

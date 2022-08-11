@@ -15,7 +15,7 @@ import PasswordTest from "components/PasswordTest";
 import { useState } from "react";
 
 // Axios
-import axios from "services/authAxios";
+import axiosAuth from "services/authAxios";
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setUpdater } from "context";
@@ -54,7 +54,7 @@ function AddCompanies({ closeAddModel }) {
     event.preventDefault();
     setFormErrors(validate(details));
     if (Object.keys(validate(details)).length === 0) {
-      const { data } = await axios.post(registerRoute, {
+      const { data } = await axiosAuth.post(registerRoute, {
         username,
         email,
         password,
@@ -78,7 +78,7 @@ function AddCompanies({ closeAddModel }) {
           data: fd,
         };
 
-        await axios(config);
+        await axiosAuth(config);
 
         closeAddModel(false);
         setUpdater(dispatch, !updater);
