@@ -65,7 +65,7 @@ function Courses() {
         ];
       }
       if (type === "template") {
-        columns = ["nom", "provider", "description"];
+        columns = ["nom", "providerID", "description"];
         let blank = {};
         columns.map((header) => (blank.header = ""));
         data.push(blank);
