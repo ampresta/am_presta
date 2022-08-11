@@ -113,7 +113,10 @@ function Partners() {
                       variant="gradient"
                       color="info"
                       size="small"
-                      onClick={() => handleDownload("allProviders", "export")}
+                      onClick={() => {
+                        console.log("export");
+                        handleDownload("allProviders", "export");
+                      }}
                     >
                       Export
                     </MDButton>
@@ -124,9 +127,10 @@ function Partners() {
                       variant="gradient"
                       color="info"
                       size="small"
-                      onClick={() =>
-                        handleDownload("addProviderTemplate", "template")
-                      }
+                      onClick={() => {
+                        console.log("template");
+                        handleDownload("addProviderTemplate", "template");
+                      }}
                     >
                       Download Template
                     </MDButton>
