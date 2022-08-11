@@ -67,7 +67,7 @@ function Courses() {
       if (type === "template") {
         columns = ["nom", "provider", "description"];
         let blank = {};
-        columns.map((header) => blank.header = "");
+        columns.map((header) => (blank.header = ""));
         data.push(blank);
       }
 
@@ -143,6 +143,17 @@ function Courses() {
                       }
                     >
                       Download Template
+                    </MDButton>
+                  </MDBox>
+
+                  <MDBox ml={3} py={1.9} px={2} mt={3}>
+                    <MDButton
+                      variant="gradient"
+                      color="info"
+                      size="small"
+                      onClick={() => navigate("/csv")}
+                    >
+                      upload csv
                     </MDButton>
                   </MDBox>
                 </Grid>
