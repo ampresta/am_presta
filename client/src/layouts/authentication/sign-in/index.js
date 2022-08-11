@@ -50,7 +50,6 @@ function Basic() {
     const res = authService.login(username, password);
     res.then((data) => {
       if (data.status) {
-        
         navigate("/dashboard");
       }
     });
@@ -75,6 +74,7 @@ function Basic() {
           mx={2}
           mt={-3}
           p={2}
+          pb={4}
           mb={1}
           textAlign="center"
         >

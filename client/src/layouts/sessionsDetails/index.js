@@ -38,20 +38,26 @@ function Partners() {
           <Grid container spacing={2} rowSpacing={2}>
             <Grid item xs={12} md={7} lg={9}>
               <Card>
+                <MDAvatar
+                  src={huawei}
+                  size="xl"
+                  sx={{
+                    border: "3.5px solid #227be9",
+                    ml: 4,
+                    mt: 1
+                  }}
+                />
                 <MDBox
                   mx={2}
-                  mt={-3}
+                  mt={-6}
                   py={3}
                   px={2}
                   variant="gradient"
                   bgColor="info"
                   borderRadius="lg"
                   coloredShadow="info"
-                  display="flex"
-                  alignItems="center"
                 >
-                  <MDAvatar src={huawei} size="xl" />
-                  <MDTypography variant="h6" color="white" ml={2}>
+                  <MDTypography variant="h6" color="white" ml={10}>
                     HCIA - Big Data
                   </MDTypography>
                 </MDBox>
