@@ -18,14 +18,24 @@ import Icon from "@mui/material/Icon";
 // Data
 import sessionsTableData from "examples/ChooseSession/data/sessionsTableData";
 
+// Material Dashboard 2 React contexts
+import { useMaterialUIController, setOpenRequestModel } from "context";
+
 //Add companies component
 import AddSession from "./add";
 
-function Sessions(props) {
-  const { cours, collab } = props;
-  const { columns, rows, SubmitButton } = sessionsTableData(cours, collab);
+function Sessions({ cours, collab }) {
+  const { columns, rows, SubmitButton, isChecked } = sessionsTableData(
+    cours,
+    collab
+  );
+
+  console.log("haaaaadi", isChecked);
 
   const [openAddModel, setOpenAddModel] = useState(false);
+
+  const [controller, dispatch] = useMaterialUIController();
+  const { openRequestModel } = controller;
 
   return (
     <>
@@ -55,10 +65,12 @@ function Sessions(props) {
                     variant="gradient"
                     color="dark"
                     size="small"
-                    iconOnly
-                    // onClick={() => setOpenAddModel(true)}
+                    onClick={() =>
+                      setOpenRequestModel(dispatch, !openRequestModel)
+                    }
                   >
-                    <Icon fontSize="small">close</Icon>
+                    <Icon fontSize="small">arrow_back</Icon>
+                    Back
                   </MDButton>
                 </MDBox>
 
@@ -86,7 +98,11 @@ function Sessions(props) {
                       color="success"
                       size="small"
                       sx={{ width: 100 }}
-                      onClick={SubmitButton}
+                      onClick={() => {
+                        SubmitButton();
+                        setOpenRequestModel(dispatch, !openRequestModel);
+                      }}
+                      disabled={!isChecked}
                     >
                       Submit
                     </MDButton>

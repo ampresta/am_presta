@@ -18,6 +18,9 @@ import { allRequestsRoute, baseURL, DeleteInstances } from "utils/APIRoutes";
 // ConfirmPoppup component
 import ConfirmPopup from "components/ConfirmPopup";
 
+// Material Dashboard 2 React contexts
+import { useMaterialUIController, setOpenRequestModel } from "context";
+
 // ChooseSession
 import ChooseSession from "examples/ChooseSession";
 
@@ -27,9 +30,13 @@ export default function Data() {
   const [allRequests, setAllRequests] = useState([]);
   const [confirmModel, setConfirmModel] = useState(false);
   const [tempCourseId, setTempCourseId] = useState(0);
-  const [SessionModel, setSessionModel] = useState(false);
+
   const [confirmCourseId, setconfirmCourseId] = useState(0);
   const [collabId, setcollabId] = useState(0);
+
+  const [controller, dispatch] = useMaterialUIController();
+
+  const { openRequestModel } = controller;
 
   useEffect(() => {
     const getAllRequests = async () => {
@@ -108,16 +115,16 @@ export default function Data() {
         Id_Item={tempCourseId}
       />
     ),
-    sessions: SessionModel && (
+    sessions: openRequestModel && (
       <ChooseSession
         cours={confirmCourseId}
         collab={collabId}
-        onConfirmPopup={() => setSessionModel(!SessionModel)}
-        handleDetele={handleDelete}
         Id_Item={tempCourseId}
       />
     ),
   };
+
+  console.log(allRequests);
 
   allRequests.map((request) =>
     sessions.rows.push({
@@ -146,19 +153,21 @@ export default function Data() {
             onClick={() => {
               setcollabId(request.CollaborateurId);
               setconfirmCourseId(request.CourId);
-              setSessionModel(!SessionModel);
+              setOpenRequestModel(dispatch, !openRequestModel);
             }}
           >
             <MDTypography variant="caption" color="text" fontWeight="medium">
               <Icon fontSize="small" color="success">
-                done
+                check
               </Icon>
             </MDTypography>
           </MDButton>
+
           <MDButton
             variant="text"
             onClick={() => {
               setConfirmModel(!confirmModel);
+              setTempCourseId(request.id);
             }}
           >
             <MDTypography variant="caption" color="text" fontWeight="medium">

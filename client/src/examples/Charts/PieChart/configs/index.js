@@ -1,19 +1,3 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-/* eslint-disable no-dupe-keys */
 // Material Dashboard 2 React base styles
 import colors from "assets/theme/base/colors";
 
@@ -43,7 +27,7 @@ function configs(labels, datasets) {
           tension: 0.9,
           pointRadius: 2,
           borderWidth: 2,
-          backgroundColor: backgroundColors,
+          backgroundColor: ["#58ae5c", "#de2567", "#191919"],
           fill: false,
           data: datasets.data,
         },

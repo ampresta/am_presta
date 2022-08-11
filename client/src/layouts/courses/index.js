@@ -26,6 +26,9 @@ import coursesTableData from "layouts/courses/data/coursesTableData";
 import authService from "services/auth.service";
 import { useNavigate } from "react-router-dom";
 
+//csv
+import Papa from "papaparse";
+
 function Courses() {
   const navigate = useNavigate();
   useEffect(() => {
@@ -33,9 +36,55 @@ function Courses() {
       navigate("/login");
     }
   }, []);
-  const { columns, rows, confirmation } = coursesTableData();
+  const { columns, rows, confirmation, rawData } = coursesTableData();
 
   const [openAddModel, setOpenAddModel] = useState(false);
+
+  const handleDownload = (title, type) => {
+    if (rawData.length > 0) {
+      let data = [];
+      let columns = [];
+      if (type === "export") {
+        rawData.map((row) =>
+          data.push({
+            nom: row.nom,
+            provider: row.Provider.nom,
+            description: row.description,
+            collabs: row.collabs,
+            sessions: row.sessions,
+            createdAt: row.createdAt,
+          })
+        );
+        columns = [
+          "nom",
+          "provider",
+          "description",
+          "collabs",
+          "sessions",
+          "createdAt",
+        ];
+      }
+      if (type === "template") {
+        columns = ["nom", "providerID", "description"];
+        let blank = {};
+        columns.map((header) => (blank.header = ""));
+        data.push(blank);
+      }
+
+      const csv = Papa.unparse(data, {
+        header: true,
+        delimiter: ", ",
+        columns: columns,
+      });
+      const blob = new Blob([csv]);
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob, { type: "text/plain" });
+      a.download = `${title}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+  };
 
   return (
     <DashboardLayout>
@@ -70,6 +119,44 @@ function Courses() {
                     >
                       <Icon fontSize="big">add</Icon>
                       add Course
+                    </MDButton>
+                  </MDBox>
+
+                  <MDBox ml={3} py={1.9} px={2} mt={3}>
+                    <MDButton
+                      variant="gradient"
+                      color="info"
+                      size="small"
+                      onClick={() => handleDownload("allCourses", "export")}
+                    >
+                      Export
+                    </MDButton>
+                  </MDBox>
+
+                  <MDBox ml={3} py={1.9} px={2} mt={3}>
+                    <MDButton
+                      variant="gradient"
+                      color="info"
+                      size="small"
+                      onClick={() =>
+                        handleDownload("addCourseTemplate", "template")
+                      }
+                    >
+                      Download Template
+                    </MDButton>
+                  </MDBox>
+
+                  <MDBox ml={3} py={1.9} px={2} mt={3}>
+                    <MDButton
+                      variant="gradient"
+                      color="info"
+                      size="small"
+                      onClick={() => {
+                        localStorage.setItem("uploadType", "courses");
+                        navigate("/csv");
+                      }}
+                    >
+                      upload csv
                     </MDButton>
                   </MDBox>
                 </Grid>

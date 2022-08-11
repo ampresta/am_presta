@@ -13,7 +13,7 @@ import MDTypography from "components/MDTypography";
 import { useState } from "react";
 
 // Axios
-import axios from "services/authAxios";
+import axiosAuth from "services/authAxios";
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setUpdater } from "context";
 
@@ -39,7 +39,7 @@ function AddPartner({ closeAddModel }) {
     event.preventDefault();
     setFormErrors(validate(partner));
     if (Object.keys(validate(partner)).length === 0) {
-      const { data } = await axios.post(addPartnersRoute, {
+      const { data } = await axiosAuth.post(addPartnersRoute, {
         nom,
       });
       const ID = data.id;
@@ -59,7 +59,7 @@ function AddPartner({ closeAddModel }) {
           data: fd,
         };
 
-        await axios(config);
+        await axiosAuth(config);
 
         closeAddModel(false);
         setUpdater(dispatch, !updater);

@@ -11,7 +11,8 @@ import Icon from "@mui/material/Icon";
 import { useState, useEffect } from "react";
 
 // Axios
-import axios from "services/authAxios";
+import axiosAuth from "services/authAxios";
+
 // Api Endpoint
 import { baseURL, allPartnersRoute, DeleteInstances } from "utils/APIRoutes";
 
@@ -32,14 +33,14 @@ export default function Data() {
 
   useEffect(() => {
     const getAllPartners = async () => {
-      const { data } = await axios.get(allPartnersRoute);
+      const { data } = await axiosAuth.get(allPartnersRoute);
       setAllPartners((prev) => data);
     };
     getAllPartners();
   }, [updater]);
 
   const handleDelete = async (id) => {
-    const { data } = await axios.post(DeleteInstances, {
+    const { data } = await axiosAuth.post(DeleteInstances, {
       model: "provider",
       id: id,
     });
@@ -89,6 +90,8 @@ export default function Data() {
         Id_Item={tempPartnerId}
       />
     ),
+
+    rawData: allPartners,
   };
 
   allPartners.map((partner) =>

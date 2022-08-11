@@ -2,6 +2,7 @@
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
+import Checkbox from "@mui/material/Checkbox";
 
 // React Hooks
 import { useState, useEffect } from "react";
@@ -9,9 +10,13 @@ import { useNavigate } from "react-router-dom";
 
 // Api Endpoint
 import axios from "services/authAxios";
-import { baseURL } from "utils/APIRoutes";
-import { SessionsofSociete } from "utils/APIRoutes";
-import { AcceptRequestRoute } from "utils/APIRoutes";
+
+// import APIRoutes
+import {
+  baseURL,
+  SessionsofSociete,
+  AcceptRequestRoute,
+} from "utils/APIRoutes";
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController } from "context";
@@ -21,6 +26,7 @@ export default function Data(cours, collab) {
 
   const [allSessions, setAllSessions] = useState([]);
   const [checked, setChecked] = useState(0);
+  const [isChecked, setIsChecked] = useState(false);
 
   const [controller] = useMaterialUIController();
 
@@ -50,15 +56,7 @@ export default function Data(cours, collab) {
       </MDBox>
     </MDBox>
   );
-  const InputCheckBox = ({ id }) => {
-    const handleCheckboxChange = (e) => {
-      if (e.target.checked) {
-        setChecked(id);
-      }
-    };
 
-    return <input type="checkbox" onClick={handleCheckboxChange} />;
-  };
   let sessions = {
     columns: [
       {
@@ -98,11 +96,20 @@ export default function Data(cours, collab) {
   } else {
     allSessions.map((session) =>
       sessions.rows.push({
-        check: <InputCheckBox id={session.id}></InputCheckBox>,
+        check: (
+          <Checkbox
+            onChange={(e) => {
+              setChecked(session.id);
+              setIsChecked(e.target.checked);
+            }}
+          ></Checkbox>
+        ),
         author: <Company image={session.Cour.image} name={session.nom} />,
       })
     );
   }
+
+  sessions.isChecked = isChecked;
 
   return sessions;
 }

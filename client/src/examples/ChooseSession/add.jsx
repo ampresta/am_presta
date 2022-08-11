@@ -52,12 +52,7 @@ function AddSession({ closeAddModel }) {
     id: "",
   });
 
-  const [courses, setCourses] = useState([
-    {
-      id: "",
-      nom: "",
-    },
-  ]);
+  const [courses, setCourses] = useState([]);
 
   const [controller, dispatch] = useMaterialUIController();
 
@@ -66,16 +61,13 @@ function AddSession({ closeAddModel }) {
   useEffect(() => {
     const getAllData = async () => {
       const { data } = await axios.get(allCompanyCoursesRoute);
-      let allCourses = [];
-      data.map((res) => allCourses.push({ id: res.id, nom: res.nom }));
-      setCourses(allCourses);
-      return;
+      setCourses(data.cours);
     };
     getAllData();
   }, []);
 
   const handleSubmit = async (event) => {
-    const { course, company, nom, dateDepart, dateFin } = session;
+    const { course, nom, dateDepart, dateFin } = session;
     event.preventDefault();
     setFormErrors(validate(session));
     if (Object.keys(validate(session)).length === 0) {
@@ -125,6 +117,19 @@ function AddSession({ closeAddModel }) {
     }
     return errors;
   };
+
+  const courses_ToBe_Selected =
+    courses.length !== 0 ? (
+      courses.map((course) => (
+        <MenuItem key={course.id} value={course}>
+          {course.nom}
+        </MenuItem>
+      ))
+    ) : (
+      <MDTypography variant="text" sx={{ color: "#2b85eb" }}>
+        No Courses !
+      </MDTypography>
+    );
 
   return (
     <Card sx={{ mt: "50px" }}>
@@ -204,11 +209,7 @@ function AddSession({ closeAddModel }) {
                     />
                   }
                 >
-                  {courses.map((course) => (
-                    <MenuItem key={course.id} value={course}>
-                      {course.nom}
-                    </MenuItem>
-                  ))}
+                  {courses_ToBe_Selected}
                 </Select>
                 <FormHelperText error>{formErrors.course}</FormHelperText>
               </FormControl>

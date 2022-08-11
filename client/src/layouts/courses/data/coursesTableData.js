@@ -14,7 +14,6 @@ import { useState, useEffect } from "react";
 // Api Endpoint
 // import axios from "services/authAxios";
 
-import axios from "services/authAxios";
 import { allCoursesRoute, baseURL, DeleteInstances } from "utils/APIRoutes";
 
 // ConfirmPoppup component
@@ -22,6 +21,7 @@ import ConfirmPopup from "components/ConfirmPopup";
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController } from "context";
+import axiosAuth from "services/authAxios";
 
 export default function Data() {
   const [allCourses, setAllCourses] = useState([]);
@@ -34,14 +34,14 @@ export default function Data() {
 
   useEffect(() => {
     const getAllCourses = async () => {
-      const { data } = await axios.get(allCoursesRoute);
+      const { data } = await axiosAuth.get(allCoursesRoute);
       setAllCourses(data);
     };
     getAllCourses();
   }, [updater]);
 
   const handleDelete = async (id) => {
-    const { data } = await axios.post(DeleteInstances, {
+    const { data } = await axiosAuth.post(DeleteInstances, {
       model: "cours",
       id: id,
     });
@@ -124,6 +124,8 @@ export default function Data() {
         Id_Item={tempCourseId}
       />
     ),
+
+    rawData: allCourses,
   };
 
   allCourses.map((course) =>

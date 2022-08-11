@@ -45,6 +45,7 @@ function Dashboard() {
 
   useEffect(() => {
     if (!authService.getCurrentUser()) {
+      console.log("LOGIN");
       navigate("/login");
     }
     const fetchCards = async (model) => {

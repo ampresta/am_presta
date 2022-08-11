@@ -5,29 +5,28 @@ import Card from "@mui/material/Card";
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-import MDButton from "components/MDButton"; 
 
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import DataTable from "examples/Tables/DataTable";
 
-//import UseState
-import { useState } from "react";
+// Material Dashboard 2 React contexts
+import { useMaterialUIController } from "context";
 
 // Data
 import sessionsTableData from "layouts/requests/data/requestsTableData";
 
 function Requests() {
   const { columns, rows, confirmation, sessions } = sessionsTableData();
-  const [openAddModel, setOpenAddModel] = useState(false);
 
-  // authService.login("abdoessordo", "123456789")
+  const [controller] = useMaterialUIController();
+  const { openRequestModel } = controller;
 
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      {!openAddModel && (
+      {!openRequestModel && (
         <MDBox pt={6} pb={1}>
           <Grid container spacing={6}>
             <Grid item xs={12}>
@@ -60,9 +59,8 @@ function Requests() {
         </MDBox>
       )}
 
-      {/* {openListModel && <Sessions closeAddModel={setOpenListModel} />} */}
       {confirmation}
-      {sessions}
+      {openRequestModel && sessions}
     </DashboardLayout>
   );
 }
