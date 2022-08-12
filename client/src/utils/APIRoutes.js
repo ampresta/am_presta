@@ -53,3 +53,9 @@ export const uploadRoute = `${baseURL}/upload`;
 // Session Details
 export const SessionGraph = `${baseURL}/session/graph`;
 export const SessionCollabRoute = `${baseURL}/session/collab`;
+
+
+//Collabs
+export const addCollabsRoute = `${baseURL}/collab/addmany`;
+export const browseCollabsRoute = `${baseURL}/collab/browse`;
+

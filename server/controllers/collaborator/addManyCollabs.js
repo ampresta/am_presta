@@ -19,8 +19,9 @@ module.exports = async (req, res) => {
   //   return res.json({ status: false, msg: "Username already used" });
 
   const DATA = [];
+  const { societe } = collabs;
   collabs.map(async (collab) => {
-    const { username, nom, prenom, societe, email, password } = collab;
+    const { username, nom, prenom, email, password } = collab;
     const hash = await argon2.hash(password + pep);
     const user = await User.create(
       {
@@ -31,7 +32,7 @@ module.exports = async (req, res) => {
           prenom,
           email,
           SocieteId: societe,
-          admin: true,
+          admin: false,
           instructor: false,
         },
       },

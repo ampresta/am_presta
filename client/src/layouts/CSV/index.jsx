@@ -6,6 +6,7 @@ import { addPartnersRoute } from "utils/APIRoutes";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { registerRoute } from "utils/APIRoutes";
+import { addCollabsRoute } from "utils/APIRoutes";
 
 // Allowed extensions for input file
 const allowedExtensions = ["csv"];
@@ -31,8 +32,11 @@ const Csv = () => {
         break;
 
       case "companies":
-        console.log("uploading courses");
         addCompany(data);
+        break;
+
+      case "collabs":
+        addCollabs(data);
         break;
 
       default:
@@ -74,6 +78,22 @@ const Csv = () => {
       }
     });
     navigate("/companies");
+  };
+
+  const addCollabs = async (DATA) => {
+    const requestDATA = { societe: DATA.societe, collabs: [] };
+    DATA.map((collab) => {
+      requestDATA.collabs.push({
+        nom: collab.nom,
+        prenom: collab[" prenom"],
+        username: collab[" username"],
+        email: collab[" email"],
+        password: collab[" password"],
+      });
+    });
+    console.log(requestDATA);
+    await axiosAuth.post(addCollabsRoute, requestDATA);
+    navigate("/collaboraters");
   };
 
   const handleFileChange = (e) => {

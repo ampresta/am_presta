@@ -21,7 +21,7 @@ import Icon from "@mui/material/Icon";
 import AddPartner from "./add";
 
 // Data
-import partnersTableData from "layouts/partners/data/partnersTableData";
+import collabsTableData from "layouts/collabs/data/collabsTableData";
 import MDButton from "components/MDButton";
 
 import Papa from "papaparse";
@@ -29,7 +29,7 @@ import { useNavigate } from "react-router-dom";
 
 function Collabs() {
   const navigate = useNavigate();
-  const { columns, rows, confirmation, rawData } = partnersTableData();
+  const { columns, rows, confirmation, rawData } = collabsTableData();
   const [openAddModel, setOpenAddModel] = useState(false);
 
   console.log(rawData);
@@ -43,15 +43,17 @@ function Collabs() {
           data.push({
             id: row.id,
             nom: row.nom,
-            course_num: row.course_num,
+            prenom: row.prenom,
+            email: row.email,
+            departement: row.departement,
             createdAt: row.createdAt,
           })
         );
-        columns = ["id", "nom", "course_num", "createdAt"];
+        columns = ["id", "nom", "prenom", "email", "departement", "createdAt"];
       }
     }
     if (type === "template") {
-      columns = ["nom"];
+      columns = ["nom", "prenom", "username", "email", "password"];
       let blank = {};
       columns.map((header) => (blank.header = ""));
       data.push(blank);
@@ -111,11 +113,10 @@ function Collabs() {
                   <MDBox ml={3} py={1.9} px={2} mt={3}>
                     <MDButton
                       variant="gradient"
-                      color={(rawData.length === 0) ? "success" : "info"}
+                      color={rawData.length === 0 ? "success" : "info"}
                       size="small"
                       onClick={() => {
-                        console.log("export");
-                        handleDownload("allProviders", "export");
+                        handleDownload("allCollabs", "export");
                       }}
                     >
                       Export
@@ -128,8 +129,7 @@ function Collabs() {
                       color="info"
                       size="small"
                       onClick={() => {
-                        console.log("template");
-                        handleDownload("addProviderTemplate", "template");
+                        handleDownload("addCollabsTemplate", "template");
                       }}
                     >
                       Download Template
@@ -142,7 +142,7 @@ function Collabs() {
                       color="info"
                       size="small"
                       onClick={() => {
-                        localStorage.setItem("uploadType", "providers");
+                        localStorage.setItem("uploadType", "collabs");
                         navigate("/csv");
                       }}
                     >

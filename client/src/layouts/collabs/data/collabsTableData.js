@@ -14,16 +14,17 @@ import { useState, useEffect } from "react";
 import axiosAuth from "services/authAxios";
 
 // Api Endpoint
-import { baseURL, allPartnersRoute, DeleteInstances } from "utils/APIRoutes";
+import { baseURL, DeleteInstances } from "utils/APIRoutes";
 
 // ConfirmPoppup component
 import ConfirmPopup from "components/ConfirmPopup";
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController } from "context";
+import { browseCollabsRoute } from "utils/APIRoutes";
 
 export default function Data() {
-  const [allPartners, setAllPartners] = useState([]);
+  const [allCollabs, setAllCollabs] = useState([]);
   const [confirmModel, setConfirmModel] = useState(false);
   const [tempPartnerId, setTempPartnerId] = useState(0);
 
@@ -32,11 +33,11 @@ export default function Data() {
   const { updater } = controller;
 
   useEffect(() => {
-    const getAllPartners = async () => {
-      const { data } = await axiosAuth.get(allPartnersRoute);
-      setAllPartners((prev) => data);
+    const getAllColabs = async () => {
+      const { data } = await axiosAuth.get(browseCollabsRoute);
+      setAllCollabs((prev) => data);
     };
-    getAllPartners();
+    getAllColabs();
   }, [updater]);
 
   const handleDelete = async (id) => {
@@ -45,7 +46,7 @@ export default function Data() {
       id: id,
     });
     if (data.status) {
-      setAllPartners(allPartners.filter((course) => course.id !== id));
+      setAllCollabs(allCollabs.filter((course) => course.id !== id));
       setConfirmModel(!confirmModel);
     } else {
       alert(data.msg);
@@ -63,17 +64,35 @@ export default function Data() {
     </MDBox>
   );
 
-  let partners = {
+  let collabs = {
     columns: [
       {
-        Header: "Partner Name",
+        Header: "Profile",
         accessor: "author",
-        width: "45%",
+        width: "5%",
         align: "left",
       },
       {
-        Header: "Number of added courses",
-        accessor: "Number_of_added_courses",
+        Header: "Nom",
+        accessor: "nom",
+        width: "10%",
+        align: "left",
+      },
+      {
+        Header: "Prenom",
+        accessor: "prenom",
+        align: "center",
+        width: "15%",
+      },
+      {
+        Header: "Email",
+        accessor: "email",
+        align: "center",
+        width: "30%",
+      },
+      {
+        Header: "Departmenet",
+        accessor: "departmenet",
         align: "center",
         width: "30%",
       },
@@ -91,15 +110,30 @@ export default function Data() {
       />
     ),
 
-    rawData: allPartners,
+    rawData: allCollabs,
   };
   try {
-    allPartners.map((partner) =>
-      partners.rows.push({
-        author: <Company image={partner.image} name={partner.nom} />,
-        Number_of_added_courses: (
+    allCollabs.map((collab) =>
+      collabs.rows.push({
+        author: <Company image={collab.image} />,
+        nom: (
           <MDTypography variant="caption" color="text" fontWeight="medium">
-            {partner.course_num}
+            {collab.nom}
+          </MDTypography>
+        ),
+        prenom: (
+          <MDTypography variant="caption" color="text" fontWeight="medium">
+            {collab.prenom}
+          </MDTypography>
+        ),
+        email: (
+          <MDTypography variant="caption" color="text" fontWeight="medium">
+            {collab.email}
+          </MDTypography>
+        ),
+        departmenet: (
+          <MDTypography variant="caption" color="text" fontWeight="medium">
+            {collab.departmenet}
           </MDTypography>
         ),
         edit: (
@@ -112,7 +146,7 @@ export default function Data() {
             variant="text"
             onClick={() => {
               setConfirmModel(!confirmModel);
-              setTempPartnerId(partner.id);
+              setTempPartnerId(collab.id);
             }}
           >
             <MDTypography variant="caption" color="text" fontWeight="medium">
@@ -124,9 +158,8 @@ export default function Data() {
         ),
       })
     );
-  } catch (error) {}
+  } catch (error) {
+  }
 
-  
-
-  return partners;
+  return collabs;
 }
