@@ -13,6 +13,7 @@ import Csv from "layouts/CSV";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
+import Collabs from "layouts/collabs";
 
 const routes = [
   {
@@ -63,6 +64,25 @@ const routes = [
     route: "/sessions",
     component: <Sessions />,
   },
+  //////////////////////////
+  // Dash 2
+  ///////////////////////////
+  {
+    type: "collapse",
+    name: "",
+    key: "",
+    // icon: <Icon fontSize="small">groups</Icon>,
+    route: "",
+    // component: <Sessions />,
+  },
+  {
+    type: "collapse",
+    name: "Collaboraters",
+    key: "collaboraters",
+    icon: <Icon fontSize="small">groups</Icon>,
+    route: "/collaboraters",
+    component: <Collabs />,
+  },
   {
     type: "collapse",
     name: "Requests",
@@ -93,6 +113,7 @@ const routes = [
     route: "/csv",
     component: <Csv />,
   },
+
   {
     type: "collapse",
     name: "Login",

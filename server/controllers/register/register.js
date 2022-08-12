@@ -3,16 +3,19 @@ const db = require("../../config/database");
 const { Collaborateur, Societe, User } = db.models;
 module.exports = async (req, res) => {
   try {
-    const { username, password, nom, prenom, societe } = req.body;
+    const { username, password, nom, prenom, societe, email } = req.body;
 
     const pep = process.env.PEPPER;
-    if (!societe || !prenom || !nom || !username || !password)
+    if (!societe || !prenom || !nom || !username || !password || !email)
       return res.sendStatus(403);
 
     const societeCheck = await Societe.findOne({ where: { name: societe } });
     if (societeCheck)
       return res.json({ status: false, msg: "societe already used" });
     const usernameCheck = await User.findOne({ where: { username } });
+    if (usernameCheck)
+      return res.json({ status: false, msg: "Username already used" });
+    const emailCheck = await Collaborateur.findOne({ where: { email } });
     if (usernameCheck)
       return res.json({ status: false, msg: "Username already used" });
 
@@ -24,6 +27,7 @@ module.exports = async (req, res) => {
         Collaborateur: {
           nom,
           prenom,
+          email,
 
           Societe: {
             name: societe,

@@ -7,7 +7,6 @@ module.exports = async (req, res) => {
   }
   try {
     for (quota of quotas) {
-      console.log(quota);
 
       Quota.create({
         SocieteId: quota.societe,

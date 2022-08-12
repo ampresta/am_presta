@@ -38,7 +38,7 @@ module.exports = async (req, res) => {
       accesstoken = sign({ user_id: user.id, type }, process.env.JWTSALT, {
         expiresIn: "15m",
       });
-      return res.json({ status: true, accesstoken, type });
+      return res.json({ status: true, accesstoken, type, userId: user.id });
     }
 
     return res.send({ status: false, msg: "Username or Password incorrect" });

@@ -33,9 +33,9 @@ function Companies() {
   const [openAddModel, setOpenAddModel] = useState(false);
 
   const handleDownload = (title, type) => {
+    let columns = [];
+    let data = [];
     if (rawData.length > 0) {
-      let data = [];
-      let columns = [];
       if (type === "export") {
         rawData.map((row) =>
           data.push({
@@ -54,34 +54,34 @@ function Companies() {
           "createdAt",
         ];
       }
-      if (type === "template") {
-        columns = [
-          "username",
-          "first_name",
-          "last_name",
-          "company_name",
-          "email",
-          "password",
-          "confirm_password",
-        ];
-        let blank = {};
-        columns.map((header) => (blank.header = ""));
-        data.push(blank);
-      }
-
-      const csv = Papa.unparse(data, {
-        header: true,
-        delimiter: ", ",
-        columns: columns,
-      });
-      const blob = new Blob([csv]);
-      const a = document.createElement("a");
-      a.href = URL.createObjectURL(blob, { type: "text/plain" });
-      a.download = `${title}.csv`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
     }
+    if (type === "template") {
+      columns = [
+        "username",
+        "first_name",
+        "last_name",
+        "company_name",
+        "email",
+        "password",
+        "confirm_password",
+      ];
+      let blank = {};
+      columns.map((header) => (blank[header] = ""));
+      data.push(blank);
+    }
+
+    const csv = Papa.unparse(data, {
+      header: true,
+      delimiter: ", ",
+      columns: columns,
+    });
+    const blob = new Blob([csv]);
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob, { type: "text/plain" });
+    a.download = `${title}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
   };
 
   return (

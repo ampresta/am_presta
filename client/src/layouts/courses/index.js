@@ -41,9 +41,9 @@ function Courses() {
   const [openAddModel, setOpenAddModel] = useState(false);
 
   const handleDownload = (title, type) => {
+    let data = [];
+    let columns = [];
     if (rawData.length > 0) {
-      let data = [];
-      let columns = [];
       if (type === "export") {
         rawData.map((row) =>
           data.push({
@@ -64,26 +64,26 @@ function Courses() {
           "createdAt",
         ];
       }
-      if (type === "template") {
-        columns = ["nom", "providerID", "description"];
-        let blank = {};
-        columns.map((header) => (blank.header = ""));
-        data.push(blank);
-      }
-
-      const csv = Papa.unparse(data, {
-        header: true,
-        delimiter: ", ",
-        columns: columns,
-      });
-      const blob = new Blob([csv]);
-      const a = document.createElement("a");
-      a.href = URL.createObjectURL(blob, { type: "text/plain" });
-      a.download = `${title}.csv`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
     }
+    if (type === "template") {
+      columns = ["nom", "providerID", "description"];
+      let blank = {};
+      columns.map((header) => (blank.header = ""));
+      data.push(blank);
+    }
+
+    const csv = Papa.unparse(data, {
+      header: true,
+      delimiter: ", ",
+      columns: columns,
+    });
+    const blob = new Blob([csv]);
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob, { type: "text/plain" });
+    a.download = `${title}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
   };
 
   return (
@@ -125,7 +125,7 @@ function Courses() {
                   <MDBox ml={3} py={1.9} px={2} mt={3}>
                     <MDButton
                       variant="gradient"
-                      color="info"
+                      color={rawData.length === 0 ? "success" : "info"}
                       size="small"
                       onClick={() => handleDownload("allCourses", "export")}
                     >

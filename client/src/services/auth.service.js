@@ -1,14 +1,19 @@
+import { userCompanyRoute } from "utils/APIRoutes";
 import { loginRoute } from "utils/APIRoutes";
-import axios from "./authAxios";
+import axios, { axiosAuth } from "./authAxios";
 const login = (username, password) => {
   return axios
     .post(loginRoute, {
       username,
       password,
     })
-    .then((response) => {
+    .then(async (response) => {
       if (response.data.accesstoken) {
-        localStorage.setItem("user", JSON.stringify(response.data));
+        localStorage.setItem("user", JSON.stringify(response.data));        
+        const { data } = await axiosAuth.post(userCompanyRoute, {
+          UserId: response.data.userId,
+        });
+        localStorage.setItem("companyID", data.societe);
       }
 
       return response.data;
@@ -17,6 +22,7 @@ const login = (username, password) => {
 
 const logout = () => {
   localStorage.removeItem("user");
+  localStorage.removeItem("companyID");
 };
 
 const getCurrentUser = () => {

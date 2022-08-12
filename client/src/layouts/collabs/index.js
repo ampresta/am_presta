@@ -27,7 +27,7 @@ import MDButton from "components/MDButton";
 import Papa from "papaparse";
 import { useNavigate } from "react-router-dom";
 
-function Partners() {
+function Collabs() {
   const navigate = useNavigate();
   const { columns, rows, confirmation, rawData } = partnersTableData();
   const [openAddModel, setOpenAddModel] = useState(false);
@@ -90,7 +90,7 @@ function Partners() {
                   coloredShadow="info"
                 >
                   <MDTypography variant="h6" color="white">
-                    Partners
+                    Collaborateurs
                   </MDTypography>
                 </MDBox>
 
@@ -105,7 +105,7 @@ function Partners() {
                       <Icon fontSize="big" color="light">
                         add
                       </Icon>
-                      add partner
+                      add collab
                     </MDButton>
                   </MDBox>
                   <MDBox ml={3} py={1.9} px={2} mt={3}>
@@ -169,4 +169,4 @@ function Partners() {
   );
 }
 
-export default Partners;
+export default Collabs;
