@@ -14,5 +14,5 @@ router.post("/browsesoc", browseSessionSoc);
 router.post("/add", addSession);
 router.all("/browse", browseSession);
 router.post("/graph", SessionDetailsGraph);
-router.get("/collab", SessionCollab);
+router.post("/collab", SessionCollab);
 module.exports = router;

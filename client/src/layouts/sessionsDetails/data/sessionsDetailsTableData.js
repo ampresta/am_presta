@@ -18,16 +18,21 @@ import { useMaterialUIController } from "context";
 import { dateFormat } from "utils/Helper";
 import MDButton from "components/MDButton";
 
+import { useParams } from "react-router-dom";
 export default function Data() {
   const [allCollabs, setAllCollabs] = useState([]);
 
   const [controller] = useMaterialUIController();
   const { updater } = controller;
-
+  const { id } = useParams();
   useEffect(() => {
     const getCollab = async () => {
-      const { data } = await axios.post(SessionCollabRoute);
-      setAllCollabs(data);
+      const { data } = await axios.post(SessionCollabRoute, {
+        sess: id,
+      });
+      // console.log("data");
+      console.log(data);
+      setAllCollabs(data.collab);
     };
     getCollab();
   }, [updater]);
@@ -52,7 +57,7 @@ export default function Data() {
         align: "left",
       },
       {
-        Header: "fin cours",
+        Header: "Date Debut",
         accessor: "fin_cours",
         width: "20%",
         align: "center",
@@ -80,12 +85,17 @@ export default function Data() {
     rows: [],
   };
 
-  allCollabs.map((session) =>
+  allCollabs.map((collab) =>
     sessionsDetails.rows.push({
-      author: <Company image={session.Cour.image} name={"Smhamad rachid"} />,
+      author: (
+        <Company
+          image={allCollabs.length > 0 && collab.image}
+          name={allCollabs.length > 0 && ` ${collab.nom} ${collab.prenom}`}
+        />
+      ),
       fin_cours: (
         <MDTypography variant="caption" color="text" fontWeight="medium">
-          {dateFormat("20-08-2022")}
+          {dateFormat(collab.Session_Collabs[0].createdAt)}
         </MDTypography>
       ),
       fin_session: (

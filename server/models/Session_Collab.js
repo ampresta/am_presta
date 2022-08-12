@@ -5,7 +5,11 @@ const Session_Collab = (db) => {
     "Session_Collab",
     {
       // Model attributes are defined here
-
+      id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
       score: {
         type: Sequelize.INTEGER,
       },

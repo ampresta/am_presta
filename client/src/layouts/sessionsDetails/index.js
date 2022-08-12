@@ -47,7 +47,7 @@ function Partners() {
   }, [updater]);
 
   const data = {
-    labels: ["Success", "Failure", "Not completed"],
+    labels: ["Cerified", "Finished Course", "Not completed"],
     datasets: {
       data: [
         loading ? graph.session.certifs_count : 0,

@@ -5,6 +5,9 @@ const Proof = (db) => {
     status: {
       type: sequelize.BOOLEAN,
     },
+    file: {
+      type: sequelize.STRING,
+    },
   });
 };
 

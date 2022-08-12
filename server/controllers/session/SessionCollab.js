@@ -4,54 +4,52 @@ const { Session_Collab, Session, Proof, Collaborateur } = db.models;
 module.exports = async (req, res) => {
   const { sess } = req.body;
   if (!sess) {
-    console.log(req.body);
     return res.sendStatus(403);
   }
-  const session = await Session.findOne({
+  const collab = await Collaborateur.findAll({
     where: {
       SocieteId: req.societe,
-      id: sess,
     },
     include: {
-      model: Collaborateur,
-      include: {
-        model: Session_Collab,
-        include: [
-          {
-            model: Proof,
-            as: "certifs",
-            where: {
-              status: true,
-            },
-          },
+      model: Session_Collab,
+      attributes: ["id", "score", "createdAt"],
 
-          {
-            model: Proof,
-            as: "fincourse",
-            where: {
-              status: true,
-            },
-          },
-        ],
+      where: {
+        SessionId: sess,
       },
-      // attributes: {
-      //   include: [
-      //     [sequelize.fn("count"), sequelize.col("certifs.id"), "certifs_count"],
-      //     [
-      //       sequelize.fn("count"),
-      //       sequelize.col("fincourse.id"),
-      //       "fincourse_count",
-      //     ],
-      //     [
-      //       sequelize.fn("count", sequelize.count("Collaborateur.id")),
-      //       "collab_count",
-      //     ],
-      //   ],
-      // },
+      include: [
+        {
+          model: Proof,
+          attributes: ["id"],
+          as: "certifs",
+          required: false,
+          where: {
+            status: true,
+          },
+        },
+
+        {
+          model: Proof,
+          attributes: ["id"],
+          required: false,
+          as: "fincourse",
+          where: {
+            status: true,
+          },
+        },
+      ],
     },
+    group: [
+      "Collaborateur.id",
+      "Session_Collabs.id",
+      "Session_Collabs.score",
+      "Session_Collabs->certifs.id",
+      "Session_Collabs->fincourse.id",
+      "Session_Collabs.createdAt",
+    ],
   });
   return res.send({
     status: true,
-    session,
+    collab,
   });
 };

@@ -11,7 +11,7 @@ module.exports = async (req, res) => {
     const result = await sequelize.transaction(async (t) => {
       const promises = [];
       for (const quota of quotas) {
-        console.log(quota);
+        // console.log(quota);
         if (quota.quota > 0) {
           const [created, b] = await Quota.upsert(
             {
