@@ -34,7 +34,7 @@ import {
   setMiniSidenav,
 } from "context";
 
-function DashboardNavbar({ absolute, light, isMini, title }) {
+function DashboardNavbar({ absolute, light, isMini, titleio }) {
   const [navbarType, setNavbarType] = useState();
 
   const [controller, dispatch] = useMaterialUIController();
@@ -86,7 +86,12 @@ function DashboardNavbar({ absolute, light, isMini, title }) {
           mb={{ xs: 1, md: 0 }}
           sx={(theme) => navbarRow(theme, { isMini })}
         >
-          <Breadcrumbs icon="home" title={title} route={route} light={light} />
+          <Breadcrumbs
+            icon="home"
+            title={titleio}
+            route={route}
+            light={light}
+          />
         </MDBox>
         {isMini ? null : (
           <MDBox sx={(theme) => navbarRow(theme, { isMini })}>

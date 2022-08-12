@@ -64,7 +64,7 @@ function Partners() {
 
   return (
     <DashboardLayout>
-      <DashboardNavbar title={loading && graph.session.nom} />
+      {loading && <DashboardNavbar titleio={graph.session.nom} />}
       {
         <MDBox pt={6} pb={1}>
           <Grid container spacing={2} rowSpacing={2}>
