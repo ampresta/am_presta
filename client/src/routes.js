@@ -80,15 +80,6 @@ const routes = [
     component: <Departments />,
   },
   {
-    type: "collapse",
-    name: "details",
-    key: "details",
-    icon: <Icon fontSize="small">check</Icon>,
-    route: "/sessions/details",
-    component: <SessionsDetails />,
-  },
-  {
-    // type: "collapse",
     name: "details",
     key: "details",
     icon: <Icon fontSize="small">check</Icon>,

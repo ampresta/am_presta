@@ -18,8 +18,7 @@ import sessionsDetailsTableData from "layouts/sessionsDetails/data/sessionsDetai
 //  React
 import { useState, useEffect } from "react";
 import { useMaterialUIController } from "context";
-// static huawei image
-import huawei from "assets/images/huawei-logo.png";
+
 import MDBadge from "components/MDBadge";
 // axios
 import axios from "services/authAxios";
@@ -35,6 +34,7 @@ function Partners() {
   const [loading, setLoading] = useState(false);
   const [controller] = useMaterialUIController();
   const { updater } = controller;
+
   let { id } = useParams();
   useEffect(() => {
     const getGraph = async () => {
@@ -45,6 +45,7 @@ function Partners() {
     };
     getGraph();
   }, [updater]);
+
   const data = {
     labels: ["Success", "Failure", "Not completed"],
     datasets: {
