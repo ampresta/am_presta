@@ -8,26 +8,22 @@ module.exports = async (req, res) => {
   }
   try {
     payload = verify(jwt, process.env.JWT_REFRESH_SALT);
-    console.log(payload);
     user_ = await User.findOne({ where: { id: payload.user_id } });
     if (!user_) {
       return res.send({ status: false, msg: "No user" });
     }
-    accesstoken = sign(
-      { user_id: payload.user_id, type: payload.type },
-      process.env.JWTSALT,
-      {
-        expiresIn: "15m",
-      }
-    );
 
-    refreshtoken = sign(
-      { user_id: payload.user_id, type: payload.type },
-      process.env.JWT_REFRESH_SALT,
-      {
-        expiresIn: "7d",
-      }
-    );
+    payload2 = { user_id: payload.user_id, type: payload.type };
+    if (payload.id) {
+      payload2.id = id;
+    }
+    accesstoken = sign(payload2, process.env.JWTSALT, {
+      expiresIn: "15m",
+    });
+
+    refreshtoken = sign(payload2, process.env.JWT_REFRESH_SALT, {
+      expiresIn: "7d",
+    });
     res.cookie("jbid", refreshtoken, {
       httpOnly: true,
       secure: true,

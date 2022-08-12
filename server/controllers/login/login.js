@@ -18,24 +18,29 @@ module.exports = async (req, res) => {
     const pep = process.env.PEPPER;
 
     const checkUser = await argon2.verify(user.password, password + pep);
-
     if (checkUser) {
       type = await GetType(user);
+
       if (type === "Error") {
         return res.json({ status: false, msg: "Undefined User Type " });
       }
-      const refreshtoken = sign(
-        { user_id: user.id, type },
-        process.env.JWT_REFRESH_SALT,
-        { expiresIn: "7d" }
-      );
+
+      payload = { user_id: user.id, type };
+      if (type === "Societe") {
+        id = await user.getCollaborateur();
+        id = id.SocieteId;
+        payload.id = id;
+      }
+      const refreshtoken = sign(payload, process.env.JWT_REFRESH_SALT, {
+        expiresIn: "7d",
+      });
 
       res.cookie("jbid", refreshtoken, {
         httpOnly: true,
         sameSite: "None",
         secure: true,
       });
-      accesstoken = sign({ user_id: user.id, type }, process.env.JWTSALT, {
+      accesstoken = sign(payload, process.env.JWTSALT, {
         expiresIn: "15m",
       });
       return res.json({ status: true, accesstoken, type, userId: user.id });
