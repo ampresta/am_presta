@@ -7,7 +7,7 @@ const checkSociete = require("../middlewares/checkSociete");
 router = Router();
 const signedin = require("../middlewares/signedin");
 
-router.use(signedin);
+// router.use(signedin);
 // Please don't change the order
 // Super Admin Links
 

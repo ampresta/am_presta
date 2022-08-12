@@ -9,7 +9,7 @@ import MDAvatar from "components/MDAvatar";
 
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+import DashboardNavbar from "./DashboardNavbar";
 import DataTable from "examples/Tables/DataTable";
 import PieChart from "examples/Charts/PieChart";
 
@@ -64,7 +64,7 @@ function Partners() {
 
   return (
     <DashboardLayout>
-      <DashboardNavbar />
+      <DashboardNavbar title={loading && graph.session.nom} />
       {
         <MDBox pt={6} pb={1}>
           <Grid container spacing={2} rowSpacing={2}>

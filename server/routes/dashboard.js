@@ -6,7 +6,7 @@ const ampdash = require("../controllers/dashboard/ampdash");
 const amtable = require("../controllers/dashboard/amtable");
 const amtop = require("../controllers/dashboard/amtop");
 
-router.use(signedin);
+// router.use(signedin);
 
 router = Router();
 router.post("/amcards", amcards);

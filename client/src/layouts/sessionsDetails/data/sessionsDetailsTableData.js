@@ -63,12 +63,6 @@ export default function Data() {
         align: "center",
       },
       {
-        Header: "fin session",
-        accessor: "fin_session",
-        width: "20%",
-        align: "center",
-      },
-      {
         Header: "status",
         accessor: "status",
         width: "10%",
@@ -98,13 +92,21 @@ export default function Data() {
           {dateFormat(collab.Session_Collabs[0].createdAt)}
         </MDTypography>
       ),
-      fin_session: (
-        <MDTypography variant="caption" color="text" fontWeight="medium">
-          {dateFormat("31-08-2022")}
-        </MDTypography>
-      ),
       status: (
-        <MDBadge badgeContent="Actif" color="success" size="lg" gradiant />
+        <>
+          {collab.Session_Collabs[0].certifs ? (
+            <MDBadge
+              badgeContent="Certified"
+              color="success"
+              size="lg"
+              gradiant
+            />
+          ) : collab.Session_Collabs[0].fincourse ? (
+            <MDBadge badgeContent="Finished" color="dark" size="lg" />
+          ) : (
+            <MDBadge badgeContent="Ongoing" color="info" size="lg" gradiant />
+          )}{" "}
+        </>
       ),
       proof: <MDButton color="info">proof</MDButton>,
     })
