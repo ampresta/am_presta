@@ -48,7 +48,16 @@ function Partners() {
   const data = {
     labels: ["Success", "Failure", "Not completed"],
     datasets: {
-      data: [70, 30, 20],
+      data: [
+        loading ? graph.session.certifs_count : 0,
+        loading ? graph.session.fincourse_count : 0,
+
+        loading
+          ? graph.session.collab_count -
+            graph.session.fincourse_count -
+            graph.session.certifs_count
+          : 0,
+      ],
     },
   };
 

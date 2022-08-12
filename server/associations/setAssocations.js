@@ -24,9 +24,9 @@ module.exports = (db) => {
   Collaborateur.belongsToMany(Session, {
     through: Session_Collab,
   });
-  Session.hasOne(Session_Collab);
+  Session.hasMany(Session_Collab);
   Session_Collab.belongsTo(Session);
-  Collaborateur.hasOne(Session_Collab);
+  Collaborateur.hasMany(Session_Collab);
   Session_Collab.belongsTo(Collaborateur);
   // Session_Collab Proof
   Proof.hasMany(Session_Collab);

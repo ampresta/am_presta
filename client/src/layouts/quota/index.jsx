@@ -17,6 +17,7 @@ import DefaultProjectCard from "./components/DefaultProjectCard";
 
 // Hook
 import { useEffect, useState } from "react";
+import { useMaterialUIController } from "context";
 
 // Images
 // import Oracle from "assets/images/oracle-logo.jpg";
@@ -27,6 +28,8 @@ function Overview() {
   const [openAddModel, setOpenAddModel] = useState(false);
   const [allCompanies, setAllCompanies] = useState([]);
 
+  const [controller] = useMaterialUIController();
+  const { updater } = controller;
   useEffect(() => {
     const getAllCompanies = async () => {
       const { data } = await axios.get(AllQuotaSocRoute);
@@ -36,7 +39,7 @@ function Overview() {
     };
 
     getAllCompanies();
-  }, []);
+  }, [updater]);
 
   return (
     <DashboardLayout>

@@ -35,6 +35,7 @@ function AddQuota({ openAddModel }) {
   useEffect(() => {
     const getAllPartners = async () => {
       const { data } = await axios.get(allPartnersRoute);
+	    console.log(data);
       let temp = [];
       data.map((provider) =>
         temp.push({ id: provider.id, nom: provider.nom, quota: "" })
@@ -62,7 +63,7 @@ function AddQuota({ openAddModel }) {
     });
     if (data.status) {
       openAddModel(false);
-      window.location.reload();
+      // window.location.reload();
     } else {
       alert(data.msg);
     }
