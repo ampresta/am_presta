@@ -8,7 +8,7 @@ const checkCollaborateur = require("../middlewares/checkCollaborateur");
 const router = Router();
 const signedin = require("../middlewares/signedin");
 
-// router.use(signedin);
+router.use(signedin);
 router.post("/addmany", addManyCollabs);
 router.get("/browse", browseCollabs);
 

@@ -8,7 +8,7 @@ const checkSociete = require("../middlewares/checkSociete");
 const router = Router();
 const signedin = require("../middlewares/signedin");
 
-// router.use(signedin);
+router.use(signedin);   
 router.use(checkSociete);
 router.post("/browsesoc", browseSessionSoc);
 router.post("/add", addSession);
