@@ -4,7 +4,6 @@ const { Cours, Session_Collab, Session, Proof, Collaborateur } = db.models;
 module.exports = async (req, res) => {
   const { sess } = req.body;
   if (!sess) {
-    console.log(req.body);
     return res.sendStatus(403);
   }
   const session = await Session.findOne({
@@ -24,6 +23,7 @@ module.exports = async (req, res) => {
         include: [
           {
             model: Proof,
+            required: false,
             as: "certifs",
             where: {
               status: true,
@@ -34,9 +34,14 @@ module.exports = async (req, res) => {
           {
             model: Proof,
             as: "fincourse",
+            required: false,
             where: {
               status: true,
             },
+            attributes: [],
+          },
+          {
+            model: Collaborateur,
             attributes: [],
           },
         ],
@@ -45,17 +50,17 @@ module.exports = async (req, res) => {
     attributes: {
       include: [
         [
-          sequelize.fn("count", sequelize.col("Session_Collab->certifs.id")),
+          sequelize.fn("count", sequelize.col("Session_Collabs->certifs.id")),
           "certifs_count",
         ],
         [
-          sequelize.fn("count", sequelize.col("Session_Collab->fincourse.id")),
+          sequelize.fn("count", sequelize.col("Session_Collabs->fincourse.id")),
           "fincourse_count",
         ],
         [
           sequelize.fn(
             "count",
-            sequelize.col("Session_Collab.CollaborateurId")
+            sequelize.col("Session_Collabs->Collaborateur.id")
           ),
           "collab_count",
         ],

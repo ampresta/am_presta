@@ -37,11 +37,9 @@ module.exports = async (req, res) => {
         },
       });
     }
-    console.log(sess);
 
     return res.send({ status: true, msg: "Collab Added" });
   } catch (err) {
-    console.log(err);
     return res.send({ status: false, msg: "Check your quota" });
   }
 };

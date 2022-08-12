@@ -15,6 +15,12 @@ const Quota = (db) => {
       Sequelize,
       paranoid: true,
       deletedAt: "deletedAt",
+      indexes: [
+        {
+          unique: true,
+          fields: ["ProviderId", "SocieteId"],
+        },
+      ],
     }
   );
 };
