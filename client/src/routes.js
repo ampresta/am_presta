@@ -88,6 +88,14 @@ const routes = [
     component: <SessionsDetails />,
   },
   {
+    // type: "collapse",
+    name: "details",
+    key: "details",
+    icon: <Icon fontSize="small">check</Icon>,
+    route: "/sessions/details/:id",
+    component: <SessionsDetails />,
+  },
+  {
     name: "csv",
     key: "csv",
     icon: <Icon fontSize="small">apartment</Icon>,

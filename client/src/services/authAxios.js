@@ -19,10 +19,8 @@ axiosAuth.interceptors.response.use(
     return response;
   },
   async (error) => {
-    console.log(error.response.status);
     try {
       if (error.response.status === 401 && error.config.reget == null) {
-        console.log("looooooooooog");
         error.config.reget = true;
         const { data } = await axiosAuth.get(refreshRoute);
         if (data.accesstoken) {
@@ -35,10 +33,7 @@ axiosAuth.interceptors.response.use(
         }
         return axiosAuth(error.config);
       }
-    } catch (err) {
-      console.log("rrrr");
-      console.log(err);
-    }
+    } catch (err) {}
     return Promise.reject(error);
   }
 );

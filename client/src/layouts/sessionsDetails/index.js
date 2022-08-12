@@ -15,14 +15,36 @@ import PieChart from "examples/Charts/PieChart";
 
 // Data
 import sessionsDetailsTableData from "layouts/sessionsDetails/data/sessionsDetailsTableData";
-
+//  React
+import { useState, useEffect } from "react";
+import { useMaterialUIController } from "context";
 // static huawei image
 import huawei from "assets/images/huawei-logo.png";
 import MDBadge from "components/MDBadge";
+// axios
+import axios from "services/authAxios";
+import { SessionGraph } from "utils/APIRoutes";
+import { useParams } from "react-router-dom";
+import { baseURL } from "utils/APIRoutes";
 
 function Partners() {
   const { columns, rows } = sessionsDetailsTableData();
 
+  const [graph, setGraph] = useState([]);
+
+  const [loading, setLoading] = useState(false);
+  const [controller] = useMaterialUIController();
+  const { updater } = controller;
+  let { id } = useParams();
+  useEffect(() => {
+    const getGraph = async () => {
+      const { data } = await axios.post(SessionGraph, { sess: id });
+      setGraph(data);
+      setLoading(true);
+      console.log(data);
+    };
+    getGraph();
+  }, [updater]);
   const data = {
     labels: ["Success", "Failure", "Not completed"],
     datasets: {
@@ -39,7 +61,7 @@ function Partners() {
             <Grid item xs={12} md={7} lg={9}>
               <Card>
                 <MDAvatar
-                  src={huawei}
+                  src={loading && `${baseURL}/${graph.session.Cour.image}`}
                   size="xl"
                   sx={{
                     border: "3.5px solid #227be9",
@@ -58,7 +80,7 @@ function Partners() {
                   coloredShadow="info"
                 >
                   <MDTypography variant="h6" color="white" ml={11}>
-                    HCIA - Big Data
+                    {loading && graph.session.nom}
                   </MDTypography>
                 </MDBox>
 

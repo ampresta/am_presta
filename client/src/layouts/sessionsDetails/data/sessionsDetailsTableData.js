@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import axios from "services/authAxios";
 
 // Api Endpoint
-import { baseURL, SessionGraph, SessionCollab } from "utils/APIRoutes";
+import { baseURL, SessionGraph, SessionCollabRoute } from "utils/APIRoutes";
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController } from "context";
@@ -20,21 +20,15 @@ import MDButton from "components/MDButton";
 
 export default function Data() {
   const [allCollabs, setAllCollabs] = useState([]);
-  const [graph, setGraph] = useState([]);
 
   const [controller] = useMaterialUIController();
   const { updater } = controller;
 
   useEffect(() => {
-    const getGraph = async () => {
-      const { data } = await axios.get(SessionGraph);
-      setGraph(data);
-    };
     const getCollab = async () => {
-      const { data } = await axios.get(SessionCollab);
+      const { data } = await axios.post(SessionCollabRoute);
       setAllCollabs(data);
     };
-    getGraph();
     getCollab();
   }, [updater]);
 
@@ -86,7 +80,7 @@ export default function Data() {
     rows: [],
   };
 
-  graph.map((session) =>
+  allCollabs.map((session) =>
     sessionsDetails.rows.push({
       author: <Company image={session.Cour.image} name={"Smhamad rachid"} />,
       fin_cours: (

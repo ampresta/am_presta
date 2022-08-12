@@ -11,7 +11,9 @@ import Icon from "@mui/material/Icon";
 
 // React Hooks
 import { useState, useEffect } from "react";
-
+import {
+  Link,
+} from "react-router-dom";
 // import axios from "services/authAxios";
 import axios from "services/authAxios";
 import {
@@ -83,13 +85,15 @@ export default function Data() {
     }
   };
 
-  const Company = ({ image, name, company }) => (
+  const Company = ({ id,image, name, company }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDAvatar src={`${baseURL}/${image}`} name={name} size="sm" />
       <MDBox ml={2} lineHeight={1}>
-        <MDTypography display="block" variant="button" fontWeight="medium">
+       <Link to={`/sessions/details/${id}`}>
+<MDTypography display="block" variant="button" fontWeight="medium">
           {name}
         </MDTypography>
+	  </Link> 
         <MDTypography variant="caption">{company}</MDTypography>
       </MDBox>
     </MDBox>
@@ -204,7 +208,7 @@ export default function Data() {
 
   allSessions.map((session) =>
     sessions.rows.push({
-      author: <Company image={session.Cour.image} name={session.nom} />,
+      author: <Company id={session.id} image={session.Cour.image} name={session.nom} />,
       cours: (
         <MDTypography
           component="a"
