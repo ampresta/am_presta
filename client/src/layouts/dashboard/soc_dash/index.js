@@ -32,34 +32,34 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "services/authAxios";
 
 // Endpoints
-import { amCardsRoute } from "utils/APIRoutes";
+import { SocCardsRoute } from "utils/APIRoutes";
 import authService from "services/auth.service";
 
 function Dashboard() {
   const navigate = useNavigate();
   const { columns, rows } = authorsTableData();
 
-  const [coursesCount, setCoursesCount] = useState(0);
-  const [partnersCount, setPartnersCount] = useState(0);
-  const [companiesCount, setCompaniesCount] = useState(0);
+  const [sessionsCount, setSessionsCount] = useState(0);
+  const [challengesCount, setChallengesCount] = useState(0);
+  const [collaboratorsCount, setCollabsCount] = useState(0);
 
   useEffect(() => {
     if (!authService.getCurrentUser()) {
       navigate("/login");
     }
     const fetchCards = async (model) => {
-      const { data } = await axios.post(amCardsRoute, { model });
+      const { data } = await axios.post(SocCardsRoute, { model });
       switch (model) {
-        case "cours":
-          setCoursesCount(data.count);
+        case "session":
+          setSessionsCount(data.count);
           break;
 
-        case "societe":
-          setCompaniesCount(data.count);
+        case "challenge":
+          setChallengesCount(data.count);
           break;
 
-        case "provider":
-          setPartnersCount(data.count);
+        case "collab":
+          setCollabsCount(data.count);
           break;
 
         default:
@@ -67,10 +67,10 @@ function Dashboard() {
       }
     };
 
-    fetchCards("cours").catch(console.error);
-    fetchCards("societe").catch(console.error);
-    fetchCards("provider").catch(console.error);
-  });
+    fetchCards("session").catch(console.error);
+    fetchCards("challenge").catch(console.error);
+    fetchCards("collab").catch(console.error);
+  }, []);
 
   return (
     <DashboardLayout>
@@ -83,7 +83,7 @@ function Dashboard() {
                 color="info"
                 icon="business"
                 title="Total Sessions"
-                count={companiesCount}
+                count={sessionsCount}
                 percentage={{
                   color: "success",
                   amount: "+55%",
@@ -96,9 +96,9 @@ function Dashboard() {
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
                 icon="school"
-                title="Total Collaborators"
+                title="Total Challenges"
                 color="success"
-                count={coursesCount}
+                count={challengesCount}
                 percentage={{
                   color: "success",
                   amount: "+3%",
@@ -112,8 +112,8 @@ function Dashboard() {
               <ComplexStatisticsCard
                 color="primary"
                 icon="handshake"
-                title="Total Partners"
-                count={partnersCount}
+                title="Total Collaborators"
+                count={collaboratorsCount}
                 percentage={{
                   color: "success",
                   amount: "+1%",
