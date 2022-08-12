@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 // @mui material components
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
@@ -36,6 +37,7 @@ function Courses() {
       navigate("/login");
     }
   }, []);
+
   const { columns, rows, confirmation, rawData } = coursesTableData();
 
   const [openAddModel, setOpenAddModel] = useState(false);
@@ -118,18 +120,22 @@ function Courses() {
                       onClick={setOpenAddModel}
                     >
                       <Icon fontSize="big">add</Icon>
-                      add Course
+                      &nbsp; add Course
                     </MDButton>
                   </MDBox>
 
                   <MDBox ml={3} py={1.9} px={2} mt={3}>
                     <MDButton
                       variant="gradient"
-                      color={rawData.length === 0 ? "success" : "info"}
+                      color="success"
                       size="small"
                       onClick={() => handleDownload("allCourses", "export")}
+                      disabled={rawData.length === 0}
                     >
-                      Export
+                      <Icon fontSize="big" color="light">
+                        download
+                      </Icon>
+                      &nbsp; Export
                     </MDButton>
                   </MDBox>
 
@@ -142,7 +148,10 @@ function Courses() {
                         handleDownload("addCourseTemplate", "template")
                       }
                     >
-                      Download Template
+                      <Icon fontSize="big" color="light">
+                        download
+                      </Icon>
+                      &nbsp; Download Template
                     </MDButton>
                   </MDBox>
 
@@ -156,7 +165,10 @@ function Courses() {
                         navigate("/csv");
                       }}
                     >
-                      upload csv
+                      <Icon fontSize="big" color="light">
+                        upload
+                      </Icon>
+                      &nbsp; upload csv
                     </MDButton>
                   </MDBox>
                 </Grid>

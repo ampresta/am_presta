@@ -9,7 +9,7 @@ import { ImageConfig } from "./config/ImageConfig";
 import uploadImg from "../../assets/images/cloud-upload-regular-240.png";
 import { Icon } from "@mui/material";
 
-const DropFileInput = ({ onFileChange, name, required }) => {
+const DropFileInput = ({ onFileChange, name, title, required }) => {
   const wrapperRef = useRef(null);
 
   const [fileList, setFileList] = useState([]);
@@ -47,7 +47,7 @@ const DropFileInput = ({ onFileChange, name, required }) => {
       >
         <MDBox className="drop-file-input__label">
           <img src={uploadImg} alt="" />
-          <p>Drag & Drop your file here</p>
+          <p>{title}</p>
         </MDBox>
         <input
           type="file"

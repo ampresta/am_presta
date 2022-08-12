@@ -48,7 +48,7 @@
 .drop-file-preview__item {
   position: relative;
   display: flex;
-  margin-bottom: 10px;
+  margin-bottom: 2px;
   padding: 10px;
   border-radius: 10px;
   border: 1px dashed #227be9;
@@ -80,12 +80,6 @@
   right: 10px;
   top: 50%;
   transform: translateY(-50%);
-  box-shadow: var(--box-shadow);
   cursor: pointer;
-  /* opacity: 0; */
   transition: opacity 0.3s ease;
 }
-
-/* .drop-file-preview__item:hover .drop-file-preview__item__del {
-  opacity: 1;
-} */

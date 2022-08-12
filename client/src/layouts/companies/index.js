@@ -127,6 +127,7 @@ function Companies() {
                       color="success"
                       size="small"
                       onClick={() => handleDownload("allCompanies", "export")}
+                      disabled={rawData.length === 0}
                     >
                       <Icon fontSize="big" color="light">
                         download

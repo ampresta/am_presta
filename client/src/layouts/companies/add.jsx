@@ -256,16 +256,10 @@ function AddCompanies({ closeAddModel }) {
             </MDBox>
           </MDBox>
 
-          {/* <MDInput
-            type="file"
-            variant="outlined"
-            name="image"
-            onChange={(e) => handleFileupload(e)}
-            fullWidth
-          /> */}
           <Card>
             <MDBox p={0.4}>
               <DropFileInput
+                title="Drag & Drop your company logo here"
                 name="image"
                 onFileChange={(files) => setFile(files[0])}
               />
