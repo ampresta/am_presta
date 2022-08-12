@@ -10,19 +10,18 @@ import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
 
 import PasswordTest from "components/PasswordTest";
+import DropFileInput from "components/DropFileInput/DropFileInput";
 
 //import UseState Hook
 import { useState } from "react";
 
-// Axios
 // import axiosAuth from "services/authAxios";
-
+import axios from "services/authAxios";
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setUpdater } from "context";
 
 import { registerRoute, uploadRoute } from "utils/APIRoutes";
-import axios from "axios";
 
 function AddCompanies({ closeAddModel }) {
   const [formErrors, setFormErrors] = useState({
@@ -46,6 +45,7 @@ function AddCompanies({ closeAddModel }) {
   });
 
   const [file, setFile] = useState(null);
+  console.log(file);
 
   const [controller, dispatch] = useMaterialUIController();
 
@@ -96,10 +96,6 @@ function AddCompanies({ closeAddModel }) {
     setDetails((prev) => {
       return { ...prev, [key]: value };
     });
-  };
-
-  const handleFileupload = (event) => {
-    setFile(event.target.files[0]);
   };
 
   const validate = (values) => {
@@ -260,13 +256,21 @@ function AddCompanies({ closeAddModel }) {
             </MDBox>
           </MDBox>
 
-          <MDInput
+          {/* <MDInput
             type="file"
             variant="outlined"
             name="image"
             onChange={(e) => handleFileupload(e)}
             fullWidth
-          />
+          /> */}
+          <Card>
+            <MDBox p={0.4}>
+              <DropFileInput
+                name="image"
+                onFileChange={(files) => setFile(files[0])}
+              />
+            </MDBox>
+          </Card>
 
           <MDBox mt={4} mb={2} display="flex" justifyContent="center">
             <MDButton

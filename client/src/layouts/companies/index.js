@@ -28,7 +28,7 @@ import Papa from "papaparse";
 import { useNavigate } from "react-router-dom";
 
 function Companies() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { columns, rows, confirmation, rawData } = companiesTableData();
   const [openAddModel, setOpenAddModel] = useState(false);
 
@@ -118,17 +118,20 @@ function Companies() {
                       <Icon fontSize="big" color="light">
                         add
                       </Icon>
-                      add company
+                      &nbsp; add company
                     </MDButton>
                   </MDBox>
                   <MDBox ml={3} py={1.9} px={2} mt={3}>
                     <MDButton
                       variant="gradient"
-                      color="info"
+                      color="success"
                       size="small"
                       onClick={() => handleDownload("allCompanies", "export")}
                     >
-                      Export
+                      <Icon fontSize="big" color="light">
+                        download
+                      </Icon>
+                      &nbsp; Export
                     </MDButton>
                   </MDBox>
 
@@ -141,7 +144,10 @@ function Companies() {
                         handleDownload("addCompanyTemplate", "template")
                       }
                     >
-                      Download Template
+                      <Icon fontSize="big" color="light">
+                        download
+                      </Icon>
+                      &nbsp; Download Template
                     </MDButton>
                   </MDBox>
 
@@ -155,7 +161,10 @@ function Companies() {
                         navigate("/csv");
                       }}
                     >
-                      upload csv
+                      <Icon fontSize="big" color="light">
+                        upload
+                      </Icon>
+                      &nbsp; upload csv
                     </MDButton>
                   </MDBox>
                 </Grid>
