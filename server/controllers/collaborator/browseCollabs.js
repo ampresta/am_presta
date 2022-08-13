@@ -13,7 +13,7 @@ module.exports = async (req, res) => {
       "DepartementId",
       "createdAt",
     ],
-    where: { admin: false, instructor: false },
+    where: { admin: false, instructor: false, SocieteId: req.societe },
   });
   return res.send(collabs);
 };

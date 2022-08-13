@@ -5,10 +5,12 @@ const browseCollabs = require("../controllers/collaborator/browseCollabs");
 const FinishCollabSession = require("../controllers/collaborator/FinishCollabSession");
 const RequestCours = require("../controllers/collaborator/RequestCours");
 const checkCollaborateur = require("../middlewares/checkCollaborateur");
+const checkSociete = require("../middlewares/checkSociete");
 const router = Router();
 const signedin = require("../middlewares/signedin");
 
 router.use(signedin);
+router.use(checkSociete);
 router.post("/addmany", addManyCollabs);
 router.get("/browse", browseCollabs);
 
