@@ -7,6 +7,7 @@ const amtable = require("../controllers/dashboard/amtable");
 const amtop = require("../controllers/dashboard/amtop");
 const checkSociete = require("../middlewares/checkSociete");
 const soccards = require("../controllers/dashboard/soccards");
+const socCollabTable = require("../controllers/dashboard/socCollabTable");
 
 // router.use(signedin);
 
@@ -18,4 +19,5 @@ router.post("/topcourses", amtop);
 // Societe Dash
 router.use(checkSociete);
 router.post("/soccards", soccards);
+router.post("/soccollab", socCollabTable);
 module.exports = router;

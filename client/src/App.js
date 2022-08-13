@@ -60,7 +60,7 @@ export default function App() {
     routes = routes_ampresta;
   }
 
-  console.log(user);
+  // console.log(user);
 
   const getRoutes = (allRoutes) =>
     allRoutes.map((route) => {

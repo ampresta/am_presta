@@ -15,7 +15,7 @@ module.exports = async (req, res) => {
 
     payload2 = { user_id: payload.user_id, type: payload.type };
     if (payload.id) {
-      payload2.id = id;
+      payload2.id = payload.id;
     }
     accesstoken = sign(payload2, process.env.JWTSALT, {
       expiresIn: "15m",

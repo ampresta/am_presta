@@ -7,7 +7,7 @@ import MDTypography from "components/MDTypography";
 import axios from "services/authAxios";
 
 //Api Routes
-import { topCompaniesRoute, baseURL } from "utils/APIRoutes";
+import { topCollabRoute, baseURL } from "utils/APIRoutes";
 // React
 
 import { useEffect, useState } from "react";
@@ -28,40 +28,56 @@ function Data(props) {
     </MDBox>
   );
 
-  const [allCompanies, setAllCompanies] = useState([]);
+  const [allCollabs, setAllCollabs] = useState([]);
 
   useEffect(() => {
-    const getAllCompanies = async () => {
-      const { data } = await axios.post(topCompaniesRoute);
-      setAllCompanies((prev) => data.companies);
+    const getAllCollabs = async () => {
+      const { data } = await axios.post(topCollabRoute);
+      console.log(data);
+      setAllCollabs(data.collabs);
     };
-    getAllCompanies();
+    getAllCollabs();
   }, []);
 
   let table = {
     columns: [
       {
-        Header: "Company Name",
+        Header: "Collaborator Name",
         accessor: "author",
-        width: "45%",
+        width: "50%",
         align: "left",
       },
-      { Header: "manager", accessor: "manager", align: "center" },
-      { Header: "date", accessor: "date", align: "center" },
+      {
+        Header: "Number of certifs",
+        accessor: "certifs",
+        width: "50%",
+        align: "left",
+      },
     ],
     rows: [],
   };
 
-  allCompanies.map((company) =>
+  allCollabs.map((collab) =>
     table.rows.push({
       author: (
         <Author
-          image={company.image}
-          name={company.name}
-          company={company.name}
+          image={collab.image}
+          name={`${collab.nom} ${collab.prenom}`}
+          company={collab.Prenom}
         />
       ),
-      manager: (
+      // manager: (
+      //   <MDTypography
+      //     component="a"
+      //     href="#"
+      //     variant="caption"
+      //     color="text"
+      //     fontWeight="medium"
+      //   >
+      //     {collab.Collaborateurs[0].nom} {collab.Collaborateurs[0].prenom}
+      //   </MDTypography>
+      // ),
+      certifs: (
         <MDTypography
           component="a"
           href="#"
@@ -69,18 +85,7 @@ function Data(props) {
           color="text"
           fontWeight="medium"
         >
-          {company.Collaborateurs[0].nom} {company.Collaborateurs[0].prenom}
-        </MDTypography>
-      ),
-      date: (
-        <MDTypography
-          component="a"
-          href="#"
-          variant="caption"
-          color="text"
-          fontWeight="medium"
-        >
-          {dateFormat(company.createdAt)}
+          {dateFormat(collab.certifs_count)}
         </MDTypography>
       ),
     })
