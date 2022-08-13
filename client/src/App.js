@@ -24,10 +24,13 @@ import AmpLogo from "assets/images/amp-logo.png";
 import themeDark from "assets/theme-dark";
 
 // Material Dashboard 2 React routes
-import routes from "routes";
+import routes_ampresta from "routes/routes_ampresta";
+import routes_societe from "routes/routes_societe";
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setDarkMode } from "context";
+
+import UserGiver from "utils/UserType";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -46,6 +49,18 @@ export default function App() {
   }, [pathname]);
 
   useEffect(() => {}, [darkMode]);
+
+  const user = UserGiver();
+
+  let routes = [];
+
+  if (user.userType === "Societe") {
+    routes = routes_societe;
+  } else if (user.userType === "Superadmin") {
+    routes = routes_ampresta;
+  }
+
+  console.log(user);
 
   const getRoutes = (allRoutes) =>
     allRoutes.map((route) => {
@@ -81,7 +96,7 @@ export default function App() {
       position="fixed"
       right="2rem"
       bottom="2rem"
-      zIndex={99}
+      zIndex={999}
       color={darkMode ? "dark" : "white"}
       sx={{ cursor: "pointer" }}
       lineHeight={1}

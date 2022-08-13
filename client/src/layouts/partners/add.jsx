@@ -80,10 +80,6 @@ function AddPartner({ closeAddModel }) {
     });
   };
 
-  const handleFileupload = (event) => {
-    setFile(event.target.files[0]);
-  };
-
   const validate = (values) => {
     const errors = {};
     if (!values.nom) {
