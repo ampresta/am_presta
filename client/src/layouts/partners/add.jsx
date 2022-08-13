@@ -9,11 +9,14 @@ import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
 
+import DropFileInput from "components/DropFileInput/DropFileInput";
+
 //import UseState Hook
 import { useState } from "react";
 
 // Axios
 import axiosAuth from "services/authAxios";
+
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setUpdater } from "context";
 
@@ -138,13 +141,15 @@ function AddPartner({ closeAddModel }) {
             <FormHelperText error>{formErrors.coursename}</FormHelperText>
           </MDBox>
 
-          <MDInput
-            type="file"
-            variant="outlined"
-            name="image"
-            onChange={(e) => handleFileupload(e)}
-            fullWidth
-          />
+          <Card>
+            <MDBox p={0.4}>
+              <DropFileInput
+                title="Drag & Drop partner logo here"
+                name="image"
+                onFileChange={(files) => setFile(files[0])}
+              />
+            </MDBox>
+          </Card>
 
           <MDBox mt={4} mb={2} display="flex" justifyContent="center">
             <MDButton

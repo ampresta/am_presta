@@ -11,9 +11,7 @@ import Icon from "@mui/material/Icon";
 
 // React Hooks
 import { useState, useEffect } from "react";
-import {
-  Link,
-} from "react-router-dom";
+import { Link } from "react-router-dom";
 // import axios from "services/authAxios";
 import axios from "services/authAxios";
 import {
@@ -85,15 +83,15 @@ export default function Data() {
     }
   };
 
-  const Company = ({ id,image, name, company }) => (
+  const Company = ({ id, image, name, company }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDAvatar src={`${baseURL}/${image}`} name={name} size="sm" />
       <MDBox ml={2} lineHeight={1}>
-       <Link to={`/sessions/details/${id}`}>
-<MDTypography display="block" variant="button" fontWeight="medium">
-          {name}
-        </MDTypography>
-	  </Link> 
+        <Link to={`/sessions/details/${id}`}>
+          <MDTypography display="block" variant="button" fontWeight="medium">
+            {name}
+          </MDTypography>
+        </Link>
         <MDTypography variant="caption">{company}</MDTypography>
       </MDBox>
     </MDBox>
@@ -189,7 +187,7 @@ export default function Data() {
     ProvidersFilter: (
       <Grid container mt={1} rowSpacing={1}>
         {providers.map((provider) => (
-          <Grid item xs={1.5} ml={3} key={provider.id}>
+          <Grid item xs={1} ml={2} key={provider.id}>
             <MDButton
               variant="outlined"
               size="small"
@@ -208,7 +206,13 @@ export default function Data() {
 
   allSessions.map((session) =>
     sessions.rows.push({
-      author: <Company id={session.id} image={session.Cour.image} name={session.nom} />,
+      author: (
+        <Company
+          id={session.id}
+          image={session.Cour.image}
+          name={session.nom}
+        />
+      ),
       cours: (
         <MDTypography
           component="a"

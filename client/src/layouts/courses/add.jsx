@@ -14,6 +14,8 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
+import DropFileInput from "components/DropFileInput/DropFileInput";
+
 //import UseState Hook
 import { useState } from "react";
 
@@ -24,10 +26,11 @@ import axiosAuth from "services/authAxios";
 import { useMaterialUIController, setUpdater } from "context";
 
 import { useEffect } from "react";
-import { allPartnersRoute } from "utils/APIRoutes";
-import { addCoursesRoute } from "utils/APIRoutes";
-import { uploadRoute } from "utils/APIRoutes";
-import authService from "services/auth.service";
+import {
+  allPartnersRoute,
+  uploadRoute,
+  addCoursesRoute,
+} from "utils/APIRoutes";
 
 function AddCourses({ closeAddModel }) {
   const [formErrors, setFormErrors] = useState({
@@ -126,10 +129,6 @@ function AddCourses({ closeAddModel }) {
     setSelectedProvider(provider);
   };
 
-  const handleFileupload = (event) => {
-    setFile(event.target.files[0]);
-  };
-
   const validate = (values) => {
     const errors = {};
     if (!values.nom) {
@@ -191,9 +190,7 @@ function AddCourses({ closeAddModel }) {
                 onChange={(e) => handleChange(e)}
                 error={formErrors.coursename}
               />
-              <FormHelperText error sx={{ ml: 2 }}>
-                {formErrors.coursename}
-              </FormHelperText>
+              <FormHelperText error>{formErrors.coursename}</FormHelperText>
             </MDBox>
 
             <MDBox mb={2} ml={2} sx={{ width: "50%" }}>
@@ -242,13 +239,15 @@ function AddCourses({ closeAddModel }) {
             <FormHelperText error>{formErrors.description}</FormHelperText>
           </MDBox>
 
-          <MDInput
-            type="file"
-            variant="outlined"
-            name="image"
-            onChange={(e) => handleFileupload(e)}
-            fullWidth
-          />
+          <Card>
+            <MDBox p={0.4}>
+              <DropFileInput
+                title="Drag & Drop course logo here"
+                name="image"
+                onFileChange={(files) => setFile(files[0])}
+              />
+            </MDBox>
+          </Card>
 
           <MDBox mt={4} mb={2} display="flex" justifyContent="center">
             <MDButton

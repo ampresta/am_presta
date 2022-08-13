@@ -105,20 +105,24 @@ function Partners() {
                       <Icon fontSize="big" color="light">
                         add
                       </Icon>
-                      add partner
+                      &nbsp; add partner
                     </MDButton>
                   </MDBox>
                   <MDBox ml={3} py={1.9} px={2} mt={3}>
                     <MDButton
                       variant="gradient"
-                      color={(rawData.length === 0) ? "success" : "info"}
+                      color="success"
                       size="small"
                       onClick={() => {
                         console.log("export");
                         handleDownload("allProviders", "export");
                       }}
+                      disabled={rawData.length === 0}
                     >
-                      Export
+                      <Icon fontSize="big" color="light">
+                        download
+                      </Icon>
+                      &nbsp; Export
                     </MDButton>
                   </MDBox>
 
@@ -132,7 +136,10 @@ function Partners() {
                         handleDownload("addProviderTemplate", "template");
                       }}
                     >
-                      Download Template
+                      <Icon fontSize="big" color="light">
+                        download
+                      </Icon>
+                      &nbsp; Download Template
                     </MDButton>
                   </MDBox>
 
@@ -146,7 +153,10 @@ function Partners() {
                         navigate("/csv");
                       }}
                     >
-                      upload csv
+                      <Icon fontSize="big" color="light">
+                        upload
+                      </Icon>
+                      &nbsp; upload csv
                     </MDButton>
                   </MDBox>
                 </Grid>
