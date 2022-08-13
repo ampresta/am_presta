@@ -81,7 +81,7 @@ const Csv = () => {
   };
 
   const addCollabs = async (DATA) => {
-    const requestDATA = { societe: DATA.societe, collabs: [] };
+    const requestDATA = { collabs: [] };
     DATA.map((collab) => {
       requestDATA.collabs.push({
         nom: collab.nom,
@@ -91,9 +91,8 @@ const Csv = () => {
         password: collab[" password"],
       });
     });
-    console.log(requestDATA);
     await axiosAuth.post(addCollabsRoute, requestDATA);
-    navigate("/collaboraters");
+    // navigate("/collaboraters");
   };
 
   const handleFileChange = (e) => {
@@ -143,6 +142,6 @@ const Csv = () => {
       </div>
     </div>
   );
-};
+};;
 
 export default Csv;

@@ -30,8 +30,6 @@ function Sessions() {
   const [openAddModel, setOpenAddModel] = useState(false);
   const [openFilter, setOpenFilter] = useState(false);
 
-  // authService.login("abdoessordo", "123456789")
-
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -64,7 +62,7 @@ function Sessions() {
                       onClick={setOpenAddModel}
                     >
                       <Icon fontSize="big">add</Icon>
-                      add Session
+                      &nbsp; add Session
                     </MDButton>
                   </MDBox>
 

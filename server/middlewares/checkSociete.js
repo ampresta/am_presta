@@ -11,7 +11,8 @@ module.exports = (req, res, next) => {
     payload = verify(token, process.env.JWTSALT);
     console.log(payload);
     if (payload.type === "Societe") {
-      req.societe = payload.user_id;
+      req.societe = payload.id;
+
       console.log("------------------------------");
       console.log(req.societe);
       console.log("------------------------------");

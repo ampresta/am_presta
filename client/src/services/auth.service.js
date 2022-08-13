@@ -9,20 +9,13 @@ const login = (username, password) => {
     })
     .then(async (response) => {
       if (response.data.accesstoken) {
-        localStorage.setItem("user", JSON.stringify(response.data));        
-        const { data } = await axiosAuth.post(userCompanyRoute, {
-          UserId: response.data.userId,
-        });
-        localStorage.setItem("companyID", data.societe);
+        localStorage.setItem("user", JSON.stringify(response.data));
       }
-
-      return response.data;
     });
 };
 
 const logout = () => {
   localStorage.removeItem("user");
-  localStorage.removeItem("companyID");
 };
 
 const getCurrentUser = () => {

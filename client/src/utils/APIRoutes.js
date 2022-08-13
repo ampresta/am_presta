@@ -13,6 +13,11 @@ export const graphsRoute = `${baseURL}/dashboard/amgraphs`;
 export const topCompaniesRoute = `${baseURL}/dashboard/amtable`;
 export const topCoursesRoute = `${baseURL}/dashboard/topcourses`;
 
+// Societe Dashboard
+export const SocCardsRoute = `${baseURL}/dashboard/soccards`;
+export const graphsSocRoute = `${baseURL}/dashboard/amgraphs`;
+export const topCollabRoute = `${baseURL}/dashboard/amtable`;
+export const topChallengesRoute = `${baseURL}/dashboard/topcourses`;
 // Companies
 export const registerRoute = `${baseURL}/register`;
 export const allCompaniesRoute = `${baseURL}/societe/browse`;
@@ -54,8 +59,6 @@ export const uploadRoute = `${baseURL}/upload`;
 export const SessionGraph = `${baseURL}/session/graph`;
 export const SessionCollabRoute = `${baseURL}/session/collab`;
 
-
 //Collabs
 export const addCollabsRoute = `${baseURL}/collab/addmany`;
 export const browseCollabsRoute = `${baseURL}/collab/browse`;
-

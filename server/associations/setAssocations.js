@@ -54,6 +54,9 @@ module.exports = (db) => {
     onDelete: "CASCADE",
   });
   Collaborateur.belongsTo(User);
+  // Challenge Societe
+  Challenge.belongsTo(Societe);
+  Societe.hasMany(Challenge);
   // Challenge Collab
   Challenge.belongsToMany(Collaborateur, { through: ChallengeCollab });
   Collaborateur.belongsToMany(Challenge, { through: ChallengeCollab });
