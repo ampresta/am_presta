@@ -10,6 +10,7 @@ const signedin = require("../middlewares/signedin");
 // router.use(signedin);
 // Please don't change the order
 // Super Admin Links
+router.use(checkSociete);
 
 // router.use("/add", CheckSuperAdmin);
 // router.use("/browse", CheckSuperAdmin);
