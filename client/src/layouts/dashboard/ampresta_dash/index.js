@@ -71,7 +71,7 @@ function Dashboard() {
     fetchCards("cours").catch(console.error);
     fetchCards("societe").catch(console.error);
     fetchCards("provider").catch(console.error);
-  });
+  }, []);
 
   return (
     <DashboardLayout>
