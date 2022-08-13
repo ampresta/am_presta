@@ -18,7 +18,7 @@ import { useState } from "react";
 import Icon from "@mui/material/Icon";
 
 //import Add component
-import AddPartner from "./add";
+import AddCollab from "./add";
 
 // Data
 import collabsTableData from "layouts/collabs/data/collabsTableData";
@@ -107,7 +107,7 @@ function Collabs() {
                       <Icon fontSize="big" color="light">
                         add
                       </Icon>
-                      add collab
+                      &nbsp; add collaborator
                     </MDButton>
                   </MDBox>
                   <MDBox ml={3} py={1.9} px={2} mt={3}>
@@ -119,7 +119,10 @@ function Collabs() {
                         handleDownload("allCollabs", "export");
                       }}
                     >
-                      Export
+                      <Icon fontSize="big" color="light">
+                        download
+                      </Icon>
+                      &nbsp; Export
                     </MDButton>
                   </MDBox>
 
@@ -132,7 +135,10 @@ function Collabs() {
                         handleDownload("addCollabsTemplate", "template");
                       }}
                     >
-                      Download Template
+                      <Icon fontSize="big" color="light">
+                        download
+                      </Icon>
+                      &nbsp; Download Template
                     </MDButton>
                   </MDBox>
 
@@ -146,7 +152,10 @@ function Collabs() {
                         navigate("/csv");
                       }}
                     >
-                      upload csv
+                      <Icon fontSize="big" color="light">
+                        upload
+                      </Icon>
+                      &nbsp; upload csv
                     </MDButton>
                   </MDBox>
                 </Grid>
@@ -163,7 +172,7 @@ function Collabs() {
           </Grid>
         </MDBox>
       )}
-      {openAddModel && <AddPartner closeAddModel={setOpenAddModel} />}
+      {openAddModel && <AddCollab closeAddModel={setOpenAddModel} />}
       {confirmation}
     </DashboardLayout>
   );

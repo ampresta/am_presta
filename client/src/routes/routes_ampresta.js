@@ -6,6 +6,7 @@ import Quota from "layouts/quota";
 import SignIn from "layouts/authentication/sign-in";
 import Logout from "layouts/authentication/logout";
 import Csv from "layouts/CSV";
+import CsvUploader from "examples/CsvUploader";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -83,6 +84,14 @@ const routes = [
     icon: <Icon fontSize="small">lock</Icon>,
     route: "/logout",
     component: <Logout />,
+  },
+  {
+    type: "collapse",
+    name: "CsvUploader",
+    key: "CsvUploader",
+    icon: <Icon fontSize="small">lock</Icon>,
+    route: "/CsvUploader",
+    component: <CsvUploader />,
   },
 ];
 

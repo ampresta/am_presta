@@ -12,19 +12,22 @@ import MDTypography from "components/MDTypography";
 //import UseState Hook
 import { useState } from "react";
 
+import DropFileInput from "components/DropFileInput/DropFileInput";
+
 // Axios
 import axiosAuth from "services/authAxios";
+
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setUpdater } from "context";
 
 import { addPartnersRoute, uploadRoute } from "utils/APIRoutes";
 
-function AddPartner({ closeAddModel }) {
+function AddCollab({ closeAddModel }) {
   const [formErrors, setFormErrors] = useState({
     nom: "",
   });
 
-  const [partner, setPartner] = useState({
+  const [collaborator, setCollaborator] = useState({
     nom: "",
   });
 
@@ -35,10 +38,10 @@ function AddPartner({ closeAddModel }) {
   const { updater } = controller;
 
   const handleSubmit = async (event) => {
-    const { nom } = partner;
+    const { nom } = collaborator;
     event.preventDefault();
-    setFormErrors(validate(partner));
-    if (Object.keys(validate(partner)).length === 0) {
+    setFormErrors(validate(collaborator));
+    if (Object.keys(validate(collaborator)).length === 0) {
       const { data } = await axiosAuth.post(addPartnersRoute, {
         nom,
       });
@@ -48,7 +51,7 @@ function AddPartner({ closeAddModel }) {
         const fd = new FormData();
         fd.append("image", file);
         fd.append("id", ID);
-        fd.append("model", "provider");
+        fd.append("model", "Collaborateur");
 
         const config = {
           method: "post",
@@ -72,19 +75,15 @@ function AddPartner({ closeAddModel }) {
   const handleChange = (event) => {
     const key = event.target.name;
     const value = event.target.value;
-    setPartner((prev) => {
+    setCollaborator((prev) => {
       return { ...prev, [key]: value };
     });
-  };
-
-  const handleFileupload = (event) => {
-    setFile(event.target.files[0]);
   };
 
   const validate = (values) => {
     const errors = {};
     if (!values.nom) {
-      errors.coursename = "Partner Name is required !";
+      errors.coursename = "Collaborator Name is required !";
     }
     return errors;
   };
@@ -105,7 +104,7 @@ function AddPartner({ closeAddModel }) {
         mb={1}
       >
         <MDTypography variant="h6" color="white">
-          Add Partner
+          Add Collaborator
         </MDTypography>
 
         <MDButton
@@ -128,7 +127,7 @@ function AddPartner({ closeAddModel }) {
           <MDBox mb={2}>
             <MDInput
               type="text"
-              label="Partner Name"
+              label="collaborator Name"
               variant="outlined"
               fullWidth
               name="nom"
@@ -138,13 +137,15 @@ function AddPartner({ closeAddModel }) {
             <FormHelperText error>{formErrors.coursename}</FormHelperText>
           </MDBox>
 
-          <MDInput
-            type="file"
-            variant="outlined"
-            name="image"
-            onChange={(e) => handleFileupload(e)}
-            fullWidth
-          />
+          <Card>
+            <MDBox>
+              <DropFileInput
+                title="Drag & Drop collab photo here"
+                name="image"
+                onFileChange={(files) => setFile(files[0])}
+              />
+            </MDBox>
+          </Card>
 
           <MDBox mt={4} mb={2} display="flex" justifyContent="center">
             <MDButton
@@ -171,4 +172,4 @@ function AddPartner({ closeAddModel }) {
   );
 }
 
-export default AddPartner;
+export default AddCollab;

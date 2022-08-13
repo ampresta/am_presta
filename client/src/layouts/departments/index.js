@@ -12,7 +12,7 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import DataTable from "examples/Tables/DataTable";
 
 //import Hook
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -23,8 +23,6 @@ import AddDepartement from "./add";
 // Data
 import departementsTableData from "layouts/departments/data/departmentsTableData";
 import MDButton from "components/MDButton";
-import { allDepartmentsRoute } from "utils/APIRoutes";
-import axios from "services/authAxios";
 
 function Departments() {
   const { columns, rows, confirmation } = departementsTableData();
@@ -63,7 +61,7 @@ function Departments() {
                       <Icon fontSize="big" color="light">
                         add
                       </Icon>
-                      add department
+                      &nbsp; add department
                     </MDButton>
                   </MDBox>
                 </Grid>
