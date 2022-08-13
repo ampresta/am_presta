@@ -16,7 +16,7 @@ export const topCoursesRoute = `${baseURL}/dashboard/topcourses`;
 // Societe Dashboard
 export const SocCardsRoute = `${baseURL}/dashboard/soccards`;
 export const graphsSocRoute = `${baseURL}/dashboard/amgraphs`;
-export const topCollabRoute = `${baseURL}/dashboard/amtable`;
+export const topCollabRoute = `${baseURL}/dashboard/soccollab`;
 export const topChallengesRoute = `${baseURL}/dashboard/topcourses`;
 // Companies
 export const registerRoute = `${baseURL}/register`;

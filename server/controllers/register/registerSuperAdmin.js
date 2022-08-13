@@ -1,6 +1,7 @@
 const argon2 = require("argon2");
-const SuperAdmin = require("../../models/SuperAdmin");
-const User = require("../../models/Users");
+const db = require("../../config/database");
+
+const { SuperAdmin, User } = db.models;
 module.exports = async (req, res) => {
   try {
     const { username, password, nom, prenom } = req.body;
@@ -29,6 +30,7 @@ module.exports = async (req, res) => {
 
     return res.send({ status: true, msg: "SuperAdmin Created Successfully" });
   } catch (err) {
+    console.log(err);
     return res.send({ msg: "an Error Occurred during your registration" });
   }
 };

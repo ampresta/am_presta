@@ -1,12 +1,8 @@
-import Dashboard from "layouts/dashboard";
+import Dashboard from "layouts/dashboard/ampresta_dash";
 import Companies from "layouts/companies";
 import Partners from "layouts/partners";
 import Courses from "layouts/courses";
-import Sessions from "layouts/sessions";
 import Quota from "layouts/quota";
-import Requests from "layouts/requests";
-import Departments from "layouts/departments";
-import SessionsDetails from "layouts/sessionsDetails";
 import SignIn from "layouts/authentication/sign-in";
 import Logout from "layouts/authentication/logout";
 import Csv from "layouts/CSV";
@@ -58,53 +54,11 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Sessions",
-    key: "sessions",
-    icon: <Icon fontSize="small">groups</Icon>,
-    route: "/sessions",
-    component: <Sessions />,
-  },
-  //////////////////////////
-  // Dash 2
-  ///////////////////////////
-  {
-    type: "collapse",
-    name: "",
-    key: "",
-    // icon: <Icon fontSize="small">groups</Icon>,
-    route: "",
-    // component: <Sessions />,
-  },
-  {
-    type: "collapse",
     name: "Collaboraters",
     key: "collaboraters",
     icon: <Icon fontSize="small">groups</Icon>,
     route: "/collaboraters",
     component: <Collabs />,
-  },
-  {
-    type: "collapse",
-    name: "Requests",
-    key: "requests",
-    icon: <Icon fontSize="small">help</Icon>,
-    route: "/requests",
-    component: <Requests />,
-  },
-  {
-    type: "collapse",
-    name: "Departments",
-    key: "departments",
-    icon: <Icon fontSize="small">apartment</Icon>,
-    route: "/departments",
-    component: <Departments />,
-  },
-  {
-    name: "details",
-    key: "details",
-    icon: <Icon fontSize="small">check</Icon>,
-    route: "/sessions/details/:id",
-    component: <SessionsDetails />,
   },
   {
     name: "csv",

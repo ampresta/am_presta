@@ -8,8 +8,9 @@ function Logout() {
   const navigate = useNavigate();
   useEffect(() => {
     authService.logout();
-    navigate("/login");
   }, []);
+
+  navigate("/login");
   return null;
 }
 

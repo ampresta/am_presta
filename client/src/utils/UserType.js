@@ -1,26 +1,23 @@
-// import { getType } from "utils/APIRoutes";
-// import authService from "services/auth.service";
-// import axios from "services/authAxios";
+import { getType } from "utils/APIRoutes";
+import axios from "services/authAxios";
 
-// import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
-// const UserGiver = () => {
-//   const [userType, setUserType] = useState("");
-//   const [loading, setloading] = useState(false);
+const UserGiver = () => {
+  const [userType, setUserType] = useState("");
 
-//   useEffect(() => {
-//     const gettype = async () => {
-//       const { data } = await axios.get(getType);
-//       if (data.status) {
-//         setUserType(data.type);
-//       }
-//       setloading(true);
-//     };
+  useEffect(() => {
+    const gettype = async () => {
+      const { data } = await axios.get(getType);
+      if (data.status) {
+        setUserType(data.type);
+      }
+    };
 
-//     gettype();
-//   }, []);
+    gettype();
+  }, []);
 
-//   return { loading, userType };
-// };
+  return { userType };
+};
 
-// export default UserGiver;
+export default UserGiver;

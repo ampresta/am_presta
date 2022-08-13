@@ -1,6 +1,7 @@
 const sequelize = require("sequelize");
 const db = require("../../config/database");
 const { Collaborateur } = db.models;
+
 module.exports = async (req, res) => {
   const collabs = await Collaborateur.findAll({
     attributes: [

@@ -129,7 +129,7 @@ function Dashboard() {
               <MDBox mb={3}>
                 <ReportsBarChart
                   color="info"
-                  title="Total companies"
+                  title="Total Sessions"
                   description="Last Campaign Performance"
                   date="campaign sent 2 days ago"
                   chart={CompaniesGraph()}
@@ -140,7 +140,7 @@ function Dashboard() {
               <MDBox mb={3}>
                 <ReportsLineChart
                   color="success"
-                  title="Total Courses"
+                  title="Total Challenges"
                   description={
                     <>
                       (<strong>+15%</strong>) increase in this month.
@@ -155,7 +155,7 @@ function Dashboard() {
               <MDBox mb={3}>
                 <ReportsLineChart
                   color="primary"
-                  title="Total partners"
+                  title="Total Collaborators"
                   description="Last Campaign Performance"
                   date="just updated"
                   chart={PartnersGraph()}
@@ -181,7 +181,7 @@ function Dashboard() {
                   justifyContent="space-between"
                 >
                   <MDTypography variant="h6" color="white">
-                    Companies
+                    Best Collaborators
                   </MDTypography>
                   <Link to={"/companies"}>
                     <MDTypography
