@@ -29,7 +29,8 @@ module.exports = async (req, res) => {
       secure: true,
       sameSite: "None",
     });
-    return res.send({ status: true, accesstoken });
+    console.log(payload2);
+    return res.send({ status: true, accesstoken, type: payload.type });
   } catch (err) {
     console.log(err);
     return res.send({ status: false, msg: err });

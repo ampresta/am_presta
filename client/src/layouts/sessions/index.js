@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import TypeGiver from "../../utils/UserType";
 import SessionAm from "./ampresta";
 import SessionSoc from "./societe";
@@ -6,9 +5,10 @@ import SessionSoc from "./societe";
 const Session = () => {
   const user = TypeGiver();
   // });
+  console.log(user);
   if (user.userType === "Societe") {
     return <SessionSoc />;
-  } else if (user.userType === "SuperAdmin") {
+  } else if (user.userType === "Superadmin") {
     return <SessionAm />;
   }
 };

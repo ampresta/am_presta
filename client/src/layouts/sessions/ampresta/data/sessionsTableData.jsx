@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
 // import axios from "services/authAxios";
 import axios from "services/authAxios";
 import {
-  allSessionsRoute,
+  AllSessionsAdminRoute,
   baseURL,
   allPartnersRoute,
   DeleteInstances,
@@ -47,7 +47,7 @@ export default function Data() {
   useEffect(() => {
     const config = {
       method: "get",
-      url: allSessionsRoute,
+      url: AllSessionsAdminRoute,
       // headers: {
       //   'Authorization': `Bearer ${authService.getCurrentUser()}`,
       // }
