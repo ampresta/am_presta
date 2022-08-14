@@ -9,7 +9,7 @@ import { ImageConfig } from "./config/ImageConfig";
 import uploadImg from "../../assets/images/cloud-upload-regular-240.png";
 import { Icon } from "@mui/material";
 
-const DropFileInput = ({ onFileChange, name, title, required }) => {
+const DropFileInput = ({ onFileChange, name, title, required, accept }) => {
   const wrapperRef = useRef(null);
 
   const [fileList, setFileList] = useState([]);
@@ -55,6 +55,7 @@ const DropFileInput = ({ onFileChange, name, title, required }) => {
           name={name}
           required={required}
           onChange={onFileDrop}
+          accept={accept}
         />
       </MDBox>
       {fileList.length > 0 ? (

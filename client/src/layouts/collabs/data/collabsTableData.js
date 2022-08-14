@@ -14,14 +14,13 @@ import { useState, useEffect } from "react";
 import axiosAuth from "services/authAxios";
 
 // Api Endpoint
-import { baseURL, DeleteInstances } from "utils/APIRoutes";
+import { baseURL, DeleteInstances, browseCollabsRoute } from "utils/APIRoutes";
 
 // ConfirmPoppup component
 import ConfirmPopup from "components/ConfirmPopup";
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController } from "context";
-import { browseCollabsRoute } from "utils/APIRoutes";
 
 export default function Data() {
   const [allCollabs, setAllCollabs] = useState([]);
@@ -33,11 +32,11 @@ export default function Data() {
   const { updater } = controller;
 
   useEffect(() => {
-    const getAllColabs = async () => {
+    const getAllCollabs = async () => {
       const { data } = await axiosAuth.get(browseCollabsRoute);
       setAllCollabs((prev) => data);
     };
-    getAllColabs();
+    getAllCollabs();
   }, [updater]);
 
   const handleDelete = async (id) => {
@@ -158,8 +157,7 @@ export default function Data() {
         ),
       })
     );
-  } catch (error) {
-  }
+  } catch (error) {}
 
   return collabs;
 }

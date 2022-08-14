@@ -240,7 +240,7 @@ function AddCourses({ closeAddModel }) {
           </MDBox>
 
           <Card>
-            <MDBox p={0.4}>
+            <MDBox>
               <DropFileInput
                 title="Drag & Drop course logo here"
                 name="image"
