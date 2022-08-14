@@ -262,6 +262,7 @@ function AddCompanies({ closeAddModel }) {
                 title="Drag & Drop your company logo here"
                 name="image"
                 onFileChange={(files) => setFile(files[0])}
+                accept=".jpeg, .png, .jpg"
               />
             </MDBox>
           </Card>

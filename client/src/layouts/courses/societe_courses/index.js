@@ -24,7 +24,7 @@ import AddCompanies from "./add";
 import { useEffect, useState } from "react";
 
 // Data
-import coursesTableData from "layouts/courses/data/coursesTableData";
+import coursesTableData from "./data/coursesTableData";
 import authService from "services/auth.service";
 import { useNavigate } from "react-router-dom";
 

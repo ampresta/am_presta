@@ -26,7 +26,9 @@ function MDAlert({ color, dismissible, children, ...rest }) {
           {children}
         </MDBox>
         {dismissible ? (
-          <MDAlertCloseIcon onClick={mount ? handleAlertStatus : null}>&times;</MDAlertCloseIcon>
+          <MDAlertCloseIcon onClick={mount ? handleAlertStatus : null}>
+            &times;
+          </MDAlertCloseIcon>
         ) : null}
       </MDAlertRoot>
     </Fade>
@@ -65,7 +67,7 @@ MDAlert.propTypes = {
     "dark",
   ]),
   dismissible: PropTypes.bool,
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
 };
 
 export default MDAlert;

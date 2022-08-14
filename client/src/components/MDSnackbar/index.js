@@ -174,7 +174,7 @@ MDSnackbar.propTypes = {
   icon: PropTypes.node.isRequired,
   title: PropTypes.string.isRequired,
   dateTime: PropTypes.string.isRequired,
-  content: PropTypes.node.isRequired,
+  content: PropTypes.node,
   close: PropTypes.func.isRequired,
   bgWhite: PropTypes.bool,
 };
