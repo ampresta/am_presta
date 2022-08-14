@@ -7,9 +7,9 @@ const Courses = () => {
   // });
   console.log(user);
   if (user.userType === "Societe") {
-    return <CourseAmpresta />;
-  } else if (user.userType === "SuperAdmin") {
     return <CourseSociete />;
+  } else if (user.userType === "Superadmin") {
+    return <CourseAmpresta />;
   }
 };
 

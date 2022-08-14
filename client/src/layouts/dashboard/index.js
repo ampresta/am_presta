@@ -8,7 +8,7 @@ const Dashboard = () => {
   console.log(user);
   if (user.userType === "Societe") {
     return <DashSoc />;
-  } else if (user.userType === "SuperAdmin") {
+  } else if (user.userType === "Superadmin") {
     return <DashAm />;
   }
 };
