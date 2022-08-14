@@ -130,7 +130,7 @@ function Courses_am() {
                       onClick={setOpenAddModel}
                     >
                       <Icon fontSize="big">add</Icon>
-                      &nbsp; add Company
+                      &nbsp; add Course
                     </MDButton>
                   </MDBox>
 
