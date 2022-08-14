@@ -18,6 +18,7 @@ export const SocCardsRoute = `${baseURL}/dashboard/soccards`;
 export const graphsSocRoute = `${baseURL}/dashboard/amgraphs`;
 export const topCollabRoute = `${baseURL}/dashboard/soccollab`;
 export const topChallengesRoute = `${baseURL}/dashboard/topcourses`;
+
 // Companies
 export const registerRoute = `${baseURL}/register`;
 export const allCompaniesRoute = `${baseURL}/societe/browse`;
@@ -57,6 +58,7 @@ export const AcceptRequestRoute = `${baseURL}/collab/addsession`;
 
 //Upload images
 export const uploadRoute = `${baseURL}/upload`;
+
 // Session Details
 export const SessionGraph = `${baseURL}/session/graph`;
 export const SessionCollabRoute = `${baseURL}/session/collab`;
@@ -64,3 +66,4 @@ export const SessionCollabRoute = `${baseURL}/session/collab`;
 //Collabs
 export const addCollabsRoute = `${baseURL}/collab/addmany`;
 export const browseCollabsRoute = `${baseURL}/collab/browse`;
+export const addCollabsSessionRoute = `${baseURL}/collab/addsession`;
