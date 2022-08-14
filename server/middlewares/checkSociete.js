@@ -12,7 +12,6 @@ module.exports = (req, res, next) => {
     console.log(payload);
     if (payload.type === "Societe") {
       req.societe = payload.id;
-
       return next();
     } else {
       console.log(payload);

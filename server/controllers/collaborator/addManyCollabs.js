@@ -1,6 +1,8 @@
 const argon2 = require("argon2");
 const db = require("../../config/database");
 const { Collaborateur, Societe, User } = db.models;
+
+
 module.exports = async (req, res) => {
   // try {
   const { collabs } = req.body;
@@ -19,9 +21,10 @@ module.exports = async (req, res) => {
   //   return res.json({ status: false, msg: "Username already used" });
 
   const DATA = [];
-  const { societe } = collabs;
+  console.log(collabs);
   collabs.map(async (collab) => {
     const { username, nom, prenom, email, password } = collab;
+
     const hash = await argon2.hash(password + pep);
     const user = await User.create(
       {
@@ -31,7 +34,7 @@ module.exports = async (req, res) => {
           nom,
           prenom,
           email,
-          SocieteId: societe,
+          SocieteId: req.societe,
           admin: false,
           instructor: false,
         },

@@ -44,15 +44,14 @@ function Basic() {
     password: "",
   });
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     const { username, password } = formDetails;
     event.preventDefault();
-    const res = authService.login(username, password);
-    res.then((data) => {
-      if (data.status) {
-        navigate("/dashboard");
-      }
-    });
+    const data = await authService.login(username, password);
+    console.log(data);
+    if (data.status) {
+      navigate("/dashboard");
+    }
   };
 
   const handleChange = (event) => {

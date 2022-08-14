@@ -12,7 +12,7 @@ import { useState, useEffect } from "react";
 import { dateFormat } from "utils/Helper";
 
 // Api Endpoint
-import axios from "services/authAxios";
+import axiosAuth from "services/authAxios";
 import { allRequestsRoute, baseURL, DeleteInstances } from "utils/APIRoutes";
 
 // ConfirmPoppup component
@@ -40,14 +40,14 @@ export default function Data() {
 
   useEffect(() => {
     const getAllRequests = async () => {
-      const { data } = await axios.get(allRequestsRoute);
+      const { data } = await axiosAuth.get(allRequestsRoute);
       setAllRequests(data);
     };
     getAllRequests();
   }, []);
 
   const handleDelete = async (id) => {
-    const { data } = await axios.post(DeleteInstances, {
+    const { data } = await axiosAuth.post(DeleteInstances, {
       model: "Request",
       id: id,
     });

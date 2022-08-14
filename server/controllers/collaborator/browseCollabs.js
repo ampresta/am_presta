@@ -1,6 +1,7 @@
 const sequelize = require("sequelize");
 const db = require("../../config/database");
 const { Collaborateur } = db.models;
+
 module.exports = async (req, res) => {
   const collabs = await Collaborateur.findAll({
     attributes: [
@@ -12,7 +13,7 @@ module.exports = async (req, res) => {
       "DepartementId",
       "createdAt",
     ],
-    where: { admin: false, instructor: false },
+    where: { admin: false, instructor: false, SocieteId: req.societe },
   });
   return res.send(collabs);
 };

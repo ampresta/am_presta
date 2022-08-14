@@ -1,4 +1,4 @@
-// react-router-dom components
+  // react-router-dom components
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
@@ -8,8 +8,9 @@ function Logout() {
   const navigate = useNavigate();
   useEffect(() => {
     authService.logout();
-    navigate("/login");
   }, []);
+
+  navigate("/login");
   return null;
 }
 

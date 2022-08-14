@@ -28,6 +28,8 @@ export default function Data() {
   const [confirmModel, setConfirmModel] = useState(false);
   const [tempCourseId, setTempCourseId] = useState(0);
 
+  console.log("before: ", allCourses);
+
   const [controller] = useMaterialUIController();
 
   const { updater } = controller;
@@ -127,6 +129,9 @@ export default function Data() {
 
     rawData: allCourses,
   };
+
+  console.log("after: ", allCourses);
+
 
   allCourses.map((course) =>
     courses.rows.push({
