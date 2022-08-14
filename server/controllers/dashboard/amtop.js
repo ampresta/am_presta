@@ -4,6 +4,7 @@ module.exports = async (req, res) => {
   companies = await Cours.findAll({
     include: {
       model: Provider,
+      required: true,
       attributes: ["nom"],
     },
     attributes: ["nom", "image"],

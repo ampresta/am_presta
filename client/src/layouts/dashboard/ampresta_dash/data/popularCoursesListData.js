@@ -9,24 +9,21 @@ const PopularCourses = () => {
   useEffect(() => {
     const getAllCourses = async () => {
       const { data } = await axios.post(topCoursesRoute);
-      return data.companies;
+      setPopularCourses(data.companies);
     };
-
-    let Conversation = [];
-
-    getAllCourses().then((data) =>
-      data.map((course) =>
-        Conversation.push({
-          image: `${baseURL}/${course.image}`,
-          name: course.nom,
-          description: course.Provider.nom,
-        })
-      )
-    );
-    setPopularCourses(Conversation);
+    getAllCourses();
   }, []);
 
-  return popularCourses;
+  let Conversation = [];
+  popularCourses.map((course) =>
+    Conversation.push({
+      image: `${baseURL}/${course.image}`,
+      name: course.nom,
+      description: course.Provider.nom,
+    })
+  );
+
+  return Conversation;
 };
 
 export default PopularCourses;
