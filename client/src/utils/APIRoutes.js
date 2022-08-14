@@ -36,6 +36,7 @@ export const allCompanyCoursesRoute = `${baseURL}/cours/browsesoc`;
 export const allSessionsRoute = `${baseURL}/session/browse`;
 export const addSessionsRoute = `${baseURL}/session/add`;
 export const SessionsofSociete = `${baseURL}/session/browsesoc`;
+export const AllSessionsAdminRoute = `${baseURL}/session/browseam`;
 
 // Quota
 export const AllQuotaRoute = `${baseURL}/quota/browse`;

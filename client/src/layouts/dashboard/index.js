@@ -1,16 +1,16 @@
 import TypeGiver from "../../utils/UserType";
-import SessionAm from "./ampresta";
-import SessionSoc from "./societe";
+import DashAm from "./ampresta_dash";
+import DashSoc from "./societe_dash";
 
-const Session = () => {
+const Dashboard = () => {
   const user = TypeGiver();
   // });
   console.log(user);
   if (user.userType === "Societe") {
-    return <SessionSoc />;
+    return <DashSoc />;
   } else if (user.userType === "Superadmin") {
-    return <SessionAm />;
+    return <DashAm />;
   }
 };
 
-export default Session;
+export default Dashboard;
