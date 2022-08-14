@@ -8,6 +8,9 @@ module.exports = async (req, res) => {
 
   try {
     const sess = await Session.findByPk(session, {
+      where: {
+        SocieteId: req.societe,
+      },
       include: [
         {
           model: Cours,

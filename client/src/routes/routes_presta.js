@@ -1,12 +1,13 @@
-import Dashboard from "layouts/dashboard/";
+import Dashboard from "layouts/dashboard/ampresta_dash";
 import Companies from "layouts/companies";
 import Partners from "layouts/partners";
-import Courses from "layouts/courses/";
+import Courses from "layouts/courses/ampresta_courses";
 import Collabs from "layouts/collabs";
 import Quota from "layouts/quota";
 import SignIn from "layouts/authentication/sign-in";
 import Logout from "layouts/authentication/logout";
-import Sessions from "layouts/sessions";
+import Sessions from "layouts/sessions/ampresta";
+import Departments from "layouts/departments/ampresta";
 // @mui icons
 import Icon from "@mui/material/Icon";
 
@@ -34,6 +35,14 @@ const routes = [
     icon: <Icon fontSize="small">school</Icon>,
     route: "/courses",
     component: <Courses />,
+  },
+  {
+    type: "collapse",
+    name: "Departments",
+    key: "departments",
+    icon: <Icon fontSize="small">apartment</Icon>,
+    route: "/departments",
+    component: <Departments />,
   },
   {
     type: "collapse",

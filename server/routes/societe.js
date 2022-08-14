@@ -16,7 +16,7 @@ router.post("/add", addSociete);
 router.all("/browse", browseSociete);
 router.post("/assign", associateAdminSociete);
 router.post("/uerSociete", getUerSociete);
-
+//Societe
 router.use(checkSociete);
 router.post("/addcollab", CreateCollabsforSociete);
 
@@ -24,5 +24,7 @@ router.get("/browserequests", browseRequests);
 
 router.get("/browsecollabs", browseCollab);
 
-router.all("/browsedepts", browseDept);
+// router.all("/browsedepts", browseDept);
+// AM
+
 module.exports = router;
