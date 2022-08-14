@@ -38,7 +38,7 @@ function AddDepartement({ closeAddModel }) {
 
   const { updater } = controller;
 
-  const [societe, setSociete] = useState([]);
+  const [societe, setSociete] = useState("");
   useEffect(() => {
     const getAllData = async () => {
       const { data } = await axios.get(allCompaniesRoute);
@@ -55,6 +55,7 @@ function AddDepartement({ closeAddModel }) {
     if (Object.keys(validate(departement)).length === 0) {
       const { data } = await axios.post(addDepartementRoute, {
         nom,
+	societe
       });
       if (data.status) {
         closeAddModel(false);
@@ -142,9 +143,9 @@ function AddDepartement({ closeAddModel }) {
               fullWidth
               name="nom"
               onChange={(e) => handleChange(e)}
-              error={formErrors.coursename}
+              error={formErrors.course}
             />
-            <FormHelperText error>{formErrors.coursename}</FormHelperText>
+            <FormHelperText error>{formErrors.course}</FormHelperText>
           </MDBox>
 
             <MDBox mb={2} ml={2} sx={{ width: "50%" }}>
@@ -153,11 +154,11 @@ function AddDepartement({ closeAddModel }) {
                   Course Name
                 </InputLabel>
                 <Select
-                  name="course"
+                  name="societe"
                   sx={{ height: 45 }}
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  value={societe.name}
+                  value={societe}
                   label="Age"
                   onChange={(e) => handleSelectedSociete(e)}
                   MenuProps={{
@@ -170,7 +171,7 @@ function AddDepartement({ closeAddModel }) {
                   input={
                     <OutlinedInput
                       id="select-multiple-chip"
-                      label="Course Name"
+                      label="Societe Name"
                       error={formErrors.course}
                     />
                   }
