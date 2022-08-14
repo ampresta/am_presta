@@ -3,19 +3,12 @@ import axios from "services/authAxios";
 
 import { useState, useEffect } from "react";
 
-const UserGiver = () => {
-  const [userType, setUserType] = useState("");
-
-  useEffect(() => {
-    const gettype = async () => {
-      const { data } = await axios.get(getType);
-      if (data.status) {
-        setUserType(data.type);
-      }
-    };
-
-    gettype();
-  }, []);
+const UserGiver = async () => {
+  let userType = "";
+  const { data } = await axios.get(getType);
+  if (data.status) {
+    userType = data.type;
+  }
 
   return { userType };
 };

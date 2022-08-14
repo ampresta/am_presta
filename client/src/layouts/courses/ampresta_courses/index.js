@@ -30,7 +30,7 @@ import { useNavigate } from "react-router-dom";
 //csv
 import Papa from "papaparse";
 
-function Courses() {
+function Courses_am() {
   const navigate = useNavigate();
   useEffect(() => {
     if (!authService.getCurrentUser()) {
@@ -192,4 +192,4 @@ function Courses() {
   );
 }
 
-export default Courses;
+export default Courses_am;
