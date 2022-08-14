@@ -1,6 +1,5 @@
 // @mui material components
 import Grid from "@mui/material/Grid";
-
 import Card from "@mui/material/Card";
 
 // Material Dashboard 2 React components
@@ -17,11 +16,13 @@ import DefaultProjectCard from "./components/DefaultProjectCard";
 
 // Hook
 import { useEffect, useState } from "react";
+
+// Material Dashboard 2 React contexts
 import { useMaterialUIController } from "context";
 
-// Images
 // import Oracle from "assets/images/oracle-logo.jpg";
 import axios from "services/authAxios";
+
 import { AllQuotaSocRoute } from "utils/APIRoutes";
 
 function Overview() {
@@ -29,11 +30,13 @@ function Overview() {
   const [allCompanies, setAllCompanies] = useState([]);
 
   const [controller] = useMaterialUIController();
+
   const { updater } = controller;
+
   useEffect(() => {
     const getAllCompanies = async () => {
       const { data } = await axios.get(AllQuotaSocRoute);
-	    console.log(data);
+      console.log(data);
       setAllCompanies((prev) => data.msg);
       return;
     };

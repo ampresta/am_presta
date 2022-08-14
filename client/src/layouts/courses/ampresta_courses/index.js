@@ -31,7 +31,7 @@ import { useNavigate } from "react-router-dom";
 import Papa from "papaparse";
 import CsvUploader from "examples/CsvUploader";
 
-function Courses() {
+function Courses_am() {
   const navigate = useNavigate();
   useEffect(() => {
     if (!authService.getCurrentUser()) {
@@ -91,6 +91,8 @@ function Courses() {
     document.body.removeChild(a);
   };
 
+  console.log("am");
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -128,7 +130,7 @@ function Courses() {
                       onClick={setOpenAddModel}
                     >
                       <Icon fontSize="big">add</Icon>
-                      &nbsp; add Courses
+                      &nbsp; add Course
                     </MDButton>
                   </MDBox>
 
@@ -192,4 +194,4 @@ function Courses() {
   );
 }
 
-export default Courses;
+export default Courses_am;

@@ -28,7 +28,6 @@ export default function Data() {
   const [confirmModel, setConfirmModel] = useState(false);
   const [tempCourseId, setTempCourseId] = useState(0);
 
-  console.log("before: ", allCourses);
 
   const [controller] = useMaterialUIController();
 
@@ -37,6 +36,7 @@ export default function Data() {
   useEffect(() => {
     const getAllCourses = async () => {
       const { data } = await axiosAuth.get(allCoursesRoute);
+      console.log(data);
       setAllCourses(data);
     };
     getAllCourses();
@@ -130,7 +130,6 @@ export default function Data() {
     rawData: allCourses,
   };
 
-  console.log("after: ", allCourses);
 
 
   allCourses.map((course) =>

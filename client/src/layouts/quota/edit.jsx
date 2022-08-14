@@ -19,6 +19,9 @@ import { useEffect } from "react";
 import { allPartnersRoute } from "utils/APIRoutes";
 import { AddQuotaRoute } from "utils/APIRoutes";
 
+// Material Dashboard 2 React contexts
+import { useMaterialUIController, setUpdater } from "context";
+
 function AddQuota({ openAddModel }) {
   const [formErrors, setFormErrors] = useState({
     field: "",
@@ -32,10 +35,14 @@ function AddQuota({ openAddModel }) {
     },
   ]);
 
+  const [controller, dispatch] = useMaterialUIController();
+
+  const { updater } = controller;
+
   useEffect(() => {
     const getAllPartners = async () => {
       const { data } = await axios.get(allPartnersRoute);
-	    console.log(data);
+      console.log(data);
       let temp = [];
       data.map((provider) =>
         temp.push({ id: provider.id, nom: provider.nom, quota: "" })
@@ -63,7 +70,7 @@ function AddQuota({ openAddModel }) {
     });
     if (data.status) {
       openAddModel(false);
-      // window.location.reload();
+      setUpdater(dispatch, !updater);
     } else {
       alert(data.msg);
     }
@@ -133,11 +140,7 @@ function AddQuota({ openAddModel }) {
                     InputProps={{
                       readOnly: true,
                     }}
-                    //   error={formErrors.coursename}
                   />
-                  {/* <FormHelperText error sx={{ ml: 2 }}>
-              {formErrors.coursename}
-            </FormHelperText> */}
                 </MDBox>
 
                 <MDBox mb={2} ml={2} sx={{ width: "50%" }}>
@@ -148,10 +151,8 @@ function AddQuota({ openAddModel }) {
                     fullWidth
                     name="quota"
                     onChange={(event) => handleChange(index, event)}
+                    required={true}
                   />
-                  {/* <FormHelperText error sx={{ ml: 2 }}>
-              {formErrors.coursename}
-            </FormHelperText> */}
                 </MDBox>
               </MDBox>
             );

@@ -11,7 +11,6 @@ import MDButton from "components/MDButton";
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import CsvUploader from "examples/CsvUploader";
 import DataTable from "examples/Tables/DataTable";
 
 // @mui icons
@@ -30,8 +29,9 @@ import { useNavigate } from "react-router-dom";
 
 //csv
 import Papa from "papaparse";
+import CsvUploader from "examples/CsvUploader";
 
-function Courses() {
+function Courses_am() {
   const navigate = useNavigate();
   useEffect(() => {
     if (!authService.getCurrentUser()) {
@@ -40,8 +40,6 @@ function Courses() {
   }, []);
 
   const { columns, rows, confirmation, rawData } = coursesTableData();
-
-  const [openAddModel, setOpenAddModel] = useState(false);
 
   const [openCsvUploader, setOpenCsvUploader] = useState(false);
 
@@ -91,12 +89,12 @@ function Courses() {
     document.body.removeChild(a);
   };
 
-  console.log(openCsvUploader);
+  console.log("societe");
 
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      {!openCsvUploader && !openAddModel && (
+      {!openCsvUploader && (
         <MDBox pt={6} pb={1}>
           <Grid container spacing={6}>
             <Grid item xs={12}>
@@ -116,65 +114,45 @@ function Courses() {
                   </MDTypography>
                 </MDBox>
 
-                <Grid container spacing={2}>
-                  <MDBox ml={3} py={1.9} px={2} mt={3}>
-                    <MDButton
-                      variant="gradient"
-                      color="info"
-                      size="small"
-                      onClick={setOpenAddModel}
-                    >
-                      <Icon fontSize="big">add</Icon>
-                      &nbsp; add Course
-                    </MDButton>
-                  </MDBox>
+                <Grid
+                  container
+                  spacing={2}
+                  display="flex"
+                  justifyContent="space-between"
+                >
+                  <MDBox ml={3} pt={2} px={2} mt={3}></MDBox>
 
-                  <MDBox ml={3} py={1.9} px={2} mt={3}>
-                    <MDButton
-                      variant="gradient"
-                      color="success"
-                      size="small"
-                      onClick={() => handleDownload("allCourses", "export")}
-                      disabled={rawData.length === 0}
-                    >
-                      <Icon fontSize="big" color="light">
-                        download
-                      </Icon>
-                      &nbsp; Export
-                    </MDButton>
-                  </MDBox>
-
-                  <MDBox ml={3} py={1.9} px={2} mt={3}>
-                    <MDButton
-                      variant="gradient"
-                      color="info"
-                      size="small"
-                      onClick={() =>
-                        handleDownload("addCourseTemplate", "template")
-                      }
-                    >
-                      <Icon fontSize="big" color="light">
-                        download
-                      </Icon>
-                      &nbsp; Download Template
-                    </MDButton>
-                  </MDBox>
-
-                  <MDBox ml={3} py={1.9} px={2} mt={3}>
-                    <MDButton
-                      variant="gradient"
-                      color="info"
-                      size="small"
-                      onClick={() => {
-                        localStorage.setItem("uploadType", "courses");
-                        navigate("/csv");
-                      }}
-                    >
-                      <Icon fontSize="big" color="light">
-                        upload
-                      </Icon>
-                      &nbsp; upload csv
-                    </MDButton>
+                  <MDBox pt={2} pr={4} mt={3} display="flex">
+                    <MDBox mr={2}>
+                      <MDButton
+                        variant="gradient"
+                        color="success"
+                        size="small"
+                        onClick={() => handleDownload("allCourses", "export")}
+                        disabled={rawData.length === 0}
+                      >
+                        <Icon fontSize="big" color="light">
+                          download
+                        </Icon>
+                        &nbsp; Export
+                      </MDButton>
+                    </MDBox>
+                    <MDBox>
+                      <MDButton
+                        variant="gradient"
+                        color="info"
+                        size="small"
+                        onClick={() => {
+                          localStorage.setItem("uploadType", "courses");
+                          setOpenCsvUploader(true);
+                        }}
+                      >
+                        <Icon fontSize="big" color="light">
+                          upload
+                        </Icon>
+                        &nbsp; upload csv
+                      </MDButton>
+                    </MDBox>
                   </MDBox>
                 </Grid>
 
@@ -190,7 +168,6 @@ function Courses() {
           </Grid>
         </MDBox>
       )}
-      {openAddModel && <AddCompanies closeAddModel={setOpenAddModel} />}
       {openCsvUploader && (
         <CsvUploader
           closeUploadModel={setOpenCsvUploader}
@@ -198,10 +175,9 @@ function Courses() {
           type={"addCourseTemplate"}
         />
       )}
-
       {confirmation}
     </DashboardLayout>
   );
 }
 
-export default Courses;
+export default Courses_am;

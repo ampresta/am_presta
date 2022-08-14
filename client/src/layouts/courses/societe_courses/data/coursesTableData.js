@@ -22,13 +22,12 @@ import ConfirmPopup from "components/ConfirmPopup";
 // Material Dashboard 2 React contexts
 import { useMaterialUIController } from "context";
 import axiosAuth from "services/authAxios";
+import { allCompanyCoursesRoute } from "utils/APIRoutes";
 
 export default function Data() {
   const [allCourses, setAllCourses] = useState([]);
   const [confirmModel, setConfirmModel] = useState(false);
   const [tempCourseId, setTempCourseId] = useState(0);
-
-  console.log("before: ", allCourses);
 
   const [controller] = useMaterialUIController();
 
@@ -36,8 +35,8 @@ export default function Data() {
 
   useEffect(() => {
     const getAllCourses = async () => {
-      const { data } = await axiosAuth.get(allCoursesRoute);
-      setAllCourses(data);
+      const { data } = await axiosAuth.get(allCompanyCoursesRoute);
+      setAllCourses(data.cours);
     };
     getAllCourses();
   }, [updater]);
@@ -129,9 +128,6 @@ export default function Data() {
 
     rawData: allCourses,
   };
-
-  console.log("after: ", allCourses);
-
 
   allCourses.map((course) =>
     courses.rows.push({

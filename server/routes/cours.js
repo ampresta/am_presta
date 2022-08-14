@@ -10,13 +10,14 @@ const signedin = require("../middlewares/signedin");
 // router.use(signedin);
 // Please don't change the order
 // Super Admin Links
+router.all("/browse", browseCourse);
 router.use(checkSociete);
 
 // router.use("/add", CheckSuperAdmin);
 // router.use("/browse", CheckSuperAdmin);
 
 router.post("/add", addCours);
-router.all("/browse", browseCourse);
+// router.all("/browse", browseCourse);
 router.use("/browsesoc", checkSociete);
 router.all("/browsesoc", browseCoursSoc);
 module.exports = router;
