@@ -58,22 +58,22 @@ const routes = [
     route: "/collaborators",
     component: <Collabs />,
   },
-  {
-    type: "collapse",
-    name: "Login",
-    key: "login",
-    icon: <Icon fontSize="small">key</Icon>,
-    route: "/login",
-    component: <SignIn />,
-  },
-  {
-    type: "collapse",
-    name: "Logout",
-    key: "Logout",
-    icon: <Icon fontSize="small">lock</Icon>,
-    route: "/logout",
-    component: <Logout />,
-  },
+  // {
+  //   type: "collapse",
+  //   name: "Login",
+  //   key: "login",
+  //   icon: <Icon fontSize="small">key</Icon>,
+  //   route: "/login",
+  //   component: <SignIn />,
+  // },
+  // {
+  //   type: "collapse",
+  //   name: "Logout",
+  //   key: "Logout",
+  //   icon: <Icon fontSize="small">lock</Icon>,
+  //   route: "/logout",
+  //   component: <Logout />,
+  // },
 ];
 
 export default routes;
