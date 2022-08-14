@@ -9,13 +9,13 @@ import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
 import OutlinedInput from "@mui/material/OutlinedInput";
+
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-
 //import UseState Hook
-import { useState, useEffect } from "react";
+import { useState,useEffect } from "react";
 
 // Axios
 import axios from "services/authAxios";
@@ -23,59 +23,38 @@ import axios from "services/authAxios";
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setUpdater } from "context";
 
-import { allCompanyCoursesRoute, addSessionsRoute } from "utils/APIRoutes";
+import { addDepartementRoute,allCompaniesRoute } from "utils/APIRoutes";
 
-function AddSession({ closeAddModel }) {
+function AddDepartement({ closeAddModel }) {
   const [formErrors, setFormErrors] = useState({
     nom: "",
-    course: "",
-    dateDepart: "",
-    dateFin: "",
   });
 
-  const [session, setSession] = useState({
+  const [departement, setDepartement] = useState({
     nom: "",
-    course: {
-      id: "",
-      name: "",
-    },
-    company: {
-      id: "",
-      name: "",
-    },
-    dateDepart: "",
-    dateFin: "",
   });
-
-  const [selectedCourse, setSelectedCourse] = useState({
-    nom: "",
-    id: "",
-  });
-
-  const [courses, setCourses] = useState([]);
-
-  useEffect(() => {
-    const getAllData = async () => {
-      const { data } = await axios.get(allCompanyCoursesRoute);
-      setCourses(data.cours);
-    };
-    getAllData();
-  }, []);
 
   const [controller, dispatch] = useMaterialUIController();
 
   const { updater } = controller;
 
+  const [societe, setSociete] = useState([]);
+  useEffect(() => {
+    const getAllData = async () => {
+      const { data } = await axios.get(allCompaniesRoute);
+	    console.log(data);
+      setSociete(data.msg);
+    };
+    getAllData();
+  }, []);
+
   const handleSubmit = async (event) => {
-    const { course, nom, dateDepart, dateFin } = session;
+    const { nom } = departement;
     event.preventDefault();
-    setFormErrors(validate(session));
-    if (Object.keys(validate(session)).length === 0) {
-      const { data } = await axios.post(addSessionsRoute, {
+    setFormErrors(validate(departement));
+    if (Object.keys(validate(departement)).length === 0) {
+      const { data } = await axios.post(addDepartementRoute, {
         nom,
-        datedebut: dateDepart,
-        datefin: dateFin,
-        cours: course.id,
       });
       if (data.status) {
         closeAddModel(false);
@@ -86,42 +65,32 @@ function AddSession({ closeAddModel }) {
     }
   };
 
+  const handleSelectedSociete = (event) => {
+    const soc = event.target.value;
+    setDepartement((prev) => ({ ...prev, soc }));
+    setSociete(soc);
+  };
   const handleChange = (event) => {
     const key = event.target.name;
     const value = event.target.value;
-    setSession((prev) => {
+    setDepartement((prev) => {
       return { ...prev, [key]: value };
     });
-  };
-
-  const handleSelectedCourse = (event) => {
-    const course = event.target.value;
-    setSession((prev) => ({ ...prev, course }));
-    setSelectedCourse(course);
   };
 
   const validate = (values) => {
     const errors = {};
     if (!values.nom) {
-      errors.nom = "Session Name is required !";
-    }
-    if (!values.course.id) {
-      errors.course = "Course Name is required !";
-    }
-    if (!values.dateDepart) {
-      errors.dateDepart = "Start Date is required !";
-    }
-    if (!values.dateFin) {
-      errors.dateFin = "End Date is required !";
+      errors.coursename = "Department Name is required !";
     }
     return errors;
   };
 
-  const courses_ToBe_Selected =
-    courses.length !== 0 ? (
-      courses.map((course) => (
-        <MenuItem key={course.id} value={course}>
-          {course.nom}
+  const societes_ToBe_Selected =
+    societe.length !== 0 ? (
+      societe.map((soc) => (
+        <MenuItem key={soc.id} value={soc}>
+          {soc.name}
         </MenuItem>
       ))
     ) : (
@@ -129,7 +98,6 @@ function AddSession({ closeAddModel }) {
         No Courses !
       </MDTypography>
     );
-
   return (
     <Card sx={{ mt: "50px" }}>
       <MDBox
@@ -146,7 +114,7 @@ function AddSession({ closeAddModel }) {
         mb={1}
       >
         <MDTypography variant="h6" color="white">
-          Add Session
+          Add Department
         </MDTypography>
 
         <MDButton
@@ -166,19 +134,18 @@ function AddSession({ closeAddModel }) {
           role="form"
           onSubmit={(event) => handleSubmit(event)}
         >
-          <MDBox display="flex">
-            <MDBox mb={2} sx={{ width: "50%" }}>
-              <MDInput
-                type="text"
-                label="Session Name"
-                variant="outlined"
-                name="nom"
-                fullWidth
-                onChange={(e) => handleChange(e)}
-                error={formErrors.nom}
-              />
-              <FormHelperText error>{formErrors.nom}</FormHelperText>
-            </MDBox>
+          <MDBox mb={2}>
+            <MDInput
+              type="text"
+              label="Department Name"
+              variant="outlined"
+              fullWidth
+              name="nom"
+              onChange={(e) => handleChange(e)}
+              error={formErrors.coursename}
+            />
+            <FormHelperText error>{formErrors.coursename}</FormHelperText>
+          </MDBox>
 
             <MDBox mb={2} ml={2} sx={{ width: "50%" }}>
               <FormControl sx={{ width: "100%" }}>
@@ -190,9 +157,9 @@ function AddSession({ closeAddModel }) {
                   sx={{ height: 45 }}
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  value={selectedCourse.name}
+                  value={societe.name}
                   label="Age"
-                  onChange={(e) => handleSelectedCourse(e)}
+                  onChange={(e) => handleSelectedSociete(e)}
                   MenuProps={{
                     PaperProps: {
                       style: {
@@ -208,45 +175,11 @@ function AddSession({ closeAddModel }) {
                     />
                   }
                 >
-                  {courses_ToBe_Selected}
+                  {societes_ToBe_Selected}
                 </Select>
                 <FormHelperText error>{formErrors.course}</FormHelperText>
               </FormControl>
             </MDBox>
-          </MDBox>
-
-          <MDBox display="flex">
-            <MDBox mb={2} sx={{ width: "50%" }}>
-              <MDInput
-                type="date"
-                label="Start Date"
-                variant="outlined"
-                name="dateDepart"
-                fullWidth
-                onChange={(e) => handleChange(e)}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-              <FormHelperText error>{formErrors.dateDepart}</FormHelperText>
-            </MDBox>
-
-            <MDBox mb={2} ml={2} sx={{ width: "50%" }}>
-              <MDInput
-                type="date"
-                label="Date Fin"
-                variant="outlined"
-                name="dateFin"
-                fullWidth
-                onChange={(e) => handleChange(e)}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-              <FormHelperText error>{formErrors.dateFin}</FormHelperText>
-            </MDBox>
-          </MDBox>
-
           <MDBox mt={4} mb={2} display="flex" justifyContent="center">
             <MDButton
               type="submit"
@@ -272,4 +205,4 @@ function AddSession({ closeAddModel }) {
   );
 }
 
-export default AddSession;
+export default AddDepartement;

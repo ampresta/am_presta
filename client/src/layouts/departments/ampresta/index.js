@@ -21,7 +21,7 @@ import Icon from "@mui/material/Icon";
 import AddDepartement from "./add";
 
 // Data
-import departementsTableData from "layouts/departments/data/departmentsTableData";
+import departementsTableData from "./data/departmentsTableData";
 import MDButton from "components/MDButton";
 
 function Departments() {

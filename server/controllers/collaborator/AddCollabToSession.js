@@ -1,3 +1,4 @@
+const { Op } = require("sequelize");
 const db = require("../../config/database");
 const { Cours, Collaborateur, Request, Session, Quota, Provider } = db.models;
 module.exports = async (req, res) => {
@@ -8,6 +9,9 @@ module.exports = async (req, res) => {
 
   try {
     const sess = await Session.findByPk(session, {
+      where: {
+        SocieteId: req.societe,
+      },
       include: [
         {
           model: Cours,
@@ -20,6 +24,11 @@ module.exports = async (req, res) => {
                 {
                   model: Quota,
                   required: true,
+                  where: {
+                    quota: {
+                      [Op.gt]: 0,
+                    },
+                  },
                 },
               ],
             },
@@ -29,6 +38,8 @@ module.exports = async (req, res) => {
     });
     const collabo = await Collaborateur.findByPk(collab);
     sess.addCollaborateur(collabo);
+    session.Cours.Provider.Quota.quota = session.Cours.Provider.Quota.quota - 1;
+    sess.save();
     if (request) {
       Request.destroy({
         where: {

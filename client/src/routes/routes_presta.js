@@ -6,7 +6,8 @@ import Collabs from "layouts/collabs";
 import Quota from "layouts/quota";
 import SignIn from "layouts/authentication/sign-in";
 import Logout from "layouts/authentication/logout";
-import Sessions from "layouts/sessions";
+import Sessions from "layouts/sessions/ampresta";
+import Departments from "layouts/departments/ampresta";
 // @mui icons
 import Icon from "@mui/material/Icon";
 
@@ -34,6 +35,14 @@ const routes = [
     icon: <Icon fontSize="small">school</Icon>,
     route: "/courses",
     component: <Courses />,
+  },
+  {
+    type: "collapse",
+    name: "Departments",
+    key: "departments",
+    icon: <Icon fontSize="small">apartment</Icon>,
+    route: "/departments",
+    component: <Departments />,
   },
   {
     type: "collapse",
