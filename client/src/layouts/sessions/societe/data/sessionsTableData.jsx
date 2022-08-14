@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 // @mui material components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
@@ -109,24 +110,21 @@ export default function Data() {
   );
 
   const Period = ({ debut, fin }) => (
-    <MDBox style={{ display: "flex" }}>
-      <MDBox style={{ marginRight: "0.5rem", textAlign: "right  " }}>
-        <span
-          style={{ fontSize: "0.75rem", display: "block", fontWeight: "Bold" }}
-        >
-          From:{" "}
-        </span>
-        <span style={{ fontSize: "0.75rem", fontWeight: "Bold" }}>To: </span>
-      </MDBox>
-      <MDBox color="info" variant="gradient" sx={{ backgroundColor: "none" }}>
-        <span
-          style={{ fontSize: "0.75rem", display: "block", fontWeight: "Bold" }}
-        >
+    <MDBox display="flex" alignItems="center">
+      <MDBox lineHeight={1.5} textAlign="right">
+        <MDTypography variant="caption" fontWeight="medium">
+          From :{" "}
+        </MDTypography>
+        <MDTypography variant="caption" fontWeight="medium" color="info">
           {dateFormat(debut)}
-        </span>
-        <span style={{ fontSize: "0.75rem", fontWeight: "Bold" }}>
+        </MDTypography>
+        <br />
+        <MDTypography variant="caption" fontWeight="medium">
+          To :{" "}
+        </MDTypography>
+        <MDTypography variant="caption" fontWeight="medium" color="info">
           {dateFormat(fin)}
-        </span>
+        </MDTypography>
       </MDBox>
     </MDBox>
   );

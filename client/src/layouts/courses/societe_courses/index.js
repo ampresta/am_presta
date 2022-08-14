@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 // @mui material components
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
@@ -5,70 +6,74 @@ import Card from "@mui/material/Card";
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
+import MDButton from "components/MDButton";
 
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import DataTable from "examples/Tables/DataTable";
 import CsvUploader from "examples/CsvUploader";
-
-//import UseState
-import { useState } from "react";
+import DataTable from "examples/Tables/DataTable";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
 
-// Data
-import companiesTableData from "layouts/companies/data/companiesTableData";
-import MDButton from "components/MDButton";
-
 //Add companies component
 import AddCompanies from "./add";
 
+// Hook
+import { useEffect, useState } from "react";
+
+// Data
+import coursesTableData from "layouts/courses/data/coursesTableData";
+import authService from "services/auth.service";
+import { useNavigate } from "react-router-dom";
+
+//csv
 import Papa from "papaparse";
 
-function Companies() {
-  const { columns, rows, confirmation, rawData } = companiesTableData();
+function Courses() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!authService.getCurrentUser()) {
+      navigate("/login");
+    }
+  }, []);
+
+  const { columns, rows, confirmation, rawData } = coursesTableData();
 
   const [openAddModel, setOpenAddModel] = useState(false);
 
   const [openCsvUploader, setOpenCsvUploader] = useState(false);
 
   const handleDownload = (title, type) => {
-    let columns = [];
     let data = [];
+    let columns = [];
     if (rawData.length > 0) {
       if (type === "export") {
         rawData.map((row) =>
           data.push({
-            id: row.id,
-            company_name: row.name,
-            admin_first_name: row.Collaborateurs[0].nom,
-            admin_last_name: row.Collaborateurs[0].prenom,
+            nom: row.nom,
+            provider: row.Provider.nom,
+            description: row.description,
+            collabs: row.collabs,
+            sessions: row.sessions,
             createdAt: row.createdAt,
           })
         );
         columns = [
-          "id",
-          "company_name",
-          "admin_first_name",
-          "admin_last_name",
+          "nom",
+          "provider",
+          "description",
+          "collabs",
+          "sessions",
           "createdAt",
         ];
       }
     }
     if (type === "template") {
-      columns = [
-        "username",
-        "first_name",
-        "last_name",
-        "company_name",
-        "email",
-        "password",
-        "confirm_password",
-      ];
+      columns = ["nom", "providerID", "description"];
       let blank = {};
-      columns.map((header) => (blank[header] = ""));
+      columns.map((header) => (blank.header = ""));
       data.push(blank);
     }
 
@@ -85,6 +90,8 @@ function Companies() {
     a.click();
     document.body.removeChild(a);
   };
+
+  console.log(openCsvUploader);
 
   return (
     <DashboardLayout>
@@ -105,7 +112,7 @@ function Companies() {
                   coloredShadow="info"
                 >
                   <MDTypography variant="h6" color="white">
-                    Companies
+                    Courses
                   </MDTypography>
                 </MDBox>
 
@@ -123,7 +130,7 @@ function Companies() {
                       onClick={setOpenAddModel}
                     >
                       <Icon fontSize="big">add</Icon>
-                      &nbsp; add Company
+                      &nbsp; add Course
                     </MDButton>
                   </MDBox>
 
@@ -133,7 +140,7 @@ function Companies() {
                         variant="gradient"
                         color="success"
                         size="small"
-                        onClick={() => handleDownload("allCompanies", "export")}
+                        onClick={() => handleDownload("allCourses", "export")}
                         disabled={rawData.length === 0}
                       >
                         <Icon fontSize="big" color="light">
@@ -148,7 +155,7 @@ function Companies() {
                         color="info"
                         size="small"
                         onClick={() => {
-                          localStorage.setItem("uploadType", "companies");
+                          localStorage.setItem("uploadType", "courses");
                           setOpenCsvUploader(true);
                         }}
                       >
@@ -178,12 +185,13 @@ function Companies() {
         <CsvUploader
           closeUploadModel={setOpenCsvUploader}
           DownloadTemplate={handleDownload}
-          type={"addCompanyTemplate"}
+          type={"addCourseTemplate"}
         />
       )}
+
       {confirmation}
     </DashboardLayout>
   );
 }
 
-export default Companies;
+export default Courses;

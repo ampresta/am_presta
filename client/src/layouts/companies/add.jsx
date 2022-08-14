@@ -257,7 +257,7 @@ function AddCompanies({ closeAddModel }) {
           </MDBox>
 
           <Card>
-            <MDBox p={0.4}>
+            <MDBox>
               <DropFileInput
                 title="Drag & Drop your company logo here"
                 name="image"

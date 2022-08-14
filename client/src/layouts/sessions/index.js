@@ -4,13 +4,12 @@ import SessionAm from "./ampresta";
 import SessionSoc from "./societe";
 
 const Session = () => {
-  // useEffect(() => {
   const user = TypeGiver();
   // });
   if (user.userType === "Societe") {
-    return <>{user !== "" && <SessionSoc />}</>;
+    return <SessionSoc />;
   } else if (user.userType === "SuperAdmin") {
-    return <>{user !== "" && <SessionAm />}</>;
+    return <SessionAm />;
   }
 };
 

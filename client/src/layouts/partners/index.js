@@ -5,6 +5,7 @@ import Card from "@mui/material/Card";
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
+import MDButton from "components/MDButton";
 
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
@@ -22,17 +23,16 @@ import AddPartner from "./add";
 
 // Data
 import partnersTableData from "layouts/partners/data/partnersTableData";
-import MDButton from "components/MDButton";
 
 import Papa from "papaparse";
-import { useNavigate } from "react-router-dom";
+import CsvUploader from "examples/CsvUploader";
 
 function Partners() {
-  const navigate = useNavigate();
   const { columns, rows, confirmation, rawData } = partnersTableData();
+
   const [openAddModel, setOpenAddModel] = useState(false);
 
-  console.log(rawData);
+  const [openCsvUploader, setOpenCsvUploader] = useState(false);
 
   const handleDownload = (title, type) => {
     let data = [];
@@ -74,7 +74,7 @@ function Partners() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      {!openAddModel && (
+      {!openCsvUploader && !openAddModel && (
         <MDBox pt={6} pb={1}>
           <Grid container spacing={6}>
             <Grid item xs={12}>
@@ -94,70 +94,55 @@ function Partners() {
                   </MDTypography>
                 </MDBox>
 
-                <Grid container spacing={2}>
-                  <MDBox ml={3} py={1.9} px={2} mt={3}>
+                <Grid
+                  container
+                  spacing={2}
+                  display="flex"
+                  justifyContent="space-between"
+                >
+                  <MDBox ml={3} pt={2} px={2} mt={3}>
                     <MDButton
                       variant="gradient"
                       color="info"
                       size="small"
                       onClick={setOpenAddModel}
                     >
-                      <Icon fontSize="big" color="light">
-                        add
-                      </Icon>
-                      &nbsp; add partner
-                    </MDButton>
-                  </MDBox>
-                  <MDBox ml={3} py={1.9} px={2} mt={3}>
-                    <MDButton
-                      variant="gradient"
-                      color="success"
-                      size="small"
-                      onClick={() => {
-                        console.log("export");
-                        handleDownload("allProviders", "export");
-                      }}
-                      disabled={rawData.length === 0}
-                    >
-                      <Icon fontSize="big" color="light">
-                        download
-                      </Icon>
-                      &nbsp; Export
+                      <Icon fontSize="big">add</Icon>
+                      &nbsp; add Partner
                     </MDButton>
                   </MDBox>
 
-                  <MDBox ml={3} py={1.9} px={2} mt={3}>
-                    <MDButton
-                      variant="gradient"
-                      color="info"
-                      size="small"
-                      onClick={() => {
-                        console.log("template");
-                        handleDownload("addProviderTemplate", "template");
-                      }}
-                    >
-                      <Icon fontSize="big" color="light">
-                        download
-                      </Icon>
-                      &nbsp; Download Template
-                    </MDButton>
-                  </MDBox>
-
-                  <MDBox ml={3} py={1.9} px={2} mt={3}>
-                    <MDButton
-                      variant="gradient"
-                      color="info"
-                      size="small"
-                      onClick={() => {
-                        localStorage.setItem("uploadType", "providers");
-                        navigate("/csv");
-                      }}
-                    >
-                      <Icon fontSize="big" color="light">
-                        upload
-                      </Icon>
-                      &nbsp; upload csv
-                    </MDButton>
+                  <MDBox pt={2} pr={4} mt={3} display="flex">
+                    <MDBox mr={2}>
+                      <MDButton
+                        variant="gradient"
+                        color="success"
+                        size="small"
+                        onClick={() => handleDownload("allProviders", "export")}
+                        disabled={rawData.length === 0}
+                      >
+                        <Icon fontSize="big" color="light">
+                          download
+                        </Icon>
+                        &nbsp; Export
+                      </MDButton>
+                    </MDBox>
+                    <MDBox>
+                      <MDButton
+                        variant="gradient"
+                        color="info"
+                        size="small"
+                        onClick={() => {
+                          localStorage.setItem("uploadType", "providers");
+                          setOpenCsvUploader(true);
+                        }}
+                      >
+                        <Icon fontSize="big" color="light">
+                          upload
+                        </Icon>
+                        &nbsp; upload csv
+                      </MDButton>
+                    </MDBox>
                   </MDBox>
                 </Grid>
 
@@ -174,6 +159,13 @@ function Partners() {
         </MDBox>
       )}
       {openAddModel && <AddPartner closeAddModel={setOpenAddModel} />}
+      {openCsvUploader && (
+        <CsvUploader
+          closeUploadModel={setOpenCsvUploader}
+          DownloadTemplate={handleDownload}
+          type={"addProviderTemplate"}
+        />
+      )}
       {confirmation}
     </DashboardLayout>
   );

@@ -1,16 +1,14 @@
 import Dashboard from "layouts/dashboard/ampresta_dash";
 import Companies from "layouts/companies";
 import Partners from "layouts/partners";
-import Courses from "layouts/courses";
+import Courses from "layouts/courses/ampresta_courses";
+import Collabs from "layouts/collabs";
 import Quota from "layouts/quota";
 import SignIn from "layouts/authentication/sign-in";
 import Logout from "layouts/authentication/logout";
-import Csv from "layouts/CSV";
-
 import Sessions from "layouts/sessions";
 // @mui icons
 import Icon from "@mui/material/Icon";
-import Collabs from "layouts/collabs";
 
 const routes = [
   {
@@ -69,13 +67,13 @@ const routes = [
     route: "/sessions",
     component: <Sessions />,
   },
-  {
-    name: "csv",
-    key: "csv",
-    icon: <Icon fontSize="small">apartment</Icon>,
-    route: "/csv",
-    component: <Csv />,
-  },
+  // {
+  //   name: "csv",
+  //   key: "csv",
+  //   icon: <Icon fontSize="small">apartment</Icon>,
+  //   route: "/csv",
+  //   component: <Csv />,
+  // },
 
   {
     type: "collapse",

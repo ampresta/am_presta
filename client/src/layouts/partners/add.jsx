@@ -138,7 +138,7 @@ function AddPartner({ closeAddModel }) {
           </MDBox>
 
           <Card>
-            <MDBox p={0.4}>
+            <MDBox>
               <DropFileInput
                 title="Drag & Drop partner logo here"
                 name="image"
