@@ -5,6 +5,7 @@ import Card from "@mui/material/Card";
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
+import MDButton from "components/MDButton";
 import MDAvatar from "components/MDAvatar";
 
 // Material Dashboard 2 React example components
@@ -12,6 +13,9 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "./DashboardNavbar";
 import DataTable from "examples/Tables/DataTable";
 import PieChart from "examples/Charts/PieChart";
+
+// Icons
+import Icon from "@mui/material/Icon";
 
 // Data
 import sessionsDetailsTableData from "layouts/sessionsDetails/data/sessionsDetailsTableData";
@@ -25,6 +29,7 @@ import axios from "services/authAxios";
 import { SessionGraph } from "utils/APIRoutes";
 import { useParams } from "react-router-dom";
 import { baseURL } from "utils/APIRoutes";
+import { addCollabsSessionRoute } from "utils/APIRoutes";
 
 function Partners() {
   const { columns, rows } = sessionsDetailsTableData();
@@ -62,6 +67,10 @@ function Partners() {
     },
   };
 
+  const handleAdd = async () => {
+    await axios.post(addCollabsSessionRoute, { session: 1, collab: 27 });
+  };
+
   return (
     <DashboardLayout>
       {loading && <DashboardNavbar titleio={graph.session.nom} />}
@@ -93,6 +102,59 @@ function Partners() {
                     {loading && graph.session.nom}
                   </MDTypography>
                 </MDBox>
+
+                <Grid
+                  container
+                  spacing={2}
+                  display="flex"
+                  justifyContent="space-between"
+                >
+                  <MDBox ml={3} pt={2} px={2} mt={3}>
+                    <MDButton
+                      variant="gradient"
+                      color="info"
+                      size="small"
+                      // onClick={setOpenAddModel}
+                      onClick={handleAdd}
+                    >
+                      <Icon fontSize="big">add</Icon>
+                      &nbsp; add Collab to Session
+                    </MDButton>
+                  </MDBox>
+
+                  <MDBox pt={2} pr={4} mt={3} display="flex">
+                    <MDBox mr={2}>
+                      <MDButton
+                        variant="gradient"
+                        color="success"
+                        size="small"
+                        // onClick={() => handleDownload("allCourses", "export")}
+                        // disabled={rawData.length === 0}
+                      >
+                        <Icon fontSize="big" color="light">
+                          download
+                        </Icon>
+                        &nbsp; Export
+                      </MDButton>
+                    </MDBox>
+                    <MDBox>
+                      <MDButton
+                        variant="gradient"
+                        color="info"
+                        size="small"
+                        onClick={() => {
+                          localStorage.setItem("uploadType", "courses");
+                          // setOpenCsvUploader(true);
+                        }}
+                      >
+                        <Icon fontSize="big" color="light">
+                          upload
+                        </Icon>
+                        &nbsp; upload csv
+                      </MDButton>
+                    </MDBox>
+                  </MDBox>
+                </Grid>
 
                 <MDBox>
                   <DataTable

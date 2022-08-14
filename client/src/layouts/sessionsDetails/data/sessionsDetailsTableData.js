@@ -77,6 +77,8 @@ export default function Data() {
     ],
 
     rows: [],
+
+    rawData: allCollabs
   };
 
   allCollabs.map((collab) =>
