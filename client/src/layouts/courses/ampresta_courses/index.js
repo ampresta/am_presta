@@ -88,6 +88,8 @@ function Courses_am() {
     document.body.removeChild(a);
   };
 
+  console.log("am");
+
   return (
     <DashboardLayout>
       <DashboardNavbar />

@@ -6,7 +6,7 @@ import Collabs from "layouts/collabs";
 import Quota from "layouts/quota";
 import SignIn from "layouts/authentication/sign-in";
 import Logout from "layouts/authentication/logout";
-
+import Sessions from "layouts/sessions";
 // @mui icons
 import Icon from "@mui/material/Icon";
 
@@ -59,6 +59,22 @@ const routes = [
     route: "/collaboraters",
     component: <Collabs />,
   },
+  {
+    type: "collapse",
+    name: "Sessions",
+    key: "sessions",
+    icon: <Icon fontSize="small">groups</Icon>,
+    route: "/sessions",
+    component: <Sessions />,
+  },
+  // {
+  //   name: "csv",
+  //   key: "csv",
+  //   icon: <Icon fontSize="small">apartment</Icon>,
+  //   route: "/csv",
+  //   component: <Csv />,
+  // },
+
   {
     type: "collapse",
     name: "Login",

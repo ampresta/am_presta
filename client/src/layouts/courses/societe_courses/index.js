@@ -91,7 +91,8 @@ function Courses_soc() {
     document.body.removeChild(a);
   };
 
-  console.log(openCsvUploader);
+  // console.log(openCsvUploader);
+  console.log("societe");
 
   return (
     <DashboardLayout>
@@ -188,7 +189,6 @@ function Courses_soc() {
           type={"addCourseTemplate"}
         />
       )}
-
       {confirmation}
     </DashboardLayout>
   );
