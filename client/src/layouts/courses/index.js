@@ -11,6 +11,7 @@ import MDButton from "components/MDButton";
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+import CsvUploader from "examples/CsvUploader";
 import DataTable from "examples/Tables/DataTable";
 
 // @mui icons
@@ -29,7 +30,6 @@ import { useNavigate } from "react-router-dom";
 
 //csv
 import Papa from "papaparse";
-import CsvUploader from "examples/CsvUploader";
 
 function Courses() {
   const navigate = useNavigate();

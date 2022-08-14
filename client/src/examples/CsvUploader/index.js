@@ -1,7 +1,7 @@
+/* eslint-disable array-callback-return */
 import React, { useState } from "react";
 import Papa from "papaparse";
 import axiosAuth from "services/authAxios";
-import { useNavigate } from "react-router-dom";
 import {
   addCoursesRoute,
   addPartnersRoute,
@@ -31,8 +31,6 @@ import { useMaterialUIController, setUpdater } from "context";
 const allowedExtensions = ["csv"];
 
 function CsvUploader({ closeUploadModel, DownloadTemplate, type }) {
-  const navigate = useNavigate();
-
   const uploadType = localStorage.getItem("uploadType");
 
   const [error, setError] = useState("");
@@ -221,6 +219,7 @@ function CsvUploader({ closeUploadModel, DownloadTemplate, type }) {
               <DropFileInput
                 title="Drag & Drop your CSV file here"
                 onFileChange={handleFileChange}
+                accept=".csv"
               />
             </MDBox>
 

@@ -10,6 +10,7 @@ import MDTypography from "components/MDTypography";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import DataTable from "examples/Tables/DataTable";
+import CsvUploader from "examples/CsvUploader";
 
 //import Hook
 import { useState } from "react";
@@ -25,14 +26,13 @@ import collabsTableData from "layouts/collabs/data/collabsTableData";
 import MDButton from "components/MDButton";
 
 import Papa from "papaparse";
-import { useNavigate } from "react-router-dom";
 
 function Collabs() {
-  const navigate = useNavigate();
   const { columns, rows, confirmation, rawData } = collabsTableData();
+
   const [openAddModel, setOpenAddModel] = useState(false);
 
-  console.log(rawData);
+  const [openCsvUploader, setOpenCsvUploader] = useState(false);
 
   const handleDownload = (title, type) => {
     let data = [];
@@ -76,7 +76,7 @@ function Collabs() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      {!openAddModel && (
+      {!openCsvUploader && !openAddModel && (
         <MDBox pt={6} pb={1}>
           <Grid container spacing={6}>
             <Grid item xs={12}>
@@ -92,71 +92,59 @@ function Collabs() {
                   coloredShadow="info"
                 >
                   <MDTypography variant="h6" color="white">
-                    Collaborateurs
+                    Collborators
                   </MDTypography>
                 </MDBox>
 
-                <Grid container spacing={2}>
-                  <MDBox ml={3} py={1.9} px={2} mt={3}>
+                <Grid
+                  container
+                  spacing={2}
+                  display="flex"
+                  justifyContent="space-between"
+                >
+                  <MDBox ml={3} pt={2} px={2} mt={3}>
                     <MDButton
                       variant="gradient"
                       color="info"
                       size="small"
                       onClick={setOpenAddModel}
                     >
-                      <Icon fontSize="big" color="light">
-                        add
-                      </Icon>
-                      &nbsp; add collaborator
-                    </MDButton>
-                  </MDBox>
-                  <MDBox ml={3} py={1.9} px={2} mt={3}>
-                    <MDButton
-                      variant="gradient"
-                      color={rawData.length === 0 ? "success" : "info"}
-                      size="small"
-                      onClick={() => {
-                        handleDownload("allCollabs", "export");
-                      }}
-                    >
-                      <Icon fontSize="big" color="light">
-                        download
-                      </Icon>
-                      &nbsp; Export
+                      <Icon fontSize="big">add</Icon>
+                      &nbsp; add Collborator
                     </MDButton>
                   </MDBox>
 
-                  <MDBox ml={3} py={1.9} px={2} mt={3}>
-                    <MDButton
-                      variant="gradient"
-                      color="info"
-                      size="small"
-                      onClick={() => {
-                        handleDownload("addCollabsTemplate", "template");
-                      }}
-                    >
-                      <Icon fontSize="big" color="light">
-                        download
-                      </Icon>
-                      &nbsp; Download Template
-                    </MDButton>
-                  </MDBox>
-
-                  <MDBox ml={3} py={1.9} px={2} mt={3}>
-                    <MDButton
-                      variant="gradient"
-                      color="info"
-                      size="small"
-                      onClick={() => {
-                        localStorage.setItem("uploadType", "collabs");
-                        navigate("/csv");
-                      }}
-                    >
-                      <Icon fontSize="big" color="light">
-                        upload
-                      </Icon>
-                      &nbsp; upload csv
-                    </MDButton>
+                  <MDBox pt={2} pr={4} mt={3} display="flex">
+                    <MDBox mr={2}>
+                      <MDButton
+                        variant="gradient"
+                        color="success"
+                        size="small"
+                        onClick={() => handleDownload("allCollabs", "export")}
+                        disabled={rawData.length === 0}
+                      >
+                        <Icon fontSize="big" color="light">
+                          download
+                        </Icon>
+                        &nbsp; Export
+                      </MDButton>
+                    </MDBox>
+                    <MDBox>
+                      <MDButton
+                        variant="gradient"
+                        color="info"
+                        size="small"
+                        onClick={() => {
+                          localStorage.setItem("uploadType", "collabs");
+                          setOpenCsvUploader(true);
+                        }}
+                      >
+                        <Icon fontSize="big" color="light">
+                          upload
+                        </Icon>
+                        &nbsp; upload csv
+                      </MDButton>
+                    </MDBox>
                   </MDBox>
                 </Grid>
 
@@ -173,6 +161,13 @@ function Collabs() {
         </MDBox>
       )}
       {openAddModel && <AddCollab closeAddModel={setOpenAddModel} />}
+      {openCsvUploader && (
+        <CsvUploader
+          closeUploadModel={setOpenCsvUploader}
+          DownloadTemplate={handleDownload}
+          type={"addCollabsTemplate"}
+        />
+      )}
       {confirmation}
     </DashboardLayout>
   );
