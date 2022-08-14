@@ -5,7 +5,7 @@ import Sessions from "layouts/sessions";
 import SessionsDetails from "layouts/sessionsDetails";
 import SignIn from "layouts/authentication/sign-in";
 import Logout from "layouts/authentication/logout";
-
+import Courses from "layouts/courses/societe_courses";
 // @mui icons
 import Icon from "@mui/material/Icon";
 import Collabs from "layouts/collabs";
@@ -18,6 +18,14 @@ const routes = [
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/dashboard",
     component: <Dashboard />,
+  },
+  {
+    type: "collapse",
+    name: "Courses",
+    key: "courses",
+    icon: <Icon fontSize="small">school</Icon>,
+    route: "/courses",
+    component: <Courses />,
   },
   {
     type: "collapse",
@@ -58,22 +66,22 @@ const routes = [
     route: "/collaborators",
     component: <Collabs />,
   },
-  // {
-  //   type: "collapse",
-  //   name: "Login",
-  //   key: "login",
-  //   icon: <Icon fontSize="small">key</Icon>,
-  //   route: "/login",
-  //   component: <SignIn />,
-  // },
-  // {
-  //   type: "collapse",
-  //   name: "Logout",
-  //   key: "Logout",
-  //   icon: <Icon fontSize="small">lock</Icon>,
-  //   route: "/logout",
-  //   component: <Logout />,
-  // },
+  {
+    // type: "collapse",
+    name: "Login",
+    key: "login",
+    icon: <Icon fontSize="small">key</Icon>,
+    route: "/login",
+    component: <SignIn />,
+  },
+  {
+    type: "collapse",
+    name: "Logout",
+    key: "Logout",
+    icon: <Icon fontSize="small">lock</Icon>,
+    route: "/logout",
+    component: <Logout />,
+  },
 ];
 
 export default routes;
