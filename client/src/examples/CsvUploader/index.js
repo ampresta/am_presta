@@ -61,6 +61,10 @@ function CsvUploader({ closeUploadModel, DownloadTemplate, type }) {
         addCollabs(data);
         break;
 
+      case "session":
+        addCollabstoSession(data);
+        break;
+
       default:
         break;
     }
@@ -138,6 +142,8 @@ function CsvUploader({ closeUploadModel, DownloadTemplate, type }) {
       alert(data.msg);
     }
   };
+
+  const addCollabstoSession = async () => {};
 
   const handleFileChange = (files) => {
     setError("");

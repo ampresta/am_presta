@@ -10,8 +10,11 @@ import { useState, useEffect } from "react";
 // Axios
 import axios from "services/authAxios";
 
+// ConfirmPoppup component
+import ConfirmPopup from "components/ConfirmPopup";
+
 // Api Endpoint
-import { baseURL, SessionGraph, SessionCollabRoute } from "utils/APIRoutes";
+import { baseURL, SessionGraph, SessionCollabRoute, DeleteInstances } from "utils/APIRoutes";
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController } from "context";
@@ -19,12 +22,18 @@ import { dateFormat } from "utils/Helper";
 import MDButton from "components/MDButton";
 
 import { useParams } from "react-router-dom";
+
+
 export default function Data() {
   const [allCollabs, setAllCollabs] = useState([]);
-
+  const [confirmModel, setConfirmModel] = useState(false);
   const [controller] = useMaterialUIController();
+  const [tempCourseId, setTempCourseId] = useState(0);
+
   const { updater } = controller;
+  
   const { id } = useParams();
+  
   useEffect(() => {
     const getCollab = async () => {
       const { data } = await axios.post(SessionCollabRoute, {
@@ -36,6 +45,19 @@ export default function Data() {
     };
     getCollab();
   }, [updater]);
+
+  const handleDelete = async (id) => {
+    const { data } = await axios.post(DeleteInstances, {
+      model: "cours",
+      id: id,
+    });
+    if (data.status) {
+      setAllCollabs(allCollabs.filter((course) => course.id !== id));
+      setConfirmModel(!confirmModel);
+    } else {
+      alert(data.msg);
+    }
+  };
 
   const Company = ({ image, name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
@@ -78,7 +100,16 @@ export default function Data() {
 
     rows: [],
 
-    rawData: allCollabs
+    rawData: allCollabs,
+
+    confirmation: confirmModel && (
+      <ConfirmPopup
+        title={"Are you sure you want to delete this course ?"}
+        onConfirmPopup={() => setConfirmModel(!confirmModel)}
+        handleDetele={handleDelete}
+        Id_Item={tempCourseId}
+      />
+    ),
   };
 
   allCollabs.map((collab) =>

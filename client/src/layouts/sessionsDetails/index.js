@@ -31,14 +31,20 @@ import { useParams } from "react-router-dom";
 import { baseURL } from "utils/APIRoutes";
 import { addCollabsSessionRoute } from "utils/APIRoutes";
 
+//csv
+import Papa from "papaparse";
+import CsvUploader from "examples/CsvUploader";
+
 function Partners() {
-  const { columns, rows } = sessionsDetailsTableData();
+  const { columns, rows, confirmation, rawData } = sessionsDetailsTableData();
 
   const [graph, setGraph] = useState([]);
-
+  const [openAddModel, setOpenAddModel] = useState(false);
   const [loading, setLoading] = useState(false);
   const [controller] = useMaterialUIController();
   const { updater } = controller;
+
+  const [openCsvUploader, setOpenCsvUploader] = useState(false);
 
   let { id } = useParams();
   useEffect(() => {
@@ -71,10 +77,49 @@ function Partners() {
     await axios.post(addCollabsSessionRoute, { session: 1, collab: 27 });
   };
 
+  const handleDownload = (title, type) => {
+    let data = [];
+    let columns = [];
+    if (rawData.length > 0) {
+      if (type === "export") {
+        rawData.map((row) =>
+          data.push({
+            id: row.id,
+            nom: row.nom,
+            prenom: row.prenom,
+            email: row.email,
+            departement: row.departement,
+            createdAt: row.createdAt,
+          })
+        );
+        columns = ["id", "nom", "prenom", "email", "departement", "createdAt"];
+      }
+    }
+    if (type === "template") {
+      columns = ["nom", "prenom", "username", "email", "password"];
+      let blank = {};
+      columns.map((header) => (blank.header = ""));
+      data.push(blank);
+    }
+
+    const csv = Papa.unparse(data, {
+      header: true,
+      delimiter: ", ",
+      columns: columns,
+    });
+    const blob = new Blob([csv]);
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob, { type: "text/plain" });
+    a.download = `${title}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  };
+
   return (
     <DashboardLayout>
       {loading && <DashboardNavbar titleio={graph.session.nom} />}
-      {
+      {!openCsvUploader && !openAddModel && (
         <MDBox pt={6} pb={1}>
           <Grid container spacing={2} rowSpacing={2}>
             <Grid item xs={12} md={7} lg={9}>
@@ -110,16 +155,7 @@ function Partners() {
                   justifyContent="space-between"
                 >
                   <MDBox ml={3} pt={2} px={2} mt={3}>
-                    <MDButton
-                      variant="gradient"
-                      color="info"
-                      size="small"
-                      // onClick={setOpenAddModel}
-                      onClick={handleAdd}
-                    >
-                      <Icon fontSize="big">add</Icon>
-                      &nbsp; add Collab to Session
-                    </MDButton>
+                    
                   </MDBox>
 
                   <MDBox pt={2} pr={4} mt={3} display="flex">
@@ -143,8 +179,8 @@ function Partners() {
                         color="info"
                         size="small"
                         onClick={() => {
-                          localStorage.setItem("uploadType", "courses");
-                          // setOpenCsvUploader(true);
+                          localStorage.setItem("uploadType", "session");
+                          setOpenCsvUploader(true);
                         }}
                       >
                         <Icon fontSize="big" color="light">
@@ -202,7 +238,17 @@ function Partners() {
             </Grid>
           </Grid>
         </MDBox>
-      }
+      )}
+
+      {openAddModel }
+      {openCsvUploader && (
+        <CsvUploader
+          closeUploadModel={setOpenCsvUploader}
+          DownloadTemplate={handleDownload}
+          type={"addCourseTemplate"}
+        />
+      )}
+      {confirmation}
     </DashboardLayout>
   );
 }
