@@ -2,8 +2,12 @@ const argon2 = require("argon2");
 const db = require("../../config/database");
 const { Collaborateur, Societe, User } = db.models;
 module.exports = async (req, res) => {
+  console.log("RRR");
+  console.log(req.body);
   const { accounts } = req.body;
-
+  if (!accounts) {
+    return res.sendStatus(403);
+  }
   const pep = process.env.PEPPER;
   for (account of accounts) {
     try {
@@ -36,7 +40,7 @@ module.exports = async (req, res) => {
             email,
             email_institu,
             SocieteId: req.societe,
-            admin: true,
+            admin: false,
             instructor: false,
           },
         },

@@ -22,7 +22,7 @@ import Icon from "@mui/material/Icon";
 import AddCollab from "./add";
 
 // Data
-import collabsTableData from "layouts/collabs/data/collabsTableData";
+import collabsTableData from "./data/collabsTableData";
 import MDButton from "components/MDButton";
 
 import Papa from "papaparse";

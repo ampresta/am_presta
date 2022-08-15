@@ -20,7 +20,7 @@ import axiosAuth from "services/authAxios";
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setUpdater } from "context";
 
-import { addPartnersRoute, uploadRoute } from "utils/APIRoutes";
+import { addCollabsRoute, uploadRoute } from "utils/APIRoutes";
 
 function AddCollab({ closeAddModel }) {
   const [formErrors, setFormErrors] = useState({
@@ -29,6 +29,8 @@ function AddCollab({ closeAddModel }) {
 
   const [collaborator, setCollaborator] = useState({
     nom: "",
+	  prenom:"",
+	  mail:""
   });
 
   const [file, setFile] = useState(null);
@@ -42,22 +44,27 @@ function AddCollab({ closeAddModel }) {
     event.preventDefault();
     setFormErrors(validate(collaborator));
     if (Object.keys(validate(collaborator)).length === 0) {
-      const { data } = await axiosAuth.post(addPartnersRoute, {
-        nom,
+      const { data } = await axiosAuth.post(addCollabsRoute, {
+	      account:{
+		      nom:collaborator.nom,
+		      prenom:collaborator.prenom,
+		      email: collaborator.mail
+	      }
       });
-      const ID = data.id;
 
+      const ID = data.id;
+	console.log(data)
       if (data.status) {
         const fd = new FormData();
         fd.append("image", file);
         fd.append("id", ID);
         fd.append("model", "Collaborateur");
-
+	console.log(fd.getAll("image"));
         const config = {
           method: "post",
           url: uploadRoute,
           headers: {
-            "content-Type": "multipart/form-data",
+            "Content-Type": "multipart/form-data",
           },
           data: fd,
         };
@@ -127,10 +134,34 @@ function AddCollab({ closeAddModel }) {
           <MDBox mb={2}>
             <MDInput
               type="text"
-              label="collaborator Name"
+              label="First Name"
+              variant="outlined"
+              fullWidth
+              name="prenom"
+              onChange={(e) => handleChange(e)}
+              error={formErrors.coursename}
+            />
+            <FormHelperText error>{formErrors.coursename}</FormHelperText>
+          </MDBox>
+          <MDBox mb={2}>
+            <MDInput
+              type="text"
+              label="Last Name"
               variant="outlined"
               fullWidth
               name="nom"
+              onChange={(e) => handleChange(e)}
+              error={formErrors.coursename}
+            />
+            <FormHelperText error>{formErrors.coursename}</FormHelperText>
+          </MDBox>
+          <MDBox mb={2}>
+            <MDInput
+              type="text"
+              label="Email"
+              variant="outlined"
+              fullWidth
+              name="mail"
               onChange={(e) => handleChange(e)}
               error={formErrors.coursename}
             />

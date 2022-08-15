@@ -24,7 +24,6 @@ axiosAuth.interceptors.response.use(
         error.config.reget = true;
         const { data } = await axiosAuth.get(refreshRoute);
         if (data.accesstoken) {
-          console.log(data);
           localStorage.removeItem("user");
           localStorage.setItem("user", JSON.stringify(data));
           error.config.headers = {

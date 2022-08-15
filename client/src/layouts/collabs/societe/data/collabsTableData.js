@@ -41,7 +41,7 @@ export default function Data() {
 
   const handleDelete = async (id) => {
     const { data } = await axiosAuth.post(DeleteInstances, {
-      model: "provider",
+      model: "Collaborateur",
       id: id,
     });
     if (data.status) {
@@ -52,7 +52,7 @@ export default function Data() {
     }
   };
 
-  const Company = ({ image, name }) => (
+  const Company = ({ name, image }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDAvatar src={`${baseURL}/${image}`} name={name} size="sm" />
       <MDBox ml={2} lineHeight={1}>
@@ -62,7 +62,6 @@ export default function Data() {
       </MDBox>
     </MDBox>
   );
-
   let collabs = {
     columns: [
       {
@@ -72,29 +71,29 @@ export default function Data() {
         align: "left",
       },
       {
-        Header: "Nom",
+        Header: "Full Name",
         accessor: "nom",
         width: "10%",
         align: "left",
       },
       {
-        Header: "Prenom",
-        accessor: "prenom",
+        Header: "Number of Sessions",
+        accessor: "session",
         align: "center",
         width: "15%",
       },
       {
-        Header: "Email",
-        accessor: "email",
+        Header: "Number of Certifs",
+        accessor: "certif",
         align: "center",
         width: "30%",
       },
-      {
-        Header: "Departmenet",
-        accessor: "departmenet",
-        align: "center",
-        width: "30%",
-      },
+      // {
+      //   Header: "Departmenet",
+      //   accessor: "departmenet",
+      //   align: "center",
+      //   width: "30%",
+      // },
       { Header: "edit", accessor: "edit", align: "center", width: "3%" },
       { Header: "delete", accessor: "delete", align: "center", width: "3%" },
     ],
@@ -117,22 +116,17 @@ export default function Data() {
         author: <Company image={collab.image} />,
         nom: (
           <MDTypography variant="caption" color="text" fontWeight="medium">
-            {collab.nom}
+            {`${collab.nom} ${collab.prenom}`}
           </MDTypography>
         ),
-        prenom: (
+        session: (
           <MDTypography variant="caption" color="text" fontWeight="medium">
-            {collab.prenom}
+            {collab.session_count}
           </MDTypography>
         ),
-        email: (
+        certif: (
           <MDTypography variant="caption" color="text" fontWeight="medium">
-            {collab.email}
-          </MDTypography>
-        ),
-        departmenet: (
-          <MDTypography variant="caption" color="text" fontWeight="medium">
-            {collab.departmenet}
+            {collab.certifs_count}
           </MDTypography>
         ),
         edit: (
