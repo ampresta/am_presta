@@ -25,12 +25,14 @@ import { addCollabsRoute, uploadRoute } from "utils/APIRoutes";
 function AddCollab({ closeAddModel }) {
   const [formErrors, setFormErrors] = useState({
     nom: "",
+    prenom: "",
+    mail: "",
   });
 
   const [collaborator, setCollaborator] = useState({
     nom: "",
-	  prenom:"",
-	  mail:""
+    prenom: "",
+    mail: "",
   });
 
   const [file, setFile] = useState(null);
@@ -45,21 +47,21 @@ function AddCollab({ closeAddModel }) {
     setFormErrors(validate(collaborator));
     if (Object.keys(validate(collaborator)).length === 0) {
       const { data } = await axiosAuth.post(addCollabsRoute, {
-	      account:{
-		      nom:collaborator.nom,
-		      prenom:collaborator.prenom,
-		      email: collaborator.mail
-	      }
+        account: {
+          nom: collaborator.nom,
+          prenom: collaborator.prenom,
+          email: collaborator.mail,
+        },
       });
 
       const ID = data.id;
-	console.log(data)
+      console.log(data);
       if (data.status) {
         const fd = new FormData();
         fd.append("image", file);
         fd.append("id", ID);
         fd.append("model", "Collaborateur");
-	console.log(fd.getAll("image"));
+        console.log(fd.getAll("image"));
         const config = {
           method: "post",
           url: uploadRoute,
@@ -90,7 +92,13 @@ function AddCollab({ closeAddModel }) {
   const validate = (values) => {
     const errors = {};
     if (!values.nom) {
-      errors.coursename = "Collaborator Name is required !";
+      errors.nom = "Collaborator First Name is required !";
+    }
+    if (!values.prenom) {
+      errors.prenom = "Collaborator Last Name is required !";
+    }
+    if (!values.mail) {
+      errors.mail = "Collaborator Email is required !";
     }
     return errors;
   };
@@ -139,9 +147,9 @@ function AddCollab({ closeAddModel }) {
               fullWidth
               name="prenom"
               onChange={(e) => handleChange(e)}
-              error={formErrors.coursename}
+              error={formErrors.nom}
             />
-            <FormHelperText error>{formErrors.coursename}</FormHelperText>
+            <FormHelperText error>{formErrors.nom}</FormHelperText>
           </MDBox>
           <MDBox mb={2}>
             <MDInput
@@ -151,9 +159,9 @@ function AddCollab({ closeAddModel }) {
               fullWidth
               name="nom"
               onChange={(e) => handleChange(e)}
-              error={formErrors.coursename}
+              error={formErrors.prenom}
             />
-            <FormHelperText error>{formErrors.coursename}</FormHelperText>
+            <FormHelperText error>{formErrors.prenom}</FormHelperText>
           </MDBox>
           <MDBox mb={2}>
             <MDInput
@@ -163,9 +171,9 @@ function AddCollab({ closeAddModel }) {
               fullWidth
               name="mail"
               onChange={(e) => handleChange(e)}
-              error={formErrors.coursename}
+              error={formErrors.mail}
             />
-            <FormHelperText error>{formErrors.coursename}</FormHelperText>
+            <FormHelperText error>{formErrors.mail}</FormHelperText>
           </MDBox>
 
           <Card>
