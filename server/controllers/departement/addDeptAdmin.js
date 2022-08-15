@@ -4,7 +4,7 @@ module.exports = async (req, res) => {
   try {
     const { nom, soc } = req.body;
 
-    if (!nom) {
+    if (!nom || !soc) {
       return res.sendStatus(403);
     }
     const departement = await Departement.create({

@@ -211,6 +211,7 @@ export default function Data() {
           id={session.id}
           image={session.Cour.image}
           name={session.nom}
+	      company={session.Societe.name}
         />
       ),
       cours: (

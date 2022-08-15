@@ -1,10 +1,11 @@
 const sequelize = require("sequelize");
 const db = require("../../config/database");
-const { Cours, Session, Provider, Collaborateur } = db.models;
+const { Cours, Session, Provider, Collaborateur, Societe } = db.models;
 module.exports = async (req, res) => {
   filters = {};
 
   filters.include = [
+    { model: Societe, attributes: ["name"] },
     {
       model: Collaborateur,
       attributes: [],
@@ -27,7 +28,7 @@ module.exports = async (req, res) => {
       ],
     ],
   };
-  filters.group = ["Session.id", "Cour.id", "Cour->Provider.id"];
+  filters.group = ["Session.id", "Societe.id", "Cour.id", "Cour->Provider.id"];
   // filters.where = { SocieteId: req.societe };
   if (req.method == "POST") {
     const { search, provider } = req.body;
