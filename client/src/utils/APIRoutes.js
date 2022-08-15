@@ -47,6 +47,7 @@ export const AddQuotaRoute = `${baseURL}/quota/add`;
 // Departments
 export const allDepartmentsRoute = `${baseURL}/societe/browsedepts`;
 export const addDepartementRoute = `${baseURL}/dept/add`;
+export const addDepartementAdminRoute = `${baseURL}/dept/adminadd`;
 export const allDepartmentsAdminRoute = `${baseURL}/dept/browsedeptsam`;
 
 //DeleteInstances

@@ -25,6 +25,7 @@ import { useMaterialUIController, setUpdater } from "context";
 
 import { useEffect } from "react";
 import { allCompaniesRoute, addDepartementRoute } from "utils/APIRoutes";
+import {addDepartementAdminRoute} from "utils/APIRoutes";
 
 function AddDepartement({ closeAddModel }) {
   const [formErrors, setFormErrors] = useState({
@@ -52,11 +53,6 @@ function AddDepartement({ closeAddModel }) {
     },
   ]);
 
-  console.log("departement", departement);
-  console.log("selectedCompany", selectedCompany);
-  console.log("companies", companies);
-  console.log("errors", formErrors);
-
   const [controller, dispatch] = useMaterialUIController();
 
   const { updater } = controller;
@@ -74,13 +70,14 @@ function AddDepartement({ closeAddModel }) {
   }, []);
 
   const handleSubmit = async (event) => {
+	  // console.log("heey");
     const { nom, company } = departement;
     event.preventDefault();
     setFormErrors(validate(departement));
     if (Object.keys(validate(departement)).length === 0) {
-      const { data } = await axiosAuth.post(addDepartementRoute, {
+      const { data } = await axiosAuth.post(addDepartementAdminRoute, {
         nom,
-        company: company.id,
+        soc: company.id,
       });
       if (data.status) {
         closeAddModel(false);
@@ -150,7 +147,6 @@ function AddDepartement({ closeAddModel }) {
         <MDBox
           component="form"
           role="form"
-          onSubmit={(event) => handleSubmit(event)}
         >
           <MDBox display="flex"></MDBox>
           <MDBox mb={2}>
@@ -203,6 +199,7 @@ function AddDepartement({ closeAddModel }) {
         <MDBox mt={4} mb={2} display="flex" justifyContent="center">
           <MDButton
             type="submit"
+            onClick={(e) => handleSubmit(e)}
             variant="gradient"
             color="info"
             sx={{ width: "30%", mr: "5px" }}
