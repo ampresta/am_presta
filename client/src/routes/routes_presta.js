@@ -2,7 +2,7 @@ import Dashboard from "layouts/dashboard/ampresta_dash";
 import Companies from "layouts/companies";
 import Partners from "layouts/partners";
 import Courses from "layouts/courses/ampresta_courses";
-import Collabs from "layouts/collabs";
+import Collabs from "layouts/collabs/ampresta";
 import Quota from "layouts/quota";
 import SignIn from "layouts/authentication/sign-in";
 import Logout from "layouts/authentication/logout";

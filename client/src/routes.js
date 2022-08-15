@@ -1,13 +1,6 @@
 import TypeGiver from "utils/UserType";
-import Dashboard from "layouts/dashboard/";
-import Companies from "layouts/companies";
-import Partners from "layouts/partners";
-import Courses from "layouts/courses/";
-import Collabs from "layouts/collabs";
-import Quota from "layouts/quota";
 import SignIn from "layouts/authentication/sign-in";
 import Logout from "layouts/authentication/logout";
-import Sessions from "layouts/sessions";
 import routes_societe from "routes/routes_societe";
 import routes_ampresta from "routes/routes_presta";
 // @mui icons

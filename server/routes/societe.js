@@ -5,6 +5,7 @@ const browseCollab = require("../controllers/societe/browseCollab");
 const browseRequests = require("../controllers/societe/browseRequests");
 const browseSociete = require("../controllers/societe/browseSociete");
 const CreateCollabsforSociete = require("../controllers/societe/CreateCollabsforSociete");
+const CreateOneCollabforSociete = require("../controllers/societe/CreateOneCollabforSociete");
 const getUerSociete = require("../controllers/societe/getUerSociete");
 const checkSociete = require("../middlewares/checkSociete");
 const router = require("express").Router();
@@ -18,11 +19,12 @@ router.post("/assign", associateAdminSociete);
 router.post("/uerSociete", getUerSociete);
 //Societe
 router.use(checkSociete);
-router.post("/addcollab", CreateCollabsforSociete);
+router.post("/addcollabs", CreateCollabsforSociete);
 
+router.post("/addcollab", CreateOneCollabforSociete);
 router.get("/browserequests", browseRequests);
 
-router.get("/browsecollabs", browseCollab);
+// router.get("/browsecollabs", browseCollab);
 
 // router.all("/browsedepts", browseDept);
 // AM

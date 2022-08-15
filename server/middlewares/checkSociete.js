@@ -9,12 +9,10 @@ module.exports = (req, res, next) => {
   }
   try {
     payload = verify(token, process.env.JWTSALT);
-    console.log(payload);
     if (payload.type === "Societe") {
       req.societe = payload.id;
       return next();
     } else {
-      console.log(payload);
       return res.send({ status: false, msg: "Not a Societe" });
     }
   } catch (err) {

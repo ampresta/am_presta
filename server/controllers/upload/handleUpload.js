@@ -13,9 +13,12 @@ module.exports = async (req, res) => {
   } else {
     return res.sendStatus(404);
   }
-  const u = await Model.findOne({ where: { id } });
-  u.image = req.file.path;
-  await u.save();
-  console.log(req.file.path);
-  return res.send({ go: req.file.path });
+  try {
+    const u = await Model.findOne({ where: { id } });
+    u.image = req.file.path;
+    await u.save();
+    return res.send({ go: req.file.path });
+  } catch (err) {
+    return res.send({ status: false });
+  }
 };
