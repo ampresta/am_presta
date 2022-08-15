@@ -1,8 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
 import MDBadge from "components/MDBadge";
+import MDButton from "components/MDButton";
 
 //React hooks
 import { useState, useEffect } from "react";
@@ -10,54 +13,34 @@ import { useState, useEffect } from "react";
 // Axios
 import axios from "services/authAxios";
 
-// ConfirmPoppup component
-import ConfirmPopup from "components/ConfirmPopup";
-
 // Api Endpoint
-import { baseURL, SessionGraph, SessionCollabRoute, DeleteInstances } from "utils/APIRoutes";
+import { baseURL, SessionGraph, SessionCollabRoute } from "utils/APIRoutes";
+
+import { useMaterialUIController, setOpenProofModel } from "context";
 
 // Material Dashboard 2 React contexts
-import { useMaterialUIController } from "context";
 import { dateFormat } from "utils/Helper";
-import MDButton from "components/MDButton";
 
 import { useParams } from "react-router-dom";
 
-
 export default function Data() {
   const [allCollabs, setAllCollabs] = useState([]);
-  const [confirmModel, setConfirmModel] = useState(false);
-  const [controller] = useMaterialUIController();
-  const [tempCourseId, setTempCourseId] = useState(0);
 
-  const { updater } = controller;
-  
+  const [controller, dispatch] = useMaterialUIController();
+  const { openProofModel } = controller;
+
   const { id } = useParams();
-  
+
   useEffect(() => {
     const getCollab = async () => {
       const { data } = await axios.post(SessionCollabRoute, {
         sess: id,
       });
-      // console.log("data");
       console.log(data);
       setAllCollabs(data.collab);
     };
     getCollab();
-  }, [updater]);
-
-  const handleDelete = async (id) => {
-    const { data } = await axios.post(DeleteInstances, {
-      model: "cours",
-      id: id,
-    });
-    if (data.status) {
-      setAllCollabs(allCollabs.filter((course) => course.id !== id));
-      setConfirmModel(!confirmModel);
-    } else {
-      alert(data.msg);
-    }
-  };
+  }, []);
 
   const Company = ({ image, name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
@@ -90,26 +73,11 @@ export default function Data() {
         width: "10%",
         align: "center",
       },
-      {
-        Header: "proof",
-        accessor: "proof",
-        width: "10%",
-        align: "center",
-      },
     ],
 
     rows: [],
 
     rawData: allCollabs,
-
-    confirmation: confirmModel && (
-      <ConfirmPopup
-        title={"Are you sure you want to delete this course ?"}
-        onConfirmPopup={() => setConfirmModel(!confirmModel)}
-        handleDetele={handleDelete}
-        Id_Item={tempCourseId}
-      />
-    ),
   };
 
   allCollabs.map((collab) =>
@@ -128,20 +96,20 @@ export default function Data() {
       status: (
         <>
           {collab.Session_Collabs[0].certifs ? (
-            <MDBadge
-              badgeContent="Certified"
-              color="success"
-              size="lg"
-              gradiant
-            />
+            <MDBadge badgeContent="Certified" color="success" size="md" />
           ) : collab.Session_Collabs[0].fincourse ? (
-            <MDBadge badgeContent="Finished" color="dark" size="lg" />
+            <MDBadge badgeContent="Finished" color="dark" size="md" />
           ) : (
-            <MDBadge badgeContent="Ongoing" color="info" size="lg" gradiant />
+            <MDButton
+              size="small"
+              variant="text"
+              onClick={() => setOpenProofModel(dispatch, !openProofModel)}
+            >
+              <MDBadge badgeContent="Check Proof" color="success" size="md" />
+            </MDButton>
           )}{" "}
         </>
       ),
-      proof: <MDButton color="info">proof</MDButton>,
     })
   );
 

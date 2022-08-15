@@ -129,6 +129,8 @@ function AddCourses({ closeAddModel }) {
     setSelectedProvider(provider);
   };
 
+  console.log(selectedProvider);
+
   const validate = (values) => {
     const errors = {};
     if (!values.nom) {
@@ -225,6 +227,7 @@ function AddCourses({ closeAddModel }) {
                 <FormHelperText error>{formErrors.provider}</FormHelperText>
               </FormControl>
             </MDBox>
+            
           </MDBox>
           <MDBox mb={2}>
             <MDInput

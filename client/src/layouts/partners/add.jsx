@@ -143,6 +143,7 @@ function AddPartner({ closeAddModel }) {
                 title="Drag & Drop partner logo here"
                 name="image"
                 onFileChange={(files) => setFile(files[0])}
+                accept=".png, .jpeg, .jpg"
               />
             </MDBox>
           </Card>

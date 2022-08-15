@@ -13,7 +13,7 @@ const PartnersGraph = () => {
       });
       setAllPartnersData(data.results);
     };
-    getData("provider", 9).then((data) => (graphs.sales.datasets.data = data));
+    getData("provider", 9).then((data) => (graphs.datasets.data = data));
   }, []);
 
   let graphs = {

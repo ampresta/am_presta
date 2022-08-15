@@ -1,33 +1,24 @@
+/* eslint-disable eqeqeq */
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
 import MDProgress from "components/MDProgress";
-import MDButton from "components/MDButton";
-
-// @mui icons
-import Icon from "@mui/material/Icon";
 
 // React Hooks
 import { useState, useEffect } from "react";
 
 // Api Endpoint
+import { allCompanyCoursesRoute, baseURL } from "utils/APIRoutes";
+
 // import axios from "services/authAxios";
-
-import { allCoursesRoute, baseURL, DeleteInstances } from "utils/APIRoutes";
-
-// ConfirmPoppup component
-import ConfirmPopup from "components/ConfirmPopup";
+import axiosAuth from "services/authAxios";
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController } from "context";
-import axiosAuth from "services/authAxios";
-import { allCompanyCoursesRoute } from "utils/APIRoutes";
 
 export default function Data() {
   const [allCourses, setAllCourses] = useState([]);
-  const [confirmModel, setConfirmModel] = useState(false);
-  const [tempCourseId, setTempCourseId] = useState(0);
 
   const [controller] = useMaterialUIController();
 
@@ -40,19 +31,6 @@ export default function Data() {
     };
     getAllCourses();
   }, [updater]);
-
-  const handleDelete = async (id) => {
-    const { data } = await axiosAuth.post(DeleteInstances, {
-      model: "cours",
-      id: id,
-    });
-    if (data.status) {
-      setAllCourses(allCourses.filter((course) => course.id !== id));
-      setConfirmModel(!confirmModel);
-    } else {
-      alert(data.msg);
-    }
-  };
 
   const Company = ({ image, name, company }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
@@ -111,20 +89,9 @@ export default function Data() {
         align: "center",
         width: "25%",
       },
-      { Header: "edit", accessor: "edit", align: "center", width: "3%" },
-      { Header: "delete", accessor: "delete", align: "center", width: "3%" },
     ],
 
     rows: [],
-
-    confirmation: confirmModel && (
-      <ConfirmPopup
-        title={"Are you sure you want to delete this course ?"}
-        onConfirmPopup={() => setConfirmModel(!confirmModel)}
-        handleDetele={handleDelete}
-        Id_Item={tempCourseId}
-      />
-    ),
 
     rawData: allCourses,
   };
@@ -157,31 +124,6 @@ export default function Data() {
               : Math.floor(100 * (course.collabs_fin / course.collabs))
           }
         />
-      ),
-      edit: (
-        <MDTypography
-          href="#"
-          variant="caption"
-          color="text"
-          fontWeight="medium"
-        >
-          <Icon fontSize="small">edit</Icon>
-        </MDTypography>
-      ),
-      delete: (
-        <MDButton
-          variant="text"
-          onClick={() => {
-            setConfirmModel(!confirmModel);
-            setTempCourseId(course.id);
-          }}
-        >
-          <MDTypography variant="caption" color="text" fontWeight="medium">
-            <Icon fontSize="small" color="primary">
-              delete
-            </Icon>
-          </MDTypography>
-        </MDButton>
       ),
     })
   );

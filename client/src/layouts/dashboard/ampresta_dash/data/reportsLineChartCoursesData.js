@@ -13,7 +13,7 @@ const CoursesGraph = () => {
       });
       setAllCoursesData(data.results);
     };
-    getData("cours", 9).then((data) => (graphs.sales.datasets.data = data));
+    getData("cours", 9).then((data) => (graphs.datasets.data = data));
   }, []);
 
   let graphs = {

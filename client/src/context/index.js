@@ -45,6 +45,9 @@ function reducer(state, action) {
     case "FORCEUPDATE": {
       return { ...state, updater: action.value };
     }
+    case "PROOFPREVIEW": {
+      return { ...state, openProofModel: action.value };
+    }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
     }
@@ -65,6 +68,7 @@ function MaterialUIControllerProvider({ children }) {
     darkMode: false,
     updater: false,
     openRequestModel: false,
+    openProofModel: false,
   };
 
   const [controller, dispatch] = useReducer(reducer, initialState);
@@ -116,6 +120,9 @@ const setUpdater = (dispatch, value) =>
 const setOpenRequestModel = (dispatch, value) =>
   dispatch({ type: "REQUESTMODEL", value });
 
+const setOpenProofModel = (dispatch, value) =>
+  dispatch({ type: "PROOFPREVIEW", value });
+
 export {
   MaterialUIControllerProvider,
   useMaterialUIController,
@@ -130,4 +137,5 @@ export {
   setDarkMode,
   setUpdater,
   setOpenRequestModel,
+  setOpenProofModel,
 };

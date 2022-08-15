@@ -37,6 +37,7 @@ import authService from "services/auth.service";
 
 function Dashboard() {
   const navigate = useNavigate();
+
   const { columns, rows } = authorsTableData();
 
   const [coursesCount, setCoursesCount] = useState(0);

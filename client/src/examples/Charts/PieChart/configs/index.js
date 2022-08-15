@@ -23,7 +23,7 @@ function configs(labels, datasets) {
         {
           label: datasets.label,
           weight: 9,
-          cutout: 0,
+          cutout: 50,
           tension: 0.9,
           pointRadius: 2,
           borderWidth: 2,

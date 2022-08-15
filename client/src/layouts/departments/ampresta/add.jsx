@@ -9,53 +9,78 @@ import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
 import OutlinedInput from "@mui/material/OutlinedInput";
-
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+
 //import UseState Hook
-import { useState,useEffect } from "react";
+import { useState } from "react";
 
 // Axios
-import axios from "services/authAxios";
+import axiosAuth from "services/authAxios";
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setUpdater } from "context";
 
-import { addDepartementRoute,allCompaniesRoute } from "utils/APIRoutes";
+import { useEffect } from "react";
+import { allCompaniesRoute, addDepartementRoute } from "utils/APIRoutes";
 
 function AddDepartement({ closeAddModel }) {
   const [formErrors, setFormErrors] = useState({
-    nom: "",
+    deptname: "",
+    company: "",
   });
 
   const [departement, setDepartement] = useState({
     nom: "",
+    company: {
+      id: "",
+      nom: "",
+    },
   });
+
+  const [selectedCompany, setSelectedCompany] = useState({
+    nom: "",
+    id: "",
+  });
+
+  const [companies, setCompanies] = useState([
+    {
+      id: "",
+      nom: "",
+    },
+  ]);
+
+  console.log("departement", departement);
+  console.log("selectedCompany", selectedCompany);
+  console.log("companies", companies);
+  console.log("errors", formErrors);
 
   const [controller, dispatch] = useMaterialUIController();
 
   const { updater } = controller;
 
-  const [societe, setSociete] = useState("");
   useEffect(() => {
     const getAllData = async () => {
-      const { data } = await axios.get(allCompaniesRoute);
-	    console.log(data);
-      setSociete(data.msg);
+      const { data } = await axiosAuth.get(allCompaniesRoute);
+      let temp = [];
+      data.msg.map((company) =>
+        temp.push({ id: company.id, nom: company.name })
+      );
+      setCompanies(temp);
     };
     getAllData();
   }, []);
 
   const handleSubmit = async (event) => {
-    const { nom } = departement;
+    const { nom, company } = departement;
     event.preventDefault();
     setFormErrors(validate(departement));
     if (Object.keys(validate(departement)).length === 0) {
-      const { data } = await axios.post(addDepartementRoute, {
+      const { data } = await axiosAuth.post(addDepartementRoute, {
         nom,
-	societe
+        company: company.id,
       });
       if (data.status) {
         closeAddModel(false);
@@ -66,11 +91,6 @@ function AddDepartement({ closeAddModel }) {
     }
   };
 
-  const handleSelectedSociete = (event) => {
-    const soc = event.target.value;
-    setDepartement((prev) => ({ ...prev, soc }));
-    setSociete(soc);
-  };
   const handleChange = (event) => {
     const key = event.target.name;
     const value = event.target.value;
@@ -79,26 +99,23 @@ function AddDepartement({ closeAddModel }) {
     });
   };
 
+  const handleSelectedCompany = (event) => {
+    const company = event.target.value;
+    setDepartement((prev) => ({ ...prev, company }));
+    setSelectedCompany(company);
+  };
+
   const validate = (values) => {
     const errors = {};
     if (!values.nom) {
-      errors.coursename = "Department Name is required !";
+      errors.deptname = "Department Name is required !";
+    }
+    if (!values.company.id) {
+      errors.company = "Company is required !";
     }
     return errors;
   };
 
-  const societes_ToBe_Selected =
-    societe.length !== 0 ? (
-      societe.map((soc) => (
-        <MenuItem key={soc.id} value={soc}>
-          {soc.name}
-        </MenuItem>
-      ))
-    ) : (
-      <MDTypography variant="text" sx={{ color: "#2b85eb" }}>
-        No Courses !
-      </MDTypography>
-    );
   return (
     <Card sx={{ mt: "50px" }}>
       <MDBox
@@ -135,6 +152,7 @@ function AddDepartement({ closeAddModel }) {
           role="form"
           onSubmit={(event) => handleSubmit(event)}
         >
+          <MDBox display="flex"></MDBox>
           <MDBox mb={2}>
             <MDInput
               type="text"
@@ -143,63 +161,63 @@ function AddDepartement({ closeAddModel }) {
               fullWidth
               name="nom"
               onChange={(e) => handleChange(e)}
-              error={formErrors.course}
+              error={formErrors.coursename}
             />
-            <FormHelperText error>{formErrors.course}</FormHelperText>
+            <FormHelperText error>{formErrors.coursename}</FormHelperText>
           </MDBox>
 
-            <MDBox mb={2} ml={2} sx={{ width: "50%" }}>
-              <FormControl sx={{ width: "100%" }}>
-                <InputLabel id="demo-simple-select-label">
-                  Course Name
-                </InputLabel>
-                <Select
-                  name="societe"
-                  sx={{ height: 45 }}
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={societe}
-                  label="Age"
-                  onChange={(e) => handleSelectedSociete(e)}
-                  MenuProps={{
-                    PaperProps: {
-                      style: {
-                        maxHeight: 150,
-                      },
+          <MDBox mb={2}>
+            <FormControl sx={{ width: "100%" }}>
+              <InputLabel id="demo-simple-select-label">Company</InputLabel>
+              <Select
+                error={formErrors.company}
+                name="company"
+                sx={{ height: 45 }}
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={selectedCompany.name}
+                label="Age"
+                onChange={(e) => handleSelectedCompany(e)}
+                MenuProps={{
+                  PaperProps: {
+                    style: {
+                      maxHeight: 150,
                     },
-                  }}
-                  input={
-                    <OutlinedInput
-                      id="select-multiple-chip"
-                      label="Societe Name"
-                      error={formErrors.course}
-                    />
-                  }
-                >
-                  {societes_ToBe_Selected}
-                </Select>
-                <FormHelperText error>{formErrors.course}</FormHelperText>
-              </FormControl>
-            </MDBox>
-          <MDBox mt={4} mb={2} display="flex" justifyContent="center">
-            <MDButton
-              type="submit"
-              variant="gradient"
-              color="info"
-              sx={{ width: "30%", mr: "5px" }}
-            >
-              Submit
-            </MDButton>
-
-            <MDButton
-              type="reset"
-              variant="gradient"
-              color="dark"
-              sx={{ width: "30%", ml: "5px" }}
-            >
-              clear
-            </MDButton>
+                  },
+                }}
+                input={
+                  <OutlinedInput id="select-multiple-chip" label="Company" />
+                }
+              >
+                {companies.map((company) => (
+                  <MenuItem key={company.id} value={company}>
+                    {company.nom}
+                  </MenuItem>
+                ))}
+              </Select>
+              <FormHelperText error>{formErrors.company}</FormHelperText>
+            </FormControl>
           </MDBox>
+        </MDBox>
+
+        <MDBox mt={4} mb={2} display="flex" justifyContent="center">
+          <MDButton
+            type="submit"
+            variant="gradient"
+            color="info"
+            sx={{ width: "30%", mr: "5px" }}
+          >
+            Submit
+          </MDButton>
+
+          <MDButton
+            type="reset"
+            variant="gradient"
+            color="dark"
+            sx={{ width: "30%", ml: "5px" }}
+          >
+            clear
+          </MDButton>
         </MDBox>
       </MDBox>
     </Card>

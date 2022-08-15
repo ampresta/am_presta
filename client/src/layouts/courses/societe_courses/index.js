@@ -16,9 +16,6 @@ import DataTable from "examples/Tables/DataTable";
 // @mui icons
 import Icon from "@mui/material/Icon";
 
-//Add companies component
-import AddCompanies from "./add";
-
 // Hook
 import { useEffect, useState } from "react";
 
@@ -39,7 +36,7 @@ function Courses_am() {
     }
   }, []);
 
-  const { columns, rows, confirmation, rawData } = coursesTableData();
+  const { columns, rows, rawData } = coursesTableData();
 
   const [openCsvUploader, setOpenCsvUploader] = useState(false);
 
@@ -137,22 +134,6 @@ function Courses_am() {
                         &nbsp; Export
                       </MDButton>
                     </MDBox>
-                    <MDBox>
-                      <MDButton
-                        variant="gradient"
-                        color="info"
-                        size="small"
-                        onClick={() => {
-                          localStorage.setItem("uploadType", "courses");
-                          setOpenCsvUploader(true);
-                        }}
-                      >
-                        <Icon fontSize="big" color="light">
-                          upload
-                        </Icon>
-                        &nbsp; upload csv
-                      </MDButton>
-                    </MDBox>
                   </MDBox>
                 </Grid>
 
@@ -175,7 +156,6 @@ function Courses_am() {
           type={"addCourseTemplate"}
         />
       )}
-      {confirmation}
     </DashboardLayout>
   );
 }
