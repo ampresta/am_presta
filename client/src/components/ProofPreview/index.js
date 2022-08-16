@@ -11,8 +11,17 @@ import Icon from "@mui/material/Icon";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
-
-const ProofPreview = ({ closeProofModel, collab, file, downloadfile }) => {
+import axiosAuth from "services/authAxios";
+import { acceptProofRoute, baseURL } from "utils/APIRoutes";
+const ProofPreview = ({ closeProofModel, collab, file }) => {
+  const Accept = async (e) => {
+    const { data } = await axiosAuth.post(acceptProofRoute, {
+      id: e,
+    });
+    if (data.status) {
+      closeProofModel(false);
+    }
+  };
   return (
     <Card>
       <MDBox
@@ -51,19 +60,24 @@ const ProofPreview = ({ closeProofModel, collab, file, downloadfile }) => {
             <p>{file.name}</p>
             <p>{file.size}B</p>
           </MDBox>
-          <span
-            className="proof_preview_item_download"
-            onClick={() => downloadfile}
-          >
-            <Icon>download</Icon>
-            &nbsp; download
-          </span>
+          <a href={`${baseURL}/${file.path}`} download={file.name}>
+            <span
+              className="proof_preview_item_download"
+              // onClick={() => downloadfile}
+            >
+              <Icon>download</Icon>
+              &nbsp; download
+            </span>
+          </a>
         </MDBox>
         <MDBox mt={4} display="flex" justifyContent="center">
           <MDButton
             variant="gradient"
             color="success"
             sx={{ width: "30%", mr: "5px" }}
+            onClick={() => {
+              Accept(file.id);
+            }}
           >
             Accept
           </MDButton>

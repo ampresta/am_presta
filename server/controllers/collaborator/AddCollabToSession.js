@@ -37,9 +37,14 @@ module.exports = async (req, res) => {
         },
       ],
     });
-    console.log("\x1b[41mHHHHllllHHHHHHHHH\x1b[0m");
+    // console.log("\x1b[41mHHHHllllHHHHHHHHH\x1b[0m");
     console.log(sess.Cour.Provider.Quota[0].quota);
-    const collabo = await Collaborateur.findByPk(collab);
+    const collabo = await Collaborateur.findByPk(collab, {
+      where: {
+        id: collab,
+        SocieteId: req.societe,
+      },
+    });
     sess.addCollaborateur(collabo);
     sess.Cour.Provider.Quota[0].quota--;
     sess.Cour.Provider.Quota[0].save();
