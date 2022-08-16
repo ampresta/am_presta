@@ -29,10 +29,9 @@ import { useMaterialUIController, setDarkMode } from "context";
 import axios from "services/authAxios";
 
 import { setAccessToken } from "utils/accessToken";
-import { getAccessToken } from "utils/accessToken";
-import axiosAuth from "services/authAxios";
 import { useState } from "react";
 import React from "react";
+
 function App() {
   const [controller, dispatch] = useMaterialUIController();
 
@@ -47,6 +46,7 @@ function App() {
   useEffect(() => {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
+
     const getRefreshToken = async () => {
       const { data } = await axios.get(refreshRoute);
       if (data && data.accesstoken) {
@@ -123,13 +123,9 @@ function App() {
         </>
       )}
       <Routes>
-        {
-          // {getRoutes(routes)}
-        }
-
         {type ? getRoutes(Routing(type)) : getRoutes(Routing(""))}
 
-        <Route path="*" element={<Navigate to="/dashboard" />} />
+        <Route path="*" element={<Navigate to="/Error404" />} />
       </Routes>
     </ThemeProvider>
   );
