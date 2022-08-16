@@ -20,22 +20,16 @@ module.exports = async (req, res) => {
       include: [
         {
           model: Proof,
-          attributes: ["id"],
+          // attributes: ["id", "file"],
           as: "certifs",
           required: false,
-          where: {
-            status: true,
-          },
         },
 
         {
           model: Proof,
-          attributes: ["id"],
+          // attributes: ["id", "file"],
           required: false,
           as: "fincourse",
-          where: {
-            status: true,
-          },
         },
       ],
     },
