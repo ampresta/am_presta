@@ -48,6 +48,8 @@ function AddQuota({ openAddModel }) {
     getAllPartners();
   }, []);
 
+  // console.log(quota);
+
   useEffect(() => {
     const getAllPartners = async () => {
       const { data } = await axios.get(allPartnersRoute);
@@ -59,8 +61,6 @@ function AddQuota({ openAddModel }) {
     };
     getAllPartners();
   }, []);
-
-  console.log("All", providers);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
