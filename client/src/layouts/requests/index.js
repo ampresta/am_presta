@@ -15,7 +15,7 @@ import DataTable from "examples/Tables/DataTable";
 import { useMaterialUIController } from "context";
 
 // Data
-import sessionsTableData from "layouts/requests/data/requestsTableData";
+import sessionsTableData from "./data/requestsTableData";
 
 function Requests() {
   const { columns, rows, confirmation, sessions } = sessionsTableData();

@@ -22,7 +22,7 @@ export const topChallengesRoute = `${baseURL}/dashboard/topcourses`;
 // Companies
 export const registerRoute = `${baseURL}/register`;
 export const allCompaniesRoute = `${baseURL}/societe/browse`;
-export const userCompanyRoute = `${baseURL}/societe/uerSociete`;
+// export const userCompanyRoute = `${baseURL}/societe/uerSociete`;
 
 // Partners
 export const allPartnersRoute = `${baseURL}/provider/browse`;

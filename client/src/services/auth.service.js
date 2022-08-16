@@ -1,4 +1,3 @@
-import { userCompanyRoute } from "utils/APIRoutes";
 import { loginRoute } from "utils/APIRoutes";
 import axios from "./authAxios";
 const login = (username, password) => {

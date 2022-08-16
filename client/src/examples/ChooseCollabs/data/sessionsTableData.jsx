@@ -1,31 +1,32 @@
-// Material Dashboard 2 React components
+// @mui material components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
-import MDButton from "components/MDButton";
+import Checkbox from "@mui/material/Checkbox";
 
-// @mui icons
-import Icon from "@mui/material/Icon";
-
-//React hooks
+// React Hooks
 import { useState, useEffect } from "react";
-
-// Axios
-import axios from "services/authAxios";
+import { useNavigate } from "react-router-dom";
 
 // Api Endpoint
-import { baseURL, DeleteInstances, browseCollabsRoute } from "utils/APIRoutes";
+import axios from "services/authAxios";
 
-// ConfirmPoppup component
-import ConfirmPopup from "components/ConfirmPopup";
+// import APIRoutes
+import {
+  baseURL,
+  browseCollabsRoute,
+  AcceptRequestRoute,
+} from "utils/APIRoutes";
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController } from "context";
 
-export default function Data() {
+export default function Data(cours, collab) {
+  let navigate = useNavigate();
+
   const [allCollabs, setAllCollabs] = useState([]);
-  const [confirmModel, setConfirmModel] = useState(false);
-  const [tempPartnerId, setTempPartnerId] = useState(0);
+  const [checked, setChecked] = useState([]);
+  const [isChecked, setIsChecked] = useState(false);
 
   const [controller] = useMaterialUIController();
 
@@ -39,18 +40,7 @@ export default function Data() {
     getAllCollabs();
   }, [updater]);
 
-  const handleDelete = async (id) => {
-    const { data } = await axios.post(DeleteInstances, {
-      model: "Collaborateur",
-      id: id,
-    });
-    if (data.status) {
-      setAllCollabs(allCollabs.filter((course) => course.id !== id));
-      setConfirmModel(!confirmModel);
-    } else {
-      alert(data.msg);
-    }
-  };
+  console.log(allCollabs);
 
   const Company = ({ name, image }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
@@ -62,18 +52,25 @@ export default function Data() {
       </MDBox>
     </MDBox>
   );
+
   let collabs = {
     columns: [
       {
+        Header: "",
+        accessor: "check",
+        width: "3%",
+        align: "left",
+      },
+      {
         Header: "Profile",
         accessor: "author",
-        width: "5%",
+        width: "3%",
         align: "left",
       },
       {
         Header: "Full Name",
         accessor: "nom",
-        width: "10%",
+        width: "20%",
         align: "left",
       },
       {
@@ -86,33 +83,57 @@ export default function Data() {
         Header: "Number of Certifs",
         accessor: "certif",
         align: "center",
+        width: "15%",
+      },
+      {
+        Header: "Departmenet",
+        accessor: "departmenet",
+        align: "center",
         width: "30%",
       },
-      // {
-      //   Header: "Departmenet",
-      //   accessor: "departmenet",
-      //   align: "center",
-      //   width: "30%",
-      // },
-      { Header: "edit", accessor: "edit", align: "center", width: "3%" },
-      { Header: "delete", accessor: "delete", align: "center", width: "3%" },
     ],
 
     rows: [],
-    confirmation: confirmModel && (
-      <ConfirmPopup
-        title={"Are you sure you want to delete this provider ?"}
-        onConfirmPopup={() => setConfirmModel(!confirmModel)}
-        handleDetele={handleDelete}
-        Id_Item={tempPartnerId}
-      />
-    ),
-
-    rawData: allCollabs,
   };
-  try {
+
+  collabs.SubmitButton = async () => {
+    console.log(collab, checked);
+    const { data } = await axios.post(AcceptRequestRoute, {
+      session: checked,
+      collab: collab,
+      request: true,
+    });
+    console.log(data);
+    if (data.status) {
+      navigate("/sessions");
+    } else {
+      alert(data.msg);
+    }
+  };
+
+  if (allCollabs.length === 0 || !Array.isArray(allCollabs)) {
+    collabs.rows.push({ author: "No Collaborators Available" });
+  } else {
+    collabs.columns[0].Header = (
+      <Checkbox
+        onChange={(e) => {
+          setChecked(1);
+          setIsChecked(e.target.checked);
+        }}
+      ></Checkbox>
+    );
+
     allCollabs.map((collab) =>
       collabs.rows.push({
+        // console.log(s);
+        check: (
+          <Checkbox
+            onChange={(e) => {
+              setChecked(collab.id);
+              setIsChecked(e.target.checked);
+            }}
+          ></Checkbox>
+        ),
         author: <Company image={collab.image} />,
         nom: (
           <MDTypography variant="caption" color="text" fontWeight="medium">
@@ -129,29 +150,11 @@ export default function Data() {
             {collab.certifs_count}
           </MDTypography>
         ),
-        edit: (
-          <MDTypography variant="caption" color="text" fontWeight="medium">
-            <Icon fontSize="small">edit</Icon>
-          </MDTypography>
-        ),
-        delete: (
-          <MDButton
-            variant="text"
-            onClick={() => {
-              setConfirmModel(!confirmModel);
-              setTempPartnerId(collab.id);
-            }}
-          >
-            <MDTypography variant="caption" color="text" fontWeight="medium">
-              <Icon fontSize="small" color="primary">
-                delete
-              </Icon>
-            </MDTypography>
-          </MDButton>
-        ),
       })
     );
-  } catch (error) {}
+  }
+
+  collabs.isChecked = isChecked;
 
   return collabs;
 }

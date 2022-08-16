@@ -33,6 +33,7 @@ import { useMaterialUIController, setOpenProofModel } from "context";
 import { useParams } from "react-router-dom";
 
 import ProofPreview from "components/ProofPreview";
+import ChooseCollabs from "examples/ChooseCollabs";
 
 function Partners() {
   const { columns, rows } = sessionsDetailsTableData();
@@ -42,7 +43,10 @@ function Partners() {
   const [loading, setLoading] = useState(false);
 
   const [controller, dispatch] = useMaterialUIController();
-  const { openProofModel } = controller;
+
+  const [openAddModel, setOpenAddModel] = useState(false);
+
+  const { openProofModel, openRequestModel } = controller;
 
   let { id } = useParams();
 
@@ -82,6 +86,7 @@ function Partners() {
   return (
     <DashboardLayout>
       {loading && <DashboardNavbar titleio={graph.session.nom} />}
+      {/* {!openRequestModel && ( */}
       <MDBox pt={6} pb={1}>
         <Grid container spacing={2} rowSpacing={2}>
           {!openProofModel && (
@@ -119,8 +124,20 @@ function Partners() {
                   container
                   spacing={2}
                   display="flex"
-                  justifyContent="flex-end"
+                  justifyContent="space-between"
                 >
+                  <MDBox ml={3} pt={2} px={2} mt={3}>
+                    <MDButton
+                      variant="gradient"
+                      color="info"
+                      size="small"
+                      onClick={setOpenAddModel}
+                    >
+                      <Icon fontSize="big">add</Icon>
+                      &nbsp; add collab to session
+                    </MDButton>
+                  </MDBox>
+
                   <MDBox pt={2} pr={4} mt={3} display="flex">
                     <MDBox mr={2}>
                       <MDButton
@@ -217,6 +234,9 @@ function Partners() {
           </Grid>
         </Grid>
       </MDBox>
+      <ChooseCollabs />
+      {/* )} */}
+      {/* {openRequestModel && <Collabs />} */}
     </DashboardLayout>
   );
 }

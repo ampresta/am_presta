@@ -176,7 +176,7 @@ function CsvUploader({ closeUploadModel, DownloadTemplate, type }) {
   };
 
   return (
-    <MDBox pt={6} pb={1}>
+    <MDBox pt={6} pb={1}>           
       <Grid container spacing={6}>
         <Grid item xs={12}>
           <Card>
