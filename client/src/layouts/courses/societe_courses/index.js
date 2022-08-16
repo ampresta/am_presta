@@ -27,11 +27,12 @@ import { useNavigate } from "react-router-dom";
 //csv
 import Papa from "papaparse";
 import CsvUploader from "examples/CsvUploader";
+import { getAccessToken } from "utils/accessToken";
 
 function Courses_am() {
   const navigate = useNavigate();
   useEffect(() => {
-    if (!authService.getCurrentUser()) {
+    if (!getAccessToken()) {
       navigate("/login");
     }
   }, []);
@@ -86,7 +87,7 @@ function Courses_am() {
     document.body.removeChild(a);
   };
 
-  console.log("societe");
+  // console.log("societe");
 
   return (
     <DashboardLayout>

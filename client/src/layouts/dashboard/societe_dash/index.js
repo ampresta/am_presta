@@ -34,6 +34,7 @@ import axios from "services/authAxios";
 // Endpoints
 import { SocCardsRoute } from "utils/APIRoutes";
 import authService from "services/auth.service";
+import { getAccessToken } from "utils/accessToken";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -44,7 +45,7 @@ function Dashboard() {
   const [collaboratorsCount, setCollabsCount] = useState(0);
 
   useEffect(() => {
-    if (!authService.getCurrentUser()) {
+    if (!getAccessToken()) {
       navigate("/login");
     }
     const fetchCards = async (model) => {

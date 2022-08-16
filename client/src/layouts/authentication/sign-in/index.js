@@ -28,12 +28,13 @@ import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 import axios from "services/authAxios";
 import { loginRoute } from "utils/APIRoutes";
 import authService from "services/auth.service";
+import { getAccessToken } from "utils/accessToken";
 
 function Basic() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (authService.getCurrentUser()) {
+    if (getAccessToken() !== "") {
       navigate("/dahsboard");
     }
   }, []);

@@ -1,8 +1,7 @@
 import { useEffect } from "react";
-
+import { refreshRoute } from "utils/APIRoutes";
 // react-router components
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
-
 // @mui material components
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -24,12 +23,17 @@ import AmpLogo from "assets/images/amp-logo.png";
 import themeDark from "assets/theme-dark";
 
 // Material Dashboard 2 React routes
-import routes from "routes";
-
+import Routing from "routes";
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setDarkMode } from "context";
+import axios from "services/authAxios";
 
-export default function App() {
+import { setAccessToken } from "utils/accessToken";
+import { getAccessToken } from "utils/accessToken";
+import axiosAuth from "services/authAxios";
+import { useState } from "react";
+import React from "react";
+function App() {
   const [controller, dispatch] = useMaterialUIController();
 
   const { layout, sidenavColor, darkMode } = controller;
@@ -38,11 +42,20 @@ export default function App() {
 
   // Activate darkMode
   const handleDarkMode = () => setDarkMode(dispatch, !darkMode);
-
+  const [type, setType] = useState("");
   // Setting page scroll to 0 when changing the route
   useEffect(() => {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
+    const getRefreshToken = async () => {
+      const { data } = await axios.get(refreshRoute);
+      if (data && data.accesstoken) {
+        setAccessToken(data.accesstoken);
+        setType(data.type);
+        console.log(type);
+      }
+    };
+    getRefreshToken();
   }, [pathname]);
 
   useEffect(() => {}, [darkMode]);
@@ -101,14 +114,24 @@ export default function App() {
       <CssBaseline />
       {layout === "dashboard" && (
         <>
-          <Sidenav color={sidenavColor} brand={AmpLogo} routes={routes} />
+          <Sidenav
+            color={sidenavColor}
+            brand={AmpLogo}
+            routes={type ? Routing(type) : Routing("")}
+          />
           {darkModeToggle}
         </>
       )}
       <Routes>
-        {getRoutes(routes)}
+        {
+          // {getRoutes(routes)}
+        }
+
+        {type ? getRoutes(Routing(type)) : getRoutes(Routing(""))}
+
         <Route path="*" element={<Navigate to="/dashboard" />} />
       </Routes>
     </ThemeProvider>
   );
 }
+export default React.memo(App);
