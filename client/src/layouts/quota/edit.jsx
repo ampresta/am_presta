@@ -16,17 +16,16 @@ import { useState } from "react";
 import axios from "services/authAxios";
 
 import { useEffect } from "react";
-import { allPartnersRoute } from "utils/APIRoutes";
-import { AddQuotaRoute } from "utils/APIRoutes";
+import {
+  allPartnersRoute,
+  AddQuotaRoute,
+  AllQuotaRoute,
+} from "utils/APIRoutes";
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setUpdater } from "context";
 
 function AddQuota({ openAddModel }) {
-  const [formErrors, setFormErrors] = useState({
-    field: "",
-  });
-
   const [providers, setProviders] = useState([
     {
       id: "",
@@ -34,6 +33,7 @@ function AddQuota({ openAddModel }) {
       quota: "",
     },
   ]);
+  const [quota, setQuota] = useState(0);
 
   const [controller, dispatch] = useMaterialUIController();
 
@@ -41,22 +41,29 @@ function AddQuota({ openAddModel }) {
 
   useEffect(() => {
     const getAllPartners = async () => {
+      const { data } = await axios.post(AllQuotaRoute);
+      console.log("quota", data.quotas);
+      setQuota(data.quotas);
+    };
+    getAllPartners();
+  }, []);
+
+  useEffect(() => {
+    const getAllPartners = async () => {
       const { data } = await axios.get(allPartnersRoute);
-      console.log(data);
       let temp = [];
       data.map((provider) =>
-        temp.push({ id: provider.id, nom: provider.nom, quota: "" })
+        temp.push({ id: provider.id, nom: provider.nom, quota: quota })
       );
       setProviders(temp);
     };
     getAllPartners();
   }, []);
 
+  console.log("All", providers);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // setFormErrors(validate(course));
-
-    // if (Object.keys(validate(course)).length === 0) {
     const quotas = [];
     providers.map((provider) =>
       quotas.push({
@@ -82,15 +89,6 @@ function AddQuota({ openAddModel }) {
     values[index].quota = quota;
     setProviders(values);
   };
-
-  // const validate = (values) => {
-  //   const errors = {};
-  //   if (!values.field) {
-  //     errors.field = "This field is required !";
-  //   }
-
-  //   return errors;
-  // };
 
   return (
     <Card sx={{ mt: "50px" }}>
@@ -150,8 +148,8 @@ function AddQuota({ openAddModel }) {
                     variant="outlined"
                     fullWidth
                     name="quota"
+                    defaultValue={provider.quota.quota}
                     onChange={(event) => handleChange(index, event)}
-                    required={true}
                   />
                 </MDBox>
               </MDBox>

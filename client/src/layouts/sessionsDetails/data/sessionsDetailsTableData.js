@@ -16,7 +16,12 @@ import axios from "services/authAxios";
 // Api Endpoint
 import { baseURL, SessionGraph, SessionCollabRoute } from "utils/APIRoutes";
 
-import { useMaterialUIController, setOpenProofModel } from "context";
+import {
+  useMaterialUIController,
+  setOpenProofModel,
+  setcollabProofModel,
+  setfileProofModel,
+} from "context";
 
 // Material Dashboard 2 React contexts
 import { dateFormat } from "utils/Helper";
@@ -27,7 +32,7 @@ export default function Data() {
   const [allCollabs, setAllCollabs] = useState([]);
 
   const [controller, dispatch] = useMaterialUIController();
-  const { openProofModel } = controller;
+  const { openProofModel, fileProofModel } = controller;
 
   const { id } = useParams();
 
@@ -41,7 +46,37 @@ export default function Data() {
     };
     getCollab();
   }, []);
-
+  const handleProof = (e) => {
+    const rank = e.currentTarget.getAttribute("index");
+    const type = e.currentTarget.getAttribute("typex");
+    console.log(allCollabs[rank]);
+    const collab = allCollabs[rank];
+    setcollabProofModel(dispatch, `${collab.nom} ${collab.prenom}`);
+    if (type === "fincourse") {
+      const file = collab.Session_Collabs[0].fincourse;
+      // console.log(file);
+      const templ = {
+        id: file.id,
+        path: file.file,
+        name: file.name,
+        size: file.size,
+        type: file.mimetype,
+      };
+      setfileProofModel(dispatch, templ);
+    } else if (type === "certifs") {
+      // console.log(file);
+      const file = collab.Session_Collabs[0].certifs;
+      const templ = {
+        id: file.id,
+        path: file.file,
+        name: file.name,
+        size: file.size,
+        type: file.mimetype,
+      };
+      setfileProofModel(dispatch, templ);
+    }
+    setOpenProofModel(dispatch, !openProofModel);
+  };
   const Company = ({ image, name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDAvatar src={`${baseURL}/${image}`} name={name} size="sm" />
@@ -53,6 +88,52 @@ export default function Data() {
     </MDBox>
   );
 
+  const parse = (collab, index) => {
+    // <>
+    // console.log(collab);
+    if (
+      collab.Session_Collabs[0].certifs &&
+      collab.Session_Collabs[0].certifs.status
+    ) {
+      return <MDBadge badgeContent="Certified" color="success" size="md" />;
+    } else if (
+      collab.Session_Collabs[0].fincourse &&
+      collab.Session_Collabs[0].fincourse.status
+    ) {
+      return <MDBadge badgeContent="Finished" color="dark" size="md" />;
+    } else if (collab.Session_Collabs[0].certifs) {
+      return (
+        <MDButton size="small" variant="text" onClick={(e) => handleProof(e)}>
+          <MDBadge
+            typex="certifs"
+            badgeContent="Check Proof"
+            color="success"
+            size="md"
+          />
+        </MDButton>
+      );
+    } else if (collab.Session_Collabs[0].fincourse) {
+      return (
+        <MDButton
+          size="small"
+          variant="text"
+          onClick={(e) => handleProof(e)}
+          typex="fincourse"
+          index={index}
+        >
+          <MDBadge
+            type="fincourse"
+            badgeContent="Check Proof"
+            color="success"
+            size="md"
+            index={index}
+          />
+        </MDButton>
+      );
+    } else {
+      return <MDBadge badgeContent="Studying" color="note" size="md" />;
+    }
+  };
   let sessionsDetails = {
     columns: [
       {
@@ -80,7 +161,7 @@ export default function Data() {
     rawData: allCollabs,
   };
 
-  allCollabs.map((collab) =>
+  allCollabs.map((collab, index) =>
     sessionsDetails.rows.push({
       author: (
         <Company
@@ -93,25 +174,8 @@ export default function Data() {
           {dateFormat(collab.Session_Collabs[0].createdAt)}
         </MDTypography>
       ),
-      status: (
-        <>
-          {collab.Session_Collabs[0].certifs ? (
-            <MDBadge badgeContent="Certified" color="success" size="md" />
-          ) : collab.Session_Collabs[0].fincourse ? (
-            <MDBadge badgeContent="Finished" color="dark" size="md" />
-          ) : (
-            <MDButton
-              size="small"
-              variant="text"
-              onClick={() => setOpenProofModel(dispatch, !openProofModel)}
-            >
-              <MDBadge badgeContent="Check Proof" color="success" size="md" />
-            </MDButton>
-          )}{" "}
-        </>
-      ),
+      status: parse(collab, index),
     })
   );
-
   return sessionsDetails;
 }

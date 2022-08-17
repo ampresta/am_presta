@@ -43,10 +43,7 @@ function Partners() {
   const [loading, setLoading] = useState(false);
 
   const [controller, dispatch] = useMaterialUIController();
-
-  const [openAddModel, setOpenAddModel] = useState(false);
-
-  const { openProofModel, openRequestModel } = controller;
+  const { collabProofModel, fileProofModel, openProofModel } = controller;
 
   let { id } = useParams();
 
@@ -79,7 +76,7 @@ function Partners() {
   // await axios.post(addCollabsSessionRoute, { session: 1, collab: 27 });
   // };
 
-  const file = { name: "filename", size: "103", type: "file/png" };
+  // const file = { name: "filename", size: "103", type: "file/png" };
 
   return (
     <DashboardLayout>
@@ -168,8 +165,8 @@ function Partners() {
           {openProofModel && (
             <Grid item xs={12} md={7} lg={9}>
               <ProofPreview
-                collab="Saad Ennigro"
-                file={file}
+                collab={openProofModel && collabProofModel}
+                file={openProofModel && fileProofModel}
                 closeProofModel={() =>
                   setOpenProofModel(dispatch, !openProofModel)
                 }

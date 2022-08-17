@@ -7,6 +7,8 @@ import SignIn from "layouts/authentication/sign-in";
 import Logout from "layouts/authentication/logout";
 import Courses from "layouts/courses/societe_courses";
 import Collabs from "layouts/collabs/societe";
+import Error404 from "layouts/error404";
+
 // @mui icons
 import Icon from "@mui/material/Icon";
 
@@ -81,6 +83,13 @@ const routes = [
     icon: <Icon fontSize="small">lock</Icon>,
     route: "/logout",
     component: <Logout />,
+  },
+  {
+    name: "Error404",
+    key: "Error404",
+    icon: <Icon fontSize="small">error</Icon>,
+    route: "/Error404",
+    component: <Error404 />,
   },
 ];
 

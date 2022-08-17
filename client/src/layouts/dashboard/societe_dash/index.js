@@ -184,7 +184,7 @@ function Dashboard() {
                   <MDTypography variant="h6" color="white">
                     Best Collaborators
                   </MDTypography>
-                  <Link to={"/companies"}>
+                  <Link to={"/collaborators"}>
                     <MDTypography
                       sx={{ textDecoration: "underline" }}
                       fontSize={14}

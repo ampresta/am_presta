@@ -48,12 +48,17 @@ function reducer(state, action) {
     case "PROOFPREVIEW": {
       return { ...state, openProofModel: action.value };
     }
+    case "PROOFFILE": {
+      return { ...state, fileProofModel: action.value };
+    }
+    case "PROOFCOLLAB": {
+      return { ...state, collabProofModel: action.value };
+    }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
     }
   }
 }
-
 // Material Dashboard 2 React context provider
 function MaterialUIControllerProvider({ children }) {
   const initialState = {
@@ -69,6 +74,9 @@ function MaterialUIControllerProvider({ children }) {
     updater: false,
     openRequestModel: false,
     openProofModel: false,
+    fileProofModel: { name: "filenamjhjhe", size: "103", type: "file/png" },
+    collabProofModel: null,
+    loadingProofModel: false,
   };
 
   const [controller, dispatch] = useReducer(reducer, initialState);
@@ -123,6 +131,12 @@ const setOpenRequestModel = (dispatch, value) =>
 const setOpenProofModel = (dispatch, value) =>
   dispatch({ type: "PROOFPREVIEW", value });
 
+const setfileProofModel = (dispatch, value) =>
+  dispatch({ type: "PROOFFILE", value });
+
+const setcollabProofModel = (dispatch, value) =>
+  dispatch({ type: "PROOFCOLLAB", value });
+
 export {
   MaterialUIControllerProvider,
   useMaterialUIController,
@@ -138,4 +152,7 @@ export {
   setUpdater,
   setOpenRequestModel,
   setOpenProofModel,
+  setcollabProofModel,
+  setfileProofModel,
+  // setloadingProofModel,
 };

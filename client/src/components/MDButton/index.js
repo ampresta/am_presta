@@ -10,7 +10,20 @@ import MDButtonRoot from "components/MDButton/MDButtonRoot";
 import { useMaterialUIController } from "context";
 
 const MDButton = forwardRef(
-  ({ color, variant, size, circular, iconOnly, children, ...rest }, ref) => {
+  (
+    {
+      index,
+      typex,
+      color,
+      variant,
+      size,
+      circular,
+      iconOnly,
+      children,
+      ...rest
+    },
+    ref
+  ) => {
     const [controller] = useMaterialUIController();
     const { darkMode } = controller;
 
@@ -22,6 +35,8 @@ const MDButton = forwardRef(
         variant={variant === "gradient" ? "contained" : variant}
         size={size}
         ownerState={{ color, variant, size, circular, iconOnly, darkMode }}
+        typex={typex}
+        index={index}
       >
         {children}
       </MDButtonRoot>
