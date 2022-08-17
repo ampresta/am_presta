@@ -12,16 +12,16 @@ import { useNavigate } from "react-router-dom";
 import axios from "services/authAxios";
 
 // import APIRoutes
-import {
-  baseURL,
-  browseCollabsRoute,
-  AcceptRequestRoute,
-} from "utils/APIRoutes";
+import { baseURL, browseCollabsRoute } from "utils/APIRoutes";
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController } from "context";
+import { toggleArrayItem } from "utils/Helper";
+import { addCollabsSessionRoute } from "utils/APIRoutes";
 
-export default function Data(cours, collab) {
+export default function Data(session) {
+  console.log("session", session);
+
   let navigate = useNavigate();
 
   const [allCollabs, setAllCollabs] = useState([]);
@@ -96,19 +96,20 @@ export default function Data(cours, collab) {
     rows: [],
   };
 
-  collabs.SubmitButton = async () => {
-    console.log(collab, checked);
-    const { data } = await axios.post(AcceptRequestRoute, {
-      session: checked,
-      collab: collab,
-      request: true,
+  collabs.SubmitButton = () => {
+    checked.map(async (collab) => {
+      const { data } = await axios.post(addCollabsSessionRoute, {
+        session,
+        collab,
+      });
+      console.log(data);
+
+      // if (data.status) {
+      //   navigate("/sessions");
+      // } else {
+      //   alert(data.msg);
+      // }
     });
-    console.log(data);
-    if (data.status) {
-      navigate("/sessions");
-    } else {
-      alert(data.msg);
-    }
   };
 
   if (allCollabs.length === 0 || !Array.isArray(allCollabs)) {
@@ -117,20 +118,21 @@ export default function Data(cours, collab) {
     collabs.columns[0].Header = (
       <Checkbox
         onChange={(e) => {
-          setChecked(1);
-          setIsChecked(e.target.checked);
+          allCollabs.map((collab) =>
+            setChecked(toggleArrayItem(collab.id, checked))
+          );
+          checked.length === 0 ? setIsChecked(false) : setIsChecked(true);
         }}
       ></Checkbox>
     );
 
     allCollabs.map((collab) =>
       collabs.rows.push({
-        // console.log(s);
         check: (
           <Checkbox
             onChange={(e) => {
-              setChecked(collab.id);
-              setIsChecked(e.target.checked);
+              setChecked(toggleArrayItem(collab.id, checked));
+              checked.length === 0 ? setIsChecked(false) : setIsChecked(true);
             }}
           ></Checkbox>
         ),
@@ -155,6 +157,7 @@ export default function Data(cours, collab) {
   }
 
   collabs.isChecked = isChecked;
+  collabs.checked = checked;
 
   return collabs;
 }

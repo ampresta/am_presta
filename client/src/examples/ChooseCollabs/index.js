@@ -25,13 +25,10 @@ import { useMaterialUIController, setOpenRequestModel } from "context";
 import AddSession from "./add";
 import { useNavigate } from "react-router-dom";
 
-function ChooseCollabs({ cours, collab }) {
-  const { columns, rows, SubmitButton, isChecked } = sessionsTableData(
-    cours,
-    collab
-  );
+function ChooseCollabs({ session }) {
+  const { columns, rows, SubmitButton, isChecked } = sessionsTableData(session);
 
-  console.log("haaaaadi", isChecked);
+  console.log("isChecked", isChecked);
 
   const [openAddModel, setOpenAddModel] = useState(false);
 

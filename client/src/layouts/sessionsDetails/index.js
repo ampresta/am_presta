@@ -75,11 +75,9 @@ function Partners() {
     },
   };
 
-  const handleAdd = async () => {
-    await axios.post(addCollabsSessionRoute, { session: 1, collab: 27 });
-  };
-
-  console.log(openProofModel);
+  // const handleAdd = async () => {
+  // await axios.post(addCollabsSessionRoute, { session: 1, collab: 27 });
+  // };
 
   const file = { name: "filename", size: "103", type: "file/png" };
 
@@ -234,7 +232,7 @@ function Partners() {
           </Grid>
         </Grid>
       </MDBox>
-      <ChooseCollabs />
+      <ChooseCollabs session={id} />
       {/* )} */}
       {/* {openRequestModel && <Collabs />} */}
     </DashboardLayout>

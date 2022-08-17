@@ -1,11 +1,12 @@
 import axios from "axios";
+import { setAccessToken } from "utils/accessToken";
+import { getAccessToken } from "utils/accessToken";
 import { refreshRoute } from "utils/APIRoutes";
-import authService from "./auth.service";
-
+// import authService from "./auth.service";
 export const axiosAuth = axios.create();
 axiosAuth.interceptors.request.use(
   function (config) {
-    config.headers.authorization = `Bearer ${authService.getCurrentUser()}`;
+    config.headers.authorization = `Bearer ${getAccessToken()}`;
     config.withCredentials = true;
 
     return config;
@@ -24,8 +25,7 @@ axiosAuth.interceptors.response.use(
         error.config.reget = true;
         const { data } = await axiosAuth.get(refreshRoute);
         if (data.accesstoken) {
-          localStorage.removeItem("user");
-          localStorage.setItem("user", JSON.stringify(data));
+          setAccessToken(data.accesstoken);
           error.config.headers = {
             ...error.config.headers,
             authorization: `Bearer ${data.accessToken}`,

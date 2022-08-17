@@ -1,3 +1,5 @@
+import { setAccessToken } from "utils/accessToken";
+import { userCompanyRoute } from "utils/APIRoutes";
 import { loginRoute } from "utils/APIRoutes";
 import axios from "./authAxios";
 const login = (username, password) => {
@@ -8,8 +10,7 @@ const login = (username, password) => {
     })
     .then(async (response) => {
       if (response.data.accesstoken) {
-        localStorage.setItem("user", JSON.stringify(response.data));
-        console.log(response);
+        setAccessToken(response.data.accesstoken);
       }
 
       return response.data;
@@ -17,21 +18,12 @@ const login = (username, password) => {
 };
 
 const logout = () => {
-  localStorage.removeItem("user");
-};
-
-const getCurrentUser = () => {
-  try {
-    return JSON.parse(localStorage.getItem("user")).accesstoken;
-  } catch {
-    return false;
-  }
+  setAccessToken("");
 };
 
 const authService = {
   login,
   logout,
-  getCurrentUser,
 };
 
 export default authService;

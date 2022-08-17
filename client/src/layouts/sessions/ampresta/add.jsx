@@ -23,7 +23,8 @@ import axios from "services/authAxios";
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setUpdater } from "context";
 
-import { allCompanyCoursesRoute, addSessionsRoute } from "utils/APIRoutes";
+import { allCoursesRoute, addSessionsAdminRoute } from "utils/APIRoutes";
+import {allCompaniesRoute} from "utils/APIRoutes";
 
 function AddSession({ closeAddModel }) {
   const [formErrors, setFormErrors] = useState({
@@ -52,14 +53,35 @@ function AddSession({ closeAddModel }) {
     id: "",
   });
 
+  const [selectedCompany, setSelectedCompany] = useState({
+    nom: "",
+    id: "",
+  });
+
+  const [companies, setCompanies] = useState([
+    {
+      id: "",
+      nom: "",
+    },
+  ]);
+
   const [courses, setCourses] = useState([]);
 
   useEffect(() => {
+    const getAllData1 = async () => {
+      const { data } = await axios.get(allCompaniesRoute);
+      let temp = [];
+      data.msg.map((company) =>
+        temp.push({ id: company.id, nom: company.name })
+      );
+      setCompanies(temp);
+    };
+    getAllData1();
     const getAllData = async () => {
-      const { data } = await axios.get(allCompanyCoursesRoute);
+      const { data } = await axios.get(allCoursesRoute);
       console.log("jat l3rossa");
-      console.log(data.cours);
-      setCourses(data.cours);
+      console.log(data);
+      setCourses(data);
     };
     getAllData();
   }, []);
@@ -73,11 +95,12 @@ function AddSession({ closeAddModel }) {
     event.preventDefault();
     setFormErrors(validate(session));
     if (Object.keys(validate(session)).length === 0) {
-      const { data } = await axios.post(addSessionsRoute, {
+      const { data } = await axios.post(addSessionsAdminRoute, {
         nom,
         datedebut: dateDepart,
         datefin: dateFin,
         cours: course.id,
+	      soc:selectedCompany.id
       });
       if (data.status) {
         closeAddModel(false);
@@ -102,6 +125,11 @@ function AddSession({ closeAddModel }) {
     setSelectedCourse(course);
   };
 
+  const handleSelectedCompany = (event) => {
+    const company = event.target.value;
+    setSession((prev) => ({ ...prev, company }));
+    setSelectedCompany(company);
+  };
   const validate = (values) => {
     const errors = {};
     if (!values.nom) {
@@ -115,6 +143,9 @@ function AddSession({ closeAddModel }) {
     }
     if (!values.dateFin) {
       errors.dateFin = "End Date is required !";
+    }
+    if (!values.company) {
+      errors.company = "Company is required !";
     }
     return errors;
   };
@@ -249,6 +280,38 @@ function AddSession({ closeAddModel }) {
             </MDBox>
           </MDBox>
 
+          <MDBox mb={2}>
+            <FormControl sx={{ width: "100%" }}>
+              <InputLabel id="demo-simple-select-label">Company</InputLabel>
+              <Select
+                error={formErrors.company}
+                name="company"
+                sx={{ height: 45 }}
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={selectedCompany.name}
+                label="Age"
+                onChange={(e) => handleSelectedCompany(e)}
+                MenuProps={{
+                  PaperProps: {
+                    style: {
+                      maxHeight: 150,
+                    },
+                  },
+                }}
+                input={
+                  <OutlinedInput id="select-multiple-chip" label="Company" />
+                }
+              >
+                {companies.map((company) => (
+                  <MenuItem key={company.id} value={company}>
+                    {company.nom}
+                  </MenuItem>
+                ))}
+              </Select>
+              <FormHelperText error>{formErrors.company}</FormHelperText>
+            </FormControl>
+          </MDBox>
           <MDBox mt={4} mb={2} display="flex" justifyContent="center">
             <MDButton
               type="submit"

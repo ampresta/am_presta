@@ -25,6 +25,7 @@ module.exports = async (req, res) => {
                   model: Quota,
                   required: true,
                   where: {
+                    SocieteId: req.societe,
                     quota: {
                       [Op.gt]: 0,
                     },
@@ -36,10 +37,12 @@ module.exports = async (req, res) => {
         },
       ],
     });
+    console.log("\x1b[41mHHHHllllHHHHHHHHH\x1b[0m");
+    console.log(sess.Cour.Provider.Quota[0].quota);
     const collabo = await Collaborateur.findByPk(collab);
     sess.addCollaborateur(collabo);
-    session.Cours.Provider.Quota.quota = session.Cours.Provider.Quota.quota - 1;
-    sess.save();
+    sess.Cour.Provider.Quota[0].quota--;
+    sess.Cour.Provider.Quota[0].save();
     if (request) {
       Request.destroy({
         where: {
@@ -51,6 +54,7 @@ module.exports = async (req, res) => {
 
     return res.send({ status: true, msg: "Collab Added" });
   } catch (err) {
+    console.log(err);
     return res.send({ status: false, msg: "Check your quota" });
   }
 };

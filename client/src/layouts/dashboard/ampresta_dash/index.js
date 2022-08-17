@@ -34,6 +34,7 @@ import axios from "services/authAxios";
 // Endpoints
 import { amCardsRoute } from "utils/APIRoutes";
 import authService from "services/auth.service";
+import { getAccessToken } from "utils/accessToken";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -45,7 +46,7 @@ function Dashboard() {
   const [companiesCount, setCompaniesCount] = useState(0);
 
   useEffect(() => {
-    if (!authService.getCurrentUser()) {
+    if (!getAccessToken()) {
       console.log("LOGIN");
       navigate("/login");
     }

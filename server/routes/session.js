@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const addSession = require("../controllers/session/addSession");
+const addSessionAdmin = require("../controllers/session/addSessionAdmin");
 const browseSession = require("../controllers/session/browseSession");
 const browseSessionAdmin = require("../controllers/session/browseSessionAdmin");
 const browseSessionSoc = require("../controllers/session/browseSessionSoc");
@@ -12,6 +13,7 @@ const signedin = require("../middlewares/signedin");
 // router.use(signedin);
 // ampresta
 router.get("/browseam", browseSessionAdmin);
+router.post("/addam", addSessionAdmin);
 //soc
 router.use(checkSociete);
 router.post("/browsesoc", browseSessionSoc);
