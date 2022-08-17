@@ -126,7 +126,7 @@ function Partners() {
                       variant="gradient"
                       color="info"
                       size="small"
-                      onClick={setOpenAddModel}
+                      // onClick={setOpenAddModel}
                     >
                       <Icon fontSize="big">add</Icon>
                       &nbsp; add collab to session
