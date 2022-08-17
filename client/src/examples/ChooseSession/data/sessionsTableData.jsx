@@ -91,7 +91,7 @@ export default function Data(cours, collab) {
     }
   };
 
-  if (allSessions.length === 0) {
+  if (allSessions.length === 0 || !Array.isArray(allSessions)) {
     sessions.rows.push({ author: "No Sessions Available" });
   } else {
     allSessions.map((session) =>

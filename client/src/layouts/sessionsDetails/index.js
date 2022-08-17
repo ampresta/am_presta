@@ -33,6 +33,7 @@ import { useMaterialUIController, setOpenProofModel } from "context";
 import { useParams } from "react-router-dom";
 
 import ProofPreview from "components/ProofPreview";
+import ChooseCollabs from "examples/ChooseCollabs";
 
 function Partners() {
   const { columns, rows } = sessionsDetailsTableData();
@@ -71,17 +72,16 @@ function Partners() {
     },
   };
 
-  const handleAdd = async () => {
-    await axios.post(addCollabsSessionRoute, { session: 1, collab: 27 });
-  };
-
-  // console.log(openProofModel);
+  // const handleAdd = async () => {
+  // await axios.post(addCollabsSessionRoute, { session: 1, collab: 27 });
+  // };
 
   // const file = { name: "filename", size: "103", type: "file/png" };
 
   return (
     <DashboardLayout>
       {loading && <DashboardNavbar titleio={graph.session.nom} />}
+      {/* {!openRequestModel && ( */}
       <MDBox pt={6} pb={1}>
         <Grid container spacing={2} rowSpacing={2}>
           {!openProofModel && (
@@ -119,8 +119,20 @@ function Partners() {
                   container
                   spacing={2}
                   display="flex"
-                  justifyContent="flex-end"
+                  justifyContent="space-between"
                 >
+                  <MDBox ml={3} pt={2} px={2} mt={3}>
+                    <MDButton
+                      variant="gradient"
+                      color="info"
+                      size="small"
+                      // onClick={setOpenAddModel}
+                    >
+                      <Icon fontSize="big">add</Icon>
+                      &nbsp; add collab to session
+                    </MDButton>
+                  </MDBox>
+
                   <MDBox pt={2} pr={4} mt={3} display="flex">
                     <MDBox mr={2}>
                       <MDButton
@@ -217,6 +229,9 @@ function Partners() {
           </Grid>
         </Grid>
       </MDBox>
+      <ChooseCollabs session={id} />
+      {/* )} */}
+      {/* {openRequestModel && <Collabs />} */}
     </DashboardLayout>
   );
 }
