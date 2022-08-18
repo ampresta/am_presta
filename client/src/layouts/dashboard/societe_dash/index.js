@@ -33,7 +33,6 @@ import axios from "services/authAxios";
 
 // Endpoints
 import { SocCardsRoute } from "utils/APIRoutes";
-import authService from "services/auth.service";
 import { getAccessToken } from "utils/accessToken";
 
 function Dashboard() {
