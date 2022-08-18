@@ -50,6 +50,8 @@ function Partners() {
   useEffect(() => {
     const getGraph = async () => {
       const { data } = await axios.post(SessionGraph, { sess: id });
+      console.log("graph");
+      console.log(data);
       setGraph(data);
       setLoading(true);
     };
@@ -61,12 +63,12 @@ function Partners() {
     datasets: {
       data: [
         loading ? graph.session.certifs_count : 0,
-        loading ? graph.session.fincourse_count : 0,
+        loading
+          ? graph.session.fincourse_count - graph.session.certifs_count
+          : 0,
 
         loading
-          ? graph.session.collab_count -
-            graph.session.fincourse_count -
-            graph.session.certifs_count
+          ? graph.session.collab_count - graph.session.fincourse_count
           : 0,
       ],
     },

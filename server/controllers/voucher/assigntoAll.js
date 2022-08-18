@@ -1,36 +1,65 @@
 const { Op } = require("sequelize");
-
 const db = require("../../config/database");
-const { Session_Collab, Voucher } = db.models;
+const { Session_Collab, Voucher, Proof, Session, Cours } = db.models;
 module.exports = async (req, res) => {
   const { id } = req.body;
   if (!id) {
     return res.sendStatus(403);
   }
   try {
-    const sess_collab = await Session_Collab.findByPk(id, {
+    const sess_collab = await Session_Collab.findAll({
       where: {
         SocieteId: req.societe,
+        SessionId: id,
       },
-      include: {
-        model: Proof,
-        as: "fincourse",
-        where: {
-          status: true,
+      include: [
+        {
+          model: Proof,
+          as: "fincourse",
+          where: {
+            status: true,
+          },
         },
-      },
+        {
+          model: Session,
+          required: true,
+          attributes: ["id"],
+          include: {
+            model: Cours,
+            required: true,
+            attributes: ["ProviderId"],
+          },
+        },
+      ],
     });
+    if (!sess_collab) {
+      return res.send({
+        status: false,
+        msg: "User doesn't exist or didn't complete this course",
+      });
+    }
+    console.log("\x1b[46mLOG\x1b[0m");
+    console.log(sess_collab);
     const v = await Voucher.findOne({
       where: {
-        Session_CollabId: {
+        SessionCollabId: {
           [Op.is]: null,
         },
         SocieteId: req.societe,
+        ProviderId: sess_collab.Session.Cour.ProviderId,
       },
     });
-    v.Session_CollabId = sess_collab.id;
+    if (!v) {
+      return res.send({
+        status: false,
+        msg: "No more Vouchers",
+      });
+    }
+    v.SessionCollabId = sess_collab.id;
+    await v.save();
     return res.send({ status: true, msg: "Done" });
   } catch (err) {
+    console.log("\x1b[46m\x1b[41mERROR\x1b[0m");
     console.log(err);
     return res.send({ status: false });
   }
