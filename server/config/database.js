@@ -17,6 +17,7 @@ sequelize.query("CREATE EXTENSION IF NOT EXISTS pg_trgm", { raw: true });
 // initialize db
 models = [
   require("../models/Request"),
+  require("../models/Voucher"),
   require("../models/Challenge"),
   require("../models/Proofs"),
   require("../models/Challenge_collab"),

@@ -1,4 +1,5 @@
 const Sequelize = require("sequelize");
+const { fields } = require("./Collaborateur");
 
 const Session_Collab = (db) => {
   db.define(
@@ -10,16 +11,22 @@ const Session_Collab = (db) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      score: {
-        type: Sequelize.INTEGER,
-      },
       status: {
         type: Sequelize.INTEGER,
         allowNull: false,
         defaultValue: 0,
       },
     },
-    { Sequelize, paranoid: true }
+    {
+      Sequelize,
+      paranoid: true,
+      indexes: [
+        {
+          unique: true,
+          fields: ["id"],
+        },
+      ],
+    }
   );
 };
 module.exports = Session_Collab;
