@@ -18,6 +18,7 @@ import { baseURL, browseCollabsRoute } from "utils/APIRoutes";
 import { useMaterialUIController } from "context";
 import { toggleArrayItem } from "utils/Helper";
 import { addCollabsSessionRoute } from "utils/APIRoutes";
+import { browseCollabsOutOfSessionRoute } from "utils/APIRoutes";
 
 export default function Data(session) {
   console.log("session", session);
@@ -34,7 +35,7 @@ export default function Data(session) {
 
   useEffect(() => {
     const getAllCollabs = async () => {
-      const { data } = await axios.get(browseCollabsRoute);
+      const { data } = await axios.get(browseCollabsOutOfSessionRoute);
       setAllCollabs((prev) => data);
     };
     getAllCollabs();
@@ -114,17 +115,18 @@ export default function Data(session) {
 
   if (allCollabs.length === 0 || !Array.isArray(allCollabs)) {
     collabs.rows.push({ author: "No Collaborators Available" });
-  } else {
-    collabs.columns[0].Header = (
-      <Checkbox
-        onChange={(e) => {
-          allCollabs.map((collab) =>
-            setChecked(toggleArrayItem(collab.id, checked))
-          );
-          checked.length === 0 ? setIsChecked(false) : setIsChecked(true);
-        }}
-      ></Checkbox>
-    );
+  }
+  else {
+    // collabs.columns[0].Header = (
+    //   <Checkbox
+    //     onChange={(e) => {
+    //       allCollabs.map((collab) =>
+    //         setChecked(toggleArrayItem(collab.id, checked))
+    //       );
+    //       checked.length === 0 ? setIsChecked(false) : setIsChecked(true);
+    //     }}
+    //   ></Checkbox>
+    // );
 
     allCollabs.map((collab) =>
       collabs.rows.push({
