@@ -1,6 +1,7 @@
-const { Op } = require("sequelize/types");
-const Session_Collab = require("../../models/Session_Collab");
+const { Op } = require("sequelize");
 
+const db = require("../../config/database");
+const { Session_Collab, Voucher } = db.models;
 module.exports = async (req, res) => {
   const { id } = req.body;
   if (!id) {
@@ -19,7 +20,7 @@ module.exports = async (req, res) => {
         },
       },
     });
-    const v = await Voucher.finOne({
+    const v = await Voucher.findOne({
       where: {
         Session_CollabId: {
           [Op.is]: null,

@@ -1,7 +1,9 @@
 const { Router } = require("express");
+const addVoucher = require("../controllers/voucher/addVoucher");
 const assignToCollab = require("../controllers/voucher/assignToCollab");
 const checkSociete = require("../middlewares/checkSociete");
 const router = Router();
+router.post("/add", addVoucher);
 router.use(checkSociete);
 router.post("/assign", assignToCollab);
 router.post("/assignall");

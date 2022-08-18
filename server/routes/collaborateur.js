@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const AddCollabOutOfSession = require("../controllers/collaborator/AddCollabOutOfSession");
 const AddCollabToSession = require("../controllers/collaborator/AddCollabToSession");
 const addManyCollabs = require("../controllers/collaborator/addManyCollabs");
 const browseCollabs = require("../controllers/collaborator/browseCollabs");
@@ -20,4 +21,5 @@ router.post("/addsession", AddCollabToSession);
 router.post("/finishsession", FinishCollabSession);
 router.use("/sendrequest", checkCollaborateur);
 router.post("/sendrequest", RequestCours);
+router.post("/browseout", AddCollabOutOfSession);
 module.exports = router;

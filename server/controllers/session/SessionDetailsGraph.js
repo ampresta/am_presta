@@ -42,6 +42,9 @@ module.exports = async (req, res) => {
           },
           {
             model: Collaborateur,
+            where: {
+              SocieteId: req.societe,
+            },
             attributes: [],
           },
         ],

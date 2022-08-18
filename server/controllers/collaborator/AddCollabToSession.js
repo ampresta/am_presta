@@ -37,14 +37,18 @@ module.exports = async (req, res) => {
         },
       ],
     });
-    // console.log("\x1b[41mHHHHllllHHHHHHHHH\x1b[0m");
-    console.log(sess.Cour.Provider.Quota[0].quota);
-    const collabo = await Collaborateur.findByPk(collab, {
+    const collabo = await Collaborateur.findOne({
       where: {
         id: collab,
         SocieteId: req.societe,
       },
     });
+    if (!collabo) {
+      return res.send({
+        status: false,
+        msg: "Collab Doesn't exist in your company",
+      });
+    }
     sess.addCollaborateur(collabo);
     sess.Cour.Provider.Quota[0].quota--;
     sess.Cour.Provider.Quota[0].save();

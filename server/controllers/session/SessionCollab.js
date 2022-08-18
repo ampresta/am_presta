@@ -12,7 +12,7 @@ module.exports = async (req, res) => {
     },
     include: {
       model: Session_Collab,
-      attributes: ["id", "score", "createdAt"],
+      attributes: ["id", "createdAt"],
 
       where: {
         SessionId: sess,
@@ -36,7 +36,6 @@ module.exports = async (req, res) => {
     group: [
       "Collaborateur.id",
       "Session_Collabs.id",
-      "Session_Collabs.score",
       "Session_Collabs->certifs.id",
       "Session_Collabs->fincourse.id",
       "Session_Collabs.createdAt",
