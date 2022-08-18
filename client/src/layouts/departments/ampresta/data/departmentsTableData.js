@@ -101,6 +101,7 @@ export default function Data() {
     confirmation: confirmModel && (
       <ConfirmPopup
         title={"Are you sure you want to delete this department ?"}
+        open={confirmModel}
         onConfirmPopup={() => setConfirmModel(!confirmModel)}
         handleDetele={handleDelete}
         Id_Item={tempDepartmentId}

@@ -29,8 +29,7 @@ import { useMaterialUIController, setDarkMode } from "context";
 import axios from "services/authAxios";
 
 import { setAccessToken } from "utils/accessToken";
-import { useState } from "react";
-import React from "react";
+import React, { useState } from "react";
 
 function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -39,9 +38,8 @@ function App() {
 
   const { pathname } = useLocation();
 
-  // Activate darkMode
-  const handleDarkMode = () => setDarkMode(dispatch, !darkMode);
   const [type, setType] = useState("");
+
   // Setting page scroll to 0 when changing the route
   useEffect(() => {
     document.documentElement.scrollTop = 0;
@@ -52,7 +50,7 @@ function App() {
       if (data && data.accesstoken) {
         setAccessToken(data.accesstoken);
         setType(data.type);
-        console.log(type);
+        console.log("type", type);
       }
     };
     getRefreshToken();
@@ -102,7 +100,7 @@ function App() {
       <Icon fontSize="small">light_mode</Icon>
       <Switch
         checked={darkMode}
-        onChange={handleDarkMode}
+        onChange={() => setDarkMode(dispatch, !darkMode)}
         sx={{ transform: "rotate(90deg)", m: "8px" }}
       />
       <Icon fontSize="small">dark_mode</Icon>
@@ -124,9 +122,7 @@ function App() {
       )}
       <Routes>
         {type ? getRoutes(Routing(type)) : getRoutes(Routing(""))}
-        {
-          // {<Route path="*" element={<Navigate to="/Error404" />} />}
-        }
+        {<Route path="*" element={<Navigate to="/dashboard" />} />}
       </Routes>
     </ThemeProvider>
   );

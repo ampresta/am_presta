@@ -164,16 +164,16 @@ function Basic() {
             </MDBox>
             <MDBox mt={3} mb={1} textAlign="center">
               <MDTypography variant="button" color="text">
-                Don&apos;t have an account?{" "}
+                Don't have an account?{" "}
                 <MDTypography
                   component={Link}
-                  to="/register"
+                  to="/"
                   variant="button"
                   color="info"
                   fontWeight="medium"
                   textGradient
                 >
-                  Sign up
+                  Contact Ampresta
                 </MDTypography>
               </MDTypography>
             </MDBox>
