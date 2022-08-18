@@ -8,6 +8,7 @@ import Logout from "layouts/authentication/logout";
 import Courses from "layouts/courses/societe_courses";
 import Collabs from "layouts/collabs/societe";
 import Error404 from "layouts/error404";
+import CatalogueCourses from "layouts/courses catalogue";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -90,6 +91,14 @@ const routes = [
     icon: <Icon fontSize="small">error</Icon>,
     route: "/Error404",
     component: <Error404 />,
+  },
+  {
+    type: "collapse",
+    name: "Catalogue",
+    key: "catalogue",
+    icon: <Icon fontSize="small">apps</Icon>,
+    route: "/catalogue",
+    component: <CatalogueCourses />,
   },
 ];
 
