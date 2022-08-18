@@ -96,22 +96,23 @@ export default function Data() {
       collab.Session_Collabs[0].certifs.status
     ) {
       return <MDBadge badgeContent="Certified" color="success" size="md" />;
+    } else if (collab.Session_Collabs[0].certifs) {
+      return (
+        <MDButton
+          size="small"
+          variant="text"
+          onClick={(e) => handleProof(e)}
+          typex="certifs"
+          index={index}
+        >
+          <MDBadge badgeContent="Check Proof" color="success" size="md" />
+        </MDButton>
+      );
     } else if (
       collab.Session_Collabs[0].fincourse &&
       collab.Session_Collabs[0].fincourse.status
     ) {
       return <MDBadge badgeContent="Finished" color="dark" size="md" />;
-    } else if (collab.Session_Collabs[0].certifs) {
-      return (
-        <MDButton size="small" variant="text" onClick={(e) => handleProof(e)}>
-          <MDBadge
-            typex="certifs"
-            badgeContent="Check Proof"
-            color="success"
-            size="md"
-          />
-        </MDButton>
-      );
     } else if (collab.Session_Collabs[0].fincourse) {
       return (
         <MDButton

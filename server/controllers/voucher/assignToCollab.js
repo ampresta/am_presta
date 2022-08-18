@@ -8,8 +8,9 @@ module.exports = async (req, res) => {
   }
   try {
     console.log("\x1b[46mLOG\x1b[0m");
-    const sess_collab = await Session_Collab.findByPk(id, {
+    const sess_collab = await Session_Collab.findOne({
       where: {
+        id: id,
         SocieteId: req.societe,
       },
       include: [
@@ -49,9 +50,12 @@ module.exports = async (req, res) => {
         ProviderId: sess_collab.Session.Cour.ProviderId,
       },
     });
-
-    console.log("\x1b[46mLOG\x1b[0m");
-    console.log(v);
+    if (!v) {
+      return res.send({
+        status: false,
+        msg: "No more Vouchers",
+      });
+    }
     v.SessionCollabId = sess_collab.id;
     await v.save();
     return res.send({ status: true, msg: "Done" });
