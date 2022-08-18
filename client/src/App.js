@@ -124,8 +124,9 @@ function App() {
       )}
       <Routes>
         {type ? getRoutes(Routing(type)) : getRoutes(Routing(""))}
-
-        <Route path="*" element={<Navigate to="/Error404" />} />
+        {
+          // {<Route path="*" element={<Navigate to="/Error404" />} />}
+        }
       </Routes>
     </ThemeProvider>
   );

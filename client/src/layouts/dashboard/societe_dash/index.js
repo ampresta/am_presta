@@ -45,8 +45,8 @@ function Dashboard() {
   const [collaboratorsCount, setCollabsCount] = useState(0);
 
   useEffect(() => {
-    if (!getAccessToken()) {
-      navigate("/login");
+    if (getAccessToken() === "") {
+      // navigate("/login");
     }
     const fetchCards = async (model) => {
       const { data } = await axios.post(SocCardsRoute, { model });

@@ -32,6 +32,7 @@ import { getAccessToken } from "utils/accessToken";
 function Courses_am() {
   const navigate = useNavigate();
   useEffect(() => {
+    console.log(getAccessToken());
     if (getAccessToken() === "") {
       navigate("/login");
     }
