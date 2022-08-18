@@ -71,6 +71,5 @@ export const browseCollabsRoute = `${baseURL}/collab/browse`;
 export const browseCollabsOutOfSessionRoute = `${baseURL}/collab/browseout`;
 export const browseCollabsAdminRoute = `${baseURL}/collab/browseadmin`;
 export const addCollabsSessionRoute = `${baseURL}/collab/addsession`;
-export const browseCollabsOutOfSessionRoute = `${baseURL}/collab/browseout`;
 // proofs
 export const acceptProofRoute = `${baseURL}/proof/accept`;

@@ -12,17 +12,17 @@ import { useNavigate } from "react-router-dom";
 import axios from "services/authAxios";
 
 // import APIRoutes
-import { baseURL, browseCollabsRoute } from "utils/APIRoutes";
+import {
+  baseURL,
+  browseCollabsOutOfSessionRoute,
+  addCollabsSessionRoute,
+} from "utils/APIRoutes";
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController } from "context";
 import { toggleArrayItem } from "utils/Helper";
-import { addCollabsSessionRoute } from "utils/APIRoutes";
-import { browseCollabsOutOfSessionRoute } from "utils/APIRoutes";
 
 export default function Data(session) {
-  console.log("session", session);
-
   let navigate = useNavigate();
 
   const [allCollabs, setAllCollabs] = useState([]);
@@ -35,13 +35,14 @@ export default function Data(session) {
 
   useEffect(() => {
     const getAllCollabs = async () => {
-      const { data } = await axios.get(browseCollabsOutOfSessionRoute);
-      setAllCollabs((prev) => data);
+      const { data } = await axios.post(browseCollabsOutOfSessionRoute, {
+        sess: session,
+      });
+      // console.log(data.collabs);
+      setAllCollabs((prev) => data.collabs);
     };
     getAllCollabs();
   }, [updater]);
-
-  console.log(allCollabs);
 
   const Company = ({ name, image }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
@@ -103,20 +104,19 @@ export default function Data(session) {
         session,
         collab,
       });
-      console.log(data);
 
-      // if (data.status) {
-      //   navigate("/sessions");
-      // } else {
-      //   alert(data.msg);
-      // }
+      if (data.status) {
+        console.log("OKKKKKKKKKK");
+        window.location.reload();
+      } else {
+        alert(data.msg);
+      }
     });
   };
 
   if (allCollabs.length === 0 || !Array.isArray(allCollabs)) {
     collabs.rows.push({ author: "No Collaborators Available" });
-  }
-  else {
+  } else {
     // collabs.columns[0].Header = (
     //   <Checkbox
     //     onChange={(e) => {
