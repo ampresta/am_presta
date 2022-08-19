@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 // @mui material components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
@@ -6,7 +7,6 @@ import Checkbox from "@mui/material/Checkbox";
 
 // React Hooks
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 
 // Api Endpoint
 import axios from "services/authAxios";
@@ -19,18 +19,15 @@ import {
 } from "utils/APIRoutes";
 
 // Material Dashboard 2 React contexts
-import { useMaterialUIController } from "context";
+import { useMaterialUIController, setUpdater } from "context";
 import { toggleArrayItem } from "utils/Helper";
 
 export default function Data(session) {
-  let navigate = useNavigate();
-
   const [allCollabs, setAllCollabs] = useState([]);
   const [checked, setChecked] = useState([]);
   const [isChecked, setIsChecked] = useState(false);
 
-  const [controller] = useMaterialUIController();
-
+  const [controller, dispatch] = useMaterialUIController();
   const { updater } = controller;
 
   useEffect(() => {
@@ -38,7 +35,7 @@ export default function Data(session) {
       const { data } = await axios.post(browseCollabsOutOfSessionRoute, {
         sess: session,
       });
-      // console.log(data.collabs);
+      console.log(data.collabs);
       setAllCollabs((prev) => data.collabs);
     };
     getAllCollabs();
@@ -60,38 +57,20 @@ export default function Data(session) {
       {
         Header: "",
         accessor: "check",
-        width: "3%",
+        width: "2%",
         align: "left",
       },
       {
         Header: "Profile",
         accessor: "author",
-        width: "3%",
+        width: "2%",
         align: "left",
       },
       {
         Header: "Full Name",
-        accessor: "nom",
+        accessor: "fullName",
         width: "20%",
         align: "left",
-      },
-      {
-        Header: "Number of Sessions",
-        accessor: "session",
-        align: "center",
-        width: "15%",
-      },
-      {
-        Header: "Number of Certifs",
-        accessor: "certif",
-        align: "center",
-        width: "15%",
-      },
-      {
-        Header: "Departmenet",
-        accessor: "departmenet",
-        align: "center",
-        width: "30%",
       },
     ],
 
@@ -107,7 +86,7 @@ export default function Data(session) {
 
       if (data.status) {
         console.log("OKKKKKKKKKK");
-        window.location.reload();
+        setUpdater(dispatch, !updater);
       } else {
         alert(data.msg);
       }
@@ -139,19 +118,9 @@ export default function Data(session) {
           ></Checkbox>
         ),
         author: <Company image={collab.image} />,
-        nom: (
+        fullName: (
           <MDTypography variant="caption" color="text" fontWeight="medium">
             {`${collab.nom} ${collab.prenom}`}
-          </MDTypography>
-        ),
-        session: (
-          <MDTypography variant="caption" color="text" fontWeight="medium">
-            {collab.session_count}
-          </MDTypography>
-        ),
-        certif: (
-          <MDTypography variant="caption" color="text" fontWeight="medium">
-            {collab.certifs_count}
           </MDTypography>
         ),
       })

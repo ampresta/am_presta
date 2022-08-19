@@ -23,18 +23,20 @@ import { useMaterialUIController, setOpenRequestModel } from "context";
 
 //Add companies component
 import AddSession from "./add";
-import { useNavigate } from "react-router-dom";
 
-function ChooseCollabs({ session }) {
-  const { columns, rows, SubmitButton, isChecked } = sessionsTableData(session);
+function Sessions({ cours, collab }) {
+  const { columns, rows, SubmitButton, isChecked } = sessionsTableData(
+    cours,
+    collab
+  );
 
-  console.log("isChecked", isChecked);
+  console.log("haaaaadi", isChecked);
 
   const [openAddModel, setOpenAddModel] = useState(false);
 
   const [controller, dispatch] = useMaterialUIController();
   const { openRequestModel } = controller;
-  const navigate = useNavigate();
+
   return (
     <>
       {!openAddModel && (
@@ -56,7 +58,7 @@ function ChooseCollabs({ session }) {
                   mb={1}
                 >
                   <MDTypography variant="h6" color="white">
-                    Select Collaborators
+                    Choose a Session
                   </MDTypography>
 
                   <MDButton
@@ -83,10 +85,10 @@ function ChooseCollabs({ session }) {
                       variant="gradient"
                       color="info"
                       size="small"
-                      onClick={() => navigate("/collaborators")}
+                      onClick={setOpenAddModel}
                     >
                       <Icon fontSize="big">add</Icon>
-                      add collabs
+                      add Session
                     </MDButton>
                   </MDBox>
 
@@ -125,4 +127,4 @@ function ChooseCollabs({ session }) {
   );
 }
 
-export default ChooseCollabs;
+export default Sessions;

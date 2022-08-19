@@ -16,6 +16,7 @@ import ExampleCard from "examples/Cards/ExampleCard";
 
 // Data
 import data from "../data/CoursesCatalogueData";
+import MDBadge from "components/MDBadge";
 
 function Catalogue() {
   const providers = [
@@ -47,16 +48,23 @@ function Catalogue() {
       <Container sx={{ mt: { xs: 2, lg: 3 } }}>
         <Grid container spacing={2}>
           <Grid item xs={12} lg={2}>
-            <MDBox position="sticky" top="200px" pb={{ xs: 2, lg: 4 }} p={2}>
+            <MDBox
+              position="sticky"
+              top="200px"
+              pb={{ xs: 2, lg: 2 }}
+              px={2}
+              py={1}
+              sx={{ border: "1px solid #222", borderRadius: "10px" }}
+            >
               <MDBox
                 display="flex"
                 justifyContent="center"
                 alignItems="center"
-                pb={3}
+                pb={2}
               >
-                <FilterAlt fontSize="large" color="dark" variant="gradient" />
-                <MDTypography variant="h5" fontWeight="bold" color="dark">
-                  FilterBy
+                <FilterAlt fontSize="medium" color="dark" variant="gradient" />
+                <MDTypography variant="text" fontWeight="bold" color="dark">
+                  Filter By
                 </MDTypography>
               </MDBox>
 
@@ -73,10 +81,10 @@ function Catalogue() {
                 {providers.map((item) => (
                   <MDButton
                     key={item.id}
-                    variant="outlined"
+                    variant="standard"
                     color="dark"
                     size="small"
-                    sx={{ mb: 0.7 }}
+                    sx={{ mb: 0.5}}
                   >
                     {item.name}
                   </MDButton>
@@ -84,7 +92,14 @@ function Catalogue() {
               </MDBox>
             </MDBox>
           </Grid>
-          <Grid item xs={12} lg={10} sx={{ mt: 3, px: { xs: 0, lg: 4 } }}>
+          <Grid item xs={12} lg={10} sx={{ px: { xs: 0, lg: 4 } }}>
+            <MDBadge
+              variant="contained"
+              color="info"
+              badgeContent={`${data.length} COURSES FOUND`}
+              container
+              sx={{ mb: 2 }}
+            />
             <Grid container spacing={2}>
               {renderData}
             </Grid>
