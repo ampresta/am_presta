@@ -22,10 +22,15 @@ module.exports = async (req, res) => {
         },
       },
       attributes: ["nom", "prenom", "id"],
-      where: { admin: false, instructor: false, SocieteId: req.societe },
+      where: {
+        $Sessions$: null,
+        admin: false,
+        instructor: false,
+        SocieteId: req.societe,
+      },
       // having: [{ session_count: { [Op.eq]: 0 } }],
-      having: where(fn("count", col("Sessions.id")), Op.eq, 0),
-      group: ["Collaborateur.id"],
+      // having: where(fn("count", col("Sessions.id")), Op.eq, 0),
+      // group: ["Collaborateur.id"],
     });
     return res.send({
       status: true,

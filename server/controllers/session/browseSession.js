@@ -7,6 +7,11 @@ module.exports = async (req, res) => {
   filters.include = [
     {
       model: Collaborateur,
+      required: false,
+      where: {
+        admin: false,
+        instructor: false,
+      },
       attributes: [],
       through: {
         attributes: [],

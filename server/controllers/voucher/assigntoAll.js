@@ -9,10 +9,14 @@ module.exports = async (req, res) => {
   try {
     const sess_collab = await Session_Collab.findAll({
       where: {
-        SocieteId: req.societe,
         SessionId: id,
+        $Voucher$: null,
       },
       include: [
+        {
+          model: Voucher,
+          required: false,
+        },
         {
           model: Proof,
           as: "fincourse",
@@ -35,28 +39,30 @@ module.exports = async (req, res) => {
     if (!sess_collab) {
       return res.send({
         status: false,
-        msg: "User doesn't exist or didn't complete this course",
+        msg: "No User Compeleted course",
       });
     }
-    console.log("\x1b[46mLOG\x1b[0m");
-    console.log(sess_collab);
-    const v = await Voucher.findOne({
-      where: {
-        SessionCollabId: {
-          [Op.is]: null,
+    let i = 0;
+    for (const collab of sess_collab) {
+      const v = await Voucher.findOne({
+        where: {
+          SessionCollabId: {
+            [Op.is]: null,
+          },
+          SocieteId: req.societe,
+          ProviderId: collab.Session.Cour.ProviderId,
         },
-        SocieteId: req.societe,
-        ProviderId: sess_collab.Session.Cour.ProviderId,
-      },
-    });
-    if (!v) {
-      return res.send({
-        status: false,
-        msg: "No more Vouchers",
       });
+      if (!v) {
+        return res.send({
+          status: false,
+          msg: `No more Vouchers.Only ${i} Vouchers Assigned]`,
+        });
+      }
+      v.SessionCollabId = collab.id;
+      await v.save();
+      i++;
     }
-    v.SessionCollabId = sess_collab.id;
-    await v.save();
     return res.send({ status: true, msg: "Done" });
   } catch (err) {
     console.log("\x1b[46m\x1b[41mERROR\x1b[0m");
