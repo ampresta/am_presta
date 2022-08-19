@@ -50,7 +50,7 @@ const routes = [
     type: "collapse",
     name: "Sessions",
     key: "sessions",
-    icon: <Icon fontSize="small">groups</Icon>,
+    icon: <Icon fontSize="small">school</Icon>,
     route: "/sessions",
     component: <Sessions />,
   },
@@ -67,6 +67,14 @@ const routes = [
     key: "collaborators",
     icon: <Icon fontSize="small">groups</Icon>,
     route: "/collaborators",
+    component: <Collabs />,
+  },
+  {
+    type: "collapse",
+    name: "Vouchers",
+    key: "vouchers",
+    icon: <Icon fontSize="small">local_activity</Icon>,
+    route: "/vouchers",
     component: <Collabs />,
   },
   {
