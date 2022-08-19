@@ -1,10 +1,11 @@
 const { Router } = require("express");
 const addVoucher = require("../controllers/voucher/addVoucher");
+const assigntoAll = require("../controllers/voucher/assigntoAll");
 const assignToCollab = require("../controllers/voucher/assignToCollab");
 const checkSociete = require("../middlewares/checkSociete");
 const router = Router();
 router.post("/add", addVoucher);
 router.use(checkSociete);
 router.post("/assign", assignToCollab);
-router.post("/assignall");
+router.post("/assignall", assigntoAll);
 module.exports = router;
