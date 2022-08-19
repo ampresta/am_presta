@@ -293,14 +293,6 @@ const coursesData = [
     pro: true,
   },
   {
-    id: 2,
-    image: NSE1Image,
-    name: "Cloud Infrastructure",
-    provider: "Oracle",
-    route: "/",
-    pro: true,
-  },
-  {
     id: 3,
     image: CloudImage,
     name: "Network Security Associate NSE1",
@@ -324,7 +316,6 @@ const coursesData = [
     route: "/",
     pro: true,
   },
-  
 ];
 
 export default coursesData;

@@ -46,6 +46,7 @@ function App() {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
   }, [pathname]);
+
   useEffect(() => {
     const getRefreshToken = async () => {
       const { data } = await axios.get(refreshRoute);
@@ -134,7 +135,7 @@ function App() {
       )}
       <Routes>
         {type ? getRoutes(Routing(type)) : getRoutes(Routing(""))}
-        {<Route path="*" element={<Navigate to="/dashboard" />} />}
+        {/* {<Route path="*" element={<Navigate to="/dashboard" />} />} */}
       </Routes>
     </ThemeProvider>
   );

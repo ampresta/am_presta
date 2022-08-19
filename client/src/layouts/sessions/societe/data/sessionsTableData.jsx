@@ -46,16 +46,8 @@ export default function Data() {
   const { updater } = controller;
 
   useEffect(() => {
-    const config = {
-      method: "get",
-      url: allSessionsRoute,
-      // headers: {
-      //   'Authorization': `Bearer ${authService.getCurrentUser()}`,
-      // }
-    };
-
     const getAllSessions = async () => {
-      const { data } = await axios(config);
+      const { data } = await axios.get(allSessionsRoute);
       setAllSessions(data);
     };
     getAllSessions();
@@ -184,9 +176,9 @@ export default function Data() {
     ),
 
     ProvidersFilter: (
-      <Grid container mt={1} rowSpacing={1}>
+      <Grid container mt={1} ml={1} rowSpacing={1}>
         {providers.map((provider) => (
-          <Grid item xs={1} ml={2} key={provider.id}>
+          <Grid item xs={1} md={1.5} lg={1} ml={{xs: 3, lg: 2}} key={provider.id}>
             <MDButton
               variant="outlined"
               size="small"
@@ -194,6 +186,7 @@ export default function Data() {
               sx={{ width: "100%" }}
               href={`https://www.google.com/search?q=${provider.nom}`}
               target="_blank"
+              onClick={() => console.log(provider.id)}
             >
               {provider.nom}
             </MDButton>

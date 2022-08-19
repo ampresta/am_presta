@@ -42,7 +42,6 @@ function AddCollab({ closeAddModel }) {
   const { updater } = controller;
 
   const handleSubmit = async (event) => {
-    const { nom } = collaborator;
     event.preventDefault();
     setFormErrors(validate(collaborator));
     if (Object.keys(validate(collaborator)).length === 0) {

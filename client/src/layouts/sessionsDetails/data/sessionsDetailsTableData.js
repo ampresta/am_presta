@@ -14,7 +14,7 @@ import { useState, useEffect } from "react";
 import axios from "services/authAxios";
 
 // Api Endpoint
-import { baseURL, SessionGraph, SessionCollabRoute } from "utils/APIRoutes";
+import { baseURL, SessionCollabRoute } from "utils/APIRoutes";
 
 import {
   useMaterialUIController,
