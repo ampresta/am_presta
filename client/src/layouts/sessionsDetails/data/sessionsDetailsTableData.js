@@ -41,7 +41,6 @@ export default function Data() {
       const { data } = await axios.post(SessionCollabRoute, {
         sess: id,
       });
-      console.log(data);
       setAllCollabs(data.collab);
     };
     getCollab();

@@ -53,7 +53,6 @@ function AddCollab({ closeAddModel }) {
       });
 
       const ID = data.id;
-	console.log(data)
       if (data.status) {
         const fd = new FormData();
         fd.append("image", file);

@@ -28,7 +28,6 @@ import { useNavigate } from "react-router-dom";
 function ChooseCollabs({ session }) {
   const { columns, rows, SubmitButton, isChecked } = sessionsTableData(session);
 
-  console.log("isChecked", isChecked);
 
   const [openAddModel, setOpenAddModel] = useState(false);
 

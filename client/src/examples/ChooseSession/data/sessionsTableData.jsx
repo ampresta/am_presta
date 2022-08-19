@@ -37,13 +37,11 @@ export default function Data(cours, collab) {
       const { data } = await axios.post(SessionsofSociete, {
         cours,
       });
-      console.log(allSessions);
       setAllSessions(data);
     };
     getAllSessions();
   }, [updater]);
 
-  console.log(allSessions);
 
   const Company = ({ image, name, company }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
@@ -77,13 +75,11 @@ export default function Data(cours, collab) {
   };
 
   sessions.SubmitButton = async () => {
-    console.log(collab, checked);
     const { data } = await axios.post(AcceptRequestRoute, {
       session: checked,
       collab: collab,
       request: true,
     });
-    console.log(data);
     if (data.status) {
       navigate("/sessions");
     } else {

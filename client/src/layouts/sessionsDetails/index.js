@@ -36,8 +36,9 @@ import ProofPreview from "components/ProofPreview";
 import ChooseCollabs from "examples/ChooseCollabs";
 
 function Partners() {
-  const { columns, rows } = sessionsDetailsTableData();
+  const { columns, rows, rawData } = sessionsDetailsTableData();
 
+  console.log(rawData);
   const [graph, setGraph] = useState([]);
 
   const [loading, setLoading] = useState(false);
@@ -136,6 +137,21 @@ function Partners() {
                   </MDBox>
 
                   <MDBox pt={2} pr={4} mt={3} display="flex">
+                    <MDBox mr={2}>
+                      <MDButton
+                        variant="gradient"
+                        color="success"
+                        size="small"
+                        // onClick={() => handleDownload("allCourses", "export")}
+                        // disabled={rawData.length === 0}
+                      >
+                        <Icon fontSize="big" color="light">
+                          download
+                        </Icon>
+                        &nbsp; Export
+                      </MDButton>
+                    </MDBox>
+
                     <MDBox mr={2}>
                       <MDButton
                         variant="gradient"

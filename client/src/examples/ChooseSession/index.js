@@ -30,7 +30,6 @@ function Sessions({ cours, collab }) {
     collab
   );
 
-  console.log("haaaaadi", isChecked);
 
   const [openAddModel, setOpenAddModel] = useState(false);
 
