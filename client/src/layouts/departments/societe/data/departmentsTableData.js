@@ -78,7 +78,7 @@ export default function Data() {
         width: "30%",
       },
       {
-        Header: "Number of challenges",
+        Header: "Certified Students",
         accessor: "Number_of_challenges",
         align: "center",
         width: "20%",
