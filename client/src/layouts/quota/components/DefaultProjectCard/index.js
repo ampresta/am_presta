@@ -48,7 +48,7 @@ function DefaultProjectCard({ image, title, openAddModel, quota, companyID }) {
         display: "flex",
         flexDirection: "column",
         backgroundColor: "transparent",
-        overflow: "visible",
+        overflow: "hidden",
       }}
     >
       <MDBox shadow="xxl" borderRadius="xl">

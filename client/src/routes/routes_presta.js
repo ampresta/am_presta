@@ -10,6 +10,8 @@ import Sessions from "layouts/sessions/ampresta";
 import Departments from "layouts/departments/ampresta";
 import Error404 from "layouts/error404";
 
+import ResetPassword from "layouts/authentication/reset-password";
+
 // @mui icons
 import Icon from "@mui/material/Icon";
 
@@ -94,6 +96,14 @@ const routes = [
     icon: <Icon fontSize="small">lock</Icon>,
     route: "/logout",
     component: <Logout />,
+  },
+  {
+    type: "collapse",
+    name: "Reset",
+    key: "reset",
+    icon: <Icon fontSize="small">key</Icon>,
+    route: "/reset",
+    component: <ResetPassword />,
   },
   {
     name: "Error404",

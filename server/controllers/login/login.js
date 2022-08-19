@@ -3,7 +3,6 @@ const { User } = db.models;
 const argon2 = require("argon2");
 const { sign } = require("jsonwebtoken");
 const GetType = require("./GetType");
-
 module.exports = async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -43,7 +42,7 @@ module.exports = async (req, res) => {
       accesstoken = sign(payload, process.env.JWTSALT, {
         expiresIn: "15m",
       });
-      return res.json({ status: true, accesstoken, type, userId: user.id });
+      return res.json({ status: true, accesstoken, type });
     }
 
     return res.send({ status: false, msg: "Username or Password incorrect" });

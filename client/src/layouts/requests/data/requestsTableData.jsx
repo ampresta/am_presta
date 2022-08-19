@@ -22,7 +22,7 @@ import ConfirmPopup from "components/ConfirmPopup";
 import { useMaterialUIController, setOpenRequestModel } from "context";
 
 // ChooseSession
-import ChooseSession from "examples/ChooseSession";
+import ChooseSession from "../ChooseSession";
 
 export default function Data() {
   // temp data for static display

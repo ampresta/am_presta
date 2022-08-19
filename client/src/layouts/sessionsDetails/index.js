@@ -19,21 +19,26 @@ import PieChart from "examples/Charts/PieChart";
 import Icon from "@mui/material/Icon";
 
 // Data
-import sessionsDetailsTableData from "layouts/sessionsDetails/data/sessionsDetailsTableData";
+import sessionsDetailsTableData from "./data/sessionsDetailsTableData";
 
 //  React
 import { useState, useEffect } from "react";
 
 // axios
 import axios from "services/authAxios";
-import { SessionGraph, addCollabsSessionRoute, baseURL } from "utils/APIRoutes";
+import { SessionGraph, baseURL } from "utils/APIRoutes";
 
-import { useMaterialUIController, setOpenProofModel } from "context";
+import {
+  useMaterialUIController,
+  setOpenProofModel,
+  setOpenSelectCollabs,
+} from "context";
+
+import ChooseCollabs from "./ChooseCollabs";
+import ProofPreview from "components/ProofPreview";
 
 import { useParams } from "react-router-dom";
 
-import ProofPreview from "components/ProofPreview";
-import ChooseCollabs from "examples/ChooseCollabs";
 
 function Partners() {
   const { columns, rows, rawData } = sessionsDetailsTableData();
@@ -44,20 +49,25 @@ function Partners() {
   const [loading, setLoading] = useState(false);
 
   const [controller, dispatch] = useMaterialUIController();
-  const { collabProofModel, fileProofModel, openProofModel } = controller;
+  const {
+    collabProofModel,
+    fileProofModel,
+    openProofModel,
+    openSelectCollabs,
+    updater
+  } = controller;
 
   let { id } = useParams();
 
   useEffect(() => {
     const getGraph = async () => {
       const { data } = await axios.post(SessionGraph, { sess: id });
-      console.log("graph");
-      console.log(data);
+      console.log("graph", data);
       setGraph(data);
       setLoading(true);
     };
     getGraph();
-  }, []);
+  }, [updater]);
 
   const data = {
     labels: ["Cerified", "Finished Course", "Not completed"],
@@ -75,19 +85,12 @@ function Partners() {
     },
   };
 
-  // const handleAdd = async () => {
-  // await axios.post(addCollabsSessionRoute, { session: 1, collab: 27 });
-  // };
-
-  // const file = { name: "filename", size: "103", type: "file/png" };
-
   return (
     <DashboardLayout>
       {loading && <DashboardNavbar titleio={graph.session.nom} />}
-      {/* {!openRequestModel && ( */}
       <MDBox pt={6} pb={1}>
         <Grid container spacing={2} rowSpacing={2}>
-          {!openProofModel && (
+          {!openSelectCollabs && !openProofModel && (
             <Grid item xs={12} md={7} lg={9}>
               <Card>
                 {loading && (
@@ -129,7 +132,9 @@ function Partners() {
                       variant="gradient"
                       color="info"
                       size="small"
-                      // onClick={setOpenAddModel}
+                      onClick={() =>
+                        setOpenSelectCollabs(dispatch, !openSelectCollabs)
+                      }
                     >
                       <Icon fontSize="big">add</Icon>
                       &nbsp; add collab to session
@@ -180,6 +185,11 @@ function Partners() {
             </Grid>
           )}
 
+          {openSelectCollabs && (
+            <Grid item xs={12} md={7} lg={9}>
+              <ChooseCollabs session={id} />
+            </Grid>
+          )}
           {openProofModel && (
             <Grid item xs={12} md={7} lg={9}>
               <ProofPreview
@@ -247,9 +257,6 @@ function Partners() {
           </Grid>
         </Grid>
       </MDBox>
-      <ChooseCollabs session={id} />
-      {/* )} */}
-      {/* {openRequestModel && <Collabs />} */}
     </DashboardLayout>
   );
 }

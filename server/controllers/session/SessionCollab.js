@@ -9,6 +9,8 @@ module.exports = async (req, res) => {
   const collab = await Collaborateur.findAll({
     where: {
       SocieteId: req.societe,
+      admin: false,
+      instructor: false,
     },
     include: {
       model: Session_Collab,

@@ -44,6 +44,8 @@ module.exports = async (req, res) => {
             model: Collaborateur,
             where: {
               SocieteId: req.societe,
+              admin: false,
+              instructor: false,
             },
             attributes: [],
           },

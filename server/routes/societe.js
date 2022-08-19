@@ -26,7 +26,7 @@ router.get("/browserequests", browseRequests);
 
 // router.get("/browsecollabs", browseCollab);
 
-// router.all("/browsedepts", browseDept);
+router.all("/browsedepts", browseDept);
 // AM
 
 module.exports = router;

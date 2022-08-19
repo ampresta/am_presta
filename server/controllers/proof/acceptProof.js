@@ -11,6 +11,7 @@ module.exports = async (req, res) => {
       where: { id },
     });
     proof.status = true;
+
     await proof.save();
     return res.send({ status: true, msg: "Done" });
   } catch (err) {

@@ -16,7 +16,7 @@ import { useState } from "react";
 import Icon from "@mui/material/Icon";
 
 // Data
-import sessionsTableData from "examples/ChooseSession/data/sessionsTableData";
+import sessionsTableData from "./data/sessionsTableData";
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setOpenRequestModel } from "context";

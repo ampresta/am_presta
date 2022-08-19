@@ -1,18 +1,49 @@
 const sequelize = require("sequelize");
 const db = require("../../config/database");
-const { Cours, Session, Provider, Collaborateur, Quota } = db.models;
+const {
+  Cours,
+  Proof,
+  Session_Collab,
+  Session,
+  Provider,
+  Collaborateur,
+  Quota,
+} = db.models;
 module.exports = async (req, res) => {
   filters = {};
 
   filters.include = [
     {
       model: Session,
+      where: {
+        SocieteId: req.societe,
+      },
+      // required: false,
       attributes: [],
       include: {
-        model: Collaborateur,
+        model: Session_Collab,
         attributes: [],
-        through: { attributes: [] },
+        include: [
+          {
+            model: Proof,
+            attributes: [],
+            as: "certifs",
+            required: false,
+            where: {
+              status: true,
+            },
+          },
+          {
+            model: Collaborateur,
+            attributes: [],
+            where: {
+              admin: false,
+              instructor: false,
+            },
+          },
+        ],
       },
+      // ],
     },
     {
       model: Provider,
@@ -22,28 +53,42 @@ module.exports = async (req, res) => {
         model: Quota,
         required: true,
         where: { SocieteId: req.societe },
-        attributes: ["quota"],
+        attributes: [],
       },
     },
   ];
-
   filters.attributes = {
     include: [
-      [sequelize.fn("count", sequelize.col("Sessions.id")), "sessions"],
       [
-        sequelize.fn("count", sequelize.col("Sessions->Collaborateurs.id")),
+        sequelize.fn(
+          "count",
+          sequelize.fn("distinct", sequelize.col("Sessions.id"))
+        ),
+        "sessions",
+      ],
+      [
+        sequelize.fn(
+          "count",
+          sequelize.fn(
+            "distinct",
+            sequelize.col("Sessions->Session_Collabs->Collaborateur.id")
+          )
+        ),
         "collabs",
       ],
       [
         sequelize.fn(
-          "sum",
-          sequelize.col("Sessions->Collaborateurs->Session_Collab.status")
+          "count",
+          sequelize.fn(
+            "distinct",
+            sequelize.col("Sessions->Session_Collabs->certifs.id")
+          )
         ),
         "collabs_fin",
       ],
     ],
   };
-  filters.group = ["Cours.id", "Provider.id", "Provider->Quota.id"];
+  filters.group = ["Cours.id", "Provider.id"];
   if (req.method == "POST") {
     const { search, provider } = req.body;
 

@@ -54,6 +54,9 @@ function reducer(state, action) {
     case "PROOFCOLLAB": {
       return { ...state, collabProofModel: action.value };
     }
+    case "OPENSELECTCOLLABS": {
+      return { ...state, openSelectCollabs: action.value };
+    }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
     }
@@ -74,9 +77,10 @@ function MaterialUIControllerProvider({ children }) {
     updater: false,
     openRequestModel: false,
     openProofModel: false,
-    fileProofModel: { name: "filenamjhjhe", size: "103", type: "file/png" },
+    fileProofModel: { name: "", size: 0, type: "file/png" },
     collabProofModel: null,
     loadingProofModel: false,
+    openSelectCollabs: false,
   };
 
   const [controller, dispatch] = useReducer(reducer, initialState);
@@ -137,6 +141,9 @@ const setfileProofModel = (dispatch, value) =>
 const setcollabProofModel = (dispatch, value) =>
   dispatch({ type: "PROOFCOLLAB", value });
 
+const setOpenSelectCollabs = (dispatch, value) =>
+  dispatch({ type: "OPENSELECTCOLLABS", value });
+
 export {
   MaterialUIControllerProvider,
   useMaterialUIController,
@@ -154,5 +161,5 @@ export {
   setOpenProofModel,
   setcollabProofModel,
   setfileProofModel,
-  // setloadingProofModel,
+  setOpenSelectCollabs,
 };

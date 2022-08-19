@@ -1,6 +1,6 @@
 const sequelize = require("sequelize");
 const db = require("../../config/database");
-const { Departement, Challenge, Collaborateur } = db.models;
+const { Departement, Session_Collab, Proof, Collaborateur } = db.models;
 module.exports = async (req, res) => {
   try {
     const departements = await Departement.findAll({
@@ -8,12 +8,20 @@ module.exports = async (req, res) => {
         {
           model: Collaborateur,
           attributes: [],
-        },
-        {
-          model: Challenge,
-          attributes: [],
-          through: {
+          include: {
+            model: Session_Collab,
             attributes: [],
+            include: [
+              {
+                model: Proof,
+                attributes: [],
+                as: "certifs",
+                required: false,
+                where: {
+                  status: true,
+                },
+              },
+            ],
           },
         },
       ],
@@ -24,7 +32,10 @@ module.exports = async (req, res) => {
             "collab_count",
           ],
           [
-            sequelize.fn("count", sequelize.col("Challenges.id")),
+            sequelize.fn(
+              "count",
+              sequelize.col("Collaborateurs.Session_Collabs->certifs.id")
+            ),
             "challenge_count",
           ],
         ],

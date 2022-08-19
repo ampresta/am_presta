@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { refreshRoute } from "utils/APIRoutes";
+import { imageRoute, refreshRoute, baseURL } from "utils/APIRoutes";
 // react-router components
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 // @mui material components
@@ -39,22 +39,35 @@ function App() {
   const { pathname } = useLocation();
 
   const [type, setType] = useState("");
+  const [image, setImage] = useState("");
 
   // Setting page scroll to 0 when changing the route
   useEffect(() => {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
+  }, [pathname]);
 
+  useEffect(() => {
     const getRefreshToken = async () => {
       const { data } = await axios.get(refreshRoute);
       if (data && data.accesstoken) {
         setAccessToken(data.accesstoken);
         setType(data.type);
-        console.log("type", type);
+        setImage(data.img);
       }
     };
     getRefreshToken();
-  }, [pathname]);
+  }, []);
+
+  useEffect(() => {
+    const getImage = async () => {
+      const { data } = await axios.get(imageRoute);
+      if (data.status) {
+        setImage(data.img);
+      }
+    };
+    getImage();
+  }, [type]);
 
   useEffect(() => {}, [darkMode]);
 
@@ -114,7 +127,7 @@ function App() {
         <>
           <Sidenav
             color={sidenavColor}
-            brand={AmpLogo}
+            brand={image ? `${baseURL}/${image}` : AmpLogo}
             routes={type ? Routing(type) : Routing("")}
           />
           {darkModeToggle}
@@ -122,7 +135,7 @@ function App() {
       )}
       <Routes>
         {type ? getRoutes(Routing(type)) : getRoutes(Routing(""))}
-        {<Route path="*" element={<Navigate to="/dashboard" />} />}
+        {/* {<Route path="*" element={<Navigate to="/dashboard" />} />} */}
       </Routes>
     </ThemeProvider>
   );

@@ -11,9 +11,13 @@ module.exports = async (req, res) => {
     const sess_collab = await Session_Collab.findOne({
       where: {
         id: id,
-        SocieteId: req.societe,
+        $Voucher$: null,
       },
       include: [
+        {
+          model: Voucher,
+          required: true,
+        },
         {
           model: Proof,
           as: "fincourse",
@@ -36,7 +40,7 @@ module.exports = async (req, res) => {
     if (!sess_collab) {
       return res.send({
         status: false,
-        msg: "User doesn't exist or didn't complete this course",
+        msg: "User doesn't exist or has already a Voucher or didn't complete this course",
       });
     }
     console.log("\x1b[46mLOG\x1b[0m");

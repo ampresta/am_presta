@@ -14,7 +14,7 @@ import { useState, useEffect } from "react";
 import axios from "services/authAxios";
 
 // Api Endpoint
-import { baseURL, SessionGraph, SessionCollabRoute } from "utils/APIRoutes";
+import { baseURL, SessionCollabRoute } from "utils/APIRoutes";
 
 import {
   useMaterialUIController,
@@ -32,7 +32,7 @@ export default function Data() {
   const [allCollabs, setAllCollabs] = useState([]);
 
   const [controller, dispatch] = useMaterialUIController();
-  const { openProofModel, fileProofModel } = controller;
+  const { openProofModel, updater } = controller;
 
   const { id } = useParams();
 
@@ -44,7 +44,8 @@ export default function Data() {
       setAllCollabs(data.collab);
     };
     getCollab();
-  }, []);
+  }, [updater]);
+
   const handleProof = (e) => {
     const rank = e.currentTarget.getAttribute("index");
     const type = e.currentTarget.getAttribute("typex");
@@ -53,7 +54,6 @@ export default function Data() {
     setcollabProofModel(dispatch, `${collab.nom} ${collab.prenom}`);
     if (type === "fincourse") {
       const file = collab.Session_Collabs[0].fincourse;
-      // console.log(file);
       const templ = {
         id: file.id,
         path: file.file,
@@ -63,7 +63,6 @@ export default function Data() {
       };
       setfileProofModel(dispatch, templ);
     } else if (type === "certifs") {
-      // console.log(file);
       const file = collab.Session_Collabs[0].certifs;
       const templ = {
         id: file.id,
@@ -88,8 +87,6 @@ export default function Data() {
   );
 
   const parse = (collab, index) => {
-    // <>
-    // console.log(collab);
     if (
       collab.Session_Collabs[0].certifs &&
       collab.Session_Collabs[0].certifs.status

@@ -6,6 +6,9 @@ import MDTypography from "components/MDTypography";
 // PasswordTester Package import
 import zxcvbn from "zxcvbn";
 
+// prop-types is library for typechecking of props
+import PropTypes from "prop-types";
+
 const PasswordTest = ({ password }) => {
   const testResult = zxcvbn(password);
   const num = (testResult.score * 100) / 4;
@@ -33,6 +36,16 @@ const PasswordTest = ({ password }) => {
       </MDBox>
     </MDBox>
   );
+};
+
+// Setting default props for the ProfilesList
+PasswordTest.defaultProps = {
+  password: "",
+};
+
+// Typechecking props for the ProfilesList
+PasswordTest.propTypes = {
+  password: PropTypes.string,
 };
 
 export default PasswordTest;

@@ -16,28 +16,27 @@ import { useState } from "react";
 import Icon from "@mui/material/Icon";
 
 // Data
-import sessionsTableData from "./data/sessionsTableData";
+import nonAddedCollabToSession from "./data/NonAddedCollabsToSession";
 
 // Material Dashboard 2 React contexts
-import { useMaterialUIController, setOpenRequestModel } from "context";
+import { useMaterialUIController, setOpenSelectCollabs } from "context";
 
 //Add companies component
-import AddSession from "./add";
-import { useNavigate } from "react-router-dom";
+import AddCollab from "./add";
 
 function ChooseCollabs({ session }) {
-  const { columns, rows, SubmitButton, isChecked } = sessionsTableData(session);
+  const { columns, rows, SubmitButton, isChecked } =
+    nonAddedCollabToSession(session);
 
 
   const [openAddModel, setOpenAddModel] = useState(false);
 
   const [controller, dispatch] = useMaterialUIController();
-  const { openRequestModel } = controller;
-  const navigate = useNavigate();
+  const { openSelectCollabs } = controller;
   return (
     <>
       {!openAddModel && (
-        <MDBox pt={6} pb={1}>
+        <MDBox pb={1}>
           <Grid container spacing={6}>
             <Grid item xs={12}>
               <Card>
@@ -51,7 +50,7 @@ function ChooseCollabs({ session }) {
                   coloredShadow="info"
                   p={3}
                   mx={2}
-                  mt={-3}
+                  mt={3}
                   mb={1}
                 >
                   <MDTypography variant="h6" color="white">
@@ -63,7 +62,7 @@ function ChooseCollabs({ session }) {
                     color="dark"
                     size="small"
                     onClick={() =>
-                      setOpenRequestModel(dispatch, !openRequestModel)
+                      setOpenSelectCollabs(dispatch, !openSelectCollabs)
                     }
                   >
                     <Icon fontSize="small">arrow_back</Icon>
@@ -82,7 +81,7 @@ function ChooseCollabs({ session }) {
                       variant="gradient"
                       color="info"
                       size="small"
-                      onClick={() => navigate("/collaborators")}
+                      onClick={() => setOpenAddModel(!openAddModel)}
                     >
                       <Icon fontSize="big">add</Icon>
                       add collabs
@@ -97,7 +96,7 @@ function ChooseCollabs({ session }) {
                       sx={{ width: 100 }}
                       onClick={() => {
                         SubmitButton();
-                        setOpenRequestModel(dispatch, !openRequestModel);
+                        setOpenSelectCollabs(dispatch, !openSelectCollabs);
                       }}
                       disabled={!isChecked}
                     >
@@ -112,6 +111,7 @@ function ChooseCollabs({ session }) {
                     isSorted={false}
                     entriesPerPage={false}
                     showTotalEntries={false}
+                    noEndBorder
                   />
                 </MDBox>
               </Card>
@@ -119,7 +119,7 @@ function ChooseCollabs({ session }) {
           </Grid>
         </MDBox>
       )}
-      {openAddModel && <AddSession closeAddModel={setOpenAddModel} />}
+      {openAddModel && <AddCollab closeAddModel={setOpenAddModel} />}
     </>
   );
 }
