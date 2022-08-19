@@ -29,8 +29,8 @@ function AddCollab({ closeAddModel }) {
 
   const [collaborator, setCollaborator] = useState({
     nom: "",
-	  prenom:"",
-	  mail:""
+    prenom: "",
+    mail: "",
   });
 
   const [file, setFile] = useState(null);
@@ -45,11 +45,11 @@ function AddCollab({ closeAddModel }) {
     setFormErrors(validate(collaborator));
     if (Object.keys(validate(collaborator)).length === 0) {
       const { data } = await axiosAuth.post(addCollabsRoute, {
-	      account:{
-		      nom:collaborator.nom,
-		      prenom:collaborator.prenom,
-		      email: collaborator.mail
-	      }
+        account: {
+          nom: collaborator.nom,
+          prenom: collaborator.prenom,
+          email: collaborator.mail,
+        },
       });
 
       const ID = data.id;
@@ -58,7 +58,7 @@ function AddCollab({ closeAddModel }) {
         fd.append("image", file);
         fd.append("id", ID);
         fd.append("model", "Collaborateur");
-	console.log(fd.getAll("image"));
+        console.log(fd.getAll("image"));
         const config = {
           method: "post",
           url: uploadRoute,

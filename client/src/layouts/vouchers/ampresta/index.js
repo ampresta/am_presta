@@ -53,7 +53,7 @@ function Vouchers() {
       }
     }
     if (type === "template") {
-      columns = ["nom", "prenom", "username", "email", "password"];
+      columns = ["societe", "provider", "code"];
       let blank = {};
       columns.map((header) => (blank.header = ""));
       data.push(blank);
@@ -165,7 +165,8 @@ function Vouchers() {
         <CsvUploader
           closeUploadModel={setOpenCsvUploader}
           DownloadTemplate={handleDownload}
-          type={"addCollabsTemplate"}
+          type={"addVouchersTemplate"}
+          uploadType="vouchers"
         />
       )}
       {confirmation}
