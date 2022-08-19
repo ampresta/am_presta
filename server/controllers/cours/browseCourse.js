@@ -1,38 +1,72 @@
 const sequelize = require("sequelize");
 const db = require("../../config/database");
-const { Cours, Session, Provider, Collaborateur } = db.models;
+const { Session_Collab, Proof, Cours, Session, Provider, Collaborateur } =
+  db.models;
 module.exports = async (req, res) => {
   filters = {};
 
   filters.include = [
     {
       model: Session,
-
+      // required: false,
       attributes: [],
       include: {
-        model: Collaborateur,
+        model: Session_Collab,
         attributes: [],
-        through: { attributes: [] },
+        include: [
+          {
+            model: Proof,
+            attributes: [],
+            as: "certifs",
+            required: false,
+            where: {
+              status: true,
+            },
+          },
+          {
+            model: Collaborateur,
+            attributes: [],
+            where: {
+              admin: false,
+              instructor: false,
+            },
+          },
+        ],
       },
+      // ],
     },
     {
       model: Provider,
       required: true,
-      attributes: ["id", "nom", "image"],
+      attributes: ["id", "nom"],
     },
   ];
-
   filters.attributes = {
     include: [
-      [sequelize.fn("count", sequelize.col("Sessions.id")), "sessions"],
       [
-        sequelize.fn("count", sequelize.col("Sessions->Collaborateurs.id")),
+        sequelize.fn(
+          "count",
+          sequelize.fn("distinct", sequelize.col("Sessions.id"))
+        ),
+        "sessions",
+      ],
+      [
+        sequelize.fn(
+          "count",
+          sequelize.fn(
+            "distinct",
+            sequelize.col("Sessions->Session_Collabs->Collaborateur.id")
+          )
+        ),
         "collabs",
       ],
       [
         sequelize.fn(
-          "sum",
-          sequelize.col("Sessions->Collaborateurs->Session_Collab.status")
+          "count",
+          sequelize.fn(
+            "distinct",
+            sequelize.col("Sessions->Session_Collabs->certifs.id")
+          )
         ),
         "collabs_fin",
       ],

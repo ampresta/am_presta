@@ -3,6 +3,8 @@ export const baseURL = `http://127.0.0.1:8000/api`;
 // Auth
 export const loginRoute = `${baseURL}/login`;
 
+export const imageRoute = `${baseURL}/login/getimage`;
+
 export const getType = `${baseURL}/gettype`;
 
 export const refreshRoute = `${baseURL}/login/refreshtoken`;

@@ -5,6 +5,8 @@ module.exports = (req, res, next) => {
   }
   token = req.headers.authorization.split(" ")[1];
   if (!token) {
+    console.log("\x1b[36mLOG:\x1b[0m");
+    console.log(req.headers.authorization);
     return res.sendStatus(403);
   }
   try {

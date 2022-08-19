@@ -1,29 +1,56 @@
 const sequelize = require("sequelize");
 const db = require("../../config/database");
-const { Cours, Session, Provider, Collaborateur, Societe } = db.models;
+const {
+  Session_Collab,
+  Proof,
+  Cours,
+  Session,
+  Provider,
+  Collaborateur,
+  Societe,
+} = db.models;
 module.exports = async (req, res) => {
   filters = {};
 
   filters.include = [
     { model: Societe, attributes: ["name"] },
     {
-      model: Collaborateur,
+      model: Session_Collab,
       attributes: [],
-      through: {
-        attributes: [],
-      },
+      include: [
+        {
+          model: Proof,
+          attributes: [],
+          as: "certifs",
+          required: false,
+          where: {
+            status: true,
+          },
+        },
+        {
+          model: Collaborateur,
+          attributes: [],
+          where: {
+            admin: false,
+            instructor: false,
+          },
+        },
+      ],
     },
   ];
 
   filters.attributes = {
     include: [
-      [sequelize.fn("count", sequelize.col("Collaborateurs.id")), "collabs"],
-
       [
         sequelize.fn(
-          "sum",
-          sequelize.col("Collaborateurs->Session_Collab.status")
+          "count",
+          sequelize.col("Session_Collabs.Collaborateur.id")
         ),
+        "collabs",
+      ],
+
+      [
+        sequelize.fn("count", sequelize.col("Session_Collabs->certifs.id")),
         "collabs_fin",
       ],
     ],

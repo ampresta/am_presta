@@ -1,23 +1,29 @@
 const sequelize = require("sequelize");
 const db = require("../../config/database");
-const { Departement, Challenge, Collaborateur, Societe } = db.models;
+const { Societe, Departement, Session_Collab, Proof, Collaborateur } =
+  db.models;
 module.exports = async (req, res) => {
   try {
     const departements = await Departement.findAll({
       include: [
-        {
-          model: Societe,
-          attributes: ["name"],
-        },
+        { model: Societe, attributes: ["name"] },
         {
           model: Collaborateur,
           attributes: [],
-        },
-        {
-          model: Challenge,
-          attributes: [],
-          through: {
+          include: {
+            model: Session_Collab,
             attributes: [],
+            include: [
+              {
+                model: Proof,
+                attributes: [],
+                as: "certifs",
+                required: false,
+                where: {
+                  status: true,
+                },
+              },
+            ],
           },
         },
       ],
@@ -28,13 +34,16 @@ module.exports = async (req, res) => {
             "collab_count",
           ],
           [
-            sequelize.fn("count", sequelize.col("Challenges.id")),
+            sequelize.fn(
+              "count",
+              sequelize.col("Collaborateurs.Session_Collabs->certifs.id")
+            ),
             "challenge_count",
           ],
         ],
       },
       // where: { SocieteId: req.societe },
-      group: ["Departement.id", "Societe.id"],
+      group: ["Societe.id", "Departement.id"],
     }); // Implementing search
     return res.send({ status: true, data: departements });
   } catch (err) {
