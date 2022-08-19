@@ -7,6 +7,7 @@ import SignIn from "layouts/authentication/sign-in";
 import Logout from "layouts/authentication/logout";
 import Courses from "layouts/courses/societe_courses";
 import Collabs from "layouts/collabs/societe";
+import Vouchers from "layouts/vouchers/societe";
 import Error404 from "layouts/error404";
 import CatalogueCourses from "layouts/courses catalogue";
 
@@ -75,7 +76,7 @@ const routes = [
     key: "vouchers",
     icon: <Icon fontSize="small">local_activity</Icon>,
     route: "/vouchers",
-    component: <Collabs />,
+    component: <Vouchers />,
   },
   {
     // type: "collapse",

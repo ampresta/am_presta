@@ -3,6 +3,7 @@ import Companies from "layouts/companies";
 import Partners from "layouts/partners";
 import Courses from "layouts/courses/ampresta_courses";
 import Collabs from "layouts/collabs/ampresta";
+import Vouchers from "layouts/vouchers/ampresta";
 import Quota from "layouts/quota";
 import SignIn from "layouts/authentication/sign-in";
 import Logout from "layouts/authentication/logout";
@@ -86,7 +87,7 @@ const routes = [
     key: "vouchers",
     icon: <Icon fontSize="small">local_activity</Icon>,
     route: "/vouchers",
-    component: <Collabs />,
+    component: <Vouchers />,
   },
   {
     type: "collapse",
