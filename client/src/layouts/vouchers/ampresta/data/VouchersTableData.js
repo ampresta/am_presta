@@ -14,20 +14,17 @@ import { useState, useEffect } from "react";
 import axiosAuth from "services/authAxios";
 
 // Api Endpoint
-import {
-  baseURL,
-  DeleteInstances,
-  browseCollabsAdminRoute,
-} from "utils/APIRoutes";
+import { baseURL, DeleteInstances } from "utils/APIRoutes";
 
 // ConfirmPoppup component
 import ConfirmPopup from "components/ConfirmPopup";
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController } from "context";
+import { browseVouchersAdminRoute } from "utils/APIRoutes";
 
 export default function Data() {
-  const [allCollabs, setAllCollabs] = useState([]);
+  const [allVouchers, setAllVouchers] = useState([]);
   const [confirmModel, setConfirmModel] = useState(false);
   const [tempPartnerId, setTempPartnerId] = useState(0);
 
@@ -36,20 +33,20 @@ export default function Data() {
   const { updater } = controller;
 
   useEffect(() => {
-    const getAllCollabs = async () => {
-      const { data } = await axiosAuth.get(browseCollabsAdminRoute);
-      setAllCollabs((prev) => data);
+    const getAllVouchers = async () => {
+      const { data } = await axiosAuth.get(browseVouchersAdminRoute);
+      setAllVouchers((prev) => data);
     };
-    getAllCollabs();
+    getAllVouchers();
   }, [updater]);
 
   const handleDelete = async (id) => {
     const { data } = await axiosAuth.post(DeleteInstances, {
-      model: "Collaborateur",
+      model: "Voucher",
       id: id,
     });
     if (data.status) {
-      setAllCollabs(allCollabs.filter((course) => course.id !== id));
+      setAllVouchers(allVouchers.filter((voucher) => voucher.id !== id));
       setConfirmModel(!confirmModel);
     } else {
       alert(data.msg);
@@ -68,7 +65,7 @@ export default function Data() {
     </MDBox>
   );
 
-  let collabs = {
+  let vouchers = {
     columns: [
       {
         Header: "Profile",
@@ -76,30 +73,24 @@ export default function Data() {
         width: "5%",
         align: "left",
       },
-      // {
-      //   Header: "Full Name",
-      //   accessor: "nom",
-      //   width: "10%",
-      //   align: "left",
-      // },
       {
-        Header: "Number of Sessions",
-        accessor: "session",
-        align: "center",
-        width: "15%",
+        Header: "Provider",
+        accessor: "provider",
+        width: "10%",
+        align: "left",
       },
       {
-        Header: "Number of Certifs",
-        accessor: "certif",
-        align: "center",
-        width: "30%",
+        Header: "Societe",
+        accessor: "societe",
+        width: "10%",
+        align: "left",
       },
-      // {
-      //   Header: "Departmenet",
-      //   accessor: "departmenet",
-      //   align: "center",
-      //   width: "30%",
-      // },
+      {
+        Header: "Value",
+        accessor: "value",
+        width: "10%",
+        align: "left",
+      },
       { Header: "edit", accessor: "edit", align: "center", width: "3%" },
       { Header: "delete", accessor: "delete", align: "center", width: "3%" },
     ],
@@ -115,31 +106,29 @@ export default function Data() {
       />
     ),
 
-    rawData: allCollabs,
+    rawData: allVouchers,
   };
   try {
-    allCollabs.map((collab) =>
-      collabs.rows.push({
+    allVouchers.map((voucher) =>
+      vouchers.rows.push({
         author: (
           <Company
-            company={collab.Societe.name}
-            name={`${collab.nom} ${collab.prenom}`}
-            image={collab.image}
+          image={voucher.Provider.image}
           />
         ),
-        // nom: (
-        //   <MDTypography variant="caption" color="text" fontWeight="medium">
-        //     {`${collab.nom} ${collab.prenom}`}
-        //   </MDTypography>
-        // ),
-        session: (
+        provider: (
           <MDTypography variant="caption" color="text" fontWeight="medium">
-            {collab.session_count}
+            {voucher.Provider.nom}
           </MDTypography>
         ),
-        certif: (
+        societe: (
           <MDTypography variant="caption" color="text" fontWeight="medium">
-            {collab.certifs_count}
+            {voucher.Societe.name}
+          </MDTypography>
+        ),
+        value: (
+          <MDTypography variant="caption" color="text" fontWeight="medium">
+            {voucher.code}
           </MDTypography>
         ),
         edit: (
@@ -152,7 +141,7 @@ export default function Data() {
             variant="text"
             onClick={() => {
               setConfirmModel(!confirmModel);
-              setTempPartnerId(collab.id);
+              setTempPartnerId(voucher.id);
             }}
           >
             <MDTypography variant="caption" color="text" fontWeight="medium">
@@ -166,5 +155,5 @@ export default function Data() {
     );
   } catch (error) {}
 
-  return collabs;
+  return vouchers;
 }

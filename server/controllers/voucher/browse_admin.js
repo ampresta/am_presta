@@ -8,7 +8,7 @@ module.exports = async (req, res) => {
     include: [
       {
         model: Provider,
-        attributes: ["id", "nom"],
+        attributes: ["id", "nom", "image"],
       },
       {
         model: Societe,

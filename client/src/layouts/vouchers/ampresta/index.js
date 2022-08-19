@@ -22,13 +22,13 @@ import Icon from "@mui/material/Icon";
 import AddCollab from "./add";
 
 // Data
-import collabsTableData from "./data/collabsTableData";
+import VouchersTableData from "./data/VouchersTableData";
 import MDButton from "components/MDButton";
 
 import Papa from "papaparse";
 
 function Vouchers() {
-  const { columns, rows, confirmation, rawData } = collabsTableData();
+  const { columns, rows, confirmation, rawData } = VouchersTableData();
 
   const [openAddModel, setOpenAddModel] = useState(false);
 
@@ -92,7 +92,7 @@ function Vouchers() {
                   coloredShadow="info"
                 >
                   <MDTypography variant="h6" color="white">
-                    Collborators
+                    Vouchers
                   </MDTypography>
                 </MDBox>
 
@@ -110,7 +110,7 @@ function Vouchers() {
                       onClick={setOpenAddModel}
                     >
                       <Icon fontSize="big">add</Icon>
-                      &nbsp; add Collborator
+                      &nbsp; add Vouchers
                     </MDButton>
                   </MDBox>
 
