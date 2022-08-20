@@ -10,38 +10,37 @@ import FilterAlt from "@mui/icons-material/FilterAlt";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
+import MDBadge from "components/MDBadge";
 
 // Presentation page components
 import ExampleCard from "examples/Cards/ExampleCard";
 
 // Data
-import data from "../data/CoursesCatalogueData";
-import MDBadge from "components/MDBadge";
+import CoursesCatalogueData from "../data/CoursesCatalogueData";
+
+import { baseURL } from "utils/APIRoutes";
 
 function Catalogue() {
-  const providers = [
-    { id: 0, name: "ALL" },
-    { id: 1, name: "Huawei" },
-    { id: 2, name: "Cisco" },
-    { id: 3, name: "Juniper" },
-    { id: 4, name: "Oracle" },
-    { id: 5, name: "Fortinet" },
-  ];
+  const { coursesData, partnersData } = CoursesCatalogueData();
 
-  const renderData = data.map(({ id, image, name, route, provider, pro }) => (
-    <Grid item xs={12} md={3} sx={{ mb: { xs: 3, lg: 0 } }} key={id}>
-      <Link to={route}>
-        <ExampleCard
-          image={image}
-          name={name}
-          provider={provider}
-          display="grid"
-          maxHeight={{ xs: "200px", md: "100px", sm: "180px", lg: "105px" }}
-          pro={pro}
-        />
-      </Link>
-    </Grid>
-  ));
+  partnersData.unshift({ id: -1, name: "ALL" });
+
+  const renderData = coursesData.map(
+    ({ id, image, name, route, provider, pro }) => (
+      <Grid item xs={12} md={3} sx={{ mb: { xs: 3, lg: 0 } }} key={id}>
+        <Link to={route}>
+          <ExampleCard
+            image={`${baseURL}/${image}`}
+            name={name}
+            provider={provider}
+            display="grid"
+            height={{ xs: "200px", md: "80px", sm: "210px", lg: "110px" }}
+            pro={pro}
+          />
+        </Link>
+      </Grid>
+    )
+  );
 
   return (
     <MDBox pb={3}>
@@ -81,13 +80,14 @@ function Catalogue() {
                 >
                   PROVIDERS
                 </MDTypography>
-                {providers.map((item) => (
+                {partnersData.map((item) => (
                   <MDButton
                     key={item.id}
-                    variant="standard"
+                    variant="text"
                     color="dark"
                     size="small"
                     sx={{ mb: 0.5 }}
+                    onClick={() => console.log(item.id)}
                   >
                     {item.name}
                   </MDButton>
@@ -99,7 +99,7 @@ function Catalogue() {
             <MDBadge
               variant="contained"
               color="info"
-              badgeContent={`${data.length} COURSES FOUND`}
+              badgeContent={`${coursesData.length} COURSES FOUND`}
               container
               sx={{ mb: 2 }}
             />

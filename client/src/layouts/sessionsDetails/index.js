@@ -39,7 +39,6 @@ import ProofPreview from "components/ProofPreview";
 
 import { useParams } from "react-router-dom";
 
-
 function Partners() {
   const { columns, rows, rawData } = sessionsDetailsTableData();
 
@@ -54,7 +53,7 @@ function Partners() {
     fileProofModel,
     openProofModel,
     openSelectCollabs,
-    updater
+    updater,
   } = controller;
 
   let { id } = useParams();
