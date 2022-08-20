@@ -16,7 +16,7 @@ module.exports = async (req, res) => {
       include: [
         {
           model: Voucher,
-          required: true,
+          required: false,
         },
         {
           model: Proof,

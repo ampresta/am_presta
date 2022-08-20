@@ -34,6 +34,10 @@ const fields = {
     type: Sequelize.BOOLEAN,
     allowNull: false,
   },
+  changedpass: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
+  },
 };
 const Collaborateur = (db) => {
   db.define("Collaborateur", fields, {

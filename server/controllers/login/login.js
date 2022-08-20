@@ -27,9 +27,15 @@ module.exports = async (req, res) => {
       payload = { user_id: user.id, type };
       if (type === "Societe") {
         id = await user.getCollaborateur();
-        id = id.SocieteId;
-        payload.id = id;
+        socid = id.SocieteId;
+        payload.id = socid;
+        payload.changedpass = id.changedpass;
       }
+      if (type === "Collab") {
+        id = await user.getCollaborateur();
+        payload.changedpass = id.changedpass;
+      }
+
       const refreshtoken = sign(payload, process.env.JWT_REFRESH_SALT, {
         expiresIn: "7d",
       });

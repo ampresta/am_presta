@@ -8,7 +8,7 @@ module.exports = async (req, res) => {
   }
   try {
     payload = verify(jwt, process.env.JWT_REFRESH_SALT);
-    user_ = await User.findOne({ where: { id: payload.user_id } });
+    const user_ = await User.findOne({ where: { id: payload.user_id } });
     if (!user_) {
       return res.send({ status: false, msg: "No user" });
     }
@@ -16,6 +16,9 @@ module.exports = async (req, res) => {
     payload2 = { user_id: payload.user_id, type: payload.type };
     if (payload.id) {
       payload2.id = payload.id;
+    }
+    if (payload.changedpass) {
+      payload2.changedpass = payload.changedpass;
     }
     accesstoken = sign(payload2, process.env.JWTSALT, {
       expiresIn: "15m",
