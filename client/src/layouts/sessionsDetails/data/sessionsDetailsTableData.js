@@ -6,6 +6,7 @@ import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
 import MDBadge from "components/MDBadge";
 import MDButton from "components/MDButton";
+import Icon from "@mui/material/Icon";
 
 //React hooks
 import { useState, useEffect } from "react";
@@ -27,6 +28,7 @@ import {
 import { dateFormat } from "utils/Helper";
 
 import { useParams } from "react-router-dom";
+import { asignOneVoucherRoute } from "utils/APIRoutes";
 
 export default function Data() {
   const [allCollabs, setAllCollabs] = useState([]);
@@ -131,6 +133,86 @@ export default function Data() {
       return <MDBadge badgeContent="Studying" color="note" size="md" />;
     }
   };
+
+  const asignVoucher = async (id) => {
+    await axios.post(asignOneVoucherRoute, { id });
+  };
+
+  const getVoucherStatus = (collab) => {
+    const session_collab = collab.Session_Collabs[0];
+    console.log(session_collab);
+    if (
+      session_collab.fincourse &&
+      // session_collab.fincourse.status &&
+      !session_collab.Voucher
+    ) {
+      return (
+        <MDBox display="flex">
+          <MDBox mr={2}>
+            <MDButton
+              variant="gradient"
+              color="success"
+              size="small"
+              onClick={() => asignVoucher(collab.Session_Collabs[0].id)}
+            >
+              &nbsp;Assign
+            </MDButton>
+          </MDBox>
+        </MDBox>
+      );
+    }
+
+    if (
+      session_collab.fincourse &&
+      // session_collab.fincourse.status &&
+      session_collab.Voucher
+    ) {
+      return (
+        <MDBox display="flex">
+          <MDBox mr={2}>
+            <MDButton
+              variant="gradient"
+              color="success"
+              size="small"
+              onClick={() => asignVoucher(collab.Session_Collabs[0].id)}
+              disabled
+            >
+              <Icon fontSize="big" color="light">
+                done_all
+              </Icon>
+              &nbsp; Assigned
+            </MDButton>
+          </MDBox>
+        </MDBox>
+      );
+    }
+
+    if (
+      !session_collab.fincourse &&
+      // !session_collab.fincourse.status &&
+      !session_collab.Voucher
+    ) {
+      return (
+        <MDBox display="flex">
+          <MDBox mr={2}>
+            <MDButton
+              variant="gradient"
+              color="success"
+              size="small"
+              onClick={() => asignVoucher(collab.Session_Collabs[0].id)}
+              disabled
+            >
+              <Icon fontSize="big" color="light">
+                warning
+              </Icon>
+              &nbsp; Not Eligible
+            </MDButton>
+          </MDBox>
+        </MDBox>
+      );
+    }
+  };
+
   let sessionsDetails = {
     columns: [
       {
@@ -151,6 +233,12 @@ export default function Data() {
         width: "10%",
         align: "center",
       },
+      {
+        Header: "voucher",
+        accessor: "voucher",
+        width: "10%",
+        align: "center",
+      },
     ],
 
     rows: [],
@@ -158,7 +246,7 @@ export default function Data() {
     rawData: allCollabs,
   };
 
-  allCollabs.map((collab, index) =>
+  allCollabs.map((collab, index) => {
     sessionsDetails.rows.push({
       author: (
         <Company
@@ -172,7 +260,8 @@ export default function Data() {
         </MDTypography>
       ),
       status: parse(collab, index),
-    })
-  );
+      voucher: getVoucherStatus(collab),
+    });
+  });
   return sessionsDetails;
 }

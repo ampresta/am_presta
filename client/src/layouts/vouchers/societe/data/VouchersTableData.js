@@ -21,6 +21,7 @@ import ConfirmPopup from "components/ConfirmPopup";
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController } from "context";
+import { browseVouchersSocRoute } from "utils/APIRoutes";
 
 export default function Data() {
   const [allCollabs, setAllCollabs] = useState([]);
@@ -36,7 +37,15 @@ export default function Data() {
       const { data } = await axios.get(browseCollabsRoute);
       setAllCollabs((prev) => data);
     };
+
+    const getAllVouchers = async () => {
+      const { data } = await axios.post(browseVouchersSocRoute);
+      console.log("=====================");
+      console.log(data);
+      console.log("=====================");
+    };
     getAllCollabs();
+    getAllVouchers();
   }, [updater]);
 
   const handleDelete = async (id) => {
