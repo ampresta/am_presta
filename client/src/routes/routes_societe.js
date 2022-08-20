@@ -10,6 +10,7 @@ import Collabs from "layouts/collabs/societe";
 import Vouchers from "layouts/vouchers/societe";
 import Error404 from "layouts/error404";
 import CatalogueCourses from "layouts/courses catalogue";
+import CoursesDetails from "layouts/courses catalogue/chooseCourse";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -108,6 +109,13 @@ const routes = [
     icon: <Icon fontSize="small">apps</Icon>,
     route: "/catalogue",
     component: <CatalogueCourses />,
+  },
+  {
+    name: "details",
+    key: "details",
+    icon: <Icon fontSize="small">check</Icon>,
+    route: "/catalogue/details",
+    component: <CoursesDetails />,
   },
 ];
 
