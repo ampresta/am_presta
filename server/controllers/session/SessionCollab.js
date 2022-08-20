@@ -1,6 +1,6 @@
 const sequelize = require("sequelize");
 const db = require("../../config/database");
-const { Session_Collab, Session, Proof, Collaborateur } = db.models;
+const { Session_Collab, Session, Proof, Collaborateur, Voucher } = db.models;
 module.exports = async (req, res) => {
   const { sess } = req.body;
   if (!sess) {
@@ -33,12 +33,17 @@ module.exports = async (req, res) => {
           required: false,
           as: "fincourse",
         },
+        {
+          model: Voucher,
+          // attributes: ["code"],
+        },
       ],
     },
     group: [
       "Collaborateur.id",
       "Session_Collabs.id",
       "Session_Collabs->certifs.id",
+      "Session_Collabs->Voucher.id",
       "Session_Collabs->fincourse.id",
       "Session_Collabs.createdAt",
     ],

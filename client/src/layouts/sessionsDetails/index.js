@@ -151,9 +151,9 @@ function Partners() {
                         // disabled={rawData.length === 0}
                       >
                         <Icon fontSize="big" color="light">
-                          download
+                          done
                         </Icon>
-                        &nbsp; Export
+                        &nbsp; Assign All
                       </MDButton>
                     </MDBox>
 

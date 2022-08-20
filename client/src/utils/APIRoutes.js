@@ -80,3 +80,4 @@ export const acceptProofRoute = `${baseURL}/proof/accept`;
 //Vouchers
 export const browseVouchersAdminRoute = `${baseURL}/voucher/browseAdmin`;
 export const addVouchersAdminRoute = `${baseURL}/voucher/add`;
+export const asignOneVoucherRoute = `${baseURL}/voucher/assign`;
