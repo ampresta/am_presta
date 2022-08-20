@@ -9,7 +9,7 @@ const coursesData = [
     image: FiveGImage,
     name: "HCIA - 5G",
     provider: "Huawei",
-    route: "/",
+    route: "/catalogue/details",
     pro: false,
   },
   {

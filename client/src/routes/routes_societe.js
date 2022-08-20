@@ -7,8 +7,10 @@ import SignIn from "layouts/authentication/sign-in";
 import Logout from "layouts/authentication/logout";
 import Courses from "layouts/courses/societe_courses";
 import Collabs from "layouts/collabs/societe";
+import Vouchers from "layouts/vouchers/societe";
 import Error404 from "layouts/error404";
 import CatalogueCourses from "layouts/courses catalogue";
+import CoursesDetails from "layouts/courses catalogue/chooseCourse";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -50,7 +52,7 @@ const routes = [
     type: "collapse",
     name: "Sessions",
     key: "sessions",
-    icon: <Icon fontSize="small">groups</Icon>,
+    icon: <Icon fontSize="small">school</Icon>,
     route: "/sessions",
     component: <Sessions />,
   },
@@ -68,6 +70,14 @@ const routes = [
     icon: <Icon fontSize="small">groups</Icon>,
     route: "/collaborators",
     component: <Collabs />,
+  },
+  {
+    type: "collapse",
+    name: "Vouchers",
+    key: "vouchers",
+    icon: <Icon fontSize="small">local_activity</Icon>,
+    route: "/vouchers",
+    component: <Vouchers />,
   },
   {
     // type: "collapse",
@@ -99,6 +109,13 @@ const routes = [
     icon: <Icon fontSize="small">apps</Icon>,
     route: "/catalogue",
     component: <CatalogueCourses />,
+  },
+  {
+    name: "details",
+    key: "details",
+    icon: <Icon fontSize="small">check</Icon>,
+    route: "/catalogue/details",
+    component: <CoursesDetails />,
   },
 ];
 

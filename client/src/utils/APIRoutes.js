@@ -73,5 +73,11 @@ export const browseCollabsRoute = `${baseURL}/collab/browse`;
 export const browseCollabsOutOfSessionRoute = `${baseURL}/collab/browseout`;
 export const browseCollabsAdminRoute = `${baseURL}/collab/browseadmin`;
 export const addCollabsSessionRoute = `${baseURL}/collab/addsession`;
+
 // proofs
 export const acceptProofRoute = `${baseURL}/proof/accept`;
+
+//Vouchers
+export const browseVouchersAdminRoute = `${baseURL}/voucher/browseAdmin`;
+export const addVouchersAdminRoute = `${baseURL}/voucher/add`;
+export const asignOneVoucherRoute = `${baseURL}/voucher/assign`;

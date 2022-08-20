@@ -77,7 +77,7 @@ function MaterialUIControllerProvider({ children }) {
     updater: false,
     openRequestModel: false,
     openProofModel: false,
-    fileProofModel: { name: "filenamjhjhe", size: "103", type: "file/png" },
+    fileProofModel: { name: "", size: 0, type: "file/png" },
     collabProofModel: null,
     loadingProofModel: false,
     openSelectCollabs: false,
@@ -161,5 +161,5 @@ export {
   setOpenProofModel,
   setcollabProofModel,
   setfileProofModel,
-  setOpenSelectCollabs
+  setOpenSelectCollabs,
 };

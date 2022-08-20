@@ -49,7 +49,6 @@ function Basic() {
     const { username, password } = formDetails;
     event.preventDefault();
     const data = await authService.login(username, password);
-    console.log(data);
     if (data.status) {
       navigate("/dashboard");
     }

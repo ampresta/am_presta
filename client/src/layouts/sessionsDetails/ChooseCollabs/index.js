@@ -28,7 +28,6 @@ function ChooseCollabs({ session }) {
   const { columns, rows, SubmitButton, isChecked } =
     nonAddedCollabToSession(session);
 
-  console.log("isChecked", isChecked);
 
   const [openAddModel, setOpenAddModel] = useState(false);
 

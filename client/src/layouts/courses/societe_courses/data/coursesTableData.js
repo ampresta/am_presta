@@ -27,6 +27,7 @@ export default function Data() {
   useEffect(() => {
     const getAllCourses = async () => {
       const { data } = await axiosAuth.get(allCompanyCoursesRoute);
+      console.log(data);
       setAllCourses(data.cours);
     };
     getAllCourses();

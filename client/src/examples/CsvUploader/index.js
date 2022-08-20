@@ -26,13 +26,12 @@ import DropFileInput from "components/DropFileInput/DropFileInput";
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setUpdater } from "context";
+import { addVouchersAdminRoute } from "utils/APIRoutes";
 
 // Allowed extensions for input file
 const allowedExtensions = ["csv"];
 
-function CsvUploader({ closeUploadModel, DownloadTemplate, type }) {
-  const uploadType = localStorage.getItem("uploadType");
-
+function CsvUploader({ closeUploadModel, DownloadTemplate, type, uploadType }) {
   const [error, setError] = useState("");
 
   const [file, setFile] = useState("");
@@ -63,6 +62,10 @@ function CsvUploader({ closeUploadModel, DownloadTemplate, type }) {
 
       case "session":
         addCollabstoSession(data);
+        break;
+
+      case "vouchers":
+        addVouchers(data);
         break;
 
       default:
@@ -143,6 +146,24 @@ function CsvUploader({ closeUploadModel, DownloadTemplate, type }) {
     }
   };
 
+  const addVouchers = async (DATA) => {
+    const requestDATA = { vouchers: [] };
+    DATA.map((voucher) => {
+      requestDATA.vouchers.push({
+        societe: voucher.societe,
+        code: voucher[" code"],
+        provider: voucher[" provider"],
+      });
+    });
+    const { data } = await axiosAuth.post(addVouchersAdminRoute, requestDATA);
+    if (data.status) {
+      closeUploadModel(false);
+      setUpdater(dispatch, !updater);
+    } else {
+      alert(data.msg);
+    }
+  };
+
   const addCollabstoSession = async () => {};
 
   const handleFileChange = (files) => {
@@ -176,7 +197,7 @@ function CsvUploader({ closeUploadModel, DownloadTemplate, type }) {
   };
 
   return (
-    <MDBox pt={6} pb={1}>           
+    <MDBox pt={6} pb={1}>
       <Grid container spacing={6}>
         <Grid item xs={12}>
           <Card>

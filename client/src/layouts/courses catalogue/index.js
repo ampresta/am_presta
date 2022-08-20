@@ -10,8 +10,6 @@ import MDTypography from "components/MDTypography";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 
-// Data
-import partnersTableData from "layouts/partners/data/partnersTableData";
 import Catalogue from "./components/Catalogue";
 
 function Partners() {

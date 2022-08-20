@@ -3,12 +3,15 @@ import Companies from "layouts/companies";
 import Partners from "layouts/partners";
 import Courses from "layouts/courses/ampresta_courses";
 import Collabs from "layouts/collabs/ampresta";
+import Vouchers from "layouts/vouchers/ampresta";
 import Quota from "layouts/quota";
 import SignIn from "layouts/authentication/sign-in";
 import Logout from "layouts/authentication/logout";
 import Sessions from "layouts/sessions/ampresta";
 import Departments from "layouts/departments/ampresta";
 import Error404 from "layouts/error404";
+
+import ResetPassword from "layouts/authentication/reset-password";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -74,11 +77,18 @@ const routes = [
     type: "collapse",
     name: "Sessions",
     key: "sessions",
-    icon: <Icon fontSize="small">groups</Icon>,
+    icon: <Icon fontSize="small">school</Icon>,
     route: "/sessions",
     component: <Sessions />,
   },
-
+  {
+    type: "collapse",
+    name: "Vouchers",
+    key: "vouchers",
+    icon: <Icon fontSize="small">local_activity</Icon>,
+    route: "/vouchers",
+    component: <Vouchers />,
+  },
   {
     type: "collapse",
     name: "Login",
@@ -96,9 +106,14 @@ const routes = [
     component: <Logout />,
   },
   {
+    name: "Reset",
+    key: "reset",
+    route: "/reset",
+    component: <ResetPassword />,
+  },
+  {
     name: "Error404",
     key: "Error404",
-    icon: <Icon fontSize="small">error</Icon>,
     route: "/Error404",
     component: <Error404 />,
   },
