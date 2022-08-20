@@ -79,5 +79,6 @@ export const acceptProofRoute = `${baseURL}/proof/accept`;
 
 //Vouchers
 export const browseVouchersAdminRoute = `${baseURL}/voucher/browseAdmin`;
+export const browseVouchersSocRoute = `${baseURL}/voucher/browseSoc`;
 export const addVouchersAdminRoute = `${baseURL}/voucher/add`;
 export const asignOneVoucherRoute = `${baseURL}/voucher/assign`;
