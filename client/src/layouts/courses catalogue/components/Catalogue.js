@@ -54,7 +54,10 @@ function Catalogue() {
               pb={{ xs: 2, lg: 2 }}
               px={2}
               py={1}
-              sx={{ border: "1px solid #222", borderRadius: "10px" }}
+              sx={{
+                border: "1px solid #222",
+                borderRadius: "10px",
+              }}
             >
               <MDBox
                 display="flex"
@@ -84,7 +87,7 @@ function Catalogue() {
                     variant="standard"
                     color="dark"
                     size="small"
-                    sx={{ mb: 0.5}}
+                    sx={{ mb: 0.5 }}
                   >
                     {item.name}
                   </MDButton>

@@ -106,17 +106,14 @@ const routes = [
     component: <Logout />,
   },
   {
-    type: "collapse",
     name: "Reset",
     key: "reset",
-    icon: <Icon fontSize="small">key</Icon>,
     route: "/reset",
     component: <ResetPassword />,
   },
   {
     name: "Error404",
     key: "Error404",
-    icon: <Icon fontSize="small">error</Icon>,
     route: "/Error404",
     component: <Error404 />,
   },
