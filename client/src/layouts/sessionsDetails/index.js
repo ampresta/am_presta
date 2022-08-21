@@ -43,7 +43,7 @@ import { asignVoucherSessionRoute } from "utils/APIRoutes";
 function Partners() {
   const { columns, rows, rawData } = sessionsDetailsTableData();
 
-  console.log(rawData);
+  console.log("rawData", rawData);
   const [graph, setGraph] = useState([]);
 
   const [loading, setLoading] = useState(false);
@@ -98,17 +98,21 @@ function Partners() {
             <Grid item xs={12} md={7} lg={9}>
               <Card>
                 {loading && (
-                  <MDAvatar
-                    src={
-                      loading ? `${baseURL}/${graph.session.Cour.image}` : null
-                    }
-                    size="xl"
-                    sx={{
-                      border: "3.5px solid #227be9",
-                      ml: 4,
-                      mt: 1,
-                    }}
-                  />
+                  <MDBox sx={{ zIndex: 999, ml: 4, pt: 1 }}>
+                    <img
+                      src={
+                        loading
+                          ? `${baseURL}/${graph.session.Cour.image}`
+                          : null
+                      }
+                      alt={graph.session.nom}
+                      width="110px"
+                      style={{
+                        borderRadius: "3px",
+                        border: "2px solid #227be9",
+                      }}
+                    ></img>
+                  </MDBox>
                 )}
                 <MDBox
                   mx={2}
@@ -120,14 +124,14 @@ function Partners() {
                   borderRadius="lg"
                   coloredShadow="info"
                 >
-                  <MDTypography variant="h6" color="white" ml={11}>
+                  <MDTypography variant="h6" color="white" ml={15}>
                     {loading && graph.session.nom}
                   </MDTypography>
                 </MDBox>
 
                 <Grid
                   container
-                  spacing={2}
+                  spacing={3}
                   display="flex"
                   justifyContent="space-between"
                 >
@@ -141,18 +145,17 @@ function Partners() {
                       }
                     >
                       <Icon fontSize="big">add</Icon>
-                      &nbsp; add collab to session
+                      &nbsp; add to session
                     </MDButton>
                   </MDBox>
 
-                  <MDBox pt={2} pr={4} mt={3} display="flex">
-                    <MDBox mr={2}>
+                  <MDBox pt={2} mt={3} display="flex">
+                    <MDBox mr={1}>
                       <MDButton
                         variant="gradient"
                         color="success"
                         size="small"
                         onClick={() => assignAll()}
-                        // disabled={rawData.length === 0}
                       >
                         <Icon fontSize="big" color="light">
                           done
@@ -229,7 +232,7 @@ function Partners() {
                     p={1}
                     sx={{ height: 5, fontSize: 10, lineHeight: 0 }}
                   >
-                    Success
+                    Certified
                   </MDBox>
                   &nbsp;
                   <MDBox
@@ -241,7 +244,7 @@ function Partners() {
                     p={1}
                     sx={{ height: 5, fontSize: 10, lineHeight: 0 }}
                   >
-                    Failure
+                    Finished
                   </MDBox>
                   &nbsp;
                   <MDBox

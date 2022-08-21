@@ -11,17 +11,29 @@ import Icon from "@mui/material/Icon";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
+
 import axiosAuth from "services/authAxios";
 import { acceptProofRoute, baseURL } from "utils/APIRoutes";
+import { useMaterialUIController, setUpdater } from "context";
+
 const ProofPreview = ({ closeProofModel, collab, file }) => {
+  const [controller, dispatch] = useMaterialUIController();
+  const { updater } = controller;
+
   const Accept = async (e) => {
     const { data } = await axiosAuth.post(acceptProofRoute, {
       id: e,
     });
     if (data.status) {
+      setUpdater(dispatch, !updater);
       closeProofModel(false);
     }
   };
+  const Decline = () => {
+    setUpdater(dispatch, !updater);
+    closeProofModel(false);
+  };
+
   return (
     <Card>
       <MDBox
@@ -60,13 +72,15 @@ const ProofPreview = ({ closeProofModel, collab, file }) => {
             <p>{file.name}</p>
             <p>{file.size}B</p>
           </MDBox>
-          <a href={`${baseURL}/${file.path}`} download={file.name}>
-            <span
-              className="proof_preview_item_download"
-              // onClick={() => downloadfile}
-            >
-              <Icon>download</Icon>
-              &nbsp; download
+          <a
+            href={`${baseURL}/${file.path}`}
+            download={file.name}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <span className="proof_preview_item_download">
+              <Icon>preview</Icon>
+              &nbsp; Open
             </span>
           </a>
         </MDBox>
@@ -86,6 +100,7 @@ const ProofPreview = ({ closeProofModel, collab, file }) => {
             variant="gradient"
             color="primary"
             sx={{ width: "30%", ml: "5px" }}
+            onClick={() => Decline()}
           >
             Decline
           </MDButton>

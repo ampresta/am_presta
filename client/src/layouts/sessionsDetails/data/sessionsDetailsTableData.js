@@ -22,6 +22,7 @@ import {
   setOpenProofModel,
   setcollabProofModel,
   setfileProofModel,
+  setUpdater,
 } from "context";
 
 // Material Dashboard 2 React contexts
@@ -135,7 +136,12 @@ export default function Data() {
   };
 
   const asignVoucher = async (id) => {
-    await axios.post(asignOneVoucherRoute, { id });
+    const { data } = await axios.post(asignOneVoucherRoute, { id });
+    if (data.status) {
+      setUpdater(dispatch, !updater);
+    } else {
+      alert(data.msg);
+    }
   };
 
   const getVoucherStatus = (collab) => {
@@ -148,7 +154,7 @@ export default function Data() {
     ) {
       return (
         <MDBox display="flex">
-          <MDBox mr={2}>
+          <MDBox>
             <MDButton
               variant="gradient"
               color="success"
@@ -169,7 +175,7 @@ export default function Data() {
     ) {
       return (
         <MDBox display="flex">
-          <MDBox mr={2}>
+          <MDBox>
             <MDButton
               variant="gradient"
               color="success"
@@ -194,7 +200,7 @@ export default function Data() {
     ) {
       return (
         <MDBox display="flex">
-          <MDBox mr={2}>
+          <MDBox>
             <MDButton
               variant="gradient"
               color="success"
@@ -263,5 +269,6 @@ export default function Data() {
       voucher: getVoucherStatus(collab),
     });
   });
+
   return sessionsDetails;
 }
