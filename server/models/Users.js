@@ -15,6 +15,10 @@ const User = (db) => {
         type: Sequelize.STRING,
         allowNull: false, // defaults to true
       },
+      email: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
     },
     {
       Sequelize,

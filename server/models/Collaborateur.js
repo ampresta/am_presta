@@ -18,10 +18,6 @@ const fields = {
   image: {
     type: Sequelize.STRING,
   },
-  email: {
-    type: Sequelize.STRING,
-    allowNull: true,
-  },
   email_institu: {
     type: Sequelize.STRING,
     allowNull: true,

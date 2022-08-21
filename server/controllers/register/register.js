@@ -15,19 +15,19 @@ module.exports = async (req, res) => {
     const usernameCheck = await User.findOne({ where: { username } });
     if (usernameCheck)
       return res.json({ status: false, msg: "Username already used" });
-    const emailCheck = await Collaborateur.findOne({ where: { email } });
+    const emailCheck = await User.findOne({ where: { email } });
     if (usernameCheck)
-      return res.json({ status: false, msg: "Username already used" });
+      return res.json({ status: false, msg: "email already used" });
 
     const hash = await argon2.hash(password + pep);
     const user = await User.create(
       {
         username: username,
         password: hash,
+        email,
         Collaborateur: {
           nom,
           prenom,
-          email,
 
           Societe: {
             name: societe,

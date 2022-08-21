@@ -14,10 +14,8 @@ module.exports = async (req, res) => {
 
     if (!prenom || !nom) return res.sendStatus(403);
     username = `${nom}.${prenom}`;
-    const password = Array(8)
-      .fill()
-      .map(() => ((Math.random() * 36) | 0).toString(36))
-      .join("");
+    const password = "@AMPRESTA@";
+
     i = 1;
     while (true) {
       usernameCheck = await User.findOne({ where: { username } });
@@ -33,10 +31,10 @@ module.exports = async (req, res) => {
       {
         username,
         password: hash,
+        email,
         Collaborateur: {
           nom,
           prenom,
-          email,
           email_institu,
           SocieteId: req.societe,
           admin: false,

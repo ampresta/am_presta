@@ -9,13 +9,12 @@ import Courses from "layouts/courses/societe_courses";
 import Collabs from "layouts/collabs/societe";
 import Vouchers from "layouts/vouchers/societe";
 import Error404 from "layouts/error404";
-// import CatalogueCourses from "layouts/courses catalogue";
+import CatalogueCourses from "layouts/courses catalogue";
 import CoursesDetails from "layouts/courses catalogue/chooseCourse";
-// import MyRequests from "layouts/MyRequests";
+import MyRequests from "layouts/MyRequests";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
-import Loading from "layouts/Loading";
 
 const routes = [
   {
@@ -24,7 +23,7 @@ const routes = [
     key: "dashboard",
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/dashboard",
-    component: <Dashboard />,
+    component: <CatalogueCourses />,
   },
   {
     type: "collapse",
@@ -104,29 +103,29 @@ const routes = [
     route: "/Error404",
     component: <Error404 />,
   },
-  // {
-  //   type: "collapse",
-  //   name: "Catalogue",
-  //   key: "catalogue",
-  //   icon: <Icon fontSize="small">apps</Icon>,
-  //   route: "/catalogue",
-  //   component: <CatalogueCourses />,
-  // },
-  // {
-  //   name: "details",
-  //   key: "details",
-  //   icon: <Icon fontSize="small">check</Icon>,
-  //   route: "/catalogue/details",
-  //   component: <CoursesDetails />,
-  // },
-  // {
-  //   type: "collapse",
-  //   name: "My Requests",
-  //   key: "myRequests",
-  //   icon: <Icon fontSize="small">warning</Icon>,
-  //   route: "/myRequests",
-  //   component: <MyRequests />,
-  // },
+  {
+    type: "collapse",
+    name: "Catalogue",
+    key: "catalogue",
+    icon: <Icon fontSize="small">apps</Icon>,
+    route: "/catalogue",
+    component: <CatalogueCourses />,
+  },
+  {
+    name: "details",
+    key: "details",
+    icon: <Icon fontSize="small">check</Icon>,
+    route: "/catalogue/details",
+    component: <CoursesDetails />,
+  },
+  {
+    type: "collapse",
+    name: "My Requests",
+    key: "myRequests",
+    icon: <Icon fontSize="small">warning</Icon>,
+    route: "/myRequests",
+    component: <MyRequests />,
+  },
 ];
 
 export default routes;
