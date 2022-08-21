@@ -36,6 +36,7 @@ export const addPartnersRoute = `${baseURL}/provider/add`;
 
 // Cours
 export const allCoursesRoute = `${baseURL}/cours/browse`;
+export const CoursesCatalogue = `${baseURL}/cours/catalogue`;
 export const addCoursesRoute = `${baseURL}/cours/add`;
 export const allCompanyCoursesRoute = `${baseURL}/cours/browsesoc`;
 
