@@ -11,6 +11,7 @@ import Vouchers from "layouts/vouchers/societe";
 import Error404 from "layouts/error404";
 import CatalogueCourses from "layouts/courses catalogue";
 import CoursesDetails from "layouts/courses catalogue/chooseCourse";
+import MyRequests from "layouts/MyRequests";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -116,6 +117,14 @@ const routes = [
     icon: <Icon fontSize="small">check</Icon>,
     route: "/catalogue/details",
     component: <CoursesDetails />,
+  },
+  {
+    type: "collapse",
+    name: "My Requests",
+    key: "myRequests",
+    icon: <Icon fontSize="small">warning</Icon>,
+    route: "/myRequests",
+    component: <MyRequests />,
   },
 ];
 

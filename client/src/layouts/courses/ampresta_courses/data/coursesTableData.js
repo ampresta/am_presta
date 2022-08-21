@@ -11,9 +11,6 @@ import Icon from "@mui/material/Icon";
 // React Hooks
 import { useState, useEffect } from "react";
 
-// Api Endpoint
-// import axios from "services/authAxios";
-
 import { allCoursesRoute, baseURL, DeleteInstances } from "utils/APIRoutes";
 
 // ConfirmPoppup component
@@ -27,7 +24,6 @@ export default function Data() {
   const [allCourses, setAllCourses] = useState([]);
   const [confirmModel, setConfirmModel] = useState(false);
   const [tempCourseId, setTempCourseId] = useState(0);
-
 
   const [controller] = useMaterialUIController();
 
@@ -130,8 +126,6 @@ export default function Data() {
 
     rawData: allCourses,
   };
-
-
 
   allCourses.map((course) =>
     courses.rows.push({

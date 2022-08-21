@@ -3,319 +3,54 @@ import FiveGImage from "assets/images/HCIA-5G.jpg";
 import NSE1Image from "assets/images/Cloud-Infrastructure.jpeg";
 import CloudImage from "assets/images/NSE1-Fortinet.jpg";
 
-const coursesData = [
-  {
-    id: 1,
-    image: FiveGImage,
-    name: "HCIA - 5G",
-    provider: "Huawei",
-    route: "/catalogue/details",
-    pro: false,
-  },
-  {
-    id: 2,
-    image: NSE1Image,
-    name: "Cloud Infrastructure",
-    provider: "Oracle",
-    route: "/",
-    pro: true,
-  },
-  {
-    id: 3,
-    image: CloudImage,
-    name: "Network Security Associate NSE1",
-    route: "",
-    provider: "Fortinet",
-    pro: false,
-  },
-  {
-    id: 4,
-    image: BigDataImage,
-    name: "HCIA - Big Data",
-    route: "",
-    provider: "Huawei",
-    pro: true,
-  },
-  {
-    id: 2,
-    image: NSE1Image,
-    name: "Cloud Infrastructure",
-    provider: "Oracle",
-    route: "/",
-    pro: true,
-  },
-  {
-    id: 3,
-    image: CloudImage,
-    name: "Network Security Associate NSE1",
-    route: "",
-    provider: "Fortinet",
-    pro: false,
-  },
-  {
-    id: 4,
-    image: BigDataImage,
-    name: "HCIA - Big Data",
-    route: "",
-    provider: "Huawei",
-    pro: true,
-  },
-  {
-    id: 2,
-    image: NSE1Image,
-    name: "Cloud Infrastructure",
-    provider: "Oracle",
-    route: "/",
-    pro: true,
-  },
-  {
-    id: 3,
-    image: CloudImage,
-    name: "Network Security Associate NSE1",
-    route: "",
-    provider: "Fortinet",
-    pro: false,
-  },
-  {
-    id: 4,
-    image: BigDataImage,
-    name: "HCIA - Big Data",
-    route: "",
-    provider: "Huawei",
-    pro: false,
-  },
-  {
-    id: 2,
-    image: NSE1Image,
-    name: "Cloud Infrastructure",
-    provider: "Oracle",
-    route: "/",
-    pro: false,
-  },
-  {
-    id: 3,
-    image: CloudImage,
-    name: "Network Security Associate NSE1",
-    route: "",
-    provider: "Fortinet",
-    pro: true,
-  },
-  {
-    id: 4,
-    image: BigDataImage,
-    name: "HCIA - Big Data",
-    route: "",
-    provider: "Huawei",
-    pro: false,
-  },
-  {
-    id: 2,
-    image: NSE1Image,
-    name: "Cloud Infrastructure",
-    provider: "Oracle",
-    route: "/",
-    pro: true,
-  },
-  {
-    id: 3,
-    image: CloudImage,
-    name: "Network Security Associate NSE1",
-    route: "",
-    provider: "Fortinet",
-    pro: false,
-  },
-  {
-    id: 4,
-    image: BigDataImage,
-    name: "HCIA - Big Data",
-    route: "",
-    provider: "Huawei",
-    pro: true,
-  },
-  {
-    id: 1,
-    image: FiveGImage,
-    name: "HCIA - 5G",
-    provider: "Huawei",
-    route: "/",
-    pro: false,
-  },
-  {
-    id: 2,
-    image: NSE1Image,
-    name: "Cloud Infrastructure",
-    provider: "Oracle",
-    route: "/",
-    pro: true,
-  },
-  {
-    id: 3,
-    image: CloudImage,
-    name: "Network Security Associate NSE1",
-    route: "",
-    provider: "Fortinet",
-    pro: false,
-  },
-  {
-    id: 4,
-    image: BigDataImage,
-    name: "HCIA - Big Data",
-    route: "",
-    provider: "Huawei",
-    pro: true,
-  },
-  {
-    id: 2,
-    image: NSE1Image,
-    name: "Cloud Infrastructure",
-    provider: "Oracle",
-    route: "/",
-    pro: true,
-  },
-  {
-    id: 3,
-    image: CloudImage,
-    name: "Network Security Associate NSE1",
-    route: "",
-    provider: "Fortinet",
-    pro: false,
-  },
-  {
-    id: 4,
-    image: BigDataImage,
-    name: "HCIA - Big Data",
-    route: "",
-    provider: "Huawei",
-    pro: true,
-  },
-  {
-    id: 2,
-    image: NSE1Image,
-    name: "Cloud Infrastructure",
-    provider: "Oracle",
-    route: "/",
-    pro: true,
-  },
-  {
-    id: 1,
-    image: FiveGImage,
-    name: "HCIA - 5G",
-    provider: "Huawei",
-    route: "/",
-    pro: false,
-  },
-  {
-    id: 2,
-    image: NSE1Image,
-    name: "Cloud Infrastructure",
-    provider: "Oracle",
-    route: "/",
-    pro: true,
-  },
-  {
-    id: 3,
-    image: CloudImage,
-    name: "Network Security Associate NSE1",
-    route: "",
-    provider: "Fortinet",
-    pro: false,
-  },
-  {
-    id: 4,
-    image: BigDataImage,
-    name: "HCIA - Big Data",
-    route: "",
-    provider: "Huawei",
-    pro: true,
-  },
-  {
-    id: 2,
-    image: NSE1Image,
-    name: "Cloud Infrastructure",
-    provider: "Oracle",
-    route: "/",
-    pro: true,
-  },
-  {
-    id: 3,
-    image: CloudImage,
-    name: "Network Security Associate NSE1",
-    route: "",
-    provider: "Fortinet",
-    pro: false,
-  },
-  {
-    id: 4,
-    image: BigDataImage,
-    name: "HCIA - Big Data",
-    route: "",
-    provider: "Huawei",
-    pro: true,
-  },
-  {
-    id: 2,
-    image: NSE1Image,
-    name: "Cloud Infrastructure",
-    provider: "Oracle",
-    route: "/",
-    pro: true,
-  },
-  {
-    id: 1,
-    image: FiveGImage,
-    name: "HCIA - 5G",
-    provider: "Huawei",
-    route: "/",
-    pro: false,
-  },
-  {
-    id: 2,
-    image: NSE1Image,
-    name: "Cloud Infrastructure",
-    provider: "Oracle",
-    route: "/",
-    pro: true,
-  },
-  {
-    id: 3,
-    image: CloudImage,
-    name: "Network Security Associate NSE1",
-    route: "",
-    provider: "Fortinet",
-    pro: false,
-  },
-  {
-    id: 4,
-    image: BigDataImage,
-    name: "HCIA - Big Data",
-    route: "",
-    provider: "Huawei",
-    pro: true,
-  },
-  {
-    id: 3,
-    image: CloudImage,
-    name: "Network Security Associate NSE1",
-    route: "",
-    provider: "Fortinet",
-    pro: false,
-  },
-  {
-    id: 4,
-    image: BigDataImage,
-    name: "HCIA - Big Data",
-    route: "",
-    provider: "Huawei",
-    pro: true,
-  },
-  {
-    id: 2,
-    image: NSE1Image,
-    name: "Cloud Infrastructure",
-    provider: "Oracle",
-    route: "/",
-    pro: true,
-  },
-];
+import { useEffect, useState } from "react";
+import { allCoursesRoute, allPartnersRoute } from "utils/APIRoutes";
+import axiosAuth from "services/authAxios";
 
-export default coursesData;
+export default function Data() {
+  const [allCourses, setAllCourses] = useState([]);
+  const [allPartners, setAllPartners] = useState([]);
+
+  useEffect(() => {
+    const getAllCourses = async () => {
+      const { data } = await axiosAuth.get(allCoursesRoute);
+      console.log(data);
+      setAllCourses(data);
+    };
+    getAllCourses();
+  }, []);
+
+  useEffect(() => {
+    const getAllPartners = async () => {
+      const { data } = await axiosAuth.get(allPartnersRoute);
+      setAllPartners((prev) => data);
+    };
+    getAllPartners();
+  }, []);
+
+  const coursesData = [];
+
+  allCourses.map((course) =>
+    coursesData.push({
+      id: course.id,
+      image: course.image,
+      provider: course.Provider.nom,
+      name: course.nom,
+      route: "/catalogue/details",
+      pro: false,
+    })
+  );
+
+  const partnersData = [];
+
+  allPartners.map((partner) =>
+    partnersData.push({
+      id: partner.id,
+      name: partner.nom,
+    })
+  );
+
+  console.log(partnersData);
+
+  return {coursesData, partnersData};
+}
