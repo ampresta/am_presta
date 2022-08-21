@@ -31,6 +31,7 @@ function Catalogue() {
   const [allCourses, setAllCourses] = useState([]);
   const [allPartners, setAllPartners] = useState([]);
 
+  const [chosenPartners, setchosenPartners] = useState([]);
   useEffect(() => {
     const getAllCourses = async () => {
       const { data } = await axiosAuth.get(CoursesCatalogue);
@@ -43,7 +44,7 @@ function Catalogue() {
   useEffect(() => {
     const getAllPartners = async () => {
       const { data } = await axiosAuth.get(allPartnersRoute);
-      setAllPartners((prev) => data);
+      setAllPartners(data);
     };
     getAllPartners();
   }, []);
@@ -92,17 +93,18 @@ function Catalogue() {
       </Grid>
     )
   );
-  let choosenPartners = [];
   const handleProvider = (e) => {
-    choosenPartners.push(e.currentTarget.id);
+    setchosenPartners((prev) => [...prev, e]);
+    let arr = [e];
+    arr.concat(chosenPartners);
     const getAllCourses = async () => {
       const { data } = await axiosAuth.post(CoursesCatalogue, {
-        providers: choosenPartners,
+        provider: [chosenPartners, e],
       });
-      console.log(data);
       setAllCourses(data.cours);
     };
     getAllCourses();
+    console.log(chosenPartners);
   };
   return (
     <MDBox pb={3}>
@@ -145,7 +147,7 @@ function Catalogue() {
                 {partnersData.map((item) => (
                   <MDButton
                     key={item.id}
-                    onClick={(e) => handleProvider(e)}
+                    onClick={() => handleProvider(item.id)}
                     variant="text"
                     color="dark"
                     size="small"
