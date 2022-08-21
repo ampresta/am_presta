@@ -1,6 +1,6 @@
 import ChangePassword from "layouts/authentication/reset-password";
 import { useMaterialUIController } from "context";
-import Loading from "layouts/Loading";
+import Loading from "examples/Loading";
 
 const SpecialRoute = ({ children }) => {
   const [controller] = useMaterialUIController();

@@ -1,7 +1,7 @@
 import { useState } from "react";
 // @mui material components
 import Card from "@mui/material/Card";
-import { FormHelperText, Icon } from "@mui/material";
+import { FormHelperText } from "@mui/material";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
