@@ -38,6 +38,7 @@ import ChooseCollabs from "./ChooseCollabs";
 import ProofPreview from "components/ProofPreview";
 
 import { useParams } from "react-router-dom";
+import { asignVoucherSessionRoute } from "utils/APIRoutes";
 
 function Partners() {
   const { columns, rows, rawData } = sessionsDetailsTableData();
@@ -82,6 +83,10 @@ function Partners() {
           : 0,
       ],
     },
+  };
+
+  const assignAll = async () => {
+    await axios.post(asignVoucherSessionRoute, { id });
   };
 
   return (
@@ -146,7 +151,7 @@ function Partners() {
                         variant="gradient"
                         color="success"
                         size="small"
-                        // onClick={() => handleDownload("allCourses", "export")}
+                        onClick={() => assignAll()}
                         // disabled={rawData.length === 0}
                       >
                         <Icon fontSize="big" color="light">
