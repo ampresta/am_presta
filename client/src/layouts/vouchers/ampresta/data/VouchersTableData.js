@@ -68,12 +68,6 @@ export default function Data() {
   let vouchers = {
     columns: [
       {
-        Header: "Profile",
-        accessor: "author",
-        width: "5%",
-        align: "left",
-      },
-      {
         Header: "Provider",
         accessor: "provider",
         width: "10%",
@@ -83,13 +77,13 @@ export default function Data() {
         Header: "Societe",
         accessor: "societe",
         width: "10%",
-        align: "left",
+        align: "center",
       },
       {
         Header: "Value",
         accessor: "value",
         width: "10%",
-        align: "left",
+        align: "center",
       },
       { Header: "edit", accessor: "edit", align: "center", width: "3%" },
       { Header: "delete", accessor: "delete", align: "center", width: "3%" },
@@ -111,16 +105,10 @@ export default function Data() {
   try {
     allVouchers.map((voucher) =>
       vouchers.rows.push({
-        author: (
-          <Company
-          image={voucher.Provider.image}
-          />
-        ),
         provider: (
-          <MDTypography variant="caption" color="text" fontWeight="medium">
-            {voucher.Provider.nom}
-          </MDTypography>
+          <Company name={voucher.Provider.nom} image={voucher.Provider.image} />
         ),
+
         societe: (
           <MDTypography variant="caption" color="text" fontWeight="medium">
             {voucher.Societe.name}

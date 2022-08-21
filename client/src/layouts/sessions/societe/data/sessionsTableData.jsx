@@ -133,13 +133,13 @@ export default function Data() {
         Header: "Cours",
         accessor: "cours",
         width: "15%",
-        align: "left",
+        align: "center",
       },
       {
         Header: "Provider",
         accessor: "provider",
         width: "15%",
-        align: "left",
+        align: "center",
       },
       {
         Header: "enrolled",
@@ -157,10 +157,10 @@ export default function Data() {
         Header: "Period",
         accessor: "period",
         align: "center",
-        width: "15%",
+        width: "25%",
       },
-      { Header: "edit", accessor: "edit", align: "center" },
-      { Header: "delete", accessor: "delete", align: "center" },
+      { Header: "edit", accessor: "edit", align: "center", width: "2%" },
+      { Header: "delete", accessor: "delete", align: "center", width: "2%" },
     ],
 
     rows: [],
@@ -178,7 +178,14 @@ export default function Data() {
     ProvidersFilter: (
       <Grid container mt={1} ml={1} rowSpacing={1}>
         {providers.map((provider) => (
-          <Grid item xs={1} md={1.5} lg={1} ml={{xs: 3, lg: 2}} key={provider.id}>
+          <Grid
+            item
+            xs={1}
+            md={1.5}
+            lg={1}
+            ml={{ xs: 3, lg: 2 }}
+            key={provider.id}
+          >
             <MDButton
               variant="outlined"
               size="small"

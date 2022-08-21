@@ -98,7 +98,7 @@ function Vouchers() {
 
                 <Grid
                   container
-                  spacing={2}
+                  spacing={3}
                   display="flex"
                   justifyContent="space-between"
                 >
@@ -115,7 +115,7 @@ function Vouchers() {
                   </MDBox>
 
                   <MDBox pt={2} pr={4} mt={3} display="flex">
-                    <MDBox mr={2}>
+                    <MDBox mr={1}>
                       <MDButton
                         variant="gradient"
                         color="success"

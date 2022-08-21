@@ -97,12 +97,6 @@ export default function Data() {
         align: "center",
         width: "30%",
       },
-      // {
-      //   Header: "Departmenet",
-      //   accessor: "departmenet",
-      //   align: "center",
-      //   width: "30%",
-      // },
       { Header: "edit", accessor: "edit", align: "center", width: "3%" },
       { Header: "delete", accessor: "delete", align: "center", width: "3%" },
     ],

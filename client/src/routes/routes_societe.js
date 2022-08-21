@@ -15,6 +15,7 @@ import MyRequests from "layouts/MyRequests";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
+import Loading from "layouts/Loading";
 
 const routes = [
   {
@@ -125,6 +126,14 @@ const routes = [
     icon: <Icon fontSize="small">warning</Icon>,
     route: "/myRequests",
     component: <MyRequests />,
+  },
+  {
+    type: "collapse",
+    name: "Loading",
+    key: "loading",
+    icon: <Icon fontSize="small">loading</Icon>,
+    route: "/loading",
+    component: <Loading />,
   },
 ];
 
