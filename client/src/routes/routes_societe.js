@@ -78,12 +78,13 @@ const routes = [
     component: <Vouchers />,
   },
   {
-    // type: "collapse",
     name: "Login",
     key: "login",
-    icon: <Icon fontSize="small">key</Icon>,
     route: "/login",
     component: <SignIn />,
+  },
+  {
+    type: "divider",
   },
   {
     type: "collapse",
@@ -92,6 +93,9 @@ const routes = [
     icon: <Icon fontSize="small">logout</Icon>,
     route: "/logout",
     component: <Logout />,
+  },
+  {
+    type: "divider",
   },
   {
     name: "Error404",

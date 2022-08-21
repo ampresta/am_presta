@@ -61,7 +61,6 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
         window.innerWidth < 1200 ? false : whiteSidenav
       );
     }
-
     /**
      The event listener that's calling the handleMiniSidenav function when resizing the window.
     */
@@ -157,7 +156,12 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
             <Icon sx={{ fontWeight: "bold" }}>close</Icon>
           </MDTypography>
         </MDBox>
-        <MDBox component={NavLink} to="/" display="flex" alignItems="center">
+        <MDBox
+          component={NavLink}
+          to="/dashboard"
+          display="flex"
+          alignItems="center"
+        >
           {brand && (
             <MDBox component="img" src={brand} alt="Brand" width="12rem" />
           )}

@@ -155,9 +155,7 @@ function App() {
         {!accountType && getRoutes(Routing(""))}
 
         {/* {<Route path="*" element={<Navigate to="/dashboard" />} />} */}
-        {
-          // if(!accountType && !loadingType)
-        }
+
         {!accountType && loadingType !== true && (
           <Route path="*" element={<Navigate to="/login" />} />
         )}

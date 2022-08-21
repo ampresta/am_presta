@@ -92,7 +92,7 @@ function Vouchers() {
                   coloredShadow="info"
                 >
                   <MDTypography variant="h6" color="white">
-                    Collborators
+                    Collaborators
                   </MDTypography>
                 </MDBox>
 

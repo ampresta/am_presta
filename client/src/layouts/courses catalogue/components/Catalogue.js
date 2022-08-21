@@ -22,21 +22,20 @@ import MDBadge from "components/MDBadge";
 // Presentation page components
 import ExampleCard from "examples/Cards/ExampleCard";
 
-// Data
-import CoursesCatalogueData from "../data/CoursesCatalogueData";
-
 import { baseURL } from "utils/APIRoutes";
 
 function Catalogue() {
   const [allCourses, setAllCourses] = useState([]);
+  const [stockedCourses, setStockedCourses] = useState([]);
   const [allPartners, setAllPartners] = useState([]);
 
-  const [chosenPartners, setchosenPartners] = useState([]);
+  // const [chosenPartners, setchosenPartners] = useState([]);
+
   useEffect(() => {
     const getAllCourses = async () => {
       const { data } = await axiosAuth.get(CoursesCatalogue);
-      console.log(data);
       setAllCourses(data.cours);
+      setStockedCourses(data.cours);
     };
     getAllCourses();
   }, []);
@@ -71,10 +70,6 @@ function Catalogue() {
     })
   );
 
-  console.log(partnersData);
-
-  // const { coursesData, partnersData } = CoursesCatalogueData();
-
   partnersData.unshift({ id: -1, name: "ALL" });
 
   const renderData = coursesData.map(
@@ -94,18 +89,24 @@ function Catalogue() {
     )
   );
   const handleProvider = (e) => {
-    setchosenPartners((prev) => [...prev, e]);
-    let arr = [e];
-    arr.concat(chosenPartners);
-    const getAllCourses = async () => {
-      const { data } = await axiosAuth.post(CoursesCatalogue, {
-        provider: [chosenPartners, e],
-      });
-      setAllCourses(data.cours);
-    };
-    getAllCourses();
-    console.log(chosenPartners);
+    if (e === -1) {
+      setAllCourses(stockedCourses);
+    } else {
+      // setchosenPartners((prev) => [...prev, e]);
+      // let arr = [e];
+      // arr.concat(chosenPartners);
+      const getAllCourses = async () => {
+        const { data } = await axiosAuth.post(CoursesCatalogue, {
+          // provider: [chosenPartners, e],
+          provider: [e],
+        });
+        setAllCourses(data.cours);
+      };
+      // console.log("chosen", chosenPartners);
+      getAllCourses();
+    }
   };
+
   return (
     <MDBox pb={3}>
       <Container sx={{ mt: { xs: 2, lg: 3 } }}>
@@ -152,7 +153,6 @@ function Catalogue() {
                     color="dark"
                     size="small"
                     sx={{ mb: 0.5 }}
-                    // onClick={() => console.log(item.id)}
                   >
                     {item.name}
                   </MDButton>

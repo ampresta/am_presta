@@ -1,8 +1,3 @@
-import BigDataImage from "assets/images/HCIA-BigData.jpg";
-import FiveGImage from "assets/images/HCIA-5G.jpg";
-import NSE1Image from "assets/images/Cloud-Infrastructure.jpeg";
-import CloudImage from "assets/images/NSE1-Fortinet.jpg";
-
 import { useEffect, useState } from "react";
 import {
   CoursesCatalogue,

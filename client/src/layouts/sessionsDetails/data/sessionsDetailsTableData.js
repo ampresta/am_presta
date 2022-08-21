@@ -222,7 +222,7 @@ export default function Data() {
   let sessionsDetails = {
     columns: [
       {
-        Header: "Collborators",
+        Header: "Collaborators",
         accessor: "author",
         width: "20%",
         align: "left",
