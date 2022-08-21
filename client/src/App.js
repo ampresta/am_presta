@@ -55,15 +55,14 @@ function App() {
   }, [pathname]);
 
   useEffect(() => {
+    setTypeLoading(dispatch, true);
     const getRefreshToken = async () => {
       const { data } = await axios.get(refreshRoute);
-      setTypeLoading(dispatch, true);
+      console.log("Waiting Now");
       if (data && data.accesstoken) {
         setTypeLoading(dispatch, false);
         setAccessToken(data.accesstoken);
         setAccountType(dispatch, data.type);
-        console.log(` loading is ${loadingType}`);
-        console.log(` account is ${accountType}`);
         if (data.changedpass !== "") {
           setChangedPassword(dispatch, data.changedpass);
         } else {

@@ -58,15 +58,15 @@ function reducer(state, action) {
       return { ...state, openSelectCollabs: action.value };
     }
     case "ACCOUNTTYPE": {
-      console.log(`type changed to ${action.value}`);
+      // console.log(`type changed to ${action.value}`);
       return { ...state, accountType: action.value };
     }
     case "TYPELOADING": {
-      console.log(`laoding changed to ${action.value}`);
+      // console.log(`laoding changed to ${action.value}`);
       return { ...state, loadingType: action.value };
     }
     case "PASSWORDCHANGED": {
-      console.log(`password changed to ${action.value}`);
+      // console.log(`password changed to ${action.value}`);
       return { ...state, changedPassword: action.value };
     }
     default: {

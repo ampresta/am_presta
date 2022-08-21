@@ -40,12 +40,12 @@ function Basic() {
   const navigate = useNavigate();
 
   const [controller, dispatch] = useMaterialUIController();
-
+const {loadingType}=controller
   useEffect(() => {
     if (getAccessToken() !== "") {
       navigate("/dashboard");
     }
-  }, []);
+  }, [loadingType]);
 
   const [rememberMe, setRememberMe] = useState(false);
   const [formDetails, setFromDetail] = useState({

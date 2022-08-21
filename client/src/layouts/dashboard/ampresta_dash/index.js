@@ -45,11 +45,12 @@ function Dashboard() {
   const [partnersCount, setPartnersCount] = useState(0);
   const [companiesCount, setCompaniesCount] = useState(0);
 
+  // useEffect(() => {
+  //   if (!getAccessToken()) {
+  //     console.log("LOGIN");
+  //     navigate("/login");
+  //   },[])
   useEffect(() => {
-    if (!getAccessToken()) {
-      console.log("LOGIN");
-      navigate("/login");
-    }
     const fetchCards = async (model) => {
       const { data } = await axios.post(amCardsRoute, { model });
       switch (model) {
