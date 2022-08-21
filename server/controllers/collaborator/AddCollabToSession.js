@@ -53,12 +53,14 @@ module.exports = async (req, res) => {
     sess.Cour.Provider.Quota[0].quota--;
     sess.Cour.Provider.Quota[0].save();
     if (request) {
-      Request.destroy({
+      const req = await Request.findOne({
         where: {
           CourId: sess.CourId,
           CollaborateurId: collab,
         },
       });
+      req.status = true;
+      await req.save();
     }
 
     return res.send({ status: true, msg: "Collab Added" });
