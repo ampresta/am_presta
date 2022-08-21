@@ -26,6 +26,7 @@ function Route(type) {
   ];
   let routes = normalroutes;
   if (type === "Societe") {
+    console.log("routes loaded");
     routes = routes_societe;
   } else if (type === "Superadmin") {
     routes = routes_ampresta;

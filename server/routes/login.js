@@ -1,4 +1,5 @@
 const cookieParser = require("cookie-parser");
+const changePassword = require("../controllers/login/changePassword");
 const router = require("express").Router();
 const login = require("../controllers/login/login");
 const refreshtoken = require("../controllers/login/refreshtoken");
@@ -13,6 +14,7 @@ router.use(cookieParser());
 router.post("/", login);
 router.get("/refreshtoken", refreshtoken);
 
+router.post("/changepass", changePassword);
 router.use("/getimage", checkSociete);
 router.get("/getimage", getImage);
 module.exports = router;

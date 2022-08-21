@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 // @mui material components
 import Card from "@mui/material/Card";
 import { FormHelperText, Icon } from "@mui/material";
@@ -12,14 +11,23 @@ import MDButton from "components/MDButton";
 
 // Authentication layout components
 import BasicLayout from "layouts/authentication/components/BasicLayout";
+import { useEffect } from "react";
 
 //Password Tester Component
 import PasswordTest from "components/PasswordTest";
-
+import { ChangePasswordRoute } from "utils/APIRoutes";
 // Images
 import bgImage from "assets/images/bg-reset-cover.jpeg";
-
+import axios from "services/authAxios";
+import { setChangedPassword } from "context";
+import { useNavigate } from "react-router-dom";
+import { useMaterialUIController } from "context";
 function PasswordReset() {
+  useEffect(() => {
+    console.log("You're heeere mf");
+  }, []);
+  const [controller, dispatch] = useMaterialUIController();
+  let navigate = useNavigate();
   const [newPassword, setNewPassword] = useState("");
   const [showStrength, setShowStrength] = useState(false);
   const [formErrors, setFormErrors] = useState({
@@ -30,6 +38,13 @@ function PasswordReset() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setFormErrors(validate(newPassword));
+    const { data } = await axios.post(ChangePasswordRoute, {
+      password: newPassword.password,
+    });
+    if (data.status) {
+      setChangedPassword(dispatch, true);
+      navigate("/dashboard");
+    }
   };
 
   const handleChange = (event) => {

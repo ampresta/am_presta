@@ -2,10 +2,10 @@ import { useEffect } from "react";
 import { imageRoute, refreshRoute, baseURL } from "utils/APIRoutes";
 // react-router components
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import SpecialRoute from "routes/SpecialRoute";
 // @mui material components
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-
 // Material Dashboard 2 React example components
 import Sidenav from "examples/Sidenav";
 
@@ -25,7 +25,13 @@ import themeDark from "assets/theme-dark";
 // Material Dashboard 2 React routes
 import Routing from "routes";
 // Material Dashboard 2 React contexts
-import { useMaterialUIController, setDarkMode } from "context";
+import {
+  useMaterialUIController,
+  setDarkMode,
+  setAccountType,
+  setChangedPassword,
+  setTypeLoading,
+} from "context";
 import axios from "services/authAxios";
 
 import { setAccessToken } from "utils/accessToken";
@@ -34,11 +40,12 @@ import React, { useState } from "react";
 function App() {
   const [controller, dispatch] = useMaterialUIController();
 
-  const { layout, sidenavColor, darkMode } = controller;
+  const { layout, accountType, loadingType, sidenavColor, darkMode } =
+    controller;
 
   const { pathname } = useLocation();
 
-  const [type, setType] = useState("");
+  // const [type, setType] = useState("");
   const [image, setImage] = useState("");
 
   // Setting page scroll to 0 when changing the route
@@ -50,10 +57,21 @@ function App() {
   useEffect(() => {
     const getRefreshToken = async () => {
       const { data } = await axios.get(refreshRoute);
+      setTypeLoading(dispatch, true);
       if (data && data.accesstoken) {
+        setTypeLoading(dispatch, false);
         setAccessToken(data.accesstoken);
-        setType(data.type);
+        setAccountType(dispatch, data.type);
+        console.log(` loading is ${loadingType}`);
+        console.log(` account is ${accountType}`);
+        if (data.changedpass !== "") {
+          setChangedPassword(dispatch, data.changedpass);
+        } else {
+          setChangedPassword(dispatch, true);
+        }
         setImage(data.img);
+      } else if (data && !data.status) {
+        setTypeLoading(dispatch, false);
       }
     };
     getRefreshToken();
@@ -67,7 +85,7 @@ function App() {
       }
     };
     getImage();
-  }, [type]);
+  }, [accountType]);
 
   useEffect(() => {}, [darkMode]);
 
@@ -82,7 +100,7 @@ function App() {
           <Route
             exact
             path={route.route}
-            element={route.component}
+            element={<SpecialRoute>{route.component}</SpecialRoute>}
             key={route.key}
           />
         );
@@ -128,14 +146,22 @@ function App() {
           <Sidenav
             color={sidenavColor}
             brand={image ? `${baseURL}/${image}` : AmpLogo}
-            routes={type ? Routing(type) : Routing("")}
+            routes={accountType ? Routing(accountType) : Routing("")}
           />
           {darkModeToggle}
         </>
       )}
       <Routes>
-        {type ? getRoutes(Routing(type)) : getRoutes(Routing(""))}
+        {accountType && getRoutes(Routing(accountType))}
+        {!accountType && getRoutes(Routing(""))}
+
         {/* {<Route path="*" element={<Navigate to="/dashboard" />} />} */}
+        {
+          // if(!accountType && !loadingType)
+        }
+        {!accountType && loadingType !== true && (
+          <Route path="*" element={<Navigate to="/login" />} />
+        )}
       </Routes>
     </ThemeProvider>
   );

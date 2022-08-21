@@ -69,10 +69,10 @@ module.exports = async (req, res) => {
       [
         sequelize.fn(
           "count",
-          sequelize.fn(
-            "distinct",
-            sequelize.col("Sessions->Session_Collabs->Collaborateur.id")
-          )
+          //   sequelize.fn(
+          //     "distinct",
+          sequelize.col("Sessions->Session_Collabs->Collaborateur.id")
+          // )
         ),
         "collabs",
       ],
