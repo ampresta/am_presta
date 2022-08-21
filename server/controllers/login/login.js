@@ -3,13 +3,16 @@ const { User } = db.models;
 const argon2 = require("argon2");
 const { sign } = require("jsonwebtoken");
 const GetType = require("./GetType");
+const { Op } = require("sequelize");
 module.exports = async (req, res) => {
   try {
     const { username, password } = req.body;
     if (!username || !password) {
       return res.send({ status: false, msg: "Check parameters" });
     }
-    const user = await User.findOne({ where: { username } });
+    const user = await User.findOne({
+      where: { [Op.or]: { username, email: username } },
+    });
 
     if (user === null)
       return res.send({ status: false, msg: "User Not found!" });

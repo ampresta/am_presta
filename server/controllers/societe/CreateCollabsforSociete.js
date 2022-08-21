@@ -2,8 +2,6 @@ const argon2 = require("argon2");
 const db = require("../../config/database");
 const { Collaborateur, Societe, User } = db.models;
 module.exports = async (req, res) => {
-  console.log("RRR");
-  console.log(req.body);
   const { accounts } = req.body;
   if (!accounts) {
     return res.sendStatus(403);
@@ -15,10 +13,7 @@ module.exports = async (req, res) => {
 
       if (!prenom || !nom) return res.sendStatus(403);
       username = `${nom}.${prenom}`;
-      const password = Array(8)
-        .fill()
-        .map(() => ((Math.random() * 36) | 0).toString(36))
-        .join("");
+      const password = "@AMPRESTA@";
       i = 1;
       while (true) {
         usernameCheck = await User.findOne({ where: { username } });
@@ -34,10 +29,10 @@ module.exports = async (req, res) => {
         {
           username,
           password: hash,
+          email,
           Collaborateur: {
             nom,
             prenom,
-            email,
             email_institu,
             SocieteId: req.societe,
             admin: false,

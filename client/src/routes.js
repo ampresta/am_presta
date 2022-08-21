@@ -3,6 +3,7 @@ import Logout from "layouts/authentication/logout";
 import routes_societe from "routes/routes_societe";
 import routes_ampresta from "routes/routes_presta";
 
+import routes_collab from "routes/routes_collab";
 // @mui icons
 import Icon from "@mui/material/Icon";
 function Route(type) {
@@ -29,6 +30,8 @@ function Route(type) {
     routes = routes_societe;
   } else if (type === "Superadmin") {
     routes = routes_ampresta;
+  } else if (type === "Collab") {
+    routes = routes_collab;
   }
   return routes;
 }
