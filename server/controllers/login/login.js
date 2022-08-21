@@ -38,6 +38,9 @@ module.exports = async (req, res) => {
       }
       if (type === "Collab") {
         id = await user.getCollaborateur();
+        console.log("\x1b[42mPAYLOAD ihuhuhu\x1b[0m");
+        console.log(id.id);
+        payload.id = id.id;
         changedpass = id.changedpass;
         payload.changedpass = changedpass;
       }
