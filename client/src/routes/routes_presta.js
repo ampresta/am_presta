@@ -101,7 +101,7 @@ const routes = [
     type: "collapse",
     name: "Logout",
     key: "Logout",
-    icon: <Icon fontSize="small">lock</Icon>,
+    icon: <Icon fontSize="small">logout</Icon>,
     route: "/logout",
     component: <Logout />,
   },
