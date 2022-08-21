@@ -11,24 +11,15 @@ module.exports = async (req, res) => {
           model: Provider,
           attributes: ["id", "nom", "image"],
         },
-        {
-          model: Societe,
-          attributes: ["id", "name"],
-        },
       ],
       where: {
         SessionCollabId: null,
+        SocieteId: req.societe,
       },
-      order: [
-        ["Provider", "id"],
-        ["Societe", "id"],
-      ],
+      order: [["Provider", "id"]],
     });
     return res.send(vouchers);
-  } catch (error) {
+  } catch {
     return res.send({ status: false });
   }
- 
 };
-
-

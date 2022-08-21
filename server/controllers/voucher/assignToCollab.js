@@ -3,7 +3,6 @@ const db = require("../../config/database");
 
 const { Session_Collab, Voucher, Proof, Session, Cours } = db.models;
 
-
 module.exports = async (req, res) => {
   const { id } = req.body;
   if (!id) {
