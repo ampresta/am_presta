@@ -14,6 +14,7 @@ const dashboard = require("./routes/dashboard");
 const proof = require("./routes/proof");
 const provider = require("./routes/provider");
 const voucher = require("./routes/voucher");
+const logout = require("./routes/logout");
 const multer = require("multer");
 const handleUpload = require("./controllers/upload/handleUpload");
 const deleteInstances = require("./controllers/delete/deleteInstances");
@@ -70,6 +71,7 @@ app.use("/api/proof", proof);
 app.use("/api/voucher", voucher);
 app.post("/api/upload", upload.single("image"), handleUpload);
 app.post("/api/delete", deleteInstances);
+app.post("/api/logout", logout);
 app.use("/api/media", express.static("media"));
 
 // Listener

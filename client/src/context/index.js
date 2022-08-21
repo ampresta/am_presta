@@ -1,5 +1,5 @@
 import { createContext, useContext, useReducer, useMemo } from "react";
-
+import React from "react";
 // prop-types is a library for typechecking of props
 import PropTypes from "prop-types";
 
@@ -57,6 +57,18 @@ function reducer(state, action) {
     case "OPENSELECTCOLLABS": {
       return { ...state, openSelectCollabs: action.value };
     }
+    case "ACCOUNTTYPE": {
+      console.log(`type changed to ${action.value}`);
+      return { ...state, accountType: action.value };
+    }
+    case "TYPELOADING": {
+      console.log(`laoding changed to ${action.value}`);
+      return { ...state, loadingType: action.value };
+    }
+    case "PASSWORDCHANGED": {
+      console.log(`password changed to ${action.value}`);
+      return { ...state, changedPassword: action.value };
+    }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
     }
@@ -81,13 +93,20 @@ function MaterialUIControllerProvider({ children }) {
     collabProofModel: null,
     loadingProofModel: false,
     openSelectCollabs: false,
+    loadingType: "init",
+    accountType: false,
+    changedPassword: false,
   };
 
   const [controller, dispatch] = useReducer(reducer, initialState);
 
   const value = useMemo(() => [controller, dispatch], [controller, dispatch]);
 
-  return <MaterialUI.Provider value={value}>{children}</MaterialUI.Provider>;
+  return (
+    <React.StrictMode>
+      <MaterialUI.Provider value={value}> {children} </MaterialUI.Provider>
+    </React.StrictMode>
+  );
 }
 
 // Material Dashboard 2 React custom hook for using context
@@ -144,6 +163,15 @@ const setcollabProofModel = (dispatch, value) =>
 const setOpenSelectCollabs = (dispatch, value) =>
   dispatch({ type: "OPENSELECTCOLLABS", value });
 
+const setTypeLoading = (dispatch, value) =>
+  dispatch({ type: "TYPELOADING", value });
+
+const setAccountType = (dispatch, value) =>
+  dispatch({ type: "ACCOUNTTYPE", value });
+
+const setChangedPassword = (dispatch, value) =>
+  dispatch({ type: "PASSWORDCHANGED", value });
+
 export {
   MaterialUIControllerProvider,
   useMaterialUIController,
@@ -162,4 +190,7 @@ export {
   setcollabProofModel,
   setfileProofModel,
   setOpenSelectCollabs,
+  setChangedPassword,
+  setAccountType,
+  setTypeLoading,
 };

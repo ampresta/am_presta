@@ -7,6 +7,7 @@ module.exports = async (req, res) => {
     return res.send({ status: false, msg: "No cookie" });
   }
   try {
+    let changedpass = "";
     payload = verify(jwt, process.env.JWT_REFRESH_SALT);
     const user_ = await User.findOne({ where: { id: payload.user_id } });
     if (!user_) {
@@ -17,8 +18,12 @@ module.exports = async (req, res) => {
     if (payload.id) {
       payload2.id = payload.id;
     }
-    if (payload.changedpass) {
-      payload2.changedpass = payload.changedpass;
+    if (payload.type === "Societe" || payload.type === "Collab") {
+      console.log("\x1b[44mPAYLOAD\x1b[0m");
+      id = await user_.getCollaborateur();
+      changedpass = id.changedpass;
+      payload2.changedpass = changedpass;
+      console.log(payload2.changedpass);
     }
     accesstoken = sign(payload2, process.env.JWTSALT, {
       expiresIn: "15m",
@@ -32,8 +37,13 @@ module.exports = async (req, res) => {
       secure: true,
       sameSite: "None",
     });
-    console.log(payload2);
-    return res.send({ status: true, accesstoken, type: payload.type });
+    // console.log(payload2);
+    return res.send({
+      status: true,
+      accesstoken,
+      type: payload.type,
+      changedpass,
+    });
   } catch (err) {
     console.log(err);
     return res.send({ status: false, msg: err });

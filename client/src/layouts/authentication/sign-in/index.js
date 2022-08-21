@@ -30,12 +30,20 @@ import { loginRoute } from "utils/APIRoutes";
 import authService from "services/auth.service";
 import { getAccessToken } from "utils/accessToken";
 
+import {
+  useMaterialUIController,
+  setDarkMode,
+  setAccountType,
+  setChangedPassword,
+} from "context";
 function Basic() {
   const navigate = useNavigate();
 
+  const [controller, dispatch] = useMaterialUIController();
+
   useEffect(() => {
     if (getAccessToken() !== "") {
-      navigate("/dahsboard");
+      navigate("/dashboard");
     }
   }, []);
 
@@ -50,6 +58,8 @@ function Basic() {
     event.preventDefault();
     const data = await authService.login(username, password);
     if (data.status) {
+      setAccountType(dispatch, data.type);
+      setChangedPassword(dispatch, data.changedpass);
       navigate("/dashboard");
     }
   };

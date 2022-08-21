@@ -15,6 +15,7 @@ module.exports = async (req, res) => {
       return res.send({ status: false, msg: "User Not found!" });
 
     const pep = process.env.PEPPER;
+    let changedpass = "";
 
     const checkUser = await argon2.verify(user.password, password + pep);
     if (checkUser) {
@@ -29,13 +30,16 @@ module.exports = async (req, res) => {
         id = await user.getCollaborateur();
         socid = id.SocieteId;
         payload.id = socid;
-        payload.changedpass = id.changedpass;
+        changedpass = id.changedpass;
+        payload.changedpass = changedpass;
       }
       if (type === "Collab") {
         id = await user.getCollaborateur();
-        payload.changedpass = id.changedpass;
+        changedpass = id.changedpass;
+        payload.changedpass = changedpass;
       }
-
+      console.log("\x1b[44mPAYLOAD\x1b[0m");
+      console.log(payload);
       const refreshtoken = sign(payload, process.env.JWT_REFRESH_SALT, {
         expiresIn: "7d",
       });
@@ -48,7 +52,7 @@ module.exports = async (req, res) => {
       accesstoken = sign(payload, process.env.JWTSALT, {
         expiresIn: "15m",
       });
-      return res.json({ status: true, accesstoken, type });
+      return res.json({ status: true, accesstoken, type, changedpass });
     }
 
     return res.send({ status: false, msg: "Username or Password incorrect" });

@@ -24,12 +24,16 @@ module.exports = async (req, res) => {
         });
       } else {
         console.log("no prov or soc");
+        return res.send({
+          status: false,
+          msg: "Provider or Societe Incorrect",
+        });
       }
     } catch (err) {
       console.log(err);
       return res.send({ status: false });
     }
   });
- 
+
   return res.send({ status: true, msg: "Done" });
 };

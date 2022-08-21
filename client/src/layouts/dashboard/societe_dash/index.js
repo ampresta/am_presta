@@ -44,6 +44,7 @@ function Dashboard() {
   const [collaboratorsCount, setCollabsCount] = useState(0);
 
   useEffect(() => {
+	  console.log("3la slamto");
     if (getAccessToken() === "") {
       // navigate("/login");
     }
