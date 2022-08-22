@@ -1,4 +1,5 @@
-import Sessions from "layouts/sessions/collab";
+import Dashboard from "layouts/dashboard/collab_dash";
+import Sessions from "layouts/sessions/societe";
 import SessionsDetails from "layouts/sessionsDetails";
 import SignIn from "layouts/authentication/sign-in";
 import Logout from "layouts/authentication/logout";
@@ -18,7 +19,7 @@ const routes = [
     key: "dashboard",
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/dashboard",
-    component: <CatalogueCourses />,
+    component: <Dashboard />,
   },
   {
     type: "collapse",
