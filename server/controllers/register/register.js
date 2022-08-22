@@ -3,10 +3,10 @@ const db = require("../../config/database");
 const { Collaborateur, Societe, User } = db.models;
 module.exports = async (req, res) => {
   try {
-    const { username, password, nom, prenom, societe, email } = req.body;
+    const { username, nom, prenom, societe, email } = req.body;
 
     const pep = process.env.PEPPER;
-    if (!societe || !prenom || !nom || !username || !password || !email)
+    if (!societe || !prenom || !nom || !username || !email)
       return res.sendStatus(403);
 
     const societeCheck = await Societe.findOne({ where: { name: societe } });
@@ -19,6 +19,12 @@ module.exports = async (req, res) => {
     if (usernameCheck)
       return res.json({ status: false, msg: "email already used" });
 
+    const password = Array(8)
+      .fill()
+      .map(() => ((Math.random() * 36) | 0).toString(36))
+      .join("");
+    console.log("PASSWORD:");
+    console.log(password);
     const hash = await argon2.hash(password + pep);
     const user = await User.create(
       {

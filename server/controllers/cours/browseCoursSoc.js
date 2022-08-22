@@ -18,10 +18,11 @@ module.exports = async (req, res) => {
       where: {
         SocieteId: req.societe,
       },
-      // required: false,
+      required: false,
       attributes: [],
       include: {
         model: Session_Collab,
+        // required:false,
         attributes: [],
         include: [
           {
@@ -35,6 +36,7 @@ module.exports = async (req, res) => {
           },
           {
             model: Collaborateur,
+            // required: false,
             attributes: [],
             where: {
               admin: false,

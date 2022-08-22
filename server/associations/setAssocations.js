@@ -99,8 +99,18 @@ module.exports = (db) => {
   SuperAdmin.User = SuperAdmin.belongsTo(User);
   User.SuperAdmin = User.hasOne(SuperAdmin);
   // Requests
-  Collaborateur.belongsToMany(Cours, { through: Request });
-  Cours.belongsToMany(Collaborateur, { through: Request });
+  Collaborateur.belongsToMany(Cours, {
+    through: {
+      model: Request,
+      unique: false,
+    },
+  });
+  Cours.belongsToMany(Collaborateur, {
+    through: {
+      model: Request,
+      unique: false,
+    },
+  });
   Collaborateur.hasMany(Request, {
     onDelete: "CASCADE",
   });

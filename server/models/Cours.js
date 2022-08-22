@@ -16,7 +16,7 @@ const Cours = (db) => {
       },
 
       description: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: false,
       },
       image: {

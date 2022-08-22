@@ -53,7 +53,7 @@ module.exports = async (req, res) => {
           include: [{ association: User.Collaborateur }],
         }
       );
-      Email.sendRegister(email, prenom, username, password, societe.name);
+      Email.sendRegister(email, username, password, societe.name);
     } catch (err) {
       return res.send({ msg: "error " + err });
     }

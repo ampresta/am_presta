@@ -37,15 +37,32 @@ module.exports = async (req, res) => {
         include: {
           model: Quota,
           attributes: [],
+          required: false,
           where: {
             SocieteId: collab.SocieteId,
           },
         },
       },
+      {
+        model: Collaborateur,
+        attributes: [],
+        through: {
+          required: false,
+          where: {
+            status: "pending",
+          },
+          attributes: [],
+        },
+        where: {
+          id: req.collab,
+        },
+        required: false,
+      },
     ],
     group: ["Cours.id", "Provider.id"],
     attributes: {
       include: [
+        [sequelize.fn("count", sequelize.col("Collaborateurs.id")), "request"],
         [
           sequelize.fn("count", sequelize.col("Sessions->Collaborateurs.id")),
           "collabs",

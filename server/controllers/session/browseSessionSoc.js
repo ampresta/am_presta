@@ -4,6 +4,7 @@ const db = require("../../config/database");
 const { Cours, Session, Provider, Collaborateur } = db.models;
 module.exports = async (req, res) => {
   const { cours } = req.body;
+
   try {
     const sessions = await Session.findAll({
       include: {
