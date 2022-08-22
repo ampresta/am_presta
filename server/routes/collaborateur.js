@@ -17,13 +17,13 @@ router.get("/browseadmin", browseCollabsAdmin);
 
 router.use("/requests", checkCollaborateur);
 router.get("/requests", browseCollabRequests);
+router.use("/sendrequest", checkCollaborateur);
+router.post("/sendrequest", RequestCours);
 
 router.use(checkSociete);
 // router.post("/addmany", addManyCollabs);
 router.get("/browse", browseCollabs);
 router.post("/addsession", AddCollabToSession);
 router.post("/finishsession", FinishCollabSession);
-router.use("/sendrequest", checkCollaborateur);
-router.post("/sendrequest", RequestCours);
 router.post("/browseout", AddCollabOutOfSession);
 module.exports = router;

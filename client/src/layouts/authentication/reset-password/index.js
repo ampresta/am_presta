@@ -24,7 +24,7 @@ import { useNavigate } from "react-router-dom";
 import { useMaterialUIController } from "context";
 function PasswordReset() {
   useEffect(() => {
-    console.log("You're heeere mf");
+    // console.log("You're heeere mf");
   }, []);
   const [controller, dispatch] = useMaterialUIController();
   let navigate = useNavigate();
