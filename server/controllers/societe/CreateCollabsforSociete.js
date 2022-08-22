@@ -3,12 +3,17 @@ const db = require("../../config/database");
 const Email = require("../../emails/Email");
 const { Collaborateur, Societe, User } = db.models;
 module.exports = async (req, res) => {
-  const { accounts } = req.body;
-  if (!accounts) {
+  const { collabs } = req.body;
+  if (!collabs) {
     return res.sendStatus(403);
   }
+  const societe = await Societe.findOne({
+    attributes: ["name"],
+    where: { id: req.societe },
+  });
+
   const pep = process.env.PEPPER;
-  for (account of accounts) {
+  for (account of collabs) {
     try {
       const { nom, prenom, email } = account;
 
@@ -26,7 +31,7 @@ module.exports = async (req, res) => {
       }
       email_institu = `${username}@institute-eca.ma`;
       const hash = await argon2.hash(password + pep);
-      const user = await User.create(
+      await User.create(
         {
           username,
           password: hash,
@@ -43,8 +48,8 @@ module.exports = async (req, res) => {
         {
           include: [{ association: User.Collaborateur }],
         }
-        );
-      Email.sendRegister(email)
+      );
+      Email.sendRegister(email, prenom, email, password, societe.name);
     } catch (err) {
       return res.send({ msg: "error " + err });
     }
@@ -53,4 +58,4 @@ module.exports = async (req, res) => {
     status: true,
     msg: "Users Created Successfully",
   });
-};
+};;

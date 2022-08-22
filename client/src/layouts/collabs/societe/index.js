@@ -134,10 +134,7 @@ function Collabs() {
                         variant="gradient"
                         color="info"
                         size="small"
-                        onClick={() => {
-                          localStorage.setItem("uploadType", "collabs");
-                          setOpenCsvUploader(true);
-                        }}
+                        onClick={() => setOpenCsvUploader(true)}
                       >
                         <Icon fontSize="big" color="light">
                           upload
@@ -166,6 +163,7 @@ function Collabs() {
           closeUploadModel={setOpenCsvUploader}
           DownloadTemplate={handleDownload}
           type={"addCollabsTemplate"}
+          uploadType="collabs"
         />
       )}
       {confirmation}

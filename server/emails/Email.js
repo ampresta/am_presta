@@ -9,11 +9,6 @@ const CLEINT_SECRET = process.env.CLEINT_SECRET;
 const REDIRECT_URI = process.env.REDIRECT_URI;
 const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
 
-console.log(CLIENT_ID);
-console.log(CLEINT_SECRET);
-console.log(REDIRECT_URI);
-console.log(REFRESH_TOKEN);
-
 const oAuth2Client = new google.auth.OAuth2(
   CLIENT_ID,
   CLEINT_SECRET,

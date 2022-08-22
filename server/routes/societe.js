@@ -19,8 +19,8 @@ router.post("/assign", associateAdminSociete);
 router.post("/uerSociete", getUerSociete);
 //Societe
 router.use(checkSociete);
-router.post("/addcollabs", CreateCollabsforSociete);
 
+router.post("/addcollabs", CreateCollabsforSociete);
 router.post("/addcollab", CreateOneCollabforSociete);
 router.get("/browserequests", browseRequests);
 
