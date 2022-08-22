@@ -1,7 +1,7 @@
 /* eslint-disable array-callback-return */
 import React, { useState } from "react";
 import Papa from "papaparse";
-import axiosAuth from "services/authAxios";
+import axios from "services/authAxios";
 import {
   addCoursesRoute,
   addPartnersRoute,
@@ -27,6 +27,7 @@ import DropFileInput from "components/DropFileInput/DropFileInput";
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setUpdater } from "context";
 import { addVouchersAdminRoute } from "utils/APIRoutes";
+import { addManyCollabsRoute } from "utils/APIRoutes";
 
 // Allowed extensions for input file
 const allowedExtensions = ["csv"];
@@ -75,7 +76,7 @@ function CsvUploader({ closeUploadModel, DownloadTemplate, type, uploadType }) {
 
   const addCourses = (DATA) => {
     DATA.map(async (course) => {
-      const { data } = await axiosAuth.post(addCoursesRoute, {
+      const { data } = await axios.post(addCoursesRoute, {
         nom: course.nom,
         provider: course[" providerID"],
         description: course[" description"],
@@ -92,7 +93,7 @@ function CsvUploader({ closeUploadModel, DownloadTemplate, type, uploadType }) {
 
   const addProvider = (DATA) => {
     DATA.map(async (provider) => {
-      const { data } = await axiosAuth.post(addPartnersRoute, provider);
+      const { data } = await axios.post(addPartnersRoute, provider);
 
       if (data.status) {
         closeUploadModel(false);
@@ -106,7 +107,7 @@ function CsvUploader({ closeUploadModel, DownloadTemplate, type, uploadType }) {
   const addCompany = (DATA) => {
     DATA.map(async (company) => {
       if (company[" confirm_password"] === company[" password"]) {
-        const { data } = await axiosAuth.post(registerRoute, {
+        const { data } = await axios.post(registerRoute, {
           username: company.username,
           nom: company[" first_name"],
           prenom: company[" last_name"],
@@ -134,10 +135,9 @@ function CsvUploader({ closeUploadModel, DownloadTemplate, type, uploadType }) {
         prenom: collab[" prenom"],
         username: collab[" username"],
         email: collab[" email"],
-        password: collab[" password"],
       });
     });
-    const { data } = await axiosAuth.post(addCollabsRoute, requestDATA);
+    const { data } = await axios.post(addManyCollabsRoute, requestDATA);
     if (data.status) {
       closeUploadModel(false);
       setUpdater(dispatch, !updater);
@@ -155,7 +155,7 @@ function CsvUploader({ closeUploadModel, DownloadTemplate, type, uploadType }) {
         provider: voucher[" provider"],
       });
     });
-    const { data } = await axiosAuth.post(addVouchersAdminRoute, requestDATA);
+    const { data } = await axios.post(addVouchersAdminRoute, requestDATA);
     if (data.status) {
       closeUploadModel(false);
       setUpdater(dispatch, !updater);

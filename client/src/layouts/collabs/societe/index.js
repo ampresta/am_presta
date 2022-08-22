@@ -53,7 +53,7 @@ function Collabs() {
       }
     }
     if (type === "template") {
-      columns = ["nom", "prenom", "username", "email", "password"];
+      columns = ["nom", "prenom", "username", "email"];
       let blank = {};
       columns.map((header) => (blank.header = ""));
       data.push(blank);
@@ -134,10 +134,7 @@ function Collabs() {
                         variant="gradient"
                         color="info"
                         size="small"
-                        onClick={() => {
-                          localStorage.setItem("uploadType", "collabs");
-                          setOpenCsvUploader(true);
-                        }}
+                        onClick={() => setOpenCsvUploader(true)}
                       >
                         <Icon fontSize="big" color="light">
                           upload
@@ -166,6 +163,7 @@ function Collabs() {
           closeUploadModel={setOpenCsvUploader}
           DownloadTemplate={handleDownload}
           type={"addCollabsTemplate"}
+          uploadType="collabs"
         />
       )}
       {confirmation}

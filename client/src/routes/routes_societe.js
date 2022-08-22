@@ -12,6 +12,7 @@ import Error404 from "layouts/error404";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
+import Loading from "examples/Loading";
 
 const routes = [
   {

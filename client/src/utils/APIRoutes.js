@@ -76,6 +76,7 @@ export const SessionGraph = `${baseURL}/session/graph`;
 export const SessionCollabRoute = `${baseURL}/session/collab`;
 
 //Collabs
+export const addManyCollabsRoute = `${baseURL}/societe/addcollabs`;
 export const addCollabsRoute = `${baseURL}/societe/addcollab`;
 export const browseCollabsRoute = `${baseURL}/collab/browse`;
 export const browseCollabsOutOfSessionRoute = `${baseURL}/collab/browseout`;
