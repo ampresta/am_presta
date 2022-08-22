@@ -89,7 +89,7 @@ export default function Data() {
     </MDBox>
   );
 
-  const parse = (collab, index) => {
+  const getStatus = (collab, index) => {
     if (
       collab.Session_Collabs[0].certifs &&
       collab.Session_Collabs[0].certifs.status
@@ -265,7 +265,7 @@ export default function Data() {
           {dateFormat(collab.Session_Collabs[0].createdAt)}
         </MDTypography>
       ),
-      status: parse(collab, index),
+      status: getStatus(collab, index),
       voucher: getVoucherStatus(collab),
     });
   });

@@ -103,11 +103,13 @@ module.exports = (db) => {
     through: {
       model: Request,
       unique: false,
-      hooks: true,
     },
   });
   Cours.belongsToMany(Collaborateur, {
-    through: { model: Request, unique: false, hooks: true },
+    through: {
+      model: Request,
+      unique: false,
+    },
   });
   Collaborateur.hasMany(Request, {
     onDelete: "CASCADE",

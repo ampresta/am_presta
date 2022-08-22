@@ -64,10 +64,10 @@ const ProofPreview = ({ closeProofModel, collab, file }) => {
 
       <MDBox p={2}>
         <MDBox className="proof_preview_item">
-          <img
+          {/* <img
             src={ImageConfig[file.type.split("/")[1]] || ImageConfig["default"]}
             alt=""
-          />
+          /> */}
           <MDBox className="proof_preview_item_info">
             <p>{file.name}</p>
             <p>{file.size}B</p>

@@ -17,8 +17,9 @@ module.exports = async (req, res) => {
       return res.send({ status: false, msg: "Cours not found" });
     }
     await Request.create({
-      CollaborateurId: collab.id,
-      CourId: crs.id,
+      CollaborateurId: req.collab,
+
+      CourId: cours,
     });
     return res.send({ status: true, msg: "Request Created" });
   } catch (err) {
