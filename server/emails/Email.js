@@ -52,17 +52,16 @@ class Email {
     return transporter;
   };
 
-  sendRegister = async (to_email, name, username, password, societe, logo="") => {
+  sendRegister = async (to_email, username, password, societe, logo="") => {
     const options = {
       from: this.from_email,
       to: to_email,
       subject: `Welcome to ${societe}`,
       template: "welcome",
       context: {
-        name,
         username,
         password,
-        logo
+        // logo
       },
     };
     this.getTransporter()
