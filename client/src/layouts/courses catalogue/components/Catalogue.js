@@ -109,7 +109,7 @@ function Catalogue() {
     <MDBox pb={3}>
       <Container sx={{ mt: { xs: 2, lg: 3 } }}>
         <Grid container spacing={2}>
-          <Grid item xs={12} lg={2}>
+          <Grid item xs={12} lg={1.5}>
             <MDBox
               position="sticky"
               top="200px"
@@ -128,7 +128,12 @@ function Catalogue() {
                 pb={2}
               >
                 <FilterAlt fontSize="medium" color="dark" variant="gradient" />
-                <MDTypography variant="text" fontWeight="bold" color="dark">
+                <MDTypography
+                  variant="text"
+                  fontWeight="bold"
+                  color="dark"
+                  sx={{ fontSize: "18px" }}
+                >
                   Filter By
                 </MDTypography>
               </MDBox>
@@ -158,7 +163,7 @@ function Catalogue() {
               </MDBox>
             </MDBox>
           </Grid>
-          <Grid item xs={12} lg={10} sx={{ px: { xs: 0, lg: 4 } }}>
+          <Grid item xs={12} lg={10.5} sx={{ px: { xs: 0, lg: 3 } }}>
             <MDBadge
               variant="contained"
               color="info"
