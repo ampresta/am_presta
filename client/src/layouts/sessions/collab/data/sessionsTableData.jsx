@@ -29,6 +29,7 @@ import ConfirmPopup from "components/ConfirmPopup";
 import { useMaterialUIController } from "context";
 
 import { dateFormat } from "utils/Helper";
+import { AllSessionsCollabRoute } from "utils/APIRoutes";
 
 export default function Data() {
   const [allSessions, setAllSessions] = useState([]);
@@ -47,7 +48,7 @@ export default function Data() {
 
   useEffect(() => {
     const getAllSessions = async () => {
-      const { data } = await axios.get(allSessionsRoute);
+      const { data } = await axios.get(AllSessionsCollabRoute);
       setAllSessions(data);
     };
     getAllSessions();
@@ -147,12 +148,12 @@ export default function Data() {
         align: "center",
         width: "15%",
       },
-      {
-        Header: "certified students",
-        accessor: "certified_students",
-        align: "center",
-        width: "25%",
-      },
+      // {
+      //   Header: "certified students",
+      //   accessor: "certified_students",
+      //   align: "center",
+      //   width: "25%",
+      // },
       {
         Header: "Period",
         accessor: "period",
@@ -244,16 +245,16 @@ export default function Data() {
             {session.collabs}
           </MDTypography>
         ),
-        certified_students: (
-          <Progress
-            color="info"
-            value={
-              session.collabs == 0
-                ? 0
-                : Math.floor(100 * (session.collabs_fin / session.collabs))
-            }
-          />
-        ),
+        // certified_students: (
+        //   <Progress
+        //     color="info"
+        //     value={
+        //       session.collabs == 0
+        //         ? 0
+        //         : Math.floor(100 * (session.collabs_fin / session.collabs))
+        //     }
+        //   />
+        // ),
         period: <Period debut={session.datedebut} fin={session.datefin} />,
         edit: (
           <MDTypography variant="caption" color="text" fontWeight="medium">

@@ -76,6 +76,8 @@ class Email {
         console.log("Email sent");
       });
   };
+
+  // sendRequest = async ()
 }
 
 module.exports = new Email("abdoessordo01@gmail.com");
