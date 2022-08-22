@@ -134,7 +134,6 @@ function CsvUploader({ closeUploadModel, DownloadTemplate, type, uploadType }) {
         prenom: collab[" prenom"],
         username: collab[" username"],
         email: collab[" email"],
-        password: collab[" password"],
       });
     });
     const { data } = await axiosAuth.post(addCollabsRoute, requestDATA);

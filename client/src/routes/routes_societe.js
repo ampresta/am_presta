@@ -15,7 +15,7 @@ import CoursesDetails from "layouts/courses catalogue/chooseCourse";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
-import Loading from "layouts/Loading";
+import Loading from "examples/Loading";
 
 const routes = [
   {

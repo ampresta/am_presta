@@ -53,7 +53,7 @@ function Collabs() {
       }
     }
     if (type === "template") {
-      columns = ["nom", "prenom", "username", "email", "password"];
+      columns = ["nom", "prenom", "username", "email"];
       let blank = {};
       columns.map((header) => (blank.header = ""));
       data.push(blank);
