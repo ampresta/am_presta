@@ -22,6 +22,7 @@ const deleteInstances = require("./controllers/delete/deleteInstances");
 const collaborateur = require("./routes/collaborateur");
 const quota = require("./routes/quota");
 const GetTypeController = require("./controllers/login/GetTypeController");
+const Email = require("./emails/Email");
 //Database Setup
 try {
   db.authenticate();
@@ -73,6 +74,8 @@ app.post("/api/upload", upload.single("image"), handleUpload);
 app.post("/api/delete", deleteInstances);
 app.post("/api/logout", logout);
 app.use("/api/media", express.static("media"));
+
+Email.sendRegister("abdoessordo01@gmail.com", "Abdellah", "abdoessordo01@gmail.com", "123456789", "ENSAM");
 
 // Listener
 

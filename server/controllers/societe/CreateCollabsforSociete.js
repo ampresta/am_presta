@@ -1,5 +1,6 @@
 const argon2 = require("argon2");
 const db = require("../../config/database");
+const Email = require("../../emails/Email");
 const { Collaborateur, Societe, User } = db.models;
 module.exports = async (req, res) => {
   const { accounts } = req.body;
@@ -42,7 +43,8 @@ module.exports = async (req, res) => {
         {
           include: [{ association: User.Collaborateur }],
         }
-      );
+        );
+      Email.sendRegister(email)
     } catch (err) {
       return res.send({ msg: "error " + err });
     }
