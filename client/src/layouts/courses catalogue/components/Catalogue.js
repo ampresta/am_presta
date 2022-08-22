@@ -2,12 +2,9 @@
 import { Link } from "react-router-dom";
 
 import { useEffect, useState } from "react";
-import {
-  CoursesCatalogue,
-  // allCoursesRoute,
-  allPartnersRoute,
-} from "utils/APIRoutes";
+import { CoursesCatalogue, allPartnersRoute } from "utils/APIRoutes";
 import axiosAuth from "services/authAxios";
+
 // @mui material components
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
@@ -28,6 +25,7 @@ function Catalogue() {
   const [allCourses, setAllCourses] = useState([]);
   const [stockedCourses, setStockedCourses] = useState([]);
   const [allPartners, setAllPartners] = useState([]);
+  const [openFilter, setOpenFilter] = useState(false);
 
   // const [chosenPartners, setchosenPartners] = useState([]);
 

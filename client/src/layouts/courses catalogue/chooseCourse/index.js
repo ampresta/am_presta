@@ -12,8 +12,6 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 
 import Ratings from "components/Ratings";
 
-import BigDataImage from "assets/images/HCIA-BigData.jpg";
-import Huawei from "assets/images/huawei-logo.png";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { CoursesDetailsRoute } from "utils/APIRoutes";
@@ -28,13 +26,16 @@ function Partners() {
       const { data } = await axiosAuth.post(CoursesDetailsRoute, {
         id,
       });
-      if (data.success) {
-        setLoading(false);
+      if (data.status) {
         setDetails(data.cours);
+        setLoading(false);
       }
     };
     getDetail();
   }, []);
+
+  console.log(details);
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -61,7 +62,7 @@ function Partners() {
             <Grid item xs={12} lg={8}>
               <MDBox p={2} pt={3}>
                 <img
-                  src={!loading && `${baseURL}/${details.Provider.image}`}
+                  src={!loading && `${baseURL}/${details.image}`}
                   alt=""
                   width="100%"
                   height="auto"
