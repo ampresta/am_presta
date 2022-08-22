@@ -6,6 +6,7 @@ import MDAvatar from "components/MDAvatar";
 import MDProgress from "components/MDProgress";
 import Grid from "@mui/material/Grid";
 import MDButton from "components/MDButton";
+import MDBadge from "components/MDBadge";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -16,7 +17,6 @@ import { Link } from "react-router-dom";
 // import axios from "services/authAxios";
 import axios from "services/authAxios";
 import {
-  allSessionsRoute,
   baseURL,
   allPartnersRoute,
   DeleteInstances,
@@ -29,6 +29,7 @@ import ConfirmPopup from "components/ConfirmPopup";
 import { useMaterialUIController } from "context";
 
 import { dateFormat } from "utils/Helper";
+import { AllSessionsCollabRoute } from "utils/APIRoutes";
 
 export default function Data() {
   const [allSessions, setAllSessions] = useState([]);
@@ -47,7 +48,7 @@ export default function Data() {
 
   useEffect(() => {
     const getAllSessions = async () => {
-      const { data } = await axios.get(allSessionsRoute);
+      const { data } = await axios.get(AllSessionsCollabRoute);
       setAllSessions(data);
     };
     getAllSessions();
@@ -121,12 +122,59 @@ export default function Data() {
     </MDBox>
   );
 
+  
+  const getStatus = (collab, index) => {
+    if (
+      collab.Session_Collabs[0].certifs &&
+      collab.Session_Collabs[0].certifs.status
+    ) {
+      return <MDBadge badgeContent="Certified" color="success" size="md" />;
+    } else if (collab.Session_Collabs[0].certifs) {
+      return (
+        <MDButton
+          size="small"
+          variant="text"
+          // onClick={(e) => handleProof(e)}
+          typex="certifs"
+          index={index}
+        >
+          <MDBadge badgeContent="Check Proof" color="success" size="md" />
+        </MDButton>
+      );
+    } else if (
+      collab.Session_Collabs[0].fincourse &&
+      collab.Session_Collabs[0].fincourse.status
+    ) {
+      return <MDBadge badgeContent="Finished" color="dark" size="md" />;
+    } else if (collab.Session_Collabs[0].fincourse) {
+      return (
+        <MDButton
+          size="small"
+          variant="text"
+          // onClick={(e) => handleProof(e)}
+          typex="fincourse"
+          index={index}
+        >
+          <MDBadge
+            type="fincourse"
+            badgeContent="Check Proof"
+            color="success"
+            size="md"
+            index={index}
+          />
+        </MDButton>
+      );
+    } else {
+      return <MDBadge badgeContent="Studying" color="note" size="md" />;
+    }
+  };
+
   let sessions = {
     columns: [
       {
         Header: "Session Name",
         accessor: "author",
-        width: "30%",
+        width: "15%",
         align: "left",
       },
       {
@@ -148,16 +196,22 @@ export default function Data() {
         width: "15%",
       },
       {
-        Header: "certified students",
-        accessor: "certified_students",
-        align: "center",
-        width: "25%",
-      },
-      {
         Header: "Period",
         accessor: "period",
         align: "center",
-        width: "25%",
+        width: "15%",
+      },
+      {
+        Header: "status",
+        accessor: "status",
+        width: "10%",
+        align: "center",
+      },
+      {
+        Header: "proof",
+        accessor: "proof",
+        width: "10%",
+        align: "center",
       },
       { Header: "edit", accessor: "edit", align: "center", width: "2%" },
       { Header: "delete", accessor: "delete", align: "center", width: "2%" },
@@ -244,15 +298,22 @@ export default function Data() {
             {session.collabs}
           </MDTypography>
         ),
-        certified_students: (
-          <Progress
-            color="info"
-            value={
-              session.collabs == 0
-                ? 0
-                : Math.floor(100 * (session.collabs_fin / session.collabs))
-            }
-          />
+        status: (
+          <MDBadge badgeContent="Check Proof" color="success" size="md" />
+        ),
+        proof: (
+          <MDBox display="flex">
+            <MDBox>
+              <MDButton
+                variant="gradient"
+                color="success"
+                size="small"
+                // onClick={() => asignVoucher(collab.Session_Collabs[0].id)}
+              >
+                &nbsp;Proof
+              </MDButton>
+            </MDBox>
+          </MDBox>
         ),
         period: <Period debut={session.datedebut} fin={session.datefin} />,
         edit: (

@@ -22,6 +22,9 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt";
 // Data
 import sessionsTableData from "./data/sessionsTableData";
 
+//Add companies component
+import AddProof from "./addProof";
+
 function Sessions() {
   const { columns, rows, confirmation, ProvidersFilter } = sessionsTableData();
   const [openAddModel, setOpenAddModel] = useState(false);
@@ -50,20 +53,6 @@ function Sessions() {
                   </MDTypography>
                 </MDBox>
 
-                <Grid container spacing={2} display="flex" alignItems="center">
-                  <MDBox pt={2} px={2} mt={3}>
-                    <MDButton
-                      variant="gradient"
-                      color="info"
-                      size="small"
-                      onClick={() => setOpenFilter(!openFilter)}
-                      iconOnly
-                    >
-                      <FilterAltIcon />
-                    </MDButton>
-                  </MDBox>
-                </Grid>
-
                 {openFilter && ProvidersFilter}
 
                 <MDBox>
@@ -78,6 +67,10 @@ function Sessions() {
           </Grid>
         </MDBox>
       )}
+
+      <AddProof />
+      {/* {openAddModel && <AddSession closeAddModel={setOpenAddModel} />} */}
+      {confirmation}
     </DashboardLayout>
   );
 }

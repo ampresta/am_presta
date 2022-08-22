@@ -1,4 +1,5 @@
 const Sequelize = require("sequelize");
+const Email = require("../emails/Email");
 const Request = (db) => {
   db.define(
     "Request",
@@ -22,6 +23,11 @@ const Request = (db) => {
       },
     },
     {
+      hooks: {
+        afterCreate: (request) => {
+          Email.sendRequest(request.id);
+        },
+      },
       Sequelize,
       paranoid: true,
       deletedAt: "deletedAt",

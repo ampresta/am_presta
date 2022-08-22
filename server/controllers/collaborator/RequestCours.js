@@ -1,5 +1,5 @@
 const sequelize = require("../../config/database");
-const { Cours, Request, Collaborateur } = sequelize.models;
+const { Cours, Collaborateur, Request } = sequelize.models;
 
 module.exports = async (req, res) => {
   const collab = await Collaborateur.findByPk(req.collab);
