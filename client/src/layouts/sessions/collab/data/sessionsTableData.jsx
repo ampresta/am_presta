@@ -31,7 +31,7 @@ import { useMaterialUIController } from "context";
 import { dateFormat } from "utils/Helper";
 import { AllSessionsCollabRoute } from "utils/APIRoutes";
 
-export default function Data() {
+export default function Data(setSessionId) {
   const [allSessions, setAllSessions] = useState([]);
   const [tempSessionId, setTempSessionId] = useState(0);
   const [confirmModel, setConfirmModel] = useState(false);
@@ -122,7 +122,6 @@ export default function Data() {
     </MDBox>
   );
 
-  
   const getStatus = (collab, index) => {
     if (
       collab.Session_Collabs[0].certifs &&
@@ -308,7 +307,7 @@ export default function Data() {
                 variant="gradient"
                 color="success"
                 size="small"
-                // onClick={() => asignVoucher(collab.Session_Collabs[0].id)}
+                onClick={() => setSessionId(session.id)}
               >
                 &nbsp;Proof
               </MDButton>

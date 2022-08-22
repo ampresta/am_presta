@@ -15,26 +15,14 @@ import { useState } from "react";
 import DropFileInput from "components/DropFileInput/DropFileInput";
 
 // Axios
-import axiosAuth from "services/authAxios";
+import axios from "services/authAxios";
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setUpdater } from "context";
 
-import { addCollabsRoute, uploadRoute } from "utils/APIRoutes";
+import { setProofRoute, uploadRoute } from "utils/APIRoutes";
 
-function AddProof({ closeAddModel }) {
-  const [formErrors, setFormErrors] = useState({
-    nom: "",
-    prenom: "",
-    mail: "",
-  });
-
-  const [collaborator, setCollaborator] = useState({
-    nom: "",
-    prenom: "",
-    mail: "",
-  });
-
+function AddProof({ closeAddModel, type, sessionId }) {
   const [file, setFile] = useState(null);
 
   const [controller, dispatch] = useMaterialUIController();
@@ -42,65 +30,26 @@ function AddProof({ closeAddModel }) {
   const { updater } = controller;
 
   const handleSubmit = async (event) => {
-    const { nom } = collaborator;
     event.preventDefault();
-    setFormErrors(validate(collaborator));
-    if (Object.keys(validate(collaborator)).length === 0) {
-      const { data } = await axiosAuth.post(addCollabsRoute, {
-        account: {
-          nom: collaborator.nom,
-          prenom: collaborator.prenom,
-          email: collaborator.mail,
-        },
-      });
 
-      const ID = data.id;
-      console.log(data);
-      if (data.status) {
-        const fd = new FormData();
-        fd.append("image", file);
-        fd.append("id", ID);
-        fd.append("model", "Collaborateur");
-        console.log(fd.getAll("image"));
-        const config = {
-          method: "post",
-          url: uploadRoute,
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-          data: fd,
-        };
+    const fd = new FormData();
+    fd.append("proof", file);
+    fd.append("sess", sessionId);
+    fd.append("type", "fincourse");
+    console.log(fd.getAll("image"));
+    const config = {
+      method: "post",
+      url: setProofRoute,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      data: fd,
+    };
 
-        await axiosAuth(config);
+    await axios(config);
 
-        closeAddModel(false);
-        setUpdater(dispatch, !updater);
-      } else {
-        alert(data.msg);
-      }
-    }
-  };
-
-  const handleChange = (event) => {
-    const key = event.target.name;
-    const value = event.target.value;
-    setCollaborator((prev) => {
-      return { ...prev, [key]: value };
-    });
-  };
-
-  const validate = (values) => {
-    const errors = {};
-    if (!values.nom) {
-      errors.nom = "Collaborator First Name is required !";
-    }
-    if (!values.prenom) {
-      errors.prenom = "Collaborator Last Name is required !";
-    }
-    if (!values.mail) {
-      errors.mail = "Collaborator Email is required !";
-    }
-    return errors;
+    // closeAddModel(false);
+    setUpdater(dispatch, !updater);
   };
 
   return (

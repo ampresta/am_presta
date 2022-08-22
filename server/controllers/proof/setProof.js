@@ -1,7 +1,9 @@
 const db = require("../../config/database");
 const { Session_Collab, Proof } = db.models;
 module.exports = async (req, res) => {
-  const { sess, collab, type } = req.body;
+  const { sess, type } = req.body;
+  const { collab } = req
+  
   if (!sess || !collab || !type) {
     return res.sendStatus(403);
   }
