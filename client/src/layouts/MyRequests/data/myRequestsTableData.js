@@ -9,6 +9,7 @@ import axios from "services/authAxios";
 import { browseCollabRequests } from "utils/APIRoutes";
 import { useEffect } from "react";
 import { useState } from "react";
+import MDBadge from "components/MDBadge";
 
 const Data = () => {
   const [req, setRequests] = useState([]);
@@ -34,23 +35,11 @@ const Data = () => {
 
   const parseStatus = (partner) => {
     if (partner.status === "pending") {
-      return (
-        <MDTypography variant="caption" color="warning" fontWeight="medium">
-          Pending
-        </MDTypography>
-      );
+      return <MDBadge badgeContent="Pending" color="warning" size="md" />;
     } else if (partner.status === "accepted") {
-      return (
-        <MDTypography variant="caption" color="success" fontWeight="medium">
-          Accepted
-        </MDTypography>
-      );
+      return <MDBadge badgeContent="Accepted" color="success" size="md" />;
     } else if (partner.status === "refused") {
-      return (
-        <MDTypography variant="caption" color="primary" fontWeight="medium">
-          Refused
-        </MDTypography>
-      );
+      return <MDBadge badgeContent="Refused" color="error" size="md" />;
     }
   };
   let myRequests = {

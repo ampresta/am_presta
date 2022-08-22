@@ -3,30 +3,20 @@
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
-import MDProgress from "components/MDProgress";
 import Grid from "@mui/material/Grid";
 import MDButton from "components/MDButton";
 import MDBadge from "components/MDBadge";
 
-// @mui icons
-import Icon from "@mui/material/Icon";
-
 // React Hooks
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+
 // import axios from "services/authAxios";
 import axios from "services/authAxios";
-import {
-  baseURL,
-  allPartnersRoute,
-  DeleteInstances,
-} from "utils/APIRoutes";
-
-// ConfirmPoppup component
-import ConfirmPopup from "components/ConfirmPopup";
+import { baseURL, allPartnersRoute } from "utils/APIRoutes";
 
 // Material Dashboard 2 React contexts
-import { useMaterialUIController } from "context";
+import { useMaterialUIController, setOpenProofModel } from "context";
 
 import { dateFormat } from "utils/Helper";
 import { AllSessionsCollabRoute } from "utils/APIRoutes";
@@ -34,7 +24,6 @@ import { AllSessionsCollabRoute } from "utils/APIRoutes";
 export default function Data() {
   const [allSessions, setAllSessions] = useState([]);
   const [tempSessionId, setTempSessionId] = useState(0);
-  const [confirmModel, setConfirmModel] = useState(false);
   const [providers, setProviders] = useState([
     {
       id: "",
@@ -42,14 +31,15 @@ export default function Data() {
     },
   ]);
 
-  const [controller] = useMaterialUIController();
+  const [controller, dispatch] = useMaterialUIController();
 
-  const { updater } = controller;
+  const { updater, openProofModel } = controller;
 
   useEffect(() => {
     const getAllSessions = async () => {
       const { data } = await axios.get(AllSessionsCollabRoute);
       setAllSessions(data);
+      console.log("hadi data aba", data);
     };
     getAllSessions();
   }, [updater]);
@@ -64,19 +54,6 @@ export default function Data() {
     getAllPartners();
   }, []);
 
-  const handleDelete = async (id) => {
-    const { data } = await axios.post(DeleteInstances, {
-      model: "Session",
-      id: id,
-    });
-    if (data.status) {
-      setAllSessions(allSessions.filter((session) => session.id !== id));
-      setConfirmModel(!confirmModel);
-    } else {
-      alert(data.msg);
-    }
-  };
-
   const Company = ({ id, image, name, company }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDAvatar src={`${baseURL}/${image}`} name={name} size="sm" />
@@ -87,17 +64,6 @@ export default function Data() {
           </MDTypography>
         </Link>
         <MDTypography variant="caption">{company}</MDTypography>
-      </MDBox>
-    </MDBox>
-  );
-
-  const Progress = ({ color, value }) => (
-    <MDBox display="flex" alignItems="center">
-      <MDTypography variant="caption" color="text" fontWeight="medium">
-        {value}%
-      </MDTypography>
-      <MDBox ml={1} width="7rem">
-        <MDProgress variant="gradient" color={color} value={value} />
       </MDBox>
     </MDBox>
   );
@@ -122,7 +88,6 @@ export default function Data() {
     </MDBox>
   );
 
-  
   const getStatus = (collab, index) => {
     if (
       collab.Session_Collabs[0].certifs &&
@@ -213,21 +178,9 @@ export default function Data() {
         width: "10%",
         align: "center",
       },
-      { Header: "edit", accessor: "edit", align: "center", width: "2%" },
-      { Header: "delete", accessor: "delete", align: "center", width: "2%" },
     ],
 
     rows: [],
-
-    confirmation: confirmModel && (
-      <ConfirmPopup
-        title={"Are you sure you want to delete this session ?"}
-        open={confirmModel}
-        onConfirmPopup={() => setConfirmModel(!confirmModel)}
-        handleDetele={handleDelete}
-        Id_Item={tempSessionId}
-      />
-    ),
 
     ProvidersFilter: (
       <Grid container mt={1} ml={1} rowSpacing={1}>
@@ -308,7 +261,10 @@ export default function Data() {
                 variant="gradient"
                 color="success"
                 size="small"
-                // onClick={() => asignVoucher(collab.Session_Collabs[0].id)}
+                onClick={() => {
+                  setTempSessionId(session.id);
+                  setOpenProofModel(dispatch, !openProofModel);
+                }}
               >
                 &nbsp;Proof
               </MDButton>
@@ -316,26 +272,6 @@ export default function Data() {
           </MDBox>
         ),
         period: <Period debut={session.datedebut} fin={session.datefin} />,
-        edit: (
-          <MDTypography variant="caption" color="text" fontWeight="medium">
-            <Icon fontSize="small">edit</Icon>
-          </MDTypography>
-        ),
-        delete: (
-          <MDButton
-            variant="text"
-            onClick={() => {
-              setConfirmModel(!confirmModel);
-              setTempSessionId(session.id);
-            }}
-          >
-            <MDTypography variant="caption" color="text" fontWeight="medium">
-              <Icon fontSize="small" color="primary">
-                delete
-              </Icon>
-            </MDTypography>
-          </MDButton>
-        ),
       })
     );
   }

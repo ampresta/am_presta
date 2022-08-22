@@ -23,7 +23,7 @@ import { useMaterialUIController, setOpenRequestModel } from "context";
 
 // ChooseSession
 import ChooseSession from "../ChooseSession";
-import {RefuseRequestRoute} from "utils/APIRoutes";
+import { RefuseRequestRoute } from "utils/APIRoutes";
 
 export default function Data() {
   // temp data for static display

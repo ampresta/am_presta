@@ -25,15 +25,22 @@ import sessionsTableData from "./data/sessionsTableData";
 //Add companies component
 import AddProof from "./addProof";
 
+// Material Dashboard 2 React contexts
+import { useMaterialUIController, setOpenProofModel } from "context";
+
 function Sessions() {
-  const { columns, rows, confirmation, ProvidersFilter } = sessionsTableData();
-  const [openAddModel, setOpenAddModel] = useState(false);
+  const { columns, rows, ProvidersFilter } = sessionsTableData();
+
+  const [controller] = useMaterialUIController();
+
+  const { openProofModel } = controller;
+
   const [openFilter, setOpenFilter] = useState(false);
 
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      {!openAddModel && (
+      {!openProofModel && (
         <MDBox pt={6} pb={1}>
           <Grid container spacing={6}>
             <Grid item xs={12}>
@@ -53,6 +60,18 @@ function Sessions() {
                   </MDTypography>
                 </MDBox>
 
+                <MDBox ml={1} px={2} mt={3}>
+                  <MDButton
+                    variant="gradient"
+                    color="info"
+                    size="small"
+                    onClick={() => setOpenFilter(!openFilter)}
+                  >
+                    <FilterAltIcon />
+                    &nbsp; Filter By Provider
+                  </MDButton>
+                </MDBox>
+
                 {openFilter && ProvidersFilter}
 
                 <MDBox>
@@ -68,9 +87,7 @@ function Sessions() {
         </MDBox>
       )}
 
-      <AddProof />
-      {/* {openAddModel && <AddSession closeAddModel={setOpenAddModel} />} */}
-      {confirmation}
+      {openProofModel && <AddProof closeAddModel={setOpenProofModel} />}
     </DashboardLayout>
   );
 }

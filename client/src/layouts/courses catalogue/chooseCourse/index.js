@@ -1,6 +1,7 @@
 // @mui material components
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
+
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
@@ -10,17 +11,32 @@ import MDButton from "components/MDButton";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 
+// Material Dashboard 2 React contexts
+import { useMaterialUIController, setUpdater } from "context";
+
 import Ratings from "components/Ratings";
 
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { sendRequestRoute, CoursesDetailsRoute } from "utils/APIRoutes";
 import axiosAuth from "services/authAxios";
-import { baseURL } from "utils/APIRoutes";
+
+import { useNavigate, useParams } from "react-router-dom";
+
+import { useEffect, useState } from "react";
+import {
+  sendRequestRoute,
+  CoursesDetailsRoute,
+  baseURL,
+} from "utils/APIRoutes";
+
 function Partners() {
   const { id } = useParams();
   const [details, setDetails] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const [controller, dispatch] = useMaterialUIController();
+  const { updater } = controller;
+
+  const navigate = useNavigate();
+
   useEffect(() => {
     const getDetail = async () => {
       const { data } = await axiosAuth.post(CoursesDetailsRoute, {
@@ -32,16 +48,15 @@ function Partners() {
       }
     };
     getDetail();
-  }, []);
-
-  console.log(details);
+  }, [updater]);
 
   const Enroll = async () => {
     const { data } = await axiosAuth.post(sendRequestRoute, {
       cours: id,
     });
     if (data.status) {
-      // refreesh page here
+      navigate("/myRequests");
+      setUpdater(dispatch, updater);
       console.log("requeest sent");
     }
   };
@@ -49,7 +64,7 @@ function Partners() {
     if (!loading && details.request > 0) {
       return (
         <MDButton disabled="true" variant="gradient" color="warning">
-          Pending
+          Pending ...
         </MDButton>
       );
     }

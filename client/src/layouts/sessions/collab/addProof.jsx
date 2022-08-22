@@ -1,11 +1,9 @@
 // @mui material components
 import Card from "@mui/material/Card";
 import Icon from "@mui/material/Icon";
-import FormHelperText from "@mui/material/FormHelperText";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
-import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
 
@@ -23,85 +21,29 @@ import { useMaterialUIController, setUpdater } from "context";
 import { addCollabsRoute, uploadRoute } from "utils/APIRoutes";
 
 function AddProof({ closeAddModel }) {
-  const [formErrors, setFormErrors] = useState({
-    nom: "",
-    prenom: "",
-    mail: "",
-  });
-
-  const [collaborator, setCollaborator] = useState({
-    nom: "",
-    prenom: "",
-    mail: "",
-  });
-
   const [file, setFile] = useState(null);
 
   const [controller, dispatch] = useMaterialUIController();
 
   const { updater } = controller;
 
-  const handleSubmit = async (event) => {
-    const { nom } = collaborator;
-    event.preventDefault();
-    setFormErrors(validate(collaborator));
-    if (Object.keys(validate(collaborator)).length === 0) {
-      const { data } = await axiosAuth.post(addCollabsRoute, {
-        account: {
-          nom: collaborator.nom,
-          prenom: collaborator.prenom,
-          email: collaborator.mail,
-        },
-      });
+  console.log(file);
 
-      const ID = data.id;
-      console.log(data);
-      if (data.status) {
-        const fd = new FormData();
-        fd.append("image", file);
-        fd.append("id", ID);
-        fd.append("model", "Collaborateur");
-        console.log(fd.getAll("image"));
-        const config = {
-          method: "post",
-          url: uploadRoute,
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-          data: fd,
-        };
+  // const handleSubmit = async (event) => {
+  //   const { nom } = collaborator;
+  //   event.preventDefault();
 
-        await axiosAuth(config);
+  //   if (data.status) {
 
-        closeAddModel(false);
-        setUpdater(dispatch, !updater);
-      } else {
-        alert(data.msg);
-      }
-    }
-  };
+  //     await axiosAuth(config);
 
-  const handleChange = (event) => {
-    const key = event.target.name;
-    const value = event.target.value;
-    setCollaborator((prev) => {
-      return { ...prev, [key]: value };
-    });
-  };
-
-  const validate = (values) => {
-    const errors = {};
-    if (!values.nom) {
-      errors.nom = "Collaborator First Name is required !";
-    }
-    if (!values.prenom) {
-      errors.prenom = "Collaborator Last Name is required !";
-    }
-    if (!values.mail) {
-      errors.mail = "Collaborator Email is required !";
-    }
-    return errors;
-  };
+  //       closeAddModel(false);
+  //       setUpdater(dispatch, !updater);
+  //     } else {
+  //       alert(data.msg);
+  //     }
+  //   }
+  // };
 
   return (
     <Card sx={{ mt: "50px" }}>
@@ -137,7 +79,7 @@ function AddProof({ closeAddModel }) {
         <MDBox
           component="form"
           role="form"
-          onSubmit={(event) => handleSubmit(event)}
+          // onSubmit={(event) => handleSubmit(event)}
         >
           <Card>
             <MDBox>
