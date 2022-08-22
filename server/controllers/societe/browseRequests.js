@@ -4,7 +4,7 @@ const { Collaborateur, Cours, Request } = db.models;
 module.exports = async (req, res) => {
   collabs = await Request.findAll({
     where: {
-      status: false,
+      status: "pending",
     },
     include: [
       {

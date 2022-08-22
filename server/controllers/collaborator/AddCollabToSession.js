@@ -59,7 +59,7 @@ module.exports = async (req, res) => {
           CollaborateurId: collab,
         },
       });
-      reqs.status = true;
+      reqs.status = "accepted";
       await reqs.save();
     }
 

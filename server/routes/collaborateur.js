@@ -6,6 +6,7 @@ const browseCollabRequests = require("../controllers/collaborator/browseCollabRe
 const browseCollabs = require("../controllers/collaborator/browseCollabs");
 const browseCollabsAdmin = require("../controllers/collaborator/browseCollabsAdmin");
 const FinishCollabSession = require("../controllers/collaborator/FinishCollabSession");
+const RefuseCollabRequest = require("../controllers/collaborator/RefuseCollabRequest");
 const RequestCours = require("../controllers/collaborator/RequestCours");
 const checkCollaborateur = require("../middlewares/checkCollaborateur");
 const checkSociete = require("../middlewares/checkSociete");
@@ -24,6 +25,7 @@ router.use(checkSociete);
 // router.post("/addmany", addManyCollabs);
 router.get("/browse", browseCollabs);
 router.post("/addsession", AddCollabToSession);
+router.post("/refuse", RefuseCollabRequest);
 router.post("/finishsession", FinishCollabSession);
 router.post("/browseout", AddCollabOutOfSession);
 module.exports = router;

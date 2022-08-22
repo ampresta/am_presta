@@ -2,7 +2,7 @@
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
-
+import { dateFormat } from "utils/Helper";
 // Api Endpoint
 import { baseURL } from "utils/APIRoutes";
 import axios from "services/authAxios";
@@ -14,9 +14,9 @@ const Data = () => {
   const [req, setRequests] = useState([]);
   useEffect(() => {
     const getRequests = async () => {
-      const { data } = axios.get(browseCollabRequests, {});
+      const { data } = await axios.get(browseCollabRequests, {});
       if (data.status) {
-        setRequests(data.req);
+        setRequests(data.requests);
       }
     };
     getRequests();
@@ -32,6 +32,27 @@ const Data = () => {
     </MDBox>
   );
 
+  const parseStatus = (partner) => {
+    if (partner.status === "pending") {
+      return (
+        <MDTypography variant="caption" color="warning" fontWeight="medium">
+          Pending
+        </MDTypography>
+      );
+    } else if (partner.status === "accepted") {
+      return (
+        <MDTypography variant="caption" color="success" fontWeight="medium">
+          Accepted
+        </MDTypography>
+      );
+    } else if (partner.status === "refused") {
+      return (
+        <MDTypography variant="caption" color="primary" fontWeight="medium">
+          Refused
+        </MDTypography>
+      );
+    }
+  };
   let myRequests = {
     columns: [
       {
@@ -41,14 +62,14 @@ const Data = () => {
         align: "left",
       },
       {
-        Header: "Provider",
-        accessor: "provider",
+        Header: "date",
+        accessor: "date",
         align: "center",
         width: "25%",
       },
       {
-        Header: "Response",
-        accessor: "response",
+        Header: "status",
+        accessor: "status",
         align: "center",
         width: "25%",
       },
@@ -59,12 +80,13 @@ const Data = () => {
 
   req.map((partner) =>
     myRequests.rows.push({
-      author: <Company image={partner.image} name={partner.nom} />,
-      Number_of_added_courses: (
+      author: <Company image={partner.Cour.image} name={partner.Cour.nom} />,
+      date: (
         <MDTypography variant="caption" color="text" fontWeight="medium">
-          {partner.course_num}
+          {dateFormat(partner.createdAt)}
         </MDTypography>
       ),
+      status: parseStatus(partner),
     })
   );
 

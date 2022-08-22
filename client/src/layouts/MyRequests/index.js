@@ -16,7 +16,7 @@ import myRequestsTableData from "./data/myRequestsTableData";
 
 function Partners() {
   const { columns, rows } = myRequestsTableData();
-
+  console.log(rows);
   return (
     <DashboardLayout>
       <DashboardNavbar />

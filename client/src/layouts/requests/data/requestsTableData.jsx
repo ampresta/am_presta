@@ -23,6 +23,7 @@ import { useMaterialUIController, setOpenRequestModel } from "context";
 
 // ChooseSession
 import ChooseSession from "../ChooseSession";
+import {RefuseRequestRoute} from "utils/APIRoutes";
 
 export default function Data() {
   // temp data for static display
@@ -47,8 +48,7 @@ export default function Data() {
   }, []);
 
   const handleDelete = async (id) => {
-    const { data } = await axiosAuth.post(DeleteInstances, {
-      model: "Request",
+    const { data } = await axiosAuth.post(RefuseRequestRoute, {
       id: id,
     });
     if (data.status) {
