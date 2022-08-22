@@ -202,79 +202,82 @@ export default function Data() {
       </Grid>
     ),
   };
-
-  allSessions.map((session) =>
-    sessions.rows.push({
-      author: (
-        <Company
-          id={session.id}
-          image={session.Cour.image}
-          name={session.nom}
-        />
-      ),
-      cours: (
-        <MDTypography
-          component="a"
-          variant="caption"
-          color="text"
-          fontWeight="medium"
-        >
-          {session.Cour.nom}
-        </MDTypography>
-      ),
-      provider: (
-        <MDTypography
-          component="a"
-          variant="caption"
-          color="text"
-          fontWeight="medium"
-        >
-          {session.Cour.Provider.nom}
-        </MDTypography>
-      ),
-      enrolled: (
-        <MDTypography
-          component="a"
-          variant="caption"
-          color="text"
-          fontWeight="medium"
-        >
-          {session.collabs}
-        </MDTypography>
-      ),
-      certified_students: (
-        <Progress
-          color="info"
-          value={
-            session.collabs == 0
-              ? 0
-              : Math.floor(100 * (session.collabs_fin / session.collabs))
-          }
-        />
-      ),
-      period: <Period debut={session.datedebut} fin={session.datefin} />,
-      edit: (
-        <MDTypography variant="caption" color="text" fontWeight="medium">
-          <Icon fontSize="small">edit</Icon>
-        </MDTypography>
-      ),
-      delete: (
-        <MDButton
-          variant="text"
-          onClick={() => {
-            setConfirmModel(!confirmModel);
-            setTempSessionId(session.id);
-          }}
-        >
-          <MDTypography variant="caption" color="text" fontWeight="medium">
-            <Icon fontSize="small" color="primary">
-              delete
-            </Icon>
+  if (allSessions.length === 0 || !Array.isArray(allSessions)) {
+    sessions.rows.push({ author: "No Sessions Available" });
+  } else {
+    allSessions.map((session) =>
+      sessions.rows.push({
+        author: (
+          <Company
+            id={session.id}
+            image={session.Cour.image}
+            name={session.nom}
+          />
+        ),
+        cours: (
+          <MDTypography
+            component="a"
+            variant="caption"
+            color="text"
+            fontWeight="medium"
+          >
+            {session.Cour.nom}
           </MDTypography>
-        </MDButton>
-      ),
-    })
-  );
+        ),
+        provider: (
+          <MDTypography
+            component="a"
+            variant="caption"
+            color="text"
+            fontWeight="medium"
+          >
+            {session.Cour.Provider.nom}
+          </MDTypography>
+        ),
+        enrolled: (
+          <MDTypography
+            component="a"
+            variant="caption"
+            color="text"
+            fontWeight="medium"
+          >
+            {session.collabs}
+          </MDTypography>
+        ),
+        certified_students: (
+          <Progress
+            color="info"
+            value={
+              session.collabs == 0
+                ? 0
+                : Math.floor(100 * (session.collabs_fin / session.collabs))
+            }
+          />
+        ),
+        period: <Period debut={session.datedebut} fin={session.datefin} />,
+        edit: (
+          <MDTypography variant="caption" color="text" fontWeight="medium">
+            <Icon fontSize="small">edit</Icon>
+          </MDTypography>
+        ),
+        delete: (
+          <MDButton
+            variant="text"
+            onClick={() => {
+              setConfirmModel(!confirmModel);
+              setTempSessionId(session.id);
+            }}
+          >
+            <MDTypography variant="caption" color="text" fontWeight="medium">
+              <Icon fontSize="small" color="primary">
+                delete
+              </Icon>
+            </MDTypography>
+          </MDButton>
+        ),
+      })
+    );
+  }
 
   return sessions;
 }
