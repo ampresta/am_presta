@@ -1,5 +1,5 @@
 const sequelize = require("../../config/database");
-const { Cours, Collaborateur } = sequelize.models;
+const { Cours, Request, Collaborateur } = sequelize.models;
 
 module.exports = async (req, res) => {
   const collab = await Collaborateur.findByPk(req.collab);
@@ -16,7 +16,11 @@ module.exports = async (req, res) => {
     if (!crs) {
       return res.send({ status: false, msg: "Cours not found" });
     }
-    collab.addCours(crs);
+    await Request.create({
+      CollaborateurId: req.collab,
+
+      CourId: cours,
+    });
     return res.send({ status: true, msg: "Request Created" });
   } catch (err) {
     console.log(err);
