@@ -13,6 +13,7 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Catalogue from "./components/Catalogue";
 
 function Partners() {
+
   return (
     <DashboardLayout>
       <DashboardNavbar />

@@ -11,11 +11,12 @@ module.exports = (req, res, next) => {
   }
   try {
     payload = verify(token, process.env.JWTSALT);
-    if (payload.type === "Societe") {
+    if (payload.type === "Societe" || payload.type === "Collab") {
+      req.login_type = payload.type;
       req.societe = payload.id;
       return next();
     } else {
-      return res.send({ status: false, msg: "Not a Societe" });
+      return res.send({ status: false, msg: "Not a Societe or a Collab" });
     }
   } catch (err) {
     console.log(err);

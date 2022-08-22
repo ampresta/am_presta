@@ -3,7 +3,9 @@ const sequelize = require("sequelize");
 const db = require("../../config/database");
 const { Cours, Session, Provider, Collaborateur } = db.models;
 module.exports = async (req, res) => {
+  const { login_type } = req;
   const { cours } = req.body;
+
   try {
     const sessions = await Session.findAll({
       include: {

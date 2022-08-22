@@ -1,4 +1,4 @@
-import Sessions from "layouts/sessions/societe";
+import Sessions from "layouts/sessions/collab";
 import SessionsDetails from "layouts/sessionsDetails";
 import SignIn from "layouts/authentication/sign-in";
 import Logout from "layouts/authentication/logout";

@@ -21,4 +21,7 @@ router.post("/add", addSession);
 router.all("/browse", browseSession);
 router.post("/graph", SessionDetailsGraph);
 router.post("/collab", SessionCollab);
+//collab
+
+
 module.exports = router;
