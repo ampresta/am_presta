@@ -49,7 +49,7 @@ module.exports = async (req, res) => {
         through: {
           required: false,
           where: {
-            status: false,
+            status: "pending",
           },
           attributes: [],
         },

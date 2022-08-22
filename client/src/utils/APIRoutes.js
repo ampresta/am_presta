@@ -66,7 +66,8 @@ export const DeleteInstances = `${baseURL}/delete`;
 // Requests
 export const allRequestsRoute = `${baseURL}/societe/browserequests`;
 export const AcceptRequestRoute = `${baseURL}/collab/addsession`;
-export const browseCollabRequests = `${baseURL}/collab/browseCollabRequests`;
+export const RefuseRequestRoute = `${baseURL}/collab/refuse`;
+export const browseCollabRequests = `${baseURL}/collab/requests`;
 
 export const allRequestsCollabRoute = `${baseURL}/collab/requests`;
 //Upload images

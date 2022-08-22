@@ -9,8 +9,16 @@ const Request = (db) => {
         autoIncrement: true,
       },
       status: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: false,
+        type: Sequelize.STRING,
+        defaultValue: "pending",
+        validate: {
+          inside: (value) => {
+            const enums = ["accepted", "pending", "refused"];
+            if (!enums.includes(value)) {
+              throw new Error("not a valid option");
+            }
+          },
+        },
       },
     },
     {

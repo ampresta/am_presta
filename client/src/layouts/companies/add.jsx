@@ -30,8 +30,8 @@ function AddCompanies({ closeAddModel }) {
     l_name: "",
     company: "",
     email: "",
-    password: "",
-    c_password: "",
+    // password: "",
+    // c_password: "",
   });
 
   const [details, setDetails] = useState({
@@ -40,8 +40,8 @@ function AddCompanies({ closeAddModel }) {
     l_name: "",
     company: "",
     email: "",
-    password: "",
-    c_password: "",
+    // password: "",
+    // c_password: "",
   });
 
   const [file, setFile] = useState(null);
@@ -114,14 +114,6 @@ function AddCompanies({ closeAddModel }) {
     }
     if (!values.email) {
       errors.email = "Email is required !";
-    }
-    if (!values.password) {
-      errors.password = "Password is required !";
-    }
-    if (!values.c_password) {
-      errors.c_password = "Password Confirmation is required !";
-    } else if (values.password !== values.c_password) {
-      errors.c_password = "Passwords don't match !";
     }
     return errors;
   };
@@ -228,33 +220,6 @@ function AddCompanies({ closeAddModel }) {
             <FormHelperText error>{formErrors.email}</FormHelperText>
           </MDBox>
 
-          <MDBox display="flex">
-            <MDBox mb={2} mr={2} sx={{ width: "50%" }}>
-              <MDInput
-                type="password"
-                label="Password"
-                variant="outlined"
-                name="password"
-                onChange={(e) => handleChange(e)}
-                fullWidth
-                error={formErrors.password}
-              />
-              <PasswordTest password={details.password} />
-              <FormHelperText error>{formErrors.password}</FormHelperText>
-            </MDBox>
-            <MDBox mb={2} ml={2} sx={{ width: "50%" }}>
-              <MDInput
-                type="password"
-                label="Confirm Password"
-                variant="outlined"
-                name="c_password"
-                onChange={(e) => handleChange(e)}
-                fullWidth
-                error={formErrors.c_password}
-              />
-              <FormHelperText error>{formErrors.c_password}</FormHelperText>
-            </MDBox>
-          </MDBox>
 
           <Card>
             <MDBox>
