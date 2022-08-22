@@ -39,6 +39,7 @@ export const allCoursesRoute = `${baseURL}/cours/browse`;
 export const CoursesCatalogue = `${baseURL}/cours/catalogue`;
 export const addCoursesRoute = `${baseURL}/cours/add`;
 export const allCompanyCoursesRoute = `${baseURL}/cours/browsesoc`;
+export const CoursesDetailsRoute = `${baseURL}/cours/detail`;
 
 // Sessions
 export const allSessionsRoute = `${baseURL}/session/browse`;

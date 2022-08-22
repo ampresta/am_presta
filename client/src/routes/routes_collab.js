@@ -82,7 +82,7 @@ const routes = [
   {
     name: "details",
     key: "details",
-    route: "/catalogue/details",
+    route: "/catalogue/details/:id",
     component: <CoursesDetails />,
   },
 ];

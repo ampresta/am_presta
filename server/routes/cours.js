@@ -9,6 +9,7 @@ const courseCatalogue = require("../controllers/cours/coursCatalague");
 const router = Router();
 const signedin = require("../middlewares/signedin");
 const checkCollaborateur = require("../middlewares/checkCollaborateur");
+const browseCourseDetails = require("../controllers/cours/browseCourseDetails");
 
 // router.use(signedin);
 // Please don't change the order
@@ -19,6 +20,8 @@ router.all("/browse", browseCourse);
 router.use("/catalogue", checkCollaborateur);
 router.all("/catalogue", courseCatalogue);
 
+router.use("/detail", checkCollaborateur);
+router.all("/detail", browseCourseDetails);
 // router.use("/add", CheckSuperAdmin);
 // router.use("/browse", CheckSuperAdmin);
 
