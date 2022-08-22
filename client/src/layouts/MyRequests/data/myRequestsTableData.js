@@ -2,21 +2,19 @@
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
-import MDButton from "components/MDButton";
-// @mui icons
-import Icon from "@mui/material/Icon";
 
 // Api Endpoint
 import { baseURL } from "utils/APIRoutes";
 import axios from "services/authAxios";
-import { allRequestsCollabRoute } from "utils/APIRoutes";
+import { browseCollabRequests } from "utils/APIRoutes";
 import { useEffect } from "react";
 import { useState } from "react";
+
 const Data = () => {
   const [req, setRequests] = useState([]);
   useEffect(() => {
     const getRequests = async () => {
-      const { data } = axios.get(allRequestsCollabRoute, {});
+      const { data } = axios.get(browseCollabRequests, {});
       if (data.status) {
         setRequests(data.req);
       }
@@ -34,7 +32,7 @@ const Data = () => {
     </MDBox>
   );
 
-  let partners = {
+  let myRequests = {
     columns: [
       {
         Header: "Course Name",
@@ -59,9 +57,8 @@ const Data = () => {
     rows: [],
   };
 
-  // try {
   req.map((partner) =>
-    partners.rows.push({
+    myRequests.rows.push({
       author: <Company image={partner.image} name={partner.nom} />,
       Number_of_added_courses: (
         <MDTypography variant="caption" color="text" fontWeight="medium">
@@ -70,8 +67,7 @@ const Data = () => {
       ),
     })
   );
-  // } catch (error) {}
 
-  return partners;
+  return myRequests;
 };
 export default Data;

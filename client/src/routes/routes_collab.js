@@ -2,7 +2,6 @@ import Sessions from "layouts/sessions/societe";
 import SessionsDetails from "layouts/sessionsDetails";
 import SignIn from "layouts/authentication/sign-in";
 import Logout from "layouts/authentication/logout";
-import Collabs from "layouts/collabs/societe";
 import Vouchers from "layouts/vouchers/societe";
 import Error404 from "layouts/error404";
 import CatalogueCourses from "layouts/courses catalogue";
@@ -19,6 +18,14 @@ const routes = [
     key: "dashboard",
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/dashboard",
+    component: <CatalogueCourses />,
+  },
+  {
+    type: "collapse",
+    name: "Catalogue",
+    key: "catalogue",
+    icon: <Icon fontSize="small">apps</Icon>,
+    route: "/catalogue",
     component: <CatalogueCourses />,
   },
   {
@@ -58,12 +65,7 @@ const routes = [
     component: <SignIn />,
   },
   {
-    type: "collapse",
-    name: "Catalogue",
-    key: "catalogue",
-    icon: <Icon fontSize="small">apps</Icon>,
-    route: "/catalogue",
-    component: <CatalogueCourses />,
+    type: "divider",
   },
   {
     type: "collapse",
@@ -72,6 +74,9 @@ const routes = [
     icon: <Icon fontSize="small">logout</Icon>,
     route: "/logout",
     component: <Logout />,
+  },
+  {
+    type: "divider",
   },
   {
     name: "Error404",
