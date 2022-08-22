@@ -47,8 +47,6 @@ function DefaultProjectCard({ image, title, openAddModel, quota, companyID }) {
       sx={{
         display: "flex",
         flexDirection: "column",
-        backgroundColor: "transparent",
-        overflow: "hidden",
       }}
     >
       <MDBox shadow="xxl" borderRadius="xl">
@@ -61,7 +59,6 @@ function DefaultProjectCard({ image, title, openAddModel, quota, companyID }) {
             height: "260px",
             margin: 0,
             boxShadow: ({ boxShadows: { xs } }) => xs,
-            mb: 0.3,
           }}
         />
       </MDBox>

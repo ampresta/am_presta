@@ -43,12 +43,18 @@ function AddQuota({ openAddModel }) {
     const getAllPartners = async () => {
       const { data } = await axios.post(AllQuotaRoute);
       console.log("quota", data.quotas);
-      setQuota(data.quotas);
+      setQuota(data);
     };
     getAllPartners();
   }, []);
 
-  // console.log(quota);
+  // const result = quota.reduce((r, a) => {
+  //   r[a.SocieteId] = r[a.SocieteId] || [];
+  //   r[a.SocieteId].push(a);
+  //   return r;
+  // }, Object.create(null));
+
+  // console.log(result);
 
   useEffect(() => {
     const getAllPartners = async () => {
@@ -106,7 +112,7 @@ function AddQuota({ openAddModel }) {
         mb={1}
       >
         <MDTypography variant="h6" color="white">
-          Add Quota
+          {quota.length !== 0 ? "Add Quota" : "Edit Quota"}
         </MDTypography>
 
         <MDButton
