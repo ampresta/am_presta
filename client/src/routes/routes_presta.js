@@ -90,7 +90,6 @@ const routes = [
     component: <Vouchers />,
   },
   {
-    type: "collapse",
     name: "Login",
     key: "login",
     icon: <Icon fontSize="small">key</Icon>,
@@ -98,12 +97,18 @@ const routes = [
     component: <SignIn />,
   },
   {
+    type: "divider",
+  },
+  {
     type: "collapse",
     name: "Logout",
     key: "Logout",
-    icon: <Icon fontSize="small">lock</Icon>,
+    icon: <Icon fontSize="small">logout</Icon>,
     route: "/logout",
     component: <Logout />,
+  },
+  {
+    type: "divider",
   },
   {
     name: "Reset",

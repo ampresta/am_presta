@@ -10,7 +10,7 @@ module.exports = (req, res, next) => {
   try {
     payload = verify(token, process.env.JWTSALT);
     if (payload.type === "Collab") {
-      req.collab = payload.user_id;
+      req.collab = payload.id;
       return next();
     } else {
       console.log(payload);

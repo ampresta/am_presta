@@ -8,6 +8,10 @@ const Request = (db) => {
         primaryKey: true,
         autoIncrement: true,
       },
+      status: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+      },
     },
     {
       Sequelize,

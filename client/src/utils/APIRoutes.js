@@ -36,8 +36,10 @@ export const addPartnersRoute = `${baseURL}/provider/add`;
 
 // Cours
 export const allCoursesRoute = `${baseURL}/cours/browse`;
+export const CoursesCatalogue = `${baseURL}/cours/catalogue`;
 export const addCoursesRoute = `${baseURL}/cours/add`;
 export const allCompanyCoursesRoute = `${baseURL}/cours/browsesoc`;
+export const CoursesDetailsRoute = `${baseURL}/cours/detail`;
 
 // Sessions
 export const allSessionsRoute = `${baseURL}/session/browse`;
@@ -63,7 +65,9 @@ export const DeleteInstances = `${baseURL}/delete`;
 // Requests
 export const allRequestsRoute = `${baseURL}/societe/browserequests`;
 export const AcceptRequestRoute = `${baseURL}/collab/addsession`;
+export const browseCollabRequests = `${baseURL}/collab/browseCollabRequests`;
 
+export const allRequestsCollabRoute = `${baseURL}/collab/requests`;
 //Upload images
 export const uploadRoute = `${baseURL}/upload`;
 

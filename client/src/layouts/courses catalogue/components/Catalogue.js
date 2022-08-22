@@ -1,6 +1,10 @@
 // react-router-dom components
 import { Link } from "react-router-dom";
 
+import { useEffect, useState } from "react";
+import { CoursesCatalogue, allPartnersRoute } from "utils/APIRoutes";
+import axiosAuth from "services/authAxios";
+
 // @mui material components
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
@@ -15,13 +19,54 @@ import MDBadge from "components/MDBadge";
 // Presentation page components
 import ExampleCard from "examples/Cards/ExampleCard";
 
-// Data
-import CoursesCatalogueData from "../data/CoursesCatalogueData";
-
 import { baseURL } from "utils/APIRoutes";
 
 function Catalogue() {
-  const { coursesData, partnersData } = CoursesCatalogueData();
+  const [allCourses, setAllCourses] = useState([]);
+  const [stockedCourses, setStockedCourses] = useState([]);
+  const [allPartners, setAllPartners] = useState([]);
+  const [openFilter, setOpenFilter] = useState(false);
+
+  // const [chosenPartners, setchosenPartners] = useState([]);
+
+  useEffect(() => {
+    const getAllCourses = async () => {
+      const { data } = await axiosAuth.get(CoursesCatalogue);
+      setAllCourses(data.cours);
+      setStockedCourses(data.cours);
+    };
+    getAllCourses();
+  }, []);
+
+  useEffect(() => {
+    const getAllPartners = async () => {
+      const { data } = await axiosAuth.get(allPartnersRoute);
+      setAllPartners(data);
+    };
+    getAllPartners();
+  }, []);
+
+  const coursesData = [];
+
+  allCourses.map((course) =>
+    coursesData.push({
+      id: course.id,
+      image: course.image,
+      provider: course.Provider.nom,
+      name: course.nom,
+      route: `/catalogue/details/${course.id}`,
+      pro: course.Provider.Quota.length > 0 ? false : true,
+    })
+  );
+
+  const partnersData = [];
+
+  allPartners.map((partner) =>
+    partnersData.push({
+      id: partner.id,
+      name: partner.nom,
+    })
+  );
 
   partnersData.unshift({ id: -1, name: "ALL" });
 
@@ -41,6 +86,24 @@ function Catalogue() {
       </Grid>
     )
   );
+  const handleProvider = (e) => {
+    if (e === -1) {
+      setAllCourses(stockedCourses);
+    } else {
+      // setchosenPartners((prev) => [...prev, e]);
+      // let arr = [e];
+      // arr.concat(chosenPartners);
+      const getAllCourses = async () => {
+        const { data } = await axiosAuth.post(CoursesCatalogue, {
+          // provider: [chosenPartners, e],
+          provider: [e],
+        });
+        setAllCourses(data.cours);
+      };
+      // console.log("chosen", chosenPartners);
+      getAllCourses();
+    }
+  };
 
   return (
     <MDBox pb={3}>
@@ -83,11 +146,11 @@ function Catalogue() {
                 {partnersData.map((item) => (
                   <MDButton
                     key={item.id}
+                    onClick={() => handleProvider(item.id)}
                     variant="text"
                     color="dark"
                     size="small"
                     sx={{ mb: 0.5 }}
-                    onClick={() => console.log(item.id)}
                   >
                     {item.name}
                   </MDButton>

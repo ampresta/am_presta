@@ -1,7 +1,6 @@
 // @mui material components
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
-
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
@@ -13,10 +12,30 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 
 import Ratings from "components/Ratings";
 
-import BigDataImage from "assets/images/HCIA-BigData.jpg";
-import Huawei from "assets/images/huawei-logo.png";
-
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { CoursesDetailsRoute } from "utils/APIRoutes";
+import axiosAuth from "services/authAxios";
+import { baseURL } from "utils/APIRoutes";
 function Partners() {
+  const { id } = useParams();
+  const [details, setDetails] = useState([]);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const getDetail = async () => {
+      const { data } = await axiosAuth.post(CoursesDetailsRoute, {
+        id,
+      });
+      if (data.status) {
+        setDetails(data.cours);
+        setLoading(false);
+      }
+    };
+    getDetail();
+  }, []);
+
+  console.log(details);
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -36,14 +55,14 @@ function Partners() {
             alignItems="center"
           >
             <MDTypography variant="h6" color="white">
-              HCIA - Big Data
+              {loading === false && details.nom}
             </MDTypography>
           </MDBox>
           <Grid container rowSpacing={1}>
             <Grid item xs={12} lg={8}>
               <MDBox p={2} pt={3}>
                 <img
-                  src={BigDataImage}
+                  src={!loading && `${baseURL}/${details.image}`}
                   alt=""
                   width="100%"
                   height="auto"
@@ -67,7 +86,7 @@ function Partners() {
                     textAlign: "justify",
                   }}
                 >
-                  HCIA - Big Data
+                  {!loading && details.nom}
                 </MDTypography>
                 <MDTypography
                   component="p"
@@ -82,10 +101,7 @@ function Partners() {
                     textAlign: "justify",
                   }}
                 >
-                  Launch your career as a back-end developer. Développez des
-                  compétences professionnelles pour une carrière recherchée et
-                  obtenez un diplôme délivré par Meta. Aucun diplôme ou
-                  expérience préalable n'est requis pour commencer.
+                  {!loading && details.description}
                 </MDTypography>
                 <MDBox px={1}>
                   <Ratings
@@ -105,7 +121,9 @@ function Partners() {
                     ml={3}
                   >
                     Enrolled By{" "}
-                    <span style={{ fontWeight: "bold" }}>14 300</span>
+                    <span style={{ fontWeight: "bold" }}>
+                      {!loading && details.collabs}
+                    </span>
                   </MDTypography>
                 </MDBox>
                 <MDBox
@@ -118,7 +136,7 @@ function Partners() {
                     Offered By
                   </MDTypography>
                   <img
-                    src={Huawei}
+                    src={!loading && `${baseURL}/${details.Provider.image}`}
                     alt=""
                     width="25%"
                     height="auto"

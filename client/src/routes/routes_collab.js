@@ -1,12 +1,7 @@
-import Dashboard from "layouts/dashboard/societe_dash";
-import Requests from "layouts/requests";
-import Departments from "layouts/departments/societe";
 import Sessions from "layouts/sessions/societe";
 import SessionsDetails from "layouts/sessionsDetails";
 import SignIn from "layouts/authentication/sign-in";
 import Logout from "layouts/authentication/logout";
-import Courses from "layouts/courses/societe_courses";
-import Collabs from "layouts/collabs/societe";
 import Vouchers from "layouts/vouchers/societe";
 import Error404 from "layouts/error404";
 import CatalogueCourses from "layouts/courses catalogue";
@@ -27,84 +22,6 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Courses",
-    key: "courses",
-    icon: <Icon fontSize="small">school</Icon>,
-    route: "/courses",
-    component: <Courses />,
-  },
-  {
-    type: "collapse",
-    name: "Departments",
-    key: "departments",
-    icon: <Icon fontSize="small">apartment</Icon>,
-    route: "/departments",
-    component: <Departments />,
-  },
-  {
-    type: "collapse",
-    name: "Requests",
-    key: "requests",
-    icon: <Icon fontSize="small">help</Icon>,
-    route: "/requests",
-    component: <Requests />,
-  },
-  {
-    type: "collapse",
-    name: "Sessions",
-    key: "sessions",
-    icon: <Icon fontSize="small">school</Icon>,
-    route: "/sessions",
-    component: <Sessions />,
-  },
-  {
-    name: "details",
-    key: "details",
-    icon: <Icon fontSize="small">check</Icon>,
-    route: "/sessions/details/:id",
-    component: <SessionsDetails />,
-  },
-  {
-    type: "collapse",
-    name: "Collaborators",
-    key: "collaborators",
-    icon: <Icon fontSize="small">groups</Icon>,
-    route: "/collaborators",
-    component: <Collabs />,
-  },
-  {
-    type: "collapse",
-    name: "Vouchers",
-    key: "vouchers",
-    icon: <Icon fontSize="small">local_activity</Icon>,
-    route: "/vouchers",
-    component: <Vouchers />,
-  },
-  {
-    // type: "collapse",
-    name: "Login",
-    key: "login",
-    icon: <Icon fontSize="small">key</Icon>,
-    route: "/login",
-    component: <SignIn />,
-  },
-  {
-    type: "collapse",
-    name: "Logout",
-    key: "Logout",
-    icon: <Icon fontSize="small">lock</Icon>,
-    route: "/logout",
-    component: <Logout />,
-  },
-  {
-    name: "Error404",
-    key: "Error404",
-    icon: <Icon fontSize="small">error</Icon>,
-    route: "/Error404",
-    component: <Error404 />,
-  },
-  {
-    type: "collapse",
     name: "Catalogue",
     key: "catalogue",
     icon: <Icon fontSize="small">apps</Icon>,
@@ -112,11 +29,26 @@ const routes = [
     component: <CatalogueCourses />,
   },
   {
+    type: "collapse",
+    name: "My Sessions",
+    key: "mySessions",
+    icon: <Icon fontSize="small">school</Icon>,
+    route: "/mySessions",
+    component: <Sessions />,
+  },
+  {
     name: "details",
     key: "details",
-    icon: <Icon fontSize="small">check</Icon>,
-    route: "/catalogue/details",
-    component: <CoursesDetails />,
+    route: "/sessions/details/:id",
+    component: <SessionsDetails />,
+  },
+  {
+    type: "collapse",
+    name: "My Vouchers",
+    key: "myVouchers",
+    icon: <Icon fontSize="small">local_activity</Icon>,
+    route: "/myVouchers",
+    component: <Vouchers />,
   },
   {
     type: "collapse",
@@ -125,6 +57,38 @@ const routes = [
     icon: <Icon fontSize="small">warning</Icon>,
     route: "/myRequests",
     component: <MyRequests />,
+  },
+  {
+    name: "Login",
+    key: "login",
+    route: "/login",
+    component: <SignIn />,
+  },
+  {
+    type: "divider",
+  },
+  {
+    type: "collapse",
+    name: "Logout",
+    key: "Logout",
+    icon: <Icon fontSize="small">logout</Icon>,
+    route: "/logout",
+    component: <Logout />,
+  },
+  {
+    type: "divider",
+  },
+  {
+    name: "Error404",
+    key: "Error404",
+    route: "/Error404",
+    component: <Error404 />,
+  },
+  {
+    name: "details",
+    key: "details",
+    route: "/catalogue/details/:id",
+    component: <CoursesDetails />,
   },
 ];
 

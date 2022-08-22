@@ -7,20 +7,25 @@ import Card from "@mui/material/Card";
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-import MDAvatar from "components/MDAvatar";
 
 function ProfilesList({ title, profiles, shadow }) {
   const renderProfiles = profiles.map(({ image, name, description }) => (
     <MDBox
       key={name}
-      component="li"
       display="flex"
       alignItems="center"
       py={1}
       mb={1}
+      mt={1}
+      lineHeight={0}
     >
       <MDBox mx={2.5}>
-        <MDAvatar src={image} alt="something here" shadow="md" />
+        <img
+          src={image}
+          width="50px"
+          alt={name}
+          style={{ border: "1px dashed #2b85eb" }}
+        />
       </MDBox>
       <MDBox
         display="flex"
