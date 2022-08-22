@@ -2,6 +2,8 @@ const nodemailer = require("nodemailer");
 const hbs = require("nodemailer-express-handlebars");
 const { google } = require("googleapis");
 const path = require("path");
+const getRequest = require("./utils");
+
 require("dotenv").config({ path: "../.env" });
 
 const CLIENT_ID = process.env.CLIENT_ID;
@@ -32,7 +34,7 @@ class Email {
       },
       viewPath: path.resolve(__dirname, "views"),
       extName: ".handlebars",
-    }
+    };
   }
 
   getTransporter = async () => {
@@ -52,7 +54,7 @@ class Email {
     return transporter;
   };
 
-  sendRegister = async (to_email, username, password, societe, logo="") => {
+  sendRegister = async (to_email, username, password, societe, logo = "") => {
     const options = {
       from: this.from_email,
       to: to_email,
@@ -65,19 +67,20 @@ class Email {
       },
     };
     this.getTransporter()
-      .then((transporter) =>
-        transporter.use(
-          "compile",
-          hbs(this.hbs_config)
-        )
-      )
+      .then((transporter) => transporter.use("compile", hbs(this.hbs_config)))
       .then((transporter) => transporter.sendMail(options))
       .then((info) => {
         console.log("Email sent");
       });
   };
 
-  // sendRequest = async ()
+  sendRequest = async (sessionId) => {
+    await getRequest
+
+    // const request = await Request.
+    // const cours = await Cours.findByPk(coursId)
+    // console.log(request);
+  };
 }
 
 module.exports = new Email("abdoessordo01@gmail.com");
