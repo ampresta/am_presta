@@ -16,16 +16,19 @@ import DropFileInput from "components/DropFileInput/DropFileInput";
 import axios from "services/authAxios";
 
 // Material Dashboard 2 React contexts
-import { useMaterialUIController, setUpdater } from "context";
+import {
+  useMaterialUIController,
+  setUpdater,
+  setOpenProofModel,
+} from "context";
 
-import { setProofRoute, uploadRoute } from "utils/APIRoutes";
+import { setProofRoute } from "utils/APIRoutes";
 
-function AddProof({ closeAddModel, type, sessionId }) {
+function AddProof({ sessionId }) {
   const [file, setFile] = useState(null);
 
   const [controller, dispatch] = useMaterialUIController();
-
-  const { updater } = controller;
+  const { updater, openProofModel } = controller;
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -34,7 +37,7 @@ function AddProof({ closeAddModel, type, sessionId }) {
     fd.append("proof", file);
     fd.append("sess", sessionId);
     fd.append("type", "fincourse");
-    console.log(fd.getAll("image"));
+    // console.log(fd.getAll("image"));
     const config = {
       method: "post",
       url: setProofRoute,
@@ -46,9 +49,11 @@ function AddProof({ closeAddModel, type, sessionId }) {
 
     await axios(config);
 
-    // closeAddModel(false);
+    setOpenProofModel(dispatch, !openProofModel);
     setUpdater(dispatch, !updater);
   };
+
+  console.log("wa ba3da", sessionId);
 
   return (
     <Card sx={{ mt: "50px" }}>
@@ -74,7 +79,7 @@ function AddProof({ closeAddModel, type, sessionId }) {
           color="dark"
           size="small"
           iconOnly
-          onClick={() => closeAddModel(false)}
+          onClick={() => setOpenProofModel(dispatch, !openProofModel)}
         >
           <Icon fontSize="small">close</Icon>
         </MDButton>
@@ -101,18 +106,9 @@ function AddProof({ closeAddModel, type, sessionId }) {
               type="submit"
               variant="gradient"
               color="info"
-              sx={{ width: "30%", mr: "5px" }}
+              sx={{ width: "50%", mr: "5px" }}
             >
-              Submit
-            </MDButton>
-
-            <MDButton
-              type="reset"
-              variant="gradient"
-              color="dark"
-              sx={{ width: "30%", ml: "5px" }}
-            >
-              clear
+              Send Proof
             </MDButton>
           </MDBox>
         </MDBox>

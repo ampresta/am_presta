@@ -12,14 +12,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 // import axios from "services/authAxios";
 import axios from "services/authAxios";
-import {
-  baseURL,
-  allPartnersRoute,
-  DeleteInstances,
-} from "utils/APIRoutes";
-
-// ConfirmPoppup component
-import ConfirmPopup from "components/ConfirmPopup";
+import { baseURL, allPartnersRoute } from "utils/APIRoutes";
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setOpenProofModel } from "context";
@@ -29,7 +22,6 @@ import { AllSessionsCollabRoute } from "utils/APIRoutes";
 
 export default function Data(setSessionId) {
   const [allSessions, setAllSessions] = useState([]);
-  const [tempSessionId, setTempSessionId] = useState(0);
   const [providers, setProviders] = useState([
     {
       id: "",
@@ -268,7 +260,7 @@ export default function Data(setSessionId) {
                 color="success"
                 size="small"
                 onClick={() => {
-                  setTempSessionId(session.id);
+                  setSessionId(session.id);
                   setOpenProofModel(dispatch, !openProofModel);
                 }}
               >

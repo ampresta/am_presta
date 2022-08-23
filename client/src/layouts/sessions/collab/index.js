@@ -7,17 +7,16 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
 
+// @mui icons
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
+
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import DataTable from "examples/Tables/DataTable";
 
 //import UseState
-import { useEffect, useState } from "react";
-
-// @mui icons
-import Icon from "@mui/material/Icon";
-import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import { useState } from "react";
 
 // Data
 import sessionsTableData from "./data/sessionsTableData";
@@ -26,11 +25,9 @@ import sessionsTableData from "./data/sessionsTableData";
 import AddProof from "./addProof";
 
 // Material Dashboard 2 React contexts
-import { useMaterialUIController, setOpenProofModel } from "context";
+import { useMaterialUIController } from "context";
 
 function Sessions() {
-  const { columns, rows, ProvidersFilter } = sessionsTableData();
-
   const [controller] = useMaterialUIController();
 
   const { openProofModel } = controller;
@@ -38,8 +35,10 @@ function Sessions() {
   const [openFilter, setOpenFilter] = useState(false);
 
   const [sessionId, setSessionId] = useState(0);
-  const { columns, rows, confirmation, ProvidersFilter } =
-    sessionsTableData(setSessionId);
+
+  const { columns, rows, ProvidersFilter } = sessionsTableData(setSessionId);
+
+  console.log("9abla", sessionId);
 
   return (
     <DashboardLayout>
@@ -91,7 +90,7 @@ function Sessions() {
         </MDBox>
       )}
 
-      {openProofModel && <AddProof closeAddModel={setOpenProofModel} sessionId={sessionId} />}
+      {openProofModel && <AddProof sessionId={sessionId} />}
     </DashboardLayout>
   );
 }
