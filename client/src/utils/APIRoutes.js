@@ -88,6 +88,7 @@ export const sendRequestRoute = `${baseURL}/collab/sendrequest`;
 
 // proofs
 export const acceptProofRoute = `${baseURL}/proof/accept`;
+export const setProofRoute = `${baseURL}/proof/set`;
 
 //Vouchers
 export const browseVouchersAdminRoute = `${baseURL}/voucher/browseAdmin`;

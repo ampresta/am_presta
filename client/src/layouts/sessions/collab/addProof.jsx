@@ -13,37 +13,42 @@ import { useState } from "react";
 import DropFileInput from "components/DropFileInput/DropFileInput";
 
 // Axios
-import axiosAuth from "services/authAxios";
+import axios from "services/authAxios";
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setUpdater } from "context";
 
-import { addCollabsRoute, uploadRoute } from "utils/APIRoutes";
+import { setProofRoute, uploadRoute } from "utils/APIRoutes";
 
-function AddProof({ closeAddModel }) {
+function AddProof({ closeAddModel, type, sessionId }) {
   const [file, setFile] = useState(null);
 
   const [controller, dispatch] = useMaterialUIController();
 
   const { updater } = controller;
 
-  console.log(file);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
-  // const handleSubmit = async (event) => {
-  //   const { nom } = collaborator;
-  //   event.preventDefault();
+    const fd = new FormData();
+    fd.append("proof", file);
+    fd.append("sess", sessionId);
+    fd.append("type", "fincourse");
+    console.log(fd.getAll("image"));
+    const config = {
+      method: "post",
+      url: setProofRoute,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      data: fd,
+    };
 
-  //   if (data.status) {
+    await axios(config);
 
-  //     await axiosAuth(config);
-
-  //       closeAddModel(false);
-  //       setUpdater(dispatch, !updater);
-  //     } else {
-  //       alert(data.msg);
-  //     }
-  //   }
-  // };
+    // closeAddModel(false);
+    setUpdater(dispatch, !updater);
+  };
 
   return (
     <Card sx={{ mt: "50px" }}>
@@ -79,7 +84,7 @@ function AddProof({ closeAddModel }) {
         <MDBox
           component="form"
           role="form"
-          // onSubmit={(event) => handleSubmit(event)}
+          onSubmit={(event) => handleSubmit(event)}
         >
           <Card>
             <MDBox>

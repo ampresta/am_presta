@@ -13,7 +13,7 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import DataTable from "examples/Tables/DataTable";
 
 //import UseState
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -36,6 +36,10 @@ function Sessions() {
   const { openProofModel } = controller;
 
   const [openFilter, setOpenFilter] = useState(false);
+
+  const [sessionId, setSessionId] = useState(0);
+  const { columns, rows, confirmation, ProvidersFilter } =
+    sessionsTableData(setSessionId);
 
   return (
     <DashboardLayout>
@@ -87,7 +91,7 @@ function Sessions() {
         </MDBox>
       )}
 
-      {openProofModel && <AddProof closeAddModel={setOpenProofModel} />}
+      {openProofModel && <AddProof closeAddModel={setOpenProofModel} sessionId={sessionId} />}
     </DashboardLayout>
   );
 }

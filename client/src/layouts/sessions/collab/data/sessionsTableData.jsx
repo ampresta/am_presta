@@ -10,10 +10,16 @@ import MDBadge from "components/MDBadge";
 // React Hooks
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-
 // import axios from "services/authAxios";
 import axios from "services/authAxios";
-import { baseURL, allPartnersRoute } from "utils/APIRoutes";
+import {
+  baseURL,
+  allPartnersRoute,
+  DeleteInstances,
+} from "utils/APIRoutes";
+
+// ConfirmPoppup component
+import ConfirmPopup from "components/ConfirmPopup";
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setOpenProofModel } from "context";
@@ -21,7 +27,7 @@ import { useMaterialUIController, setOpenProofModel } from "context";
 import { dateFormat } from "utils/Helper";
 import { AllSessionsCollabRoute } from "utils/APIRoutes";
 
-export default function Data() {
+export default function Data(setSessionId) {
   const [allSessions, setAllSessions] = useState([]);
   const [tempSessionId, setTempSessionId] = useState(0);
   const [providers, setProviders] = useState([
