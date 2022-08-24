@@ -13,7 +13,7 @@ import { dateFormat } from "utils/Helper";
 
 // Api Endpoint
 import axiosAuth from "services/authAxios";
-import { allRequestsRoute, baseURL, DeleteInstances } from "utils/APIRoutes";
+import { allRequestsRoute, baseURL } from "utils/APIRoutes";
 
 // ConfirmPoppup component
 import ConfirmPopup from "components/ConfirmPopup";
@@ -63,7 +63,7 @@ export default function Data() {
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDAvatar src={`${baseURL}/${image}`} name={name} size="sm" />
       <MDBox ml={2} lineHeight={1}>
-        <MDTypography display="block" variant="button" fontWeight="medium">
+        <MDTypography display="block" variant="caption" fontWeight="medium">
           {name}
         </MDTypography>
       </MDBox>
@@ -72,7 +72,7 @@ export default function Data() {
 
   const Collaborator = ({ collab_name }) => (
     <MDBox>
-      <MDTypography display="block" variant="caption" fontWeight="medium">
+      <MDTypography display="block" variant="button" fontWeight="medium">
         {collab_name}
       </MDTypography>
     </MDBox>
@@ -81,15 +81,15 @@ export default function Data() {
   let sessions = {
     columns: [
       {
-        Header: "Course Request",
+        Header: "Collaborator Profile",
         accessor: "author",
         width: "25%",
         align: "left",
       },
       {
-        Header: "Collaborator Name",
+        Header: "Course Request",
         accessor: "collaborator",
-        width: "20%",
+        width: "25%",
         align: "center",
       },
       {
@@ -102,14 +102,14 @@ export default function Data() {
         Header: "Actions",
         accessor: "actions",
         align: "center",
-        width: "30%",
+        width: "25%",
       },
     ],
 
     rows: [],
     confirmation: confirmModel && (
       <ConfirmPopup
-        title={"Are you sure you want to delete this request ?"}
+        title={"Are you sure you want to decline this request ?"}
         open={confirmModel}
         onConfirmPopup={() => setConfirmModel(!confirmModel)}
         handleDetele={handleDelete}
@@ -130,13 +130,12 @@ export default function Data() {
   allRequests.map((request) =>
     sessions.rows.push({
       author: (
-        <Company image={request.Collaborateur.image} name={request.Cour.nom} />
-      ),
-      collaborator: (
-        <Collaborator
-          collab_name={`${request.Collaborateur.nom} ${request.Collaborateur.prenom}`}
+        <Company
+          image={request.Collaborateur.image}
+          name={`${request.Collaborateur.nom} ${request.Collaborateur.prenom}`}
         />
       ),
+      collaborator: <Collaborator collab_name={request.Cour.nom} />,
       enrolled: (
         <MDTypography
           component="a"
@@ -157,11 +156,9 @@ export default function Data() {
               setOpenRequestModel(dispatch, !openRequestModel);
             }}
           >
-            <MDTypography variant="caption" color="text" fontWeight="medium">
-              <Icon fontSize="small" color="success">
-                check
-              </Icon>
-            </MDTypography>
+            <Icon fontSize="small" color="success">
+              check
+            </Icon>
           </MDButton>
 
           <MDButton
@@ -171,11 +168,9 @@ export default function Data() {
               setTempCourseId(request.id);
             }}
           >
-            <MDTypography variant="caption" color="text" fontWeight="medium">
-              <Icon fontSize="small" color="primary">
-                delete
-              </Icon>
-            </MDTypography>
+            <Icon fontSize="large" color="primary">
+              close
+            </Icon>
           </MDButton>
         </>
       ),

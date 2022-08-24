@@ -9,7 +9,6 @@ import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
 
-import PasswordTest from "components/PasswordTest";
 import DropFileInput from "components/DropFileInput/DropFileInput";
 
 //import UseState Hook
@@ -30,8 +29,6 @@ function AddCompanies({ closeAddModel }) {
     l_name: "",
     company: "",
     email: "",
-    // password: "",
-    // c_password: "",
   });
 
   const [details, setDetails] = useState({
@@ -40,8 +37,6 @@ function AddCompanies({ closeAddModel }) {
     l_name: "",
     company: "",
     email: "",
-    // password: "",
-    // c_password: "",
   });
 
   const [file, setFile] = useState(null);
@@ -219,7 +214,6 @@ function AddCompanies({ closeAddModel }) {
             />
             <FormHelperText error>{formErrors.email}</FormHelperText>
           </MDBox>
-
 
           <Card>
             <MDBox>

@@ -2,7 +2,6 @@
 // @mui material components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-import MDAvatar from "components/MDAvatar";
 import Grid from "@mui/material/Grid";
 import MDButton from "components/MDButton";
 import MDBadge from "components/MDBadge";
@@ -54,7 +53,13 @@ export default function Data(setSessionId) {
 
   const Company = ({ id, image, name, company }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
-      <MDAvatar src={`${baseURL}/${image}`} name={name} size="sm" />
+      <img
+        src={`${baseURL}/${image}`}
+        alt={name}
+        width="70px"
+        height="auto"
+        style={{ border: "2px solid #2b85eb" }}
+      />
       <MDBox ml={2} lineHeight={1}>
         <Link to={`/sessions/details/${id}`}>
           <MDTypography display="block" variant="button" fontWeight="medium">
@@ -113,7 +118,6 @@ export default function Data(setSessionId) {
       return (
         <MDButton
           size="small"
-          variant="text"
           // onClick={(e) => handleProof(e)}
           typex="fincourse"
           index={index}
@@ -173,7 +177,7 @@ export default function Data(setSessionId) {
       {
         Header: "proof",
         accessor: "proof",
-        width: "10%",
+        width: "20%",
         align: "center",
       },
     ],
@@ -250,24 +254,20 @@ export default function Data(setSessionId) {
           </MDTypography>
         ),
         status: (
-          <MDBadge badgeContent="Check Proof" color="success" size="md" />
+          <MDBadge badgeContent="hadi khssha t9ad" color="error" size="md" />
         ),
         proof: (
-          <MDBox display="flex">
-            <MDBox>
-              <MDButton
-                variant="gradient"
-                color="success"
-                size="small"
-                onClick={() => {
-                  setSessionId(session.id);
-                  setOpenProofModel(dispatch, !openProofModel);
-                }}
-              >
-                &nbsp;Proof
-              </MDButton>
-            </MDBox>
-          </MDBox>
+          <MDButton
+            variant="gradient"
+            color="info"
+            size="small"
+            onClick={() => {
+              setSessionId(session.id);
+              setOpenProofModel(dispatch, !openProofModel);
+            }}
+          >
+            &nbsp;Add Proof
+          </MDButton>
         ),
         period: <Period debut={session.datedebut} fin={session.datefin} />,
       })
