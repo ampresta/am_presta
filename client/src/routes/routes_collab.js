@@ -3,7 +3,7 @@ import Sessions from "layouts/sessions/collab";
 import SessionsDetails from "layouts/sessionsDetails";
 import SignIn from "layouts/authentication/sign-in";
 import Logout from "layouts/authentication/logout";
-import Vouchers from "layouts/vouchers/societe";
+import Vouchers from "layouts/vouchers/collab";
 import Error404 from "layouts/error404";
 import CatalogueCourses from "layouts/courses catalogue";
 import CoursesDetails from "layouts/courses catalogue/chooseCourse";

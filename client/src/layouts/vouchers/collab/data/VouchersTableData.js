@@ -21,7 +21,7 @@ import ConfirmPopup from "components/ConfirmPopup";
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController } from "context";
-import { browseVouchersSocRoute } from "utils/APIRoutes";
+import { browseVouchersCollabRoute } from "utils/APIRoutes";
 
 export default function Data() {
   const [allVouchers, setAllVouchers] = useState([]);
@@ -34,7 +34,7 @@ export default function Data() {
 
   useEffect(() => {
     const getAllVouchers = async () => {
-      const { data } = await axiosAuth.post(browseVouchersSocRoute);
+      const { data } = await axiosAuth.post(browseVouchersCollabRoute);
       setAllVouchers(data);
     };
     getAllVouchers();
@@ -70,17 +70,27 @@ export default function Data() {
       {
         Header: "Provider",
         accessor: "provider",
-        width: "10%",
+        width: "23%",
         align: "left",
       },
       {
-        Header: "Vouchers Left",
-        accessor: "v_left",
-        width: "10%",
+        Header: "session",
+        accessor: "session",
+        width: "23%",
         align: "center",
       },
-      { Header: "edit", accessor: "edit", align: "center", width: "3%" },
-      { Header: "delete", accessor: "delete", align: "center", width: "3%" },
+      {
+        Header: "cours",
+        accessor: "cours",
+        width: "23%",
+        align: "center",
+      },
+      {
+        Header: "code",
+        accessor: "value",
+        width: "31%",
+        align: "center",
+      },
     ],
 
     rows: [],
@@ -101,30 +111,20 @@ export default function Data() {
       vouchers.rows.push({
         provider: <Company name={voucher.nom} image={voucher.image} />,
 
-        v_left: (
+        value: (
           <MDTypography variant="caption" color="text" fontWeight="medium">
-            {voucher.count}
+            {voucher.code}
           </MDTypography>
         ),
-        edit: (
+        session: (
           <MDTypography variant="caption" color="text" fontWeight="medium">
-            <Icon fontSize="small">edit</Icon>
+            {voucher.session_name}
           </MDTypography>
         ),
-        delete: (
-          <MDButton
-            variant="text"
-            onClick={() => {
-              setConfirmModel(!confirmModel);
-              setTempPartnerId(voucher.id);
-            }}
-          >
-            <MDTypography variant="caption" color="text" fontWeight="medium">
-              <Icon fontSize="small" color="primary">
-                delete
-              </Icon>
-            </MDTypography>
-          </MDButton>
+        cours: (
+          <MDTypography variant="caption" color="text" fontWeight="medium">
+            {voucher.cours_nom}
+          </MDTypography>
         ),
       })
     );

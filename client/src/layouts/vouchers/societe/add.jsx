@@ -25,8 +25,6 @@ import { addCollabsRoute, uploadRoute } from "utils/APIRoutes";
 function AddCollab({ closeAddModel }) {
   const [formErrors, setFormErrors] = useState({
     nom: "",
-    prenom: "",
-    mail: "",
   });
 
   const [collaborator, setCollaborator] = useState({
@@ -55,7 +53,6 @@ function AddCollab({ closeAddModel }) {
       });
 
       const ID = data.id;
-      console.log(data);
       if (data.status) {
         const fd = new FormData();
         fd.append("image", file);
@@ -92,13 +89,7 @@ function AddCollab({ closeAddModel }) {
   const validate = (values) => {
     const errors = {};
     if (!values.nom) {
-      errors.nom = "Collaborator First Name is required !";
-    }
-    if (!values.prenom) {
-      errors.prenom = "Collaborator Last Name is required !";
-    }
-    if (!values.mail) {
-      errors.mail = "Collaborator Email is required !";
+      errors.coursename = "Collaborator Name is required !";
     }
     return errors;
   };
@@ -147,9 +138,9 @@ function AddCollab({ closeAddModel }) {
               fullWidth
               name="prenom"
               onChange={(e) => handleChange(e)}
-              error={formErrors.nom}
+              error={formErrors.coursename}
             />
-            <FormHelperText error>{formErrors.nom}</FormHelperText>
+            <FormHelperText error>{formErrors.coursename}</FormHelperText>
           </MDBox>
           <MDBox mb={2}>
             <MDInput
@@ -159,9 +150,9 @@ function AddCollab({ closeAddModel }) {
               fullWidth
               name="nom"
               onChange={(e) => handleChange(e)}
-              error={formErrors.prenom}
+              error={formErrors.coursename}
             />
-            <FormHelperText error>{formErrors.prenom}</FormHelperText>
+            <FormHelperText error>{formErrors.coursename}</FormHelperText>
           </MDBox>
           <MDBox mb={2}>
             <MDInput
@@ -171,9 +162,9 @@ function AddCollab({ closeAddModel }) {
               fullWidth
               name="mail"
               onChange={(e) => handleChange(e)}
-              error={formErrors.mail}
+              error={formErrors.coursename}
             />
-            <FormHelperText error>{formErrors.mail}</FormHelperText>
+            <FormHelperText error>{formErrors.coursename}</FormHelperText>
           </MDBox>
 
           <Card>
