@@ -12,6 +12,7 @@ import { useEffect } from "react";
 import axios from "services/authAxios";
 import { CollabDashboard } from "utils/APIRoutes";
 import { useState } from "react";
+
 function Dashboard() {
   const [collabdata, setData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -84,7 +85,7 @@ function Dashboard() {
 
   return (
     <DashboardLayout>
-      <DashboardNavbar />
+      <DashboardNavbar collab />
       <MDBox py={3}>
         <Grid container spacing={2} rowSpacing={1}>
           {MenuList.map((item) => (

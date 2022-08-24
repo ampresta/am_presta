@@ -1,15 +1,16 @@
+import { useEffect, useState } from "react";
+
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-import MDAvatar from "components/MDAvatar";
-import { dateFormat } from "utils/Helper";
-// Api Endpoint
-import { baseURL } from "utils/APIRoutes";
-import axios from "services/authAxios";
-import { browseCollabRequests } from "utils/APIRoutes";
-import { useEffect } from "react";
-import { useState } from "react";
 import MDBadge from "components/MDBadge";
+
+// Api Endpoint
+import { baseURL, browseCollabRequests } from "utils/APIRoutes";
+import { dateFormat } from "utils/Helper";
+
+// import axios
+import axios from "services/authAxios";
 
 const Data = () => {
   const [req, setRequests] = useState([]);
@@ -24,7 +25,13 @@ const Data = () => {
   }, []);
   const Company = ({ image, name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
-      <MDAvatar src={`${baseURL}/${image}`} name={name} size="sm" />
+      <img
+        src={`${baseURL}/${image}`}
+        alt={name}
+        width="50px"
+        height="auto"
+        style={{ border: "1.5px solid #2b85eb" }}
+      />
       <MDBox ml={2} lineHeight={1}>
         <MDTypography display="block" variant="button" fontWeight="medium">
           {name}

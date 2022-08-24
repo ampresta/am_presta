@@ -1,7 +1,6 @@
 // @mui material components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-import MDAvatar from "components/MDAvatar";
 import MDProgress from "components/MDProgress";
 import Grid from "@mui/material/Grid";
 import MDButton from "components/MDButton";
@@ -45,16 +44,8 @@ export default function Data() {
   const { updater } = controller;
 
   useEffect(() => {
-    const config = {
-      method: "get",
-      url: AllSessionsAdminRoute,
-      // headers: {
-      //   'Authorization': `Bearer ${authService.getCurrentUser()}`,
-      // }
-    };
-
     const getAllSessions = async () => {
-      const { data } = await axios(config);
+      const { data } = await axios.get(AllSessionsAdminRoute);
       setAllSessions(data);
     };
     getAllSessions();
@@ -85,7 +76,13 @@ export default function Data() {
 
   const Company = ({ id, image, name, company }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
-      <MDAvatar src={`${baseURL}/${image}`} name={name} size="sm" />
+      <img
+        src={`${baseURL}/${image}`}
+        alt={name}
+        width="70px"
+        height="auto"
+        style={{ border: "2px solid #2b85eb" }}
+      />
       <MDBox ml={2} lineHeight={1}>
         <Link to={`/sessions/details/${id}`}>
           <MDTypography display="block" variant="button" fontWeight="medium">
@@ -109,24 +106,21 @@ export default function Data() {
   );
 
   const Period = ({ debut, fin }) => (
-    <MDBox style={{ display: "flex" }}>
-      <MDBox style={{ marginRight: "0.5rem", textAlign: "right  " }}>
-        <span
-          style={{ fontSize: "0.75rem", display: "block", fontWeight: "Bold" }}
-        >
-          From:{" "}
-        </span>
-        <span style={{ fontSize: "0.75rem", fontWeight: "Bold" }}>To: </span>
-      </MDBox>
-      <MDBox color="info" variant="gradient" sx={{ backgroundColor: "none" }}>
-        <span
-          style={{ fontSize: "0.75rem", display: "block", fontWeight: "Bold" }}
-        >
+    <MDBox display="flex" alignItems="center">
+      <MDBox lineHeight={1.5} textAlign="right">
+        <MDTypography variant="caption" fontWeight="medium">
+          From :{" "}
+        </MDTypography>
+        <MDTypography variant="caption" fontWeight="medium" color="info">
           {dateFormat(debut)}
-        </span>
-        <span style={{ fontSize: "0.75rem", fontWeight: "Bold" }}>
+        </MDTypography>
+        <br />
+        <MDTypography variant="caption" fontWeight="medium">
+          To :{" "}
+        </MDTypography>
+        <MDTypography variant="caption" fontWeight="medium" color="info">
           {dateFormat(fin)}
-        </span>
+        </MDTypography>
       </MDBox>
     </MDBox>
   );
@@ -279,7 +273,7 @@ export default function Data() {
           </MDButton>
         ),
       })
-    )
+    );
   }
 
   return sessions;

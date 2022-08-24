@@ -41,16 +41,16 @@ export default function Data(setSessionId) {
     getAllSessions();
   }, [updater]);
 
-  // useEffect(() => {
-  //   const getAllPartners = async () => {
-  //     const { data } = await axios.get(allPartnersRoute);
-  //     let temp = [];
-  //     data.map((provider) => temp.push({ id: provider.id, nom: provider.nom }));
-  //     setProviders(temp);
-	    // console.log(temp);
-  //   };
-  //   getAllPartners();
-  // }, []);
+  useEffect(() => {
+    const getAllPartners = async () => {
+      const { data } = await axios.get(allPartnersRoute);
+      let temp = [];
+      data.map((provider) => temp.push({ id: provider.id, nom: provider.nom }));
+      setProviders(temp);
+      console.log(temp);
+    };
+    getAllPartners();
+  }, []);
 
   const Company = ({ id, image, name, company }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
@@ -99,9 +99,7 @@ export default function Data(setSessionId) {
     ) {
       return <MDBadge badgeContent="Certified" color="success" size="md" />;
     } else if (collab.Session_Collabs[0].certifs) {
-      return (
-          <MDBadge badgeContent="Pending" color="warning" size="md" />
-      );
+      return <MDBadge badgeContent="Pending" color="warning" size="md" />;
     } else if (
       collab.Session_Collabs[0].fincourse &&
       collab.Session_Collabs[0].fincourse.status
@@ -109,13 +107,13 @@ export default function Data(setSessionId) {
       return <MDBadge badgeContent="Finished" color="dark" size="md" />;
     } else if (collab.Session_Collabs[0].fincourse) {
       return (
-          <MDBadge
-            type="fincourse"
-            badgeContent=" Course Finished"
-            color="success"
-            size="md"
-            index={index}
-          />
+        <MDBadge
+          type="fincourse"
+          badgeContent=" Course Finished"
+          color="success"
+          size="md"
+          index={index}
+        />
       );
     } else {
       return <MDBadge badgeContent="Studying" color="note" size="md" />;
@@ -200,7 +198,7 @@ export default function Data(setSessionId) {
   if (allSessions.length === 0 || !Array.isArray(allSessions)) {
     sessions.rows.push({ author: "No Sessions Available" });
   } else {
-    allSessions.map((session,index) =>
+    allSessions.map((session, index) =>
       sessions.rows.push({
         author: (
           <Company
@@ -239,7 +237,7 @@ export default function Data(setSessionId) {
             {session.collabs}
           </MDTypography>
         ),
-        status: getStatus(session,index),
+        status: getStatus(session, index),
         proof: (
           <MDButton
             variant="gradient"
@@ -249,6 +247,7 @@ export default function Data(setSessionId) {
               setSessionId(session.id);
               setOpenProofModel(dispatch, !openProofModel);
             }}
+            // disabled={session.Session_Collabs[index].fincourse.size > 0}
           >
             &nbsp;Add Proof
           </MDButton>

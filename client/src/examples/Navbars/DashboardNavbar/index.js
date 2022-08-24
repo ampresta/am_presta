@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 // react-router components
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 // prop-types is a library for typechecking of props.
 import PropTypes from "prop-types";
@@ -30,7 +30,7 @@ import {
 // Material Dashboard 2 React context
 import { useMaterialUIController, setMiniSidenav } from "context";
 
-function DashboardNavbar({ absolute, light, isMini }) {
+function DashboardNavbar({ absolute, light, isMini, collab }) {
   const [controller, dispatch] = useMaterialUIController();
   const { miniSidenav, transparentNavbar, darkMode } = controller;
   const [openMenu, setOpenMenu] = useState(false);
@@ -51,12 +51,14 @@ function DashboardNavbar({ absolute, light, isMini }) {
       onClose={() => setOpenMenu(false)}
       sx={{ mt: 2 }}
     >
-      <NotificationItem
-        icon={<Icon>person</Icon>}
-        title="My profile"
-        to="/profile"
-      />
-      <NotificationItem icon={<Icon>logout</Icon>} title="logout" />
+      {collab && (
+        <Link to="/profile">
+          <NotificationItem icon={<Icon>person</Icon>} title="My profile" />
+        </Link>
+      )}
+      <Link to="/logout">
+        <NotificationItem icon={<Icon>logout</Icon>} title="logout" />
+      </Link>
     </Menu>
   );
 
@@ -134,6 +136,7 @@ DashboardNavbar.defaultProps = {
   absolute: false,
   light: false,
   isMini: false,
+  collab: false,
 };
 
 // Typechecking props for the DashboardNavbar
@@ -141,6 +144,7 @@ DashboardNavbar.propTypes = {
   absolute: PropTypes.bool,
   light: PropTypes.bool,
   isMini: PropTypes.bool,
+  collab: PropTypes.bool,
 };
 
 export default DashboardNavbar;

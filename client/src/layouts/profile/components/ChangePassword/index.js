@@ -30,6 +30,8 @@ function ChangePassword({ shadow }) {
     const { current_password, new_password, confirm_password } = details;
     event.preventDefault();
     setFormErrors(validate(details));
+
+    console.log(details);
   };
 
   const handleChange = (event) => {

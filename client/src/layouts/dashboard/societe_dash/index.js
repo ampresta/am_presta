@@ -26,17 +26,15 @@ import DataTable from "examples/Tables/DataTable";
 
 // Hooks
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 //Axios
 import axios from "services/authAxios";
 
 // Endpoints
 import { SocCardsRoute } from "utils/APIRoutes";
-import { getAccessToken } from "utils/accessToken";
 
 function Dashboard() {
-  const navigate = useNavigate();
   const { columns, rows } = authorsTableData();
 
   const [sessionsCount, setSessionsCount] = useState(0);
@@ -44,10 +42,8 @@ function Dashboard() {
   const [collaboratorsCount, setCollabsCount] = useState(0);
 
   useEffect(() => {
-	  console.log("3la slamto");
-    if (getAccessToken() === "") {
-      // navigate("/login");
-    }
+    console.log("3la slamto");
+
     const fetchCards = async (model) => {
       const { data } = await axios.post(SocCardsRoute, { model });
       switch (model) {

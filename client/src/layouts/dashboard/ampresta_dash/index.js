@@ -26,30 +26,21 @@ import DataTable from "examples/Tables/DataTable";
 
 // Hooks
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 //Axios
 import axios from "services/authAxios";
 
 // Endpoints
 import { amCardsRoute } from "utils/APIRoutes";
-import authService from "services/auth.service";
-import { getAccessToken } from "utils/accessToken";
 
 function Dashboard() {
-  const navigate = useNavigate();
-
   const { columns, rows } = authorsTableData();
 
   const [coursesCount, setCoursesCount] = useState(0);
   const [partnersCount, setPartnersCount] = useState(0);
   const [companiesCount, setCompaniesCount] = useState(0);
 
-  // useEffect(() => {
-  //   if (!getAccessToken()) {
-  //     console.log("LOGIN");
-  //     navigate("/login");
-  //   },[])
   useEffect(() => {
     const fetchCards = async (model) => {
       const { data } = await axios.post(amCardsRoute, { model });
