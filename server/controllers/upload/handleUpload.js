@@ -2,7 +2,7 @@ const db = require("../../config/database");
 const { Collaborateur, Cours, Provider, Societe } = db.models;
 const upload = require("./upload");
 module.exports = async (req, res) => {
-  if (!req.file.path) {
+  if (!req.file) {
     return res.send({ status: false });
   }
   const { model, id } = req.body;
