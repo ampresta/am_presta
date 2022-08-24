@@ -1,7 +1,6 @@
 // @mui material components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-import MDAvatar from "components/MDAvatar";
 import Checkbox from "@mui/material/Checkbox";
 
 // React Hooks
@@ -42,10 +41,15 @@ export default function Data(cours, collab) {
     getAllSessions();
   }, [updater]);
 
-
   const Company = ({ image, name, company }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
-      <MDAvatar src={`${baseURL}/${image}`} name={name} size="sm" />
+      <img
+        src={`${baseURL}/${image}`}
+        alt={name}
+        width="60px"
+        height="auto"
+        style={{ border: "2px solid #2b85eb" }}
+      />
       <MDBox ml={2} lineHeight={1}>
         <MDTypography display="block" variant="button" fontWeight="medium">
           {name}

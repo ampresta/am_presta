@@ -24,7 +24,6 @@ import { useEffect, useState } from "react";
 
 // Data
 import coursesTableData from "./data/coursesTableData";
-import authService from "services/auth.service";
 import { useNavigate } from "react-router-dom";
 
 //csv

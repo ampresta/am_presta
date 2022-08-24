@@ -18,7 +18,7 @@ import Ratings from "components/Ratings";
 
 import axiosAuth from "services/authAxios";
 
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import { useEffect, useState } from "react";
 import {
@@ -35,8 +35,6 @@ function Partners() {
   const [enrolled, setEnrolled] = useState(false);
   const [controller, dispatch] = useMaterialUIController();
   const { updater } = controller;
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     const getDetail = async () => {
@@ -56,7 +54,6 @@ function Partners() {
       cours: id,
     });
     if (data.status) {
-      // navigate("/myRequests");
       setUpdater(dispatch, updater);
       setEnrolled(true);
       console.log("requeest sent");
@@ -92,7 +89,7 @@ function Partners() {
   };
   return (
     <DashboardLayout>
-      <DashboardNavbar />
+      <DashboardNavbar collab />
       <MDBox pt={6} pb={1}>
         <Card>
           <MDBox

@@ -2,7 +2,6 @@
 // @mui material components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-import MDAvatar from "components/MDAvatar";
 import MDProgress from "components/MDProgress";
 import Grid from "@mui/material/Grid";
 import MDButton from "components/MDButton";
@@ -78,7 +77,13 @@ export default function Data() {
 
   const Company = ({ id, image, name, company }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
-      <MDAvatar src={`${baseURL}/${image}`} name={name} size="sm" />
+      <img
+        src={`${baseURL}/${image}`}
+        alt={name}
+        width="70px"
+        height="auto"
+        style={{ border: "2px solid #2b85eb" }}
+      />
       <MDBox ml={2} lineHeight={1}>
         <Link to={`/sessions/details/${id}`}>
           <MDTypography display="block" variant="button" fontWeight="medium">

@@ -13,10 +13,9 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Catalogue from "./components/Catalogue";
 
 function Partners() {
-
   return (
     <DashboardLayout>
-      <DashboardNavbar />
+      <DashboardNavbar collab />
       <MDBox pt={6} pb={1}>
         <Grid container spacing={6}>
           <Grid item xs={12}>

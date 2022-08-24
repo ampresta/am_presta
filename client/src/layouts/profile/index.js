@@ -49,7 +49,7 @@ function Overview() {
 
   return (
     <DashboardLayout>
-      <DashboardNavbar />
+      <DashboardNavbar collab />
       <MDBox mb={3} />
       <Header>
         <TabContext value={tabValue}>
