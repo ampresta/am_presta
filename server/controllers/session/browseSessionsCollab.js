@@ -7,25 +7,31 @@ module.exports = async (req, res) => {
   let filters = {};
   filters.include = [
     {
-      model: Session_Collab,
+      model: Collaborateur,
+      through: {
+        attributes: [],
+      },
       attributes: [],
+      where: {
+        admin: false,
+        instructor: false,
+      },
+    },
+    {
+      model: Session_Collab,
+      attributes: ["id"],
       include: [
         {
           model: Proof,
-          attributes: [],
+          // attributes: [],
           as: "certifs",
           required: false,
-          where: {
-            status: true,
-          },
         },
         {
-          model: Collaborateur,
-          attributes: [],
-          where: {
-            admin: false,
-            instructor: false,
-          },
+          model: Proof,
+          // attributes: [],
+          as: "fincourse",
+          required: false,
         },
       ],
       where: { CollaborateurId: collab },
@@ -34,16 +40,17 @@ module.exports = async (req, res) => {
 
   filters.attributes = {
     include: [
-      [
-        sequelize.fn(
-          "count",
-          sequelize.col("Session_Collabs.Collaborateur.id")
-        ),
-        "collabs",
-      ],
+      [sequelize.fn("count", sequelize.col("Collaborateurs.id")), "collabs"],
     ],
   };
-  filters.group = ["Session.id", "Cour.id", "Cour->Provider.id"];
+  filters.group = [
+    "Session_Collabs.id",
+    "Session_Collabs->fincourse.id",
+    "Session_Collabs->certifs.id",
+    "Session.id",
+    "Cour.id",
+    "Cour->Provider.id",
+  ];
   filters.include.push({
     model: Cours,
     required: true,
@@ -58,6 +65,6 @@ module.exports = async (req, res) => {
     return res.send(sessions);
   } catch (err) {
     console.log(err);
-    return res.send({ status: "error" });
+    return res.send({ status: false });
   }
 };
