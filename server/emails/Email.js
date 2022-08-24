@@ -82,5 +82,5 @@ class Email {
     // console.log(request);
   };
 }
-
-module.exports = new Email("abdoessordo01@gmail.com");
+ 
+module.exports = new Email("noreply@institute-eca.ma");

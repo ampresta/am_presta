@@ -3,8 +3,7 @@ const db = require("../../config/database");
 const Email = require("../../emails/Email");
 const { Collaborateur, Societe, User } = db.models;
 module.exports = async (req, res) => {
-  console.log("RRR");
-  console.log(req.body);
+
   const { account } = req.body;
   if (!account) {
     return res.sendStatus(403);
@@ -16,7 +15,6 @@ module.exports = async (req, res) => {
   const pep = process.env.PEPPER;
   try {
     const { nom, prenom, email } = account;
-
     if (!prenom || !nom) return res.sendStatus(403);
     username = `${nom}.${prenom}`;
     const password = Array(8)
