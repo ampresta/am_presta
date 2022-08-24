@@ -1,6 +1,7 @@
 // @mui material components
 import Card from "@mui/material/Card";
 import Icon from "@mui/material/Icon";
+import { OutlinedInput,  FormHelperText,Select, MenuItem,FormControl, InputLabel } from "@mui/material";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -27,6 +28,7 @@ import { setProofRoute } from "utils/APIRoutes";
 function AddProof({ sessionId }) {
   const [file, setFile] = useState(null);
 
+  const [selectedType, setType] = useState(null);
   const [controller, dispatch] = useMaterialUIController();
   const { updater, openProofModel } = controller;
 
@@ -35,7 +37,7 @@ function AddProof({ sessionId }) {
 
     const fd = new FormData();
     fd.append("proof", file);
-    fd.append("sess", sessionId);
+    fd.append("sess", sessionId.id);
     fd.append("type", "fincourse");
     // console.log(fd.getAll("image"));
     const config = {
@@ -53,8 +55,10 @@ function AddProof({ sessionId }) {
     setUpdater(dispatch, !updater);
   };
 
-  console.log("wa ba3da", sessionId);
-
+  // console.log("wa ba3da", sessionId);
+const handleSelectedType = (e)=>{
+	setType(e.target.value)
+}
   return (
     <Card sx={{ mt: "50px" }}>
       <MDBox
@@ -86,6 +90,36 @@ function AddProof({ sessionId }) {
       </MDBox>
 
       <MDBox pt={4} pb={3} px={10}>
+            <MDBox mb={2} ml={2} sx={{ width: "100%" }}>
+              <FormControl sx={{ width: "100%" }}>
+                <InputLabel id="demo-simple-select-label">
+	  Type
+                </InputLabel>
+                <Select
+                  name="course"
+                  sx={{ height: 45 }}
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  label="Age"
+	          value={selectedType}
+                  onChange={(e) => handleSelectedType(e)}
+                  MenuProps={{
+                    PaperProps: {
+                      style: {
+                        maxHeight: 150,
+                      },
+                    },
+                  }}
+                >
+        <MenuItem key={1} value={"fincourse"}>
+	  Course Completion
+        </MenuItem>
+	  {sessionId.Session_Collabs[0].fincourse && (<MenuItem key={2} value={"certifs"} >
+	  Certification
+        </MenuItem>)}
+                </Select>
+              </FormControl>
+            </MDBox>
         <MDBox
           component="form"
           role="form"

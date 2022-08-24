@@ -41,16 +41,16 @@ export default function Data(setSessionId) {
     getAllSessions();
   }, [updater]);
 
-  useEffect(() => {
-    const getAllPartners = async () => {
-      const { data } = await axios.get(allPartnersRoute);
-      let temp = [];
-      data.map((provider) => temp.push({ id: provider.id, nom: provider.nom }));
-      setProviders(temp);
-      console.log(temp);
-    };
-    getAllPartners();
-  }, []);
+  // useEffect(() => {
+  //   const getAllPartners = async () => {
+  //     const { data } = await axios.get(allPartnersRoute);
+  //     let temp = [];
+  //     data.map((provider) => temp.push({ id: provider.id, nom: provider.nom }));
+  //     setProviders(temp);
+  //     console.log(temp);
+  //   };
+  //   getAllPartners();
+  // }, []);
 
   const Company = ({ id, image, name, company }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
@@ -109,8 +109,8 @@ export default function Data(setSessionId) {
       return (
         <MDBadge
           type="fincourse"
-          badgeContent=" Course Finished"
-          color="success"
+          badgeContent=" Pending "
+          color="warning"
           size="md"
           index={index}
         />
@@ -244,7 +244,7 @@ export default function Data(setSessionId) {
             color="info"
             size="small"
             onClick={() => {
-              setSessionId(session.id);
+              setSessionId(session);
               setOpenProofModel(dispatch, !openProofModel);
             }}
             // disabled={session.Session_Collabs[index].fincourse.size > 0}
