@@ -16,7 +16,7 @@ module.exports = async (req, res) => {
   }
   if (req.admin) {
     try {
-      const ret = await upload(Model, id, req.file.path);
+      const ret = await upload(Model, id, req.file.path, {});
       return res.send(ret);
     } catch (err) {
       return res.send({ status: false });
@@ -36,7 +36,7 @@ module.exports = async (req, res) => {
     const ret = await upload(Model, id_, req.file.path, filters);
     return res.send(ret);
   } else if (req.collab && model == "Collaborateur") {
-    const ret = await upload(Model, req.collab, req.file.path);
+    const ret = await upload(Model, req.collab, req.file.path, {});
     return res.send(ret);
   }
 };

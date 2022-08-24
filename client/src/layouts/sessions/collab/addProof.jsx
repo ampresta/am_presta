@@ -38,7 +38,7 @@ function AddProof({ sessionId }) {
     const fd = new FormData();
     fd.append("proof", file);
     fd.append("sess", sessionId.id);
-    fd.append("type", "fincourse");
+    fd.append("type",selectedType);
     // console.log(fd.getAll("image"));
     const config = {
       method: "post",
