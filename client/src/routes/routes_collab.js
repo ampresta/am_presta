@@ -8,6 +8,7 @@ import Error404 from "layouts/error404";
 import CatalogueCourses from "layouts/courses catalogue";
 import CoursesDetails from "layouts/courses catalogue/chooseCourse";
 import MyRequests from "layouts/MyRequests";
+import Profile from "layouts/profile";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -60,10 +61,12 @@ const routes = [
     component: <MyRequests />,
   },
   {
-    name: "Login",
-    key: "login",
-    route: "/login",
-    component: <SignIn />,
+    type: "collapse",
+    name: "profile",
+    key: "profile",
+    icon: <Icon fontSize="small">person</Icon>,
+    route: "/profile",
+    component: <Profile />,
   },
   {
     type: "divider",
@@ -78,6 +81,12 @@ const routes = [
   },
   {
     type: "divider",
+  },
+  {
+    name: "Login",
+    key: "login",
+    route: "/login",
+    component: <SignIn />,
   },
   {
     name: "Error404",

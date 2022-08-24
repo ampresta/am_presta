@@ -78,7 +78,7 @@ function Dashboard() {
       icon: "settings",
       title: "My informations",
       description: "Personal Informations I can change",
-      route: "/",
+      route: "/profile",
     },
   ];
 
