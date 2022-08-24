@@ -8,8 +8,24 @@ import MDBox from "components/MDBox";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import MenuCards from "examples/Cards/MenuCards";
-
+import { useEffect } from "react";
+import axios from "services/authAxios";
+import { CollabDashboard } from "utils/APIRoutes";
+import { useState } from "react";
 function Dashboard() {
+  const [collabdata, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    const getStats = async () => {
+      const { data } = await axios.get(CollabDashboard);
+      if (data.status) {
+        setData(data);
+        console.log(data);
+        setLoading(true);
+      }
+    };
+    getStats();
+  }, []);
   const MenuList = [
     {
       id: 1,
@@ -18,7 +34,7 @@ function Dashboard() {
       title: "My Requests",
       description: "All requests I sent to enroll in a course",
       route: "/myRequests",
-      value: "1",
+      value: loading && collabdata.requests,
     },
     {
       id: 2,
@@ -36,7 +52,7 @@ function Dashboard() {
       title: "My Sessions",
       description: "All requests I sent to enroll in a course",
       route: "/mySessions",
-      value: "2",
+      value: loading && collabdata.sessions,
     },
     {
       id: 4,
@@ -45,7 +61,7 @@ function Dashboard() {
       title: "My Vouchers",
       description: "Code with which I can pass an exam",
       route: "/myVouchers",
-      value: "0",
+      value: loading && collabdata.vouchers,
     },
     {
       id: 5,
@@ -54,7 +70,7 @@ function Dashboard() {
       title: "My Certificates",
       description: "Approved certificates I can download",
       route: "/",
-      value: "2",
+      value: loading && collabdata.certifs,
     },
     {
       id: 6,

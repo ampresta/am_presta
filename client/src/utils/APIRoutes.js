@@ -19,6 +19,7 @@ export const graphsRoute = `${baseURL}/dashboard/amgraphs`;
 export const topCompaniesRoute = `${baseURL}/dashboard/amtable`;
 export const topCoursesRoute = `${baseURL}/dashboard/topcourses`;
 
+export const CollabDashboard = `${baseURL}/dashboard/collab`;
 // Societe Dashboard
 export const SocCardsRoute = `${baseURL}/dashboard/soccards`;
 export const graphsSocRoute = `${baseURL}/dashboard/amgraphs`;

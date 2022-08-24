@@ -23,6 +23,7 @@ const collaborateur = require("./routes/collaborateur");
 const quota = require("./routes/quota");
 const GetTypeController = require("./controllers/login/GetTypeController");
 const Email = require("./emails/Email");
+const changePhotoMiddleware = require("./middlewares/changePhotoMiddleware");
 //Database Setup
 try {
   db.authenticate();
@@ -70,6 +71,7 @@ app.use("/api/provider", provider);
 app.use("/api/collab", collaborateur);
 app.use("/api/proof", proof);
 app.use("/api/voucher", voucher);
+app.use("/api/upload", changePhotoMiddleware);
 app.post("/api/upload", upload.single("image"), handleUpload);
 app.post("/api/delete", deleteInstances);
 app.post("/api/logout", logout);

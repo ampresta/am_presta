@@ -32,6 +32,7 @@ function Partners() {
   const [details, setDetails] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const [enrolled, setEnrolled] = useState(false);
   const [controller, dispatch] = useMaterialUIController();
   const { updater } = controller;
 
@@ -55,13 +56,14 @@ function Partners() {
       cours: id,
     });
     if (data.status) {
-      navigate("/myRequests");
+      // navigate("/myRequests");
       setUpdater(dispatch, updater);
+      setEnrolled(true);
       console.log("requeest sent");
     }
   };
   const renderButton = () => {
-    if (!loading && details.request > 0) {
+    if (!loading && (details.request > 0 || enrolled)) {
       return (
         <MDButton disabled="true" variant="gradient" color="warning">
           Pending ...

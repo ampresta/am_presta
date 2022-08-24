@@ -1,5 +1,6 @@
 const db = require("../../config/database");
 const { Collaborateur, Cours, Provider, Societe } = db.models;
+const upload = require("./upload");
 module.exports = async (req, res) => {
   const { model, id } = req.body;
   if (model == "cours") {
@@ -13,12 +14,29 @@ module.exports = async (req, res) => {
   } else {
     return res.sendStatus(404);
   }
-  try {
-    const u = await Model.findOne({ where: { id } });
-    u.image = req.file.path;
-    await u.save();
-    return res.send({ go: req.file.path });
-  } catch (err) {
-    return res.send({ status: false });
+  if (req.admin) {
+    try {
+      const ret = await upload(Model, id, req.file.path);
+      return res.send(ret);
+    } catch (err) {
+      return res.send({ status: false });
+    }
+  } else if (req.societe) {
+    id_ = req.societe;
+    filters = {};
+    if (model == "Collaborateur") {
+      id_ = id;
+      filters = {
+        where: {
+          SocieteId: req.societe,
+          id: id_,
+        },
+      };
+    }
+    const ret = await upload(Model, id_, req.file.path, filters);
+    return res.send(ret);
+  } else if (req.collab && model == "Collaborateur") {
+    const ret = await upload(Model, req.collab, req.file.path);
+    return res.send(ret);
   }
 };

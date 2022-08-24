@@ -18,6 +18,7 @@ const User = (db) => {
       email: {
         type: Sequelize.STRING,
         allowNull: true,
+        unique: true,
       },
     },
     {
