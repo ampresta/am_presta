@@ -9,6 +9,7 @@ module.exports = (req, res, next) => {
     // console.log(req.headers.authorization);
     return res.sendStatus(403);
   }
+
   try {
     payload = verify(token, process.env.JWTSALT);
     if (payload.type === "Societe") {

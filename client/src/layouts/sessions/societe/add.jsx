@@ -25,6 +25,7 @@ import { useMaterialUIController, setUpdater } from "context";
 
 import { allCompanyCoursesRoute, addSessionsRoute } from "utils/APIRoutes";
 
+import {allCompaniesRoute} from "utils/APIRoutes";
 function AddSession({ closeAddModel }) {
   const [formErrors, setFormErrors] = useState({
     nom: "",
@@ -52,6 +53,17 @@ function AddSession({ closeAddModel }) {
     id: "",
   });
 
+  const [selectedCompany, setSelectedCompany] = useState({
+    nom: "",
+    id: "",
+  });
+
+  const [companies, setCompanies] = useState([
+    {
+      id: "",
+      nom: "",
+    },
+  ]);
   const [courses, setCourses] = useState([]);
 
   useEffect(() => {

@@ -4,6 +4,7 @@ const associateAdminSociete = require("../controllers/societe/associateAdminSoci
 const browseCollab = require("../controllers/societe/browseCollab");
 const browseRequests = require("../controllers/societe/browseRequests");
 const browseSociete = require("../controllers/societe/browseSociete");
+const CreateCollabAdmin = require("../controllers/societe/CreateCollabAdmin");
 const CreateCollabsforSociete = require("../controllers/societe/CreateCollabsforSociete");
 const CreateOneCollabforSociete = require("../controllers/societe/CreateOneCollabforSociete");
 const getUerSociete = require("../controllers/societe/getUerSociete");
@@ -11,12 +12,13 @@ const checkSociete = require("../middlewares/checkSociete");
 const router = require("express").Router();
 const signedin = require("../middlewares/signedin");
 
-router.use(signedin);
+// router.use(signedin);
 
 router.post("/add", addSociete);
 router.all("/browse", browseSociete);
 router.post("/assign", associateAdminSociete);
 router.post("/uerSociete", getUerSociete);
+router.post("/addcollabadmin", CreateCollabAdmin);
 //Societe
 router.use(checkSociete);
 

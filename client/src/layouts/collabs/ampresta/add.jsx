@@ -8,10 +8,13 @@ import MDBox from "components/MDBox";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
-
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 //import UseState Hook
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
 import DropFileInput from "components/DropFileInput/DropFileInput";
 
 // Axios
@@ -22,6 +25,8 @@ import { useMaterialUIController, setUpdater } from "context";
 
 import { addCollabsRoute, uploadRoute } from "utils/APIRoutes";
 
+import {allCompaniesRoute} from "utils/APIRoutes";
+import {addCollabRouteAdmin} from "utils/APIRoutes";
 function AddCollab({ closeAddModel }) {
   const [formErrors, setFormErrors] = useState({
     nom: "",
@@ -32,23 +37,59 @@ function AddCollab({ closeAddModel }) {
 	  prenom:"",
 	  mail:""
   });
+  const [selectedCompany, setSelectedCompany] = useState({
+    nom: "",
+    id: "",
+  });
+
+  const [companies, setCompanies] = useState([
+    {
+      id: "",
+      nom: "",
+    },
+  ]);
 
   const [file, setFile] = useState(null);
 
   const [controller, dispatch] = useMaterialUIController();
 
   const { updater } = controller;
+  const handleSelectedCompany = (event) => {
+    const company = event.target.value;
+    setCollaborator((prev) => ({ ...prev, company }));
+    setSelectedCompany(company);
+  };
+	useEffect(()=>{
+		
+    const getAllSociete = async () => {
+      const { data } = await axiosAuth.get(allCompaniesRoute);
+      let temp = [];
+      data.msg.map((company) =>
+        temp.push({ id: company.id, nom: company.name })
+      );
+      setCompanies(temp);
+    };
+ getAllSociete();
+
+	},[])
 
   const handleSubmit = async (event) => {
     const { nom } = collaborator;
     event.preventDefault();
     setFormErrors(validate(collaborator));
+	      console.log({account:{
+		      nom:collaborator.nom,
+		      prenom:collaborator.prenom,
+		      email: collaborator.mail,
+		      societe:collaborator.company.id
+	      }})
     if (Object.keys(validate(collaborator)).length === 0) {
-      const { data } = await axiosAuth.post(addCollabsRoute, {
+      const { data } = await axiosAuth.post(addCollabRouteAdmin, {
 	      account:{
 		      nom:collaborator.nom,
 		      prenom:collaborator.prenom,
-		      email: collaborator.mail
+		      email: collaborator.mail,
+		      societe:collaborator.company.id
 	      }
       });
 
@@ -167,6 +208,38 @@ function AddCollab({ closeAddModel }) {
             <FormHelperText error>{formErrors.coursename}</FormHelperText>
           </MDBox>
 
+          <MDBox mb={2}>
+            <FormControl sx={{ width: "100%" }}>
+              <InputLabel id="demo-simple-select-label">Company</InputLabel>
+              <Select
+                error={formErrors.company}
+                name="company"
+                sx={{ height: 45 }}
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={selectedCompany.name}
+                label="Age"
+                onChange={(e) => handleSelectedCompany(e)}
+                MenuProps={{
+                  PaperProps: {
+                    style: {
+                      maxHeight: 150,
+                    },
+                  },
+                }}
+                input={
+                  <OutlinedInput id="select-multiple-chip" label="Company" />
+                }
+              >
+                {companies.map((company) => (
+                  <MenuItem key={company.id} value={company}>
+                    {company.nom}
+                  </MenuItem>
+                ))}
+              </Select>
+              <FormHelperText error>{formErrors.company}</FormHelperText>
+            </FormControl>
+          </MDBox>
           <Card>
             <MDBox>
               <DropFileInput

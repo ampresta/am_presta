@@ -3,18 +3,20 @@ const db = require("../../config/database");
 const Email = require("../../emails/Email");
 const { Collaborateur, Societe, User } = db.models;
 module.exports = async (req, res) => {
-
   const { account } = req.body;
   if (!account) {
     return res.sendStatus(403);
   }
-  const societe = await Societe.findOne({
-    attributes: ["name"],
-    where: { id: req.societe },
-  });
   const pep = process.env.PEPPER;
   try {
-    const { nom, prenom, email } = account;
+    const { nom, prenom, email, societe } = account;
+    const societes = await Societe.findOne({
+      attributes: ["name"],
+      where: { id: societe },
+    });
+    if (!societe) {
+      return res.send({ status: false, msg: "Please specify a company" });
+    }
     if (!prenom || !nom) return res.sendStatus(403);
     username = `${nom}.${prenom}`;
     const password = Array(8)
@@ -41,7 +43,7 @@ module.exports = async (req, res) => {
           nom,
           prenom,
           email_institu,
-          SocieteId: req.societe,
+          SocieteId: societe,
           admin: false,
           instructor: false,
         },
@@ -50,7 +52,7 @@ module.exports = async (req, res) => {
         include: [{ association: User.Collaborateur }],
       }
     );
-    Email.sendRegister(email, username, password, societe.name);
+    Email.sendRegister(email, username, password, societes.name);
     return res.send({
       status: true,
       msg: "Users Created Successfully",
