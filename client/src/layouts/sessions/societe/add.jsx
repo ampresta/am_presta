@@ -67,20 +67,11 @@ function AddSession({ closeAddModel }) {
   const [courses, setCourses] = useState([]);
 
   useEffect(() => {
-    const getAllSociete = async () => {
-      const { data } = await axios.get(allCompaniesRoute);
-      let temp = [];
-      data.msg.map((company) =>
-        temp.push({ id: company.id, nom: company.name })
-      );
-      setCompanies(temp);
-    };
     const getAllData = async () => {
       const { data } = await axios.get(allCompanyCoursesRoute);
       setCourses(data.cours);
     };
     getAllData();
-	  getAllSociete();
   }, []);
 
   const [controller, dispatch] = useMaterialUIController();
