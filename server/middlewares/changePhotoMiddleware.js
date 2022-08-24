@@ -17,7 +17,7 @@ module.exports = (req, res, next) => {
     } else if (payload.type === "Collab") {
       req.collab = payload.id;
       return next();
-    } else if (payload.type === "SuperAdmin") {
+    } else if (payload.type === "Superadmin") {
       req.admin = true;
       return next();
     } else {
