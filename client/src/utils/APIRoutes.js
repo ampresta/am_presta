@@ -94,6 +94,7 @@ export const setProofRoute = `${baseURL}/proof/set`;
 //Vouchers
 export const browseVouchersAdminRoute = `${baseURL}/voucher/browseAdmin`;
 export const browseVouchersSocRoute = `${baseURL}/voucher/browseSoc`;
+export const browseVouchersCollabRoute = `${baseURL}/voucher/browseCol`;
 export const addVouchersAdminRoute = `${baseURL}/voucher/add`;
 export const asignOneVoucherRoute = `${baseURL}/voucher/assign`;
 export const asignVoucherSessionRoute = `${baseURL}/voucher/assignall`;

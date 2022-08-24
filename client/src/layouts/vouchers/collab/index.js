@@ -19,7 +19,6 @@ import { useState } from "react";
 import Icon from "@mui/material/Icon";
 
 //import Add component
-import AddCollab from "./add";
 
 // Data
 import VouchersTableData from "./data/VouchersTableData";
@@ -96,58 +95,6 @@ function Vouchers() {
                   </MDTypography>
                 </MDBox>
 
-                {/* <Grid
-                  container
-                  spacing={3}
-                  display="flex"
-                  justifyContent="space-between"
-                >
-                  <MDBox ml={3} pt={2} px={2} mt={3}>
-                    <MDButton
-                      variant="gradient"
-                      color="info"
-                      size="small"
-                      onClick={setOpenAddModel}
-                    >
-                      <Icon fontSize="big">add</Icon>
-                      &nbsp; add Vouchers
-                    </MDButton>
-                  </MDBox>
-
-                  <MDBox pt={2} pr={4} mt={3} display="flex">
-                    <MDBox mr={1}>
-                      <MDButton
-                        variant="gradient"
-                        color="success"
-                        size="small"
-                        onClick={() => handleDownload("allCollabs", "export")}
-                        disabled={rawData.length === 0}
-                      >
-                        <Icon fontSize="big" color="light">
-                          download
-                        </Icon>
-                        &nbsp; Export
-                      </MDButton>
-                    </MDBox>
-                    <MDBox>
-                      <MDButton
-                        variant="gradient"
-                        color="info"
-                        size="small"
-                        onClick={() => {
-                          localStorage.setItem("uploadType", "collabs");
-                          setOpenCsvUploader(true);
-                        }}
-                      >
-                        <Icon fontSize="big" color="light">
-                          upload
-                        </Icon>
-                        &nbsp; upload csv
-                      </MDButton>
-                    </MDBox>
-                  </MDBox>
-                </Grid> */}
-
                 <MDBox>
                   <DataTable
                     table={{ columns, rows }}
@@ -160,15 +107,7 @@ function Vouchers() {
           </Grid>
         </MDBox>
       )}
-      {openAddModel && <AddCollab closeAddModel={setOpenAddModel} />}
-      {openCsvUploader && (
-        <CsvUploader
-          closeUploadModel={setOpenCsvUploader}
-          DownloadTemplate={handleDownload}
-          type={"addVouchersTemplate"}
-          uploadType="vouchers"
-        />
-      )}
+
       {confirmation}
     </DashboardLayout>
   );
