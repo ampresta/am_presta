@@ -172,9 +172,7 @@ export default function Data() {
           </MDBox>
         </MDBox>
       );
-    }
-
-    if (
+    } else if (
       session_collab.fincourse.status === "accepted" &&
       // session_collab.fincourse.status &&
       session_collab.Voucher
@@ -197,13 +195,7 @@ export default function Data() {
           </MDBox>
         </MDBox>
       );
-    }
-
-    if (
-      !session_collab.fincourse &&
-      // !session_collab.fincourse.status &&
-      !session_collab.Voucher
-    ) {
+    } else {
       return (
         <MDBox display="flex">
           <MDBox>

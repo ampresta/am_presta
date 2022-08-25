@@ -18,6 +18,7 @@ import MDAvatar from "components/MDAvatar";
 
 // Images
 import burceMars from "assets/images/bruce-mars.jpg";
+import { useEffect } from "react";
 
 function ProfileInfoCard({ shadow }) {
   const labels = [];
