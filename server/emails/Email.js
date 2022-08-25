@@ -49,6 +49,7 @@ class Email {
         refreshToken: REFRESH_TOKEN,
         accessToken: accessToken,
       },
+      from: this.from_email
     });
 
     return transporter;
@@ -66,7 +67,8 @@ class Email {
       from: this.from_email,
       to: to_email,
       subject: `Welcome to ${societe}`,
-      template: "welcome",
+      text: "",
+      template: "welcome",      
       context: {
         username,
         password,
@@ -92,6 +94,7 @@ class Email {
     const options = {
       from: this.from_email,
       to: to_email,
+      text: "",
       subject: `Request to access cours: ${course}`,
       template: "alert",
       context: {
@@ -109,7 +112,7 @@ class Email {
       });
   };
 
-  sendResponse = async (
+  sendRefuseResponse = async (
     to_email,
     status,
     course,
@@ -119,11 +122,41 @@ class Email {
     const options = {
       from: this.from_email,
       to: to_email,
+      text: "",
       subject: `Response to your ${course} course enrollment request `,
-      template: "response",
+      template: "refuse",
       context: {
         course,
         status,
+        url,
+        // logo
+      },
+    };
+    this.getTransporter()
+      .then((transporter) => transporter.use("compile", hbs(this.hbs_config)))
+      .then((transporter) => transporter.sendMail(options))
+      .then((info) => {
+        console.log("Email sent");
+      });
+  };
+
+  sendAccepteResponse = async (
+    to_email,
+    status,
+    course,
+    session,
+    logo = "",
+    url = "http://127.0.0.1:3000/mySessions"
+  ) => {
+    const options = {
+      from: this.from_email,
+      to: to_email,
+      subject: `Response to your ${course} course enrollment request `,
+      template: "accepte",
+      context: {
+        course,
+        status,
+        session,
         url,
         // logo
       },
