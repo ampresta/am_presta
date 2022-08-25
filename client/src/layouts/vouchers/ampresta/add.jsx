@@ -8,9 +8,14 @@ import MDBox from "components/MDBox";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import OutlinedInput from "@mui/material/OutlinedInput";
 
 //import UseState Hook
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import DropFileInput from "components/DropFileInput/DropFileInput";
 
@@ -21,6 +26,7 @@ import axiosAuth from "services/authAxios";
 import { useMaterialUIController, setUpdater } from "context";
 
 import { addCollabsRoute, uploadRoute } from "utils/APIRoutes";
+import { allCompaniesRoute } from "utils/APIRoutes";
 
 function AddCollab({ closeAddModel }) {
   const [formErrors, setFormErrors] = useState({
@@ -33,11 +39,26 @@ function AddCollab({ closeAddModel }) {
     mail: "",
   });
 
+  const [allCompanies, setAllCompanies] = useState()
+  const [allProviders, setAllProviders] = useState()
+
   const [file, setFile] = useState(null);
 
   const [controller, dispatch] = useMaterialUIController();
 
   const { updater } = controller;
+
+
+  useEffect(() => {
+    const getAllCompanies = async () => {
+      const { data } = await axiosAuth.get(allCompaniesRoute);
+      let temp = [];
+      data.map((provider) => temp.push({ id: provider.id, nom: provider.nom }));
+      setProviders(temp);
+    };
+    getAllCompanies();
+  }, []);
+
 
   const handleSubmit = async (event) => {
     const { nom } = collaborator;
@@ -130,6 +151,74 @@ function AddCollab({ closeAddModel }) {
           role="form"
           onSubmit={(event) => handleSubmit(event)}
         >
+          <MDBox display="flex">
+            <MDBox mb={2} ml={2} sx={{ width: "50%" }}>
+              <FormControl sx={{ width: "100%" }}>
+                <InputLabel id="demo-simple-select-label">Provider</InputLabel>
+                <Select
+                  error={formErrors.provider}
+                  name="provider"
+                  sx={{ height: 45 }}
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={selectedProvider.name}
+                  label="Age"
+                  onChange={(e) => handleSelectedProvider(e)}
+                  MenuProps={{
+                    PaperProps: {
+                      style: {
+                        maxHeight: 150,
+                      },
+                    },
+                  }}
+                  input={
+                    <OutlinedInput id="select-multiple-chip" label="Provider" />
+                  }
+                >
+                  {providers.map((provider) => (
+                    <MenuItem key={provider.id} value={provider}>
+                      {provider.nom}
+                    </MenuItem>
+                  ))}
+                </Select>
+                <FormHelperText error>{formErrors.provider}</FormHelperText>
+              </FormControl>
+            </MDBox>
+
+            <MDBox mb={2} ml={2} sx={{ width: "50%" }}>
+              <FormControl sx={{ width: "100%" }}>
+                <InputLabel id="demo-simple-select-label">Provider</InputLabel>
+                <Select
+                  error={formErrors.provider}
+                  name="provider"
+                  sx={{ height: 45 }}
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={selectedProvider.name}
+                  label="Age"
+                  // onChange={(e) => handleSelectedProvider(e)}
+                  MenuProps={{
+                    PaperProps: {
+                      style: {
+                        maxHeight: 150,
+                      },
+                    },
+                  }}
+                  input={
+                    <OutlinedInput id="select-multiple-chip" label="Provider" />
+                  }
+                >
+                  {providers.map((provider) => (
+                    <MenuItem key={provider.id} value={provider}>
+                      {provider.nom}
+                    </MenuItem>
+                  ))}
+                </Select>
+                <FormHelperText error>{formErrors.provider}</FormHelperText>
+              </FormControl>
+            </MDBox>
+          </MDBox>
+
           <MDBox mb={2}>
             <MDInput
               type="text"
@@ -142,7 +231,6 @@ function AddCollab({ closeAddModel }) {
             />
             <FormHelperText error>{formErrors.coursename}</FormHelperText>
           </MDBox>
-
 
           <MDBox mt={4} mb={2} display="flex" justifyContent="center">
             <MDButton
