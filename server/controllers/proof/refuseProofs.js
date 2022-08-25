@@ -10,7 +10,7 @@ module.exports = async (req, res) => {
     const proof = await Proof.findOne({
       where: { id },
     });
-    proof.status = "accepted";
+    proof.status = "refused";
 
     await proof.save();
     return res.send({ status: true, msg: "Done" });

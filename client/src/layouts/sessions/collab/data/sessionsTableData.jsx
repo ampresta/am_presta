@@ -95,21 +95,21 @@ export default function Data(setSessionId) {
   const getStatus = (collab, index) => {
     if (
       collab.Session_Collabs[0].certifs &&
-      collab.Session_Collabs[0].certifs.status
+      collab.Session_Collabs[0].certifs.status==="accepted"
     ) {
       return <MDBadge badgeContent="Certified" color="success" size="md" />;
-    } else if (collab.Session_Collabs[0].certifs) {
+    } else if (collab.Session_Collabs[0].certifs   && collab.Session_Collabs[0].certifs.status==="pending"  ) {
       return <MDBadge badgeContent="Pending" color="warning" size="md" />;
     } else if (
       collab.Session_Collabs[0].fincourse &&
-      collab.Session_Collabs[0].fincourse.status
+      collab.Session_Collabs[0].fincourse.status==="accepted"
     ) {
-      return <MDBadge badgeContent="Finished" color="dark" size="md" />;
-    } else if (collab.Session_Collabs[0].fincourse) {
+      return <MDBadge badgeContent="Course Finished" color="dark" size="md" />;
+    } else if (collab.Session_Collabs[0].fincourse && collab.Session_Collabs[0].fincourse.status==="pending" ) {
       return (
         <MDBadge
           type="fincourse"
-          badgeContent=" Course Finished"
+          badgeContent="Pending"
           color="success"
           size="md"
           index={index}
@@ -244,7 +244,7 @@ export default function Data(setSessionId) {
             color="info"
             size="small"
             onClick={() => {
-              setSessionId(session.id);
+              setSessionId(session);
               setOpenProofModel(dispatch, !openProofModel);
             }}
             // disabled={session.Session_Collabs[index].fincourse.size > 0}

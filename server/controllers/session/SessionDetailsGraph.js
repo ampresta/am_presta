@@ -26,7 +26,7 @@ module.exports = async (req, res) => {
             required: false,
             as: "certifs",
             where: {
-              status: true,
+              status: "accepted",
             },
             attributes: [],
           },
@@ -36,7 +36,7 @@ module.exports = async (req, res) => {
             as: "fincourse",
             required: false,
             where: {
-              status: true,
+              status: "accepted",
             },
             attributes: [],
           },

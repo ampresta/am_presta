@@ -15,7 +15,7 @@ module.exports = async (req, res) => {
         as: "certifs",
         attributes: [],
         where: {
-          status: true,
+          status: "accepted",
         },
       },
     },

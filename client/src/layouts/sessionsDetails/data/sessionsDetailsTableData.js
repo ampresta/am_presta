@@ -92,10 +92,11 @@ export default function Data() {
   const getStatus = (collab, index) => {
     if (
       collab.Session_Collabs[0].certifs &&
-      collab.Session_Collabs[0].certifs.status
+      collab.Session_Collabs[0].certifs.status==="accepted"
     ) {
       return <MDBadge badgeContent="Certified" color="success" size="md" />;
-    } else if (collab.Session_Collabs[0].certifs) {
+      
+    } else if (collab.Session_Collabs[0].certifs &&  collab.Session_Collabs[0].certifs.status==="pending" ) {
       return (
         <MDButton
           size="small"
@@ -109,10 +110,10 @@ export default function Data() {
       );
     } else if (
       collab.Session_Collabs[0].fincourse &&
-      collab.Session_Collabs[0].fincourse.status
+      collab.Session_Collabs[0].fincourse.status==="accepted"
     ) {
       return <MDBadge badgeContent="Finished" color="dark" size="md" />;
-    } else if (collab.Session_Collabs[0].fincourse) {
+    } else if (collab.Session_Collabs[0].fincourse   &&   collab.Session_Collabs[0].fincourse.status==="pending" ) {
       return (
         <MDButton
           size="small"
