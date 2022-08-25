@@ -39,6 +39,7 @@ module.exports = async (req, res) => {
         sess_collab.fincourse.size = req.file.size;
         sess_collab.fincourse.name = req.file.filename;
         sess_collab.fincourse.status = "pending";
+        await sess_collab.fincourse.save();
       }
     } else if (type === "certifs") {
       if (!sess_collab.certifs) {
@@ -55,10 +56,9 @@ module.exports = async (req, res) => {
         sess_collab.certifs.size = req.file.size;
         sess_collab.certifs.name = req.file.filename;
         sess_collab.certifs.status = "pending";
+        await sess_collab.certifs.save();
       }
     }
-    await sess_collab.certifs.save();
-    await sess_collab.fincourse.save();
     await sess_collab.save();
     return res.send({ status: true, go: req.file.path });
   } catch (err) {
