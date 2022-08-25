@@ -92,11 +92,13 @@ export default function Data() {
   const getStatus = (collab, index) => {
     if (
       collab.Session_Collabs[0].certifs &&
-      collab.Session_Collabs[0].certifs.status==="accepted"
+      collab.Session_Collabs[0].certifs.status === "accepted"
     ) {
       return <MDBadge badgeContent="Certified" color="success" size="md" />;
-      
-    } else if (collab.Session_Collabs[0].certifs &&  collab.Session_Collabs[0].certifs.status==="pending" ) {
+    } else if (
+      collab.Session_Collabs[0].certifs &&
+      collab.Session_Collabs[0].certifs.status === "pending"
+    ) {
       return (
         <MDButton
           size="small"
@@ -110,10 +112,13 @@ export default function Data() {
       );
     } else if (
       collab.Session_Collabs[0].fincourse &&
-      collab.Session_Collabs[0].fincourse.status==="accepted"
+      collab.Session_Collabs[0].fincourse.status === "accepted"
     ) {
       return <MDBadge badgeContent="Finished" color="dark" size="md" />;
-    } else if (collab.Session_Collabs[0].fincourse   &&   collab.Session_Collabs[0].fincourse.status==="pending" ) {
+    } else if (
+      collab.Session_Collabs[0].fincourse &&
+      collab.Session_Collabs[0].fincourse.status === "pending"
+    ) {
       return (
         <MDButton
           size="small"
@@ -149,7 +154,7 @@ export default function Data() {
     const session_collab = collab.Session_Collabs[0];
     console.log(session_collab);
     if (
-      session_collab.fincourse &&
+      session_collab.fincourse.status === "accepted" &&
       // session_collab.fincourse.status &&
       !session_collab.Voucher
     ) {
@@ -170,7 +175,7 @@ export default function Data() {
     }
 
     if (
-      session_collab.fincourse &&
+      session_collab.fincourse.status === "accepted" &&
       // session_collab.fincourse.status &&
       session_collab.Voucher
     ) {

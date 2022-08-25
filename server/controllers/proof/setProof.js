@@ -38,6 +38,8 @@ module.exports = async (req, res) => {
         sess_collab.fincourse.mimetype = req.file.mimetype;
         sess_collab.fincourse.size = req.file.size;
         sess_collab.fincourse.name = req.file.filename;
+        sess_collab.fincourse.status = "pending";
+        await sess_collab.fincourse.save();
       }
     } else if (type === "certifs") {
       if (!sess_collab.certifs) {
@@ -53,12 +55,14 @@ module.exports = async (req, res) => {
         sess_collab.certifs.mimetype = req.file.mimetype;
         sess_collab.certifs.size = req.file.size;
         sess_collab.certifs.name = req.file.filename;
+        sess_collab.certifs.status = "pending";
+        await sess_collab.certifs.save();
       }
     }
     await sess_collab.save();
     return res.send({ status: true, go: req.file.path });
   } catch (err) {
-    console.log("\x1b[41mERROR:\x1b[0m");
+    // console.log("\x1b[41mERROR:\x1b[0m");
     console.log(err);
     return res.send({ status: false });
   }

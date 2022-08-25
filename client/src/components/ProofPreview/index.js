@@ -13,7 +13,7 @@ import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
 
 import axiosAuth from "services/authAxios";
-import { acceptProofRoute, baseURL } from "utils/APIRoutes";
+import { acceptProofRoute, refuseProofRoute, baseURL } from "utils/APIRoutes";
 import { useMaterialUIController, setUpdater } from "context";
 
 const ProofPreview = ({ closeProofModel, collab, file }) => {
@@ -29,9 +29,14 @@ const ProofPreview = ({ closeProofModel, collab, file }) => {
       closeProofModel(false);
     }
   };
-  const Decline = () => {
-    setUpdater(dispatch, !updater);
-    closeProofModel(false);
+  const Decline = async (e) => {
+    const { data } = await axiosAuth.post(refuseProofRoute, {
+      id: e,
+    });
+    if (data.status) {
+      setUpdater(dispatch, !updater);
+      closeProofModel(false);
+    }
   };
 
   return (
@@ -100,7 +105,7 @@ const ProofPreview = ({ closeProofModel, collab, file }) => {
             variant="gradient"
             color="primary"
             sx={{ width: "30%", ml: "5px" }}
-            onClick={() => Decline()}
+            onClick={() => Decline(file.id)}
           >
             Decline
           </MDButton>
