@@ -13,7 +13,7 @@ module.exports = async (req, res) => {
           model: Proof,
           as: "certifs",
           where: {
-            status: true,
+            status: "accepted",
           },
         },
       },

@@ -81,7 +81,7 @@ function Dashboard() {
                 count={companiesCount}
                 percentage={{
                   color: "success",
-                  amount: "+55%",
+                  // amount: "+55%",
                   label: "than lask month",
                 }}
               />
@@ -96,7 +96,7 @@ function Dashboard() {
                 count={coursesCount}
                 percentage={{
                   color: "success",
-                  amount: "+3%",
+                  // amount: "+3%",
                   label: "than last month",
                 }}
               />
@@ -111,7 +111,7 @@ function Dashboard() {
                 count={partnersCount}
                 percentage={{
                   color: "success",
-                  amount: "+1%",
+                  // amount: "+1%",
                   label: "than last month",
                 }}
               />
@@ -136,11 +136,11 @@ function Dashboard() {
                 <ReportsLineChart
                   color="success"
                   title="Total Courses"
-                  description={
-                    <>
-                      (<strong>+15%</strong>) increase in this month.
-                    </>
-                  }
+                  // description={
+                  // <>
+                  // (<strong>+15%</strong>) increase in this month.
+                  // </>
+                  // }
                   date="updated 4 min ago"
                   chart={CoursesGraph()}
                 />

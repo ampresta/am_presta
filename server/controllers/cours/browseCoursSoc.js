@@ -31,7 +31,7 @@ module.exports = async (req, res) => {
             as: "certifs",
             required: false,
             where: {
-              status: true,
+              status: "accepted",
             },
           },
           {

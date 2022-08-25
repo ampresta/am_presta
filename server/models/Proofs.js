@@ -8,7 +8,16 @@ const Proof = (db) => {
       autoIncrement: true,
     },
     status: {
-      type: sequelize.BOOLEAN,
+      type: sequelize.STRING,
+      defaultValue: "pending",
+      validate: {
+        inside: (value) => {
+          const enums = ["accepted", "pending", "refused"];
+          if (!enums.includes(value)) {
+            throw new Error("not a valid option");
+          }
+        },
+      },
     },
     file: {
       type: sequelize.STRING,
