@@ -56,12 +56,11 @@ module.exports = async (req, res) => {
   sess.addCollaborateur(collabo);
   sess.Cour.Provider.Quota[0].quota--;
   sess.Cour.Provider.Quota[0].save();
-  let cours;
 
   const { nom } = await Session.findByPk(session);
   if (request) {
     console.log(request);
-    cours = await Cours.findOne({
+    const cours = await Cours.findOne({
       attributes: ["nom"],
       include: {
         attributes: [],
@@ -83,10 +82,9 @@ module.exports = async (req, res) => {
     await reqs.save();
   }
 
+  Email.sendAddToSession(email, nom);
+
   return res.send({
-    email,
-    cours: cours.nom,
-    session: nom,
     status: true,
     msg: "Collab Added",
   });

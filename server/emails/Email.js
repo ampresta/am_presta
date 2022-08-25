@@ -24,8 +24,9 @@ const getAccessToken = async () => {
 };
 
 class Email {
-  constructor(from_email) {
-    this.from_email = from_email;
+  constructor(email, name) {
+    this.email = email;
+    this.from_email = `"${name}" <${email}>`;
     this.hbs_config = {
       viewEngine: {
         extName: ".handlebars",
@@ -43,13 +44,13 @@ class Email {
       service: "gmail",
       auth: {
         type: "OAuth2",
-        user: this.from_email,
+        user: this.email,
         clientId: CLIENT_ID,
         clientSecret: CLEINT_SECRET,
         refreshToken: REFRESH_TOKEN,
         accessToken: accessToken,
       },
-      from: this.from_email
+      from: this.from_email,
     });
 
     return transporter;
@@ -68,7 +69,7 @@ class Email {
       to: to_email,
       subject: `Welcome to ${societe}`,
       text: "",
-      template: "welcome",      
+      template: "welcome",
       context: {
         username,
         password,
@@ -151,6 +152,7 @@ class Email {
     const options = {
       from: this.from_email,
       to: to_email,
+      text: "",
       subject: `Response to your ${course} course enrollment request `,
       template: "accepte",
       context: {
@@ -168,6 +170,31 @@ class Email {
         console.log("Email sent");
       });
   };
+
+  sendAddToSession = async (
+    to_email,
+    session,
+    logo = "",
+    url = "http://127.0.0.1:3000/mySessions"
+  ) => {
+    const options = {
+      from: this.from_email,
+      to: to_email,
+      subject: `Added to a new session `,
+      template: "addToSession",
+      context: {
+        session,
+        url,
+        // logo
+      },
+    };
+    this.getTransporter()
+      .then((transporter) => transporter.use("compile", hbs(this.hbs_config)))
+      .then((transporter) => transporter.sendMail(options))
+      .then((info) => {
+        console.log("Email sent");
+      });
+  };
 }
 
-module.exports = new Email("noreply@institute-eca.ma");
+module.exports = new Email("noreply@institute-eca.ma", "Am Presta");
