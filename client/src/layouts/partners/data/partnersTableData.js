@@ -127,7 +127,5 @@ export default function Data() {
     );
   } catch (error) {}
 
-  
-
   return partners;
 }

@@ -9,15 +9,19 @@ import MDBadge from "components/MDBadge";
 // React Hooks
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+
 // import axios from "services/authAxios";
 import axios from "services/authAxios";
-import { baseURL, allPartnersRoute } from "utils/APIRoutes";
+import {
+  baseURL,
+  allPartnersRoute,
+  AllSessionsCollabRoute,
+} from "utils/APIRoutes";
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setOpenProofModel } from "context";
-
 import { dateFormat } from "utils/Helper";
-import { AllSessionsCollabRoute } from "utils/APIRoutes";
+import { Icon } from "@mui/material";
 
 export default function Data(setSessionId) {
   const [allSessions, setAllSessions] = useState([]);
@@ -116,7 +120,7 @@ export default function Data(setSessionId) {
         />
       );
     } else {
-      return <MDBadge badgeContent="Studying" color="note" size="md" />;
+      return <MDBadge badgeContent="Studying" color="secondary" size="md" />;
     }
   };
 
@@ -131,7 +135,7 @@ export default function Data(setSessionId) {
       {
         Header: "Cours",
         accessor: "cours",
-        width: "15%",
+        width: "10%",
         align: "center",
       },
       {
@@ -144,13 +148,13 @@ export default function Data(setSessionId) {
         Header: "enrolled",
         accessor: "enrolled",
         align: "center",
-        width: "15%",
+        width: "5%",
       },
       {
         Header: "Period",
         accessor: "period",
         align: "center",
-        width: "15%",
+        width: "20%",
       },
       {
         Header: "status",
@@ -161,7 +165,13 @@ export default function Data(setSessionId) {
       {
         Header: "proof",
         accessor: "proof",
-        width: "20%",
+        width: "15%",
+        align: "center",
+      },
+      {
+        Header: "show proof",
+        accessor: "show_proof",
+        width: "25%",
         align: "center",
       },
     ],
@@ -247,12 +257,19 @@ export default function Data(setSessionId) {
               setSessionId(session.id);
               setOpenProofModel(dispatch, !openProofModel);
             }}
-            // disabled={session.Session_Collabs[index].fincourse.size > 0}
+            // disabled={session.Session_Collabs[index].fincourse.size !== 0}
           >
             &nbsp;Add Proof
           </MDButton>
         ),
         period: <Period debut={session.datedebut} fin={session.datefin} />,
+        show_proof: (
+          <MDButton variant="text">
+            <MDTypography variant="caption" color="text" fontWeight="medium">
+              <Icon fontSize="small">visibility</Icon>
+            </MDTypography>
+          </MDButton>
+        ),
       })
     );
   }
