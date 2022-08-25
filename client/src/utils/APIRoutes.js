@@ -87,7 +87,7 @@ export const browseCollabsOutOfSessionRoute = `${baseURL}/collab/browseout`;
 export const browseCollabsAdminRoute = `${baseURL}/collab/browseadmin`;
 export const addCollabsSessionRoute = `${baseURL}/collab/addsession`;
 export const sendRequestRoute = `${baseURL}/collab/sendrequest`;
-
+export const getCollabroute = `${baseURL}/collab/get`;
 // proofs
 export const acceptProofRoute = `${baseURL}/proof/accept`;
 export const refuseProofRoute = `${baseURL}/proof/refuse`;

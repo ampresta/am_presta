@@ -6,18 +6,25 @@ import Grid from "@mui/material/Grid";
 import MDButton from "components/MDButton";
 import MDBadge from "components/MDBadge";
 
+import { Icon } from "@mui/material";
+
 // React Hooks
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+
 // import axios from "services/authAxios";
 import axios from "services/authAxios";
-import { baseURL, allPartnersRoute } from "utils/APIRoutes";
+import {
+  baseURL,
+  allPartnersRoute,
+  AllSessionsCollabRoute,
+} from "utils/APIRoutes";
+
+import ProofModel from "examples/proofModel";
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setOpenProofModel } from "context";
-
 import { dateFormat } from "utils/Helper";
-import { AllSessionsCollabRoute } from "utils/APIRoutes";
 
 export default function Data(setSessionId) {
   const [allSessions, setAllSessions] = useState([]);
@@ -29,8 +36,9 @@ export default function Data(setSessionId) {
   ]);
 
   const [controller, dispatch] = useMaterialUIController();
-
   const { updater, openProofModel } = controller;
+
+  const [showMyProof, setShowMyProof] = useState(false);
 
   useEffect(() => {
     const getAllSessions = async () => {
@@ -47,7 +55,6 @@ export default function Data(setSessionId) {
       let temp = [];
       data.map((provider) => temp.push({ id: provider.id, nom: provider.nom }));
       setProviders(temp);
-      console.log(temp);
     };
     getAllPartners();
   }, []);
@@ -92,31 +99,50 @@ export default function Data(setSessionId) {
     </MDBox>
   );
 
+  const [myProof, SetMyProof] = useState("");
+
+  // allSessions.map((session) =>
+  //   SetMyProof(
+  //     session.Session_Collabs[0].fincourse === null
+  //       ? null
+  //       : session.Session_Collabs[0].fincourse.file
+  //   )
+  // );
+
+  // console.log(AllProofs);
+  // console.log(allSessions);
+
   const getStatus = (collab, index) => {
     if (
       collab.Session_Collabs[0].certifs &&
-      collab.Session_Collabs[0].certifs.status==="accepted"
+      collab.Session_Collabs[0].certifs.status === "accepted"
     ) {
       return <MDBadge badgeContent="Certified" color="success" size="md" />;
-    } else if (collab.Session_Collabs[0].certifs   && collab.Session_Collabs[0].certifs.status==="pending"  ) {
+    } else if (
+      collab.Session_Collabs[0].certifs &&
+      collab.Session_Collabs[0].certifs.status === "pending"
+    ) {
       return <MDBadge badgeContent="Pending" color="warning" size="md" />;
     } else if (
       collab.Session_Collabs[0].fincourse &&
-      collab.Session_Collabs[0].fincourse.status==="accepted"
+      collab.Session_Collabs[0].fincourse.status === "accepted"
     ) {
-      return <MDBadge badgeContent="Course Finished" color="dark" size="md" />;
-    } else if (collab.Session_Collabs[0].fincourse && collab.Session_Collabs[0].fincourse.status==="pending" ) {
+      return <MDBadge badgeContent="Finished" color="dark" size="md" />;
+    } else if (
+      collab.Session_Collabs[0].fincourse &&
+      collab.Session_Collabs[0].fincourse.status === "pending"
+    ) {
       return (
         <MDBadge
           type="fincourse"
           badgeContent="Pending"
-          color="success"
+          color="warning"
           size="md"
           index={index}
         />
       );
     } else {
-      return <MDBadge badgeContent="Studying" color="note" size="md" />;
+      return <MDBadge badgeContent="Studying" color="secondary" size="md" />;
     }
   };
 
@@ -125,32 +151,32 @@ export default function Data(setSessionId) {
       {
         Header: "Session Name",
         accessor: "author",
-        width: "15%",
+        width: "10%",
         align: "left",
       },
       {
         Header: "Cours",
         accessor: "cours",
-        width: "15%",
+        width: "10%",
         align: "center",
       },
       {
         Header: "Provider",
         accessor: "provider",
-        width: "15%",
+        width: "10%",
         align: "center",
       },
       {
         Header: "enrolled",
         accessor: "enrolled",
         align: "center",
-        width: "15%",
+        width: "5%",
       },
       {
         Header: "Period",
         accessor: "period",
         align: "center",
-        width: "15%",
+        width: "10%",
       },
       {
         Header: "status",
@@ -161,7 +187,13 @@ export default function Data(setSessionId) {
       {
         Header: "proof",
         accessor: "proof",
-        width: "20%",
+        width: "10%",
+        align: "center",
+      },
+      {
+        Header: "show proof",
+        accessor: "show_proof",
+        width: "5%",
         align: "center",
       },
     ],
@@ -193,6 +225,14 @@ export default function Data(setSessionId) {
           </Grid>
         ))}
       </Grid>
+    ),
+
+    ShowMyProof: showMyProof && (
+      <ProofModel
+        file={`${baseURL}/${myProof}`}
+        open={showMyProof}
+        onClose={setShowMyProof}
+      />
     ),
   };
   if (allSessions.length === 0 || !Array.isArray(allSessions)) {
@@ -247,12 +287,36 @@ export default function Data(setSessionId) {
               setSessionId(session);
               setOpenProofModel(dispatch, !openProofModel);
             }}
-            // disabled={session.Session_Collabs[index].fincourse.size > 0}
+            // disabled={session.Session_Collabs[index].fincourse.size !== 0}
           >
             &nbsp;Add Proof
           </MDButton>
         ),
         period: <Period debut={session.datedebut} fin={session.datefin} />,
+        show_proof:
+          session.Session_Collabs[0].fincourse === null ? (
+            <MDButton variant="text">
+              <MDTypography variant="caption" color="text" fontWeight="medium">
+                <Icon fontSize="small">visibility_off</Icon>
+              </MDTypography>
+            </MDButton>
+          ) : (
+            <MDButton
+              variant="text"
+              onClick={() => {
+                SetMyProof(
+                  session.Session_Collabs[0].fincourse === null
+                    ? null
+                    : session.Session_Collabs[0].fincourse.file
+                );
+                setShowMyProof(true);
+              }}
+            >
+              <MDTypography variant="caption" color="text" fontWeight="medium">
+                <Icon fontSize="small">visibility</Icon>
+              </MDTypography>
+            </MDButton>
+          ),
       })
     );
   }

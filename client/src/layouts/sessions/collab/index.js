@@ -29,14 +29,13 @@ import { useMaterialUIController } from "context";
 
 function Sessions() {
   const [controller] = useMaterialUIController();
-
   const { openProofModel } = controller;
 
   const [openFilter, setOpenFilter] = useState(false);
-
   const [sessionId, setSessionId] = useState(0);
 
-  const { columns, rows, ProvidersFilter } = sessionsTableData(setSessionId);
+  const { columns, rows, ProvidersFilter, ShowMyProof } =
+    sessionsTableData(setSessionId);
 
   console.log("9abla", sessionId);
 
@@ -91,6 +90,7 @@ function Sessions() {
       )}
 
       {openProofModel && <AddProof sessionId={sessionId} />}
+      {ShowMyProof}
     </DashboardLayout>
   );
 }

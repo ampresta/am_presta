@@ -162,12 +162,7 @@ export default function Data() {
         />
       ),
       edit: (
-        <MDTypography
-          href="#"
-          variant="caption"
-          color="text"
-          fontWeight="medium"
-        >
+        <MDTypography variant="caption" color="text" fontWeight="medium">
           <Icon fontSize="small">edit</Icon>
         </MDTypography>
       ),

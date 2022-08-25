@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
 // @mui material components
 import Card from "@mui/material/Card";
-import { FormHelperText } from "@mui/material";
+import FormHelperText from "@mui/material/FormHelperText";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -11,22 +12,21 @@ import MDButton from "components/MDButton";
 
 // Authentication layout components
 import BasicLayout from "layouts/authentication/components/BasicLayout";
-import { useEffect } from "react";
 
 //Password Tester Component
 import PasswordTest from "components/PasswordTest";
 import { ChangePasswordRoute } from "utils/APIRoutes";
+
 // Images
 import bgImage from "assets/images/bg-reset-cover.jpeg";
 import axios from "services/authAxios";
-import { setChangedPassword } from "context";
+
 import { useNavigate } from "react-router-dom";
-import { useMaterialUIController } from "context";
+import { useMaterialUIController, setChangedPassword } from "context";
+
 function PasswordReset() {
-  useEffect(() => {
-    // console.log("You're heeere mf");
-  }, []);
-  const [controller, dispatch] = useMaterialUIController();
+  useEffect(() => {}, []);
+  const [, dispatch] = useMaterialUIController();
   let navigate = useNavigate();
   const [newPassword, setNewPassword] = useState("");
   const [showStrength, setShowStrength] = useState(false);
