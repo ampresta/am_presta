@@ -90,6 +90,7 @@ export const sendRequestRoute = `${baseURL}/collab/sendrequest`;
 
 // proofs
 export const acceptProofRoute = `${baseURL}/proof/accept`;
+export const refuseProofRoute = `${baseURL}/proof/refuse`;
 export const setProofRoute = `${baseURL}/proof/set`;
 
 //Vouchers
