@@ -110,7 +110,7 @@ function AddCollab({ closeAddModel }) {
         mb={1}
       >
         <MDTypography variant="h6" color="white">
-          Add Collaborator
+          Add Voucher
         </MDTypography>
 
         <MDButton
@@ -133,7 +133,7 @@ function AddCollab({ closeAddModel }) {
           <MDBox mb={2}>
             <MDInput
               type="text"
-              label="First Name"
+              label="Code"
               variant="outlined"
               fullWidth
               name="prenom"
@@ -142,40 +142,7 @@ function AddCollab({ closeAddModel }) {
             />
             <FormHelperText error>{formErrors.coursename}</FormHelperText>
           </MDBox>
-          <MDBox mb={2}>
-            <MDInput
-              type="text"
-              label="Last Name"
-              variant="outlined"
-              fullWidth
-              name="nom"
-              onChange={(e) => handleChange(e)}
-              error={formErrors.coursename}
-            />
-            <FormHelperText error>{formErrors.coursename}</FormHelperText>
-          </MDBox>
-          <MDBox mb={2}>
-            <MDInput
-              type="text"
-              label="Email"
-              variant="outlined"
-              fullWidth
-              name="mail"
-              onChange={(e) => handleChange(e)}
-              error={formErrors.coursename}
-            />
-            <FormHelperText error>{formErrors.coursename}</FormHelperText>
-          </MDBox>
 
-          <Card>
-            <MDBox>
-              <DropFileInput
-                title="Drag & Drop collab photo here"
-                name="image"
-                onFileChange={(files) => setFile(files[0])}
-              />
-            </MDBox>
-          </Card>
 
           <MDBox mt={4} mb={2} display="flex" justifyContent="center">
             <MDButton
