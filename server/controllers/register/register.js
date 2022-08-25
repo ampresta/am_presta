@@ -1,5 +1,6 @@
 const argon2 = require("argon2");
 const db = require("../../config/database");
+const Email = require("../../emails/Email");
 const { Collaborateur, Societe, User } = db.models;
 module.exports = async (req, res) => {
   try {
@@ -16,15 +17,13 @@ module.exports = async (req, res) => {
     if (usernameCheck)
       return res.json({ status: false, msg: "Username already used" });
     const emailCheck = await User.findOne({ where: { email } });
-    if (usernameCheck)
+    if (emailCheck)
       return res.json({ status: false, msg: "email already used" });
 
     const password = Array(8)
       .fill()
       .map(() => ((Math.random() * 36) | 0).toString(36))
       .join("");
-    console.log("PASSWORD:");
-    console.log(password);
     const hash = await argon2.hash(password + pep);
     const user = await User.create(
       {
@@ -48,6 +47,7 @@ module.exports = async (req, res) => {
         ],
       }
     );
+    Email.sendRegister(email, username, password, societe);
     return res.send({
       status: true,
       msg: "User Created Successfully",

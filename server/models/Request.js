@@ -23,11 +23,6 @@ const Request = (db) => {
       },
     },
     {
-      hooks: {
-        afterCreate: (request) => {
-          Email.sendRequest(request.id);
-        },
-      },
       Sequelize,
       paranoid: true,
       deletedAt: "deletedAt",

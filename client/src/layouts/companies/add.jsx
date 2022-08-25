@@ -61,6 +61,7 @@ function AddCompanies({ closeAddModel }) {
       });
       const ID = data.id;
       if (data.status) {
+        
         const fd = new FormData();
         fd.append("image", file);
         fd.append("id", ID);
