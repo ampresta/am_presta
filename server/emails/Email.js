@@ -54,7 +54,14 @@ class Email {
     return transporter;
   };
 
-  sendRegister = async (to_email, username, password, societe, logo = "") => {
+  sendRegister = async (
+    to_email,
+    username,
+    password,
+    societe,
+    logo = "",
+    url = "http://127.0.0.1:3000/login"
+  ) => {
     const options = {
       from: this.from_email,
       to: to_email,
@@ -63,6 +70,7 @@ class Email {
       context: {
         username,
         password,
+        url,
         // logo
       },
     };
@@ -74,13 +82,59 @@ class Email {
       });
   };
 
-  sendRequest = async (sessionId) => {
-    await getRequest
+  sendRequest = async (
+    to_email,
+    name,
+    course,
+    logo = "",
+    url = "http://127.0.0.1:3000/requests"
+  ) => {
+    const options = {
+      from: this.from_email,
+      to: to_email,
+      subject: `Request to access cours: ${course}`,
+      template: "alert",
+      context: {
+        course,
+        name,
+        url,
+        // logo
+      },
+    };
+    this.getTransporter()
+      .then((transporter) => transporter.use("compile", hbs(this.hbs_config)))
+      .then((transporter) => transporter.sendMail(options))
+      .then((info) => {
+        console.log("Email sent");
+      });
+  };
 
-    // const request = await Request.
-    // const cours = await Cours.findByPk(coursId)
-    // console.log(request);
+  sendResponse = async (
+    to_email,
+    status,
+    course,
+    logo = "",
+    url = "http://127.0.0.1:3000/myRequests"
+  ) => {
+    const options = {
+      from: this.from_email,
+      to: to_email,
+      subject: `Response to your ${course} course enrollment request `,
+      template: "response",
+      context: {
+        course,
+        status,
+        url,
+        // logo
+      },
+    };
+    this.getTransporter()
+      .then((transporter) => transporter.use("compile", hbs(this.hbs_config)))
+      .then((transporter) => transporter.sendMail(options))
+      .then((info) => {
+        console.log("Email sent");
+      });
   };
 }
- 
+
 module.exports = new Email("noreply@institute-eca.ma");

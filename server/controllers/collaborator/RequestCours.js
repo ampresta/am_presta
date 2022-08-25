@@ -1,5 +1,6 @@
 const sequelize = require("../../config/database");
-const { Cours, Collaborateur, Request } = sequelize.models;
+const Email = require("../../emails/Email");
+const { Cours, Collaborateur, Request, User } = sequelize.models;
 
 module.exports = async (req, res) => {
   const collab = await Collaborateur.findByPk(req.collab);
@@ -21,7 +22,23 @@ module.exports = async (req, res) => {
 
       CourId: cours,
     });
-    return res.send({ status: true, msg: "Request Created" });
+    const { SocieteId } = collab;
+    const emails = await User.findAll({
+      raw: true,
+      attributes: ["email"],
+      include: {
+        model: Collaborateur,
+        attributes: [],
+        where: {
+          admin: true,
+          SocieteId: SocieteId,
+        },
+      },
+    });
+    to_emails = [];
+    emails.map((email) => to_emails.push(email.email));
+    Email.sendRequest(to_emails, `${collab.prenom} ${collab.nom}`, crs.nom);
+    return res.send({ email: "sent", status: true, msg: "Request Created" });
   } catch (err) {
     console.log(err);
     return res.send({ status: false, msg: "Error" });

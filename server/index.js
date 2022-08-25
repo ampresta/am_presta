@@ -77,7 +77,6 @@ app.post("/api/delete", deleteInstances);
 app.post("/api/logout", logout);
 app.use("/api/media", express.static("media"));
 
-// Email.sendRegister("abdoessordo01@gmail.com", "Abdellah", "abdoessordo01@gmail.com", "123456789", "ENSAM");
 
 // Listener
 
