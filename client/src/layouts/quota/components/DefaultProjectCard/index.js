@@ -34,7 +34,14 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-function DefaultProjectCard({ image, title, openAddModel, quota, companyID }) {
+function DefaultProjectCard({
+  image,
+  title,
+  openAddModel,
+  quota,
+  setCompanyID,
+  companyID,
+}) {
   const [expanded, setExpanded] = useState(false);
 
   const { columns, rows } = QuotaListData(quota);
@@ -79,7 +86,7 @@ function DefaultProjectCard({ image, title, openAddModel, quota, companyID }) {
             size="small"
             color="info"
             onClick={() => {
-              localStorage.setItem("companyID", companyID);
+              setCompanyID(companyID);
               openAddModel(true);
             }}
             sx={{ height: 20 }}

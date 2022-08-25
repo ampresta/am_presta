@@ -29,6 +29,7 @@ export const topChallengesRoute = `${baseURL}/dashboard/topcourses`;
 // Companies
 export const registerRoute = `${baseURL}/register`;
 export const allCompaniesRoute = `${baseURL}/societe/browse`;
+export const addCollabRouteAdmin = `${baseURL}/societe/addcollabadmin`;
 // export const userCompanyRoute = `${baseURL}/societe/uerSociete`;
 
 // Partners

@@ -28,6 +28,7 @@ import { AllQuotaSocRoute } from "utils/APIRoutes";
 function Overview() {
   const [openAddModel, setOpenAddModel] = useState(false);
   const [allCompanies, setAllCompanies] = useState([]);
+  const [companyID, setCompanyID] = useState(-1);
 
   const [controller] = useMaterialUIController();
 
@@ -73,6 +74,7 @@ function Overview() {
                     {allCompanies.map((company) => (
                       <Grid item xs={12} md={6} xl={3} key={company.id}>
                         <DefaultProjectCard
+                          setCompanyID={setCompanyID}
                           companyID={company.id}
                           image={company.image}
                           title={company.name}
@@ -88,7 +90,9 @@ function Overview() {
           </Grid>
         </MDBox>
       )}
-      {openAddModel && <AddQuota openAddModel={setOpenAddModel} />}
+      {openAddModel && (
+        <AddQuota openAddModel={setOpenAddModel} companyID={companyID} />
+      )}
     </DashboardLayout>
   );
 }
