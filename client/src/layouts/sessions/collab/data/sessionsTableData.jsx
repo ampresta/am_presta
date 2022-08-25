@@ -21,7 +21,7 @@ import {
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setOpenProofModel } from "context";
 import { dateFormat } from "utils/Helper";
-import { Icon } from "@mui/material";
+import { Icon, Modal } from "@mui/material";
 
 export default function Data(setSessionId) {
   const [allSessions, setAllSessions] = useState([]);
@@ -51,7 +51,6 @@ export default function Data(setSessionId) {
       let temp = [];
       data.map((provider) => temp.push({ id: provider.id, nom: provider.nom }));
       setProviders(temp);
-      console.log(temp);
     };
     getAllPartners();
   }, []);
@@ -95,6 +94,8 @@ export default function Data(setSessionId) {
       </MDBox>
     </MDBox>
   );
+
+  
 
   const getStatus = (collab, index) => {
     if (

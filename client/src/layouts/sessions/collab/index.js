@@ -26,6 +26,7 @@ import AddProof from "./addProof";
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController } from "context";
+import ProofModel from "examples/proofModel";
 
 function Sessions() {
   const [controller] = useMaterialUIController();
@@ -90,6 +91,7 @@ function Sessions() {
         </MDBox>
       )}
 
+      <ProofModel />
       {openProofModel && <AddProof sessionId={sessionId} />}
     </DashboardLayout>
   );
