@@ -24,7 +24,7 @@ module.exports = async (req, res) => {
           model: Proof,
           as: "fincourse",
           where: {
-            status: true,
+            status: "accepted",
           },
         },
         {
