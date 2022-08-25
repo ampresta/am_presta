@@ -26,18 +26,16 @@ import AddProof from "./addProof";
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController } from "context";
-import ProofModel from "examples/proofModel";
 
 function Sessions() {
   const [controller] = useMaterialUIController();
-
   const { openProofModel } = controller;
 
   const [openFilter, setOpenFilter] = useState(false);
-
   const [sessionId, setSessionId] = useState(0);
 
-  const { columns, rows, ProvidersFilter } = sessionsTableData(setSessionId);
+  const { columns, rows, ProvidersFilter, ShowMyProof } =
+    sessionsTableData(setSessionId);
 
   console.log("9abla", sessionId);
 
@@ -91,8 +89,8 @@ function Sessions() {
         </MDBox>
       )}
 
-      <ProofModel />
       {openProofModel && <AddProof sessionId={sessionId} />}
+      {ShowMyProof}
     </DashboardLayout>
   );
 }
