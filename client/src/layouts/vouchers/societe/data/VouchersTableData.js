@@ -79,8 +79,6 @@ export default function Data() {
         width: "10%",
         align: "center",
       },
-      { Header: "edit", accessor: "edit", align: "center", width: "3%" },
-      { Header: "delete", accessor: "delete", align: "center", width: "3%" },
     ],
 
     rows: [],
@@ -105,26 +103,6 @@ export default function Data() {
           <MDTypography variant="caption" color="text" fontWeight="medium">
             {voucher.count}
           </MDTypography>
-        ),
-        edit: (
-          <MDTypography variant="caption" color="text" fontWeight="medium">
-            <Icon fontSize="small">edit</Icon>
-          </MDTypography>
-        ),
-        delete: (
-          <MDButton
-            variant="text"
-            onClick={() => {
-              setConfirmModel(!confirmModel);
-              setTempPartnerId(voucher.id);
-            }}
-          >
-            <MDTypography variant="caption" color="text" fontWeight="medium">
-              <Icon fontSize="small" color="primary">
-                delete
-              </Icon>
-            </MDTypography>
-          </MDButton>
         ),
       })
     );

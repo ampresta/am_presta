@@ -80,9 +80,10 @@ module.exports = async (req, res) => {
     reqs.status = "accepted";
     Email.sendAccepteResponse(email, "accepted", cours.nom, nom);
     await reqs.save();
+  } else {
+    Email.sendAddToSession(email, nom);
   }
 
-  Email.sendAddToSession(email, nom);
 
   return res.send({
     status: true,
