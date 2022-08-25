@@ -129,7 +129,6 @@ function AddCourses({ closeAddModel }) {
     setSelectedProvider(provider);
   };
 
-  console.log(selectedProvider);
 
   const validate = (values) => {
     const errors = {};
