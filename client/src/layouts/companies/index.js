@@ -64,8 +64,6 @@ function Companies() {
         "last_name",
         "company_name",
         "email",
-        "password",
-        "confirm_password",
       ];
       let blank = {};
       columns.map((header) => (blank[header] = ""));

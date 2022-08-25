@@ -106,23 +106,18 @@ function CsvUploader({ closeUploadModel, DownloadTemplate, type, uploadType }) {
 
   const addCompany = (DATA) => {
     DATA.map(async (company) => {
-      if (company[" confirm_password"] === company[" password"]) {
-        const { data } = await axios.post(registerRoute, {
-          username: company.username,
-          nom: company[" first_name"],
-          prenom: company[" last_name"],
-          societe: company[" company_name"],
-          email: company[" email"],
-          password: company[" password"],
-        });
-        if (data.status) {
-          closeUploadModel(false);
-          setUpdater(dispatch, !updater);
-        } else {
-          alert(data.msg);
-        }
+      const { data } = await axios.post(registerRoute, {
+        username: company.username,
+        nom: company[" first_name"],
+        prenom: company[" last_name"],
+        societe: company[" company_name"],
+        email: company[" email"],
+      });
+      if (data.status) {
+        closeUploadModel(false);
+        setUpdater(dispatch, !updater);
       } else {
-        console.log("password and confirm password dont match");
+        alert(data.msg);
       }
     });
   };
