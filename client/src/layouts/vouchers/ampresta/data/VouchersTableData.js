@@ -70,19 +70,19 @@ export default function Data() {
       {
         Header: "Provider",
         accessor: "provider",
-        width: "10%",
+        width: "30%",
         align: "left",
       },
       {
         Header: "Societe",
         accessor: "societe",
-        width: "10%",
+        width: "30%",
         align: "center",
       },
       {
         Header: "Value",
         accessor: "value",
-        width: "10%",
+        width: "30%",
         align: "center",
       },
       { Header: "edit", accessor: "edit", align: "center", width: "3%" },

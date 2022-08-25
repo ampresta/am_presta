@@ -12,8 +12,6 @@ import MDTypography from "components/MDTypography";
 //import UseState Hook
 import { useState } from "react";
 
-import DropFileInput from "components/DropFileInput/DropFileInput";
-
 // Axios
 import axiosAuth from "services/authAxios";
 
@@ -32,8 +30,6 @@ function AddCollab({ closeAddModel }) {
     prenom: "",
     mail: "",
   });
-
-  const [file, setFile] = useState(null);
 
   const [controller, dispatch] = useMaterialUIController();
 
@@ -55,7 +51,6 @@ function AddCollab({ closeAddModel }) {
       const ID = data.id;
       if (data.status) {
         const fd = new FormData();
-        fd.append("image", file);
         fd.append("id", ID);
         fd.append("model", "Collaborateur");
         console.log(fd.getAll("image"));
@@ -142,7 +137,6 @@ function AddCollab({ closeAddModel }) {
             />
             <FormHelperText error>{formErrors.coursename}</FormHelperText>
           </MDBox>
-
 
           <MDBox mt={4} mb={2} display="flex" justifyContent="center">
             <MDButton
