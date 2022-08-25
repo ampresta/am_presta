@@ -2,8 +2,8 @@ const db = require("../../config/database");
 const { Session_Collab, Proof } = db.models;
 module.exports = async (req, res) => {
   const { sess, type } = req.body;
-  const { collab } = req
-  
+  const { collab } = req;
+
   if (!sess || !collab || !type) {
     return res.sendStatus(403);
   }
@@ -23,11 +23,10 @@ module.exports = async (req, res) => {
       ],
     });
     if (type === "fincourse") {
-      console.log("\x1b[41mLOG:\x1b[0m");
-      console.log(sess_collab);
+      // console.log("\x1b[41mLOG:\x1b[0m");
+      // console.log(sess_collab);
       if (!sess_collab.fincourse) {
         const proof = await Proof.create({
-          status: false,
           name: req.file.filename,
           mimetype: req.file.mimetype,
           size: req.file.size,
@@ -43,7 +42,6 @@ module.exports = async (req, res) => {
     } else if (type === "certifs") {
       if (!sess_collab.certifs) {
         const proof = await Proof.create({
-          status: false,
           name: req.file.filename,
           mimetype: req.file.mimetype,
           size: req.file.size,

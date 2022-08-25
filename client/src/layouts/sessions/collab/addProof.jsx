@@ -35,6 +35,7 @@ import { setProofRoute } from "utils/APIRoutes";
 function AddProof({ sessionId }) {
   const [file, setFile] = useState(null);
 
+	console.log(sessionId);
   const [selectedType, setType] = useState(null);
   const [controller, dispatch] = useMaterialUIController();
   const { updater, openProofModel } = controller;
