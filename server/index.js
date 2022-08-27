@@ -77,7 +77,6 @@ app.post("/api/delete", deleteInstances);
 app.post("/api/logout", logout);
 app.use("/api/media", express.static("media"));
 
-
 // Listener
 
 app.listen(PORT, () => console.log(`Server listening on ${PORT}...`));

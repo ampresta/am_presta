@@ -125,7 +125,6 @@ function Dashboard() {
                 <ReportsBarChart
                   color="info"
                   title="Total companies"
-                  description="Last Campaign Performance"
                   date="campaign sent 2 days ago"
                   chart={CompaniesGraph()}
                 />
@@ -136,11 +135,6 @@ function Dashboard() {
                 <ReportsLineChart
                   color="success"
                   title="Total Courses"
-                  // description={
-                  // <>
-                  // (<strong>+15%</strong>) increase in this month.
-                  // </>
-                  // }
                   date="updated 4 min ago"
                   chart={CoursesGraph()}
                 />
@@ -151,7 +145,6 @@ function Dashboard() {
                 <ReportsLineChart
                   color="primary"
                   title="Total partners"
-                  description="Last Campaign Performance"
                   date="just updated"
                   chart={PartnersGraph()}
                 />

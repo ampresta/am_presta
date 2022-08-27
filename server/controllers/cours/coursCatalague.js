@@ -18,8 +18,6 @@ module.exports = async (req, res) => {
         id: i,
       });
     }
-    console.log("\x1b[42mPAYLOAD \x1b[\x1b[0m33meffff\x1b[0m");
-    console.log(t);
     filters = {
       include: {
         model: Provider,
@@ -30,9 +28,12 @@ module.exports = async (req, res) => {
         required: true,
         include: {
           model: Quota,
-          required: false,
+
           where: {
             SocieteId: collab.SocieteId,
+            quota: {
+              [Op.gt]: 0,
+            },
           },
         },
       },
@@ -45,7 +46,6 @@ module.exports = async (req, res) => {
         required: true,
         include: {
           model: Quota,
-          required: false,
           where: {
             SocieteId: collab.SocieteId,
           },
