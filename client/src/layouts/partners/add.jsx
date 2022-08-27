@@ -19,10 +19,9 @@ import axiosAuth from "services/authAxios";
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setUpdater } from "context";
-
 import { addPartnersRoute, uploadRoute } from "utils/APIRoutes";
 
-function AddPartner({ closeAddModel }) {
+function AddPartner({ closeAddModel, openSnackBar }) {
   const [formErrors, setFormErrors] = useState({
     nom: "",
   });
@@ -34,7 +33,6 @@ function AddPartner({ closeAddModel }) {
   const [file, setFile] = useState(null);
 
   const [controller, dispatch] = useMaterialUIController();
-
   const { updater } = controller;
 
   const handleSubmit = async (event) => {
@@ -66,6 +64,7 @@ function AddPartner({ closeAddModel }) {
 
         closeAddModel(false);
         setUpdater(dispatch, !updater);
+        openSnackBar(true);
       } else {
         alert(data.msg);
       }

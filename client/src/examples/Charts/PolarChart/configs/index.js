@@ -23,7 +23,16 @@ function configs(labels, datasets) {
       datasets: [
         {
           label: datasets.label,
-          backgroundColor: backgroundColors,
+          backgroundColor: [
+            "#58ae5c",
+            "#de2567",
+            "#191919",
+            "#f5962b",
+            "#a9131b",
+            "#1652ac",
+            "#39393f",
+            "#ded625",
+          ],
           data: datasets.data,
         },
       ],

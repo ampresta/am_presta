@@ -11,6 +11,9 @@ import MDButton from "components/MDButton";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import DataTable from "examples/Tables/DataTable";
+import CsvUploader from "examples/CsvUploader";
+
+import MySnackBar from "components/MySnackBar";
 
 //import Hook
 import { useState } from "react";
@@ -25,14 +28,16 @@ import AddPartner from "./add";
 import partnersTableData from "layouts/partners/data/partnersTableData";
 
 import Papa from "papaparse";
-import CsvUploader from "examples/CsvUploader";
 
 function Partners() {
-  const { columns, rows, confirmation, rawData } = partnersTableData();
+  const { columns, rows, confirmation, rawData, notifications } =
+    partnersTableData();
 
   const [openAddModel, setOpenAddModel] = useState(false);
 
   const [openCsvUploader, setOpenCsvUploader] = useState(false);
+
+  const [openSnackBar, setOpenSnackBar] = useState(false);
 
   const handleDownload = (title, type) => {
     let data = [];
@@ -158,7 +163,12 @@ function Partners() {
           </Grid>
         </MDBox>
       )}
-      {openAddModel && <AddPartner closeAddModel={setOpenAddModel} />}
+      {openAddModel && (
+        <AddPartner
+          closeAddModel={setOpenAddModel}
+          openSnackBar={setOpenSnackBar}
+        />
+      )}
       {openCsvUploader && (
         <CsvUploader
           closeUploadModel={setOpenCsvUploader}
@@ -167,6 +177,15 @@ function Partners() {
         />
       )}
       {confirmation}
+      {notifications}
+      {openSnackBar && (
+        <MySnackBar
+          color="success"
+          title="Partner Added Succesfully"
+          open={openSnackBar}
+          close={() => setOpenSnackBar(!openSnackBar)}
+        />
+      )}
     </DashboardLayout>
   );
 }

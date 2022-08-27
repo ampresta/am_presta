@@ -21,9 +21,9 @@ function PolarChart({ icon, title, description, chart }) {
   const { data, options } = configs(chart.labels || [], chart.datasets || {});
 
   const renderChart = (
-    <MDBox py={2} pr={2} pl={icon.component ? 1 : 2}>
+    <MDBox py={2.5} pr={2} pl={2}>
       {title || description ? (
-        <MDBox display="flex" px={description ? 1 : 0} pt={description ? 1 : 0}>
+        <MDBox display="flex" px={description ? 1 : 0} pt={1}>
           {icon.component && (
             <MDBox
               width="4rem"
