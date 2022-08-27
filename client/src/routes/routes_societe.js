@@ -5,10 +5,11 @@ import Sessions from "layouts/sessions/societe";
 import SessionsDetails from "layouts/sessionsDetails";
 import SignIn from "layouts/authentication/sign-in";
 import Logout from "layouts/authentication/logout";
-import Courses from "layouts/courses/societe_courses";
+import Courses from "layouts/courses/courses catalogue";
 import Collabs from "layouts/collabs/societe";
 import Vouchers from "layouts/vouchers/societe";
 import Error404 from "layouts/error404";
+import CoursesDetails from "layouts/courses/courses catalogue/chooseCourse";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -104,6 +105,12 @@ const routes = [
     icon: <Icon fontSize="small">error</Icon>,
     route: "/Error404",
     component: <Error404 />,
+  },
+  {
+    name: "details",
+    key: "details",
+    route: "/catalogue/details/:id",
+    component: <CoursesDetails />,
   },
 ];
 

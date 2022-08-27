@@ -21,11 +21,7 @@ import axiosAuth from "services/authAxios";
 import { useParams } from "react-router-dom";
 
 import { useEffect, useState } from "react";
-import {
-  sendRequestRoute,
-  CoursesDetailsRoute,
-  baseURL,
-} from "utils/APIRoutes";
+import { CoursesDetailsSocRoute, baseURL } from "utils/APIRoutes";
 
 function Partners() {
   const { id } = useParams();
@@ -38,7 +34,7 @@ function Partners() {
 
   useEffect(() => {
     const getDetail = async () => {
-      const { data } = await axiosAuth.post(CoursesDetailsRoute, {
+      const { data } = await axiosAuth.post(CoursesDetailsSocRoute, {
         id,
       });
       if (data.status) {
@@ -49,44 +45,6 @@ function Partners() {
     getDetail();
   }, [updater]);
 
-  const Enroll = async () => {
-    const { data } = await axiosAuth.post(sendRequestRoute, {
-      cours: id,
-    });
-    if (data.status) {
-      setUpdater(dispatch, updater);
-      setEnrolled(true);
-      console.log("requeest sent");
-    }
-  };
-  const renderButton = () => {
-    if (!loading && (details.request > 0 || enrolled)) {
-      return (
-        <MDButton disabled="true" variant="gradient" color="warning">
-          Pending ...
-        </MDButton>
-      );
-    }
-    if (!loading && details.enroll > 0) {
-      return (
-        <MDButton
-          variant="gradient"
-          onClick={() => {
-            Enroll();
-          }}
-          color="info"
-        >
-          Enroll Now
-        </MDButton>
-      );
-    } else {
-      return (
-        <MDButton disabled="true" variant="gradient" color="secondary">
-          Enroll Now
-        </MDButton>
-      );
-    }
-  };
   return (
     <DashboardLayout>
       <DashboardNavbar collab />
@@ -158,7 +116,6 @@ function Partners() {
                   <Ratings rating={5} fontSize="medium" color="warning" />
                 </MDBox>
                 <MDBox p={2} display="flex" alignItems="center">
-                  {renderButton()}
                   <MDTypography
                     variant="caption"
                     color="dark"
