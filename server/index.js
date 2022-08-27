@@ -39,12 +39,12 @@ try {
 //     credentials: true,
 //   })
 // );
-app.use(cors({ credentials: true, origin: "http://127.0.0.1:3000" }));
+app.use(cors({ credentials: true, origin: "*" }));
 
 app.use(morgan("tiny"));
 app.use(express.json());
 require("dotenv").config();
-
+app.set("trust proxy", true); 
 // FILE STORAGE
 const STORAGE = multer.diskStorage({
   destination: (req, file, cb) => {
