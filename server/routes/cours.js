@@ -10,6 +10,7 @@ const router = Router();
 const signedin = require("../middlewares/signedin");
 const checkCollaborateur = require("../middlewares/checkCollaborateur");
 const browseCourseDetails = require("../controllers/cours/browseCourseDetails");
+const browseCoursDetailsSoc = require("../controllers/cours/browseCoursDetailsSoc");
 
 // router.use(signedin);
 // Please don't change the order
@@ -30,4 +31,5 @@ router.post("/add", addCours);
 router.use(checkSociete);
 router.use("/browsesoc", checkSociete);
 router.all("/browsesoc", browseCoursSoc);
+router.all("/detailsoc", browseCoursDetailsSoc);
 module.exports = router;
