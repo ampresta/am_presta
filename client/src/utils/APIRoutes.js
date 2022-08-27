@@ -30,7 +30,6 @@ export const topChallengesRoute = `${baseURL}/dashboard/topcourses`;
 export const registerRoute = `${baseURL}/register`;
 export const allCompaniesRoute = `${baseURL}/societe/browse`;
 export const addCollabRouteAdmin = `${baseURL}/societe/addcollabadmin`;
-// export const userCompanyRoute = `${baseURL}/societe/uerSociete`;
 
 // Partners
 export const allPartnersRoute = `${baseURL}/provider/browse`;

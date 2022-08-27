@@ -9,15 +9,21 @@ import MDButton from "components/MDButton";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
+import MDTypography from "components/MDTypography";
 
-const ProofModel = ({ file, open, onClose }) => {
+const ProofModel = ({ finCourse, certifCompletion, open, onClose }) => {
   return (
     <Modal open={open} onClose={onClose} disableAutoFocus={true}>
       <Slide direction="up" in={open} timeout={250}>
         <MDBox
-          sx={{ position: "absolute", top: "30%", right: "35%" }}
-          shadow="xl"
-          // ml={{ xs: 0, md: 5, lg: 15, sm: 2.5 }}
+          sx={{
+            position: "sticky",
+            top: "30%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          ml={{ xs: 0, md: 0, lg: 15, sm: 2.5 }}
         >
           <Card>
             <MDBox p={2} display="flex" justifyContent="flex-end">
@@ -31,14 +37,50 @@ const ProofModel = ({ file, open, onClose }) => {
                 <Icon fontSize="small">close</Icon>
               </MDButton>
             </MDBox>
-            <MDBox px={4} pb={4}>
-              <img
-                src={file}
-                alt="show my proof"
-                width="300px"
-                height="auto"
-                style={{ border: "4px solid #2b85eb" }}
-              />
+            <MDBox
+              px={4}
+              pb={3}
+              display={{ sm: "block", xs: "block", md: "block", lg: "flex" }}
+            >
+              <MDBox
+                mr={
+                  certifCompletion !== "http://127.0.0.1:8000/api/null" ? 1 : 0
+                }
+                mb={1}
+              >
+                <img
+                  src={finCourse}
+                  alt="show my proof"
+                  width="300px"
+                  height="200px"
+                  style={{ border: "4px solid #2b85eb" }}
+                />
+                <MDBox textAlign="center">
+                  <MDTypography variant="body2" fontWeight="bold" color="dark">
+                    My End Course Proof
+                  </MDTypography>
+                </MDBox>
+              </MDBox>
+              {certifCompletion !== "http://127.0.0.1:8000/api/null" && (
+                <MDBox ml={1}>
+                  <img
+                    src={certifCompletion}
+                    alt="show my proof"
+                    width="300px"
+                    height="200px"
+                    style={{ border: "4px solid #2b85eb" }}
+                  />
+                  <MDBox textAlign="center">
+                    <MDTypography
+                      variant="body2"
+                      fontWeight="bold"
+                      color="dark"
+                    >
+                      My Certification Completion Proof
+                    </MDTypography>
+                  </MDBox>
+                </MDBox>
+              )}
             </MDBox>
           </Card>
         </MDBox>

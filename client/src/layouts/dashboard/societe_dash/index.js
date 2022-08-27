@@ -16,8 +16,6 @@ import PopularCoursesList from "examples/Lists/PopularCoursesList";
 
 // Data
 import authorsTableData from "./data/companiesTableData";
-import CompaniesGraph from "./data/reportsBarChartCompaniesData";
-import CoursesGraph from "./data/reportsLineChartCoursesData";
 import popularCoursesListData from "./data/popularCoursesListData";
 import DataTable from "examples/Tables/DataTable";
 
@@ -32,7 +30,6 @@ import axios from "services/authAxios";
 import { SocCardsRoute } from "utils/APIRoutes";
 import PolarChart from "examples/Charts/PolarChart";
 import DefaultLineChart from "examples/Charts/LineCharts/DefaultLineChart";
-import GradientLineChart from "examples/Charts/LineCharts/GradientLineChart";
 
 function Dashboard() {
   const { columns, rows } = authorsTableData();
@@ -113,7 +110,7 @@ function Dashboard() {
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox pt={3}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} rowSpacing={3}>
           <Grid item xs={12} md={12} lg={4}>
             <PolarChart
               icon={{ color: "success", component: "pie_chart" }}
@@ -121,9 +118,9 @@ function Dashboard() {
               chart={data}
             />
           </Grid>
-          <Grid container item spacing={2} rowSpacing={1} xs={12} lg={8}>
+          <Grid container item columnSpacing={2} rowSpacing={1} xs={12} lg={8}>
             <Grid item xs={12} md={12} lg={6}>
-              <MDBox mb={1.5}>
+              <MDBox mb={1}>
                 <ComplexStatisticsCard
                   color="primary"
                   icon="business"
@@ -138,7 +135,7 @@ function Dashboard() {
               </MDBox>
             </Grid>
             <Grid item xs={12} md={12} lg={6}>
-              <MDBox mb={1.5}>
+              <MDBox mb={1}>
                 <ComplexStatisticsCard
                   icon="groups"
                   title="Total Collaborators"
