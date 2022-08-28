@@ -36,12 +36,17 @@ import {
 
 import { io } from "socket.io-client";
 import axios from "services/authAxios";
-import { addNotifRoute } from "utils/APIRoutes";
-import { getNotifsRoute } from "utils/APIRoutes";
+import { getNotifsCollabRoute, getNotifsSocRoute } from "utils/APIRoutes";
 
 function DashboardNavbar({ absolute, light, isMini, collab }) {
   const [controller, dispatch] = useMaterialUIController();
-  const { miniSidenav, transparentNavbar, darkMode, changedNotif } = controller;
+  const {
+    miniSidenav,
+    transparentNavbar,
+    darkMode,
+    changedNotif,
+    accountType,
+  } = controller;
   const [openMenu, setOpenMenu] = useState(false);
   const route = useLocation().pathname.split("/").slice(1);
 
@@ -89,11 +94,18 @@ function DashboardNavbar({ absolute, light, isMini, collab }) {
       return colorValue;
     },
   });
+  console.log(accountType);
 
   // Get initial Notifs no ws
   useEffect(() => {
     const getNotifs = async () => {
-      const { data } = await axios.post(getNotifsRoute);
+      let route;
+      if (accountType === "Societe") {
+        route = getNotifsSocRoute
+      } else if (accountType === "Collab") {
+        route = getNotifsCollabRoute
+      }
+      const { data } = await axios.post(route);
       setChangedNotif(dispatch, data.length);
     };
     getNotifs();
@@ -106,8 +118,14 @@ function DashboardNavbar({ absolute, light, isMini, collab }) {
 
   useEffect(() => {
     socket.current.on("notif", async () => {
+      let route;
+      if (accountType === "Societe") {
+        route = getNotifsSocRoute
+      } else if (accountType === "Collab") {
+        route = getNotifsCollabRoute
+      }
       console.log("notifs emited");
-      const { data } = await axios.post(getNotifsRoute);
+      const { data } = await axios.post(route);
       setChangedNotif(dispatch, data.length);
     });
   }, [socket]);
@@ -132,37 +150,42 @@ function DashboardNavbar({ absolute, light, isMini, collab }) {
         {isMini ? null : (
           <MDBox>
             <MDBox color={light ? "white" : "inherit"}>
-              <IconButton
-                size="small"
-                disableRipple
-                color="inherit"
-                sx={navbarIconButton}
-                aria-controls="notification-menu"
-                aria-haspopup="true"
-                variant="contained"
-                onClick={(event) => setOpenMenu(event.currentTarget)}
-                style={{ position: "relative" }}
-              >
-                <Icon style={{ zIndex: 1 }} sx={iconsStyle}>
-                  notifications
-                </Icon>
-                <span
-                  style={{
-                    position: "absolute",
-                    top: "0",
-                    rigth: "0",
-                    width: "20px",
-                    height: "20px",
-                    zIndex: 100,
-                    background: "red",
-                    color: "wheat",
-                    borderRadius: "50%",
-                    transform: "translate(8px, -8px)",
-                  }}
-                >
-                  {changedNotif}
-                </span>
-              </IconButton>
+              {(accountType === "Societe" || accountType === "Collab") && (
+                <>
+                  <h1>{changedNotif}</h1>
+                  <IconButton
+                    size="small"
+                    disableRipple
+                    color="inherit"
+                    sx={navbarIconButton}
+                    aria-controls="notification-menu"
+                    aria-haspopup="true"
+                    variant="contained"
+                    onClick={(event) => setOpenMenu(event.currentTarget)}
+                    style={{ position: "relative" }}
+                  >
+                    <Icon style={{ zIndex: 1 }} sx={iconsStyle}>
+                      notifications
+                    </Icon>
+                    <span
+                      style={{
+                        position: "absolute",
+                        top: "0",
+                        rigth: "0",
+                        width: "20px",
+                        height: "20px",
+                        zIndex: 100,
+                        background: "red",
+                        color: "wheat",
+                        borderRadius: "50%",
+                        transform: "translate(8px, -8px)",
+                      }}
+                    >
+                      {changedNotif}
+                    </span>
+                  </IconButton>
+                </>
+              )}
 
               <IconButton
                 size="small"
