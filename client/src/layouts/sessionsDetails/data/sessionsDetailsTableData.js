@@ -154,8 +154,8 @@ export default function Data() {
     const session_collab = collab.Session_Collabs[0];
     console.log(session_collab);
     if (
+      session_collab.fincourse &&
       session_collab.fincourse.status === "accepted" &&
-      // session_collab.fincourse.status &&
       !session_collab.Voucher
     ) {
       return (
@@ -173,6 +173,7 @@ export default function Data() {
         </MDBox>
       );
     } else if (
+      session_collab.fincourse &&
       session_collab.fincourse.status === "accepted" &&
       // session_collab.fincourse.status &&
       session_collab.Voucher
