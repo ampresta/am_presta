@@ -4,7 +4,9 @@ const { Session_Collab, Proof, Cours, Session, Provider, Collaborateur } =
   db.models;
 module.exports = async (req, res) => {
   filters = {};
-
+  const { paranoid } = req.body;
+  console.log(paranoid);
+  filters.paranoid = paranoid !== undefined ? false : true;
   filters.include = [
     {
       model: Session,

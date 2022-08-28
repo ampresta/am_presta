@@ -3,6 +3,9 @@ const db = require("../../config/database");
 const { Societe, Collaborateur, Quota, Provider } = db.models;
 module.exports = async (req, res) => {
   filters = {};
+  const { paranoid } = req.body;
+  console.log(paranoid);
+  filters.paranoid = paranoid !== undefined ? false : true;
   filters.include = {
     model: Collaborateur,
     attributes: ["nom", "prenom"],
@@ -36,7 +39,7 @@ module.exports = async (req, res) => {
     } else {
       societe = await Societe.findAll(filters);
 
-      return res.json({ status: false, msg: societe });
+      return res.json({ status: true, msg: societe });
     }
   }
 
