@@ -5,6 +5,7 @@ const getProof = require("../controllers/proof/getProof");
 const refuseProofs = require("../controllers/proof/refuseProofs");
 const setProof = require("../controllers/proof/setProof");
 const checkCollaborateur = require("../middlewares/checkCollaborateur");
+const checkSuperAdmin = require("../middlewares/checkSuperAdmin");
 
 // FILE STORAGE
 const STORAGE = multer.diskStorage({
@@ -18,11 +19,12 @@ const STORAGE = multer.diskStorage({
 const upload = multer({ storage: STORAGE });
 const router = Router();
 
+router.use("/set", checkCollaborateur);
+router.post("/set", upload.single("proof"), setProof);
+
+router.use(checkSuperAdmin);
 router.post("/refuse", refuseProofs);
 router.post("/accept", acceptProof);
 router.post("/get", getProof);
-
-router.use("/set", checkCollaborateur);
-router.post("/set", upload.single("proof"), setProof);
 
 module.exports = router;

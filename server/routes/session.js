@@ -9,12 +9,15 @@ const SessionCollab = require("../controllers/session/SessionCollab");
 const SessionDetailsGraph = require("../controllers/session/SessionDetailsGraph");
 const checkCollaborateur = require("../middlewares/checkCollaborateur");
 const checkSociete = require("../middlewares/checkSociete");
+const checkSuperAdmin = require("../middlewares/checkSuperAdmin");
 const router = Router();
 const signedin = require("../middlewares/signedin");
 
 // router.use(signedin);
 // ampresta
+router.use("/browseam", checkSuperAdmin);
 router.all("/browseam", browseSessionAdmin);
+router.use("/addam", checkSuperAdmin);
 router.post("/addam", addSessionAdmin);
 //collab
 router.use("/browsecollab", checkCollaborateur);
