@@ -18,16 +18,16 @@ import { allCoursesRoute, baseURL, DeleteInstances } from "utils/APIRoutes";
 import ConfirmPopup from "components/ConfirmPopup";
 
 // Material Dashboard 2 React contexts
-import { useMaterialUIController } from "context";
+import { setUpdater, useMaterialUIController } from "context";
 import axiosAuth from "services/authAxios";
 
-export default function Data() {
+export default function Data(setOpenAddModel) {
   const [allCourses, setAllCourses] = useState([]);
   const [confirmModel, setConfirmModel] = useState(false);
   const [tempCourseId, setTempCourseId] = useState(0);
   const [openSnackBar, setOpenSnackBar] = useState(false);
 
-  const [controller] = useMaterialUIController();
+  const [controller, dispatch] = useMaterialUIController();
 
   const { updater } = controller;
 
@@ -50,6 +50,8 @@ export default function Data() {
     if (data.status) {
       setOpenSnackBar(true);
       // setAllCourses(allCourses.filter((course) => course.id !== id));
+      //
+      setUpdater(dispatch, !updater);
       setConfirmModel(!confirmModel);
     } else {
       alert(data.msg);
@@ -90,6 +92,14 @@ export default function Data() {
       return " ";
     } else {
       return provider.nom;
+    }
+  };
+
+  const getDataByID = (id) => {
+    for (let i = 0; i < allCourses.length; i++) {
+      if (allCourses[i].id === id) {
+        return allCourses[i];
+      }
     }
   };
 
@@ -186,16 +196,24 @@ export default function Data() {
         />
       ),
       edit: (
-        <MDTypography variant="caption" color="text" fontWeight="medium">
-          <Icon fontSize="small">edit</Icon>
-        </MDTypography>
+        <MDButton
+          variant="text"
+          onClick={() => {
+            console.log(getDataByID(course.id));
+            setOpenAddModel(true);
+          }}
+        >
+          <MDTypography variant="caption" color="text" fontWeight="medium">
+            <Icon fontSize="small">edit</Icon>
+          </MDTypography>
+        </MDButton>
       ),
-      delete: (
+      delete: !course.deletedAt ? (
         <MDButton
           variant="text"
           onClick={() => {
             setConfirmModel(!confirmModel);
-            setTempCourseId(course.id);
+            tempCourseId(course.id);
           }}
         >
           <MDTypography variant="caption" color="text" fontWeight="medium">
@@ -204,6 +222,12 @@ export default function Data() {
             </Icon>
           </MDTypography>
         </MDButton>
+      ) : (
+        <MDTypography variant="caption" color="text" fontWeight="medium">
+          <Icon fontSize="small" color="secondary">
+            delete
+          </Icon>
+        </MDTypography>
       ),
     })
   );

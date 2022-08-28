@@ -2,6 +2,7 @@
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
+import MDBadge from "components/MDBadge";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -19,20 +20,22 @@ import { allDepartmentsAdminRoute, DeleteInstances } from "utils/APIRoutes";
 import ConfirmPopup from "components/ConfirmPopup";
 
 // Material Dashboard 2 React contexts
-import { useMaterialUIController } from "context";
+import { setUpdater, useMaterialUIController } from "context";
 
 export default function Data() {
   const [AllDepartements, setAllDepartements] = useState([]);
   const [confirmModel, setConfirmModel] = useState(false);
   const [tempDepartmentId, setTempDepartmentId] = useState(0);
 
-  const [controller] = useMaterialUIController();
+  const [controller, dispatch] = useMaterialUIController();
 
   const { updater } = controller;
 
   useEffect(() => {
     const getAllDepartements = async () => {
-      const { data } = await axios.get(allDepartmentsAdminRoute);
+      const { data } = await axios.post(allDepartmentsAdminRoute, {
+        paranoid: false,
+      });
       console.log(data);
       setAllDepartements(data.data);
     };
@@ -45,9 +48,8 @@ export default function Data() {
       id: id,
     });
     if (data.status) {
-      setAllDepartements(
-        AllDepartements.filter((departement) => departement.id !== id)
-      );
+      setUpdater(dispatch, !updater);
+      // AllDepartements.filter((departement) => departement.id !== id)
       setConfirmModel(!confirmModel);
     } else {
       alert(data.msg);
@@ -88,7 +90,7 @@ export default function Data() {
         width: "30%",
       },
       {
-        Header: "Number of challenges",
+        Header: "status ",
         accessor: "Number_of_challenges",
         align: "center",
         width: "20%",
@@ -109,6 +111,13 @@ export default function Data() {
     ),
   };
 
+  const parseStatus = (partner) => {
+    if (partner.deletedAt) {
+      return <MDBadge badgeContent="Deleted" color="primary" size="md" />;
+    } else {
+      return <MDBadge badgeContent="Active" color="success" size="md" />;
+    }
+  };
   AllDepartements.map((department) =>
     departements.rows.push({
       author: (
@@ -119,17 +128,17 @@ export default function Data() {
           {department.collab_count}
         </MDTypography>
       ),
-      Number_of_challenges: (
+      Number_of_challenges: parseStatus(department),
+      edit: !department.deletedAt ? (
         <MDTypography variant="caption" color="text" fontWeight="medium">
-          {department.challenge_count}
+          <Icon fontSize="small">edit</Icon>
         </MDTypography>
-      ),
-      edit: (
+      ) : (
         <MDTypography variant="caption" color="text" fontWeight="medium">
           <Icon fontSize="small">edit</Icon>
         </MDTypography>
       ),
-      delete: (
+      delete: !department.deletedAt ? (
         <MDButton
           variant="text"
           onClick={() => {
@@ -143,6 +152,12 @@ export default function Data() {
             </Icon>
           </MDTypography>
         </MDButton>
+      ) : (
+        <MDTypography variant="caption" color="text" fontWeight="medium">
+          <Icon fontSize="small" color="secondary">
+            delete
+          </Icon>
+        </MDTypography>
       ),
     })
   );

@@ -5,12 +5,13 @@ const addDeptAdmin = require("../controllers/departement/addDeptAdmin");
 const browsDeptAdmin = require("../controllers/departement/browsDeptAdmin");
 
 const checkSociete = require("../middlewares/checkSociete");
-//AM PRESTA
-
-router.all("/browsedeptsam", browsDeptAdmin);
-
-router.post("/adminadd", addDeptAdmin);
-router.use(checkSociete);
+const checkSuperAdmin = require("../middlewares/checkSuperAdmin");
+// Societe
+router.use("/add", checkSociete);
 router.post("/add", addDept);
+//AM PRESTA
+router.use(checkSuperAdmin);
+router.all("/browsedeptsam", browsDeptAdmin);
+router.post("/adminadd", addDeptAdmin);
 
 module.exports = router;

@@ -4,7 +4,10 @@ const { Societe, Departement, Session_Collab, Proof, Collaborateur } =
   db.models;
 module.exports = async (req, res) => {
   try {
+    const { paranoid } = req.body;
     const departements = await Departement.findAll({
+      paranoid: paranoid !== undefined ? false : true,
+
       include: [
         { model: Societe, attributes: ["name"] },
         {
@@ -32,13 +35,6 @@ module.exports = async (req, res) => {
           [
             sequelize.fn("count", sequelize.col("Collaborateurs.id")),
             "collab_count",
-          ],
-          [
-            sequelize.fn(
-              "count",
-              sequelize.col("Collaborateurs.Session_Collabs->certifs.id")
-            ),
-            "challenge_count",
           ],
         ],
       },

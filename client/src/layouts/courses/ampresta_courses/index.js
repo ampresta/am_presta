@@ -40,12 +40,12 @@ function Courses_am() {
     }
   }, []);
 
-  const { columns, rows, confirmation, rawData, notifications } =
-    coursesTableData();
-
   const [openAddModel, setOpenAddModel] = useState(false);
   const [openCsvUploader, setOpenCsvUploader] = useState(false);
   const [openSnackBar, setOpenSnackBar] = useState(false);
+
+  const { columns, rows, confirmation, rawData, notifications } =
+    coursesTableData(setOpenAddModel);
 
   const handleDownload = (title, type) => {
     let data = [];
