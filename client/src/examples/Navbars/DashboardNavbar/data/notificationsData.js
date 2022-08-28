@@ -7,7 +7,6 @@ import { getNotifsCollabRoute, getNotifsSocRoute } from "utils/APIRoutes";
 import { useMaterialUIController, setChangedNotif } from "context";
 import { marknoptifReadRoute } from "utils/APIRoutes";
 
-const ALL_NOTIFS_TYPES = ["Session", "Provider", "Voucher", "Proof", "Request"];
 
 const generate_notif = (data, entity, description, emetteur, id) => {
   switch (entity) {
@@ -34,7 +33,7 @@ export const markRead = async (notifId) => {
 
 export default function Data() {
   const [controller, dispatch] = useMaterialUIController();
-  const { changedNotif, accountType } = controller;
+  const { accountType } = controller;
 
   const [notifs, setNotifs] = useState(null);
 

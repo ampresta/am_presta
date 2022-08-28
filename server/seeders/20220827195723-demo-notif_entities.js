@@ -37,25 +37,19 @@ module.exports = {
         },
         {
           entity: "Request",
-          description: "Collab sent Request to enroll to course",
+          description: "sent a request to enroll to",
           createdAt: "2022-02-12",
           updatedAt: new Date(),
         },
         {
           entity: "Request",
-          description: "Request accepted",
+          description: "has accepted your request to enroll",
           createdAt: "2022-02-12",
           updatedAt: new Date(),
         },
         {
           entity: "Request",
-          description: "Request refused",
-          createdAt: "2022-02-12",
-          updatedAt: new Date(),
-        },
-        {
-          entity: "Request",
-          description: "Request refused",
+          description: "has rejected your request to enroll",
           createdAt: "2022-02-12",
           updatedAt: new Date(),
         },

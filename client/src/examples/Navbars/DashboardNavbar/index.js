@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 
 // react-router components
 import { Link, useLocation } from "react-router-dom";
@@ -31,11 +31,7 @@ import {
 } from "examples/Navbars/DashboardNavbar/styles";
 
 // Material Dashboard 2 React context
-import {
-  useMaterialUIController,
-  setMiniSidenav,
-  setChangedNotif,
-} from "context";
+import { useMaterialUIController, setMiniSidenav } from "context";
 
 
 import notificationsData from "./data/notificationsData";
