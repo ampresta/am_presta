@@ -265,7 +265,7 @@ export default function Data() {
         </MDTypography>
       ),
       status: getStatus(collab, index),
-      // voucher: getVoucherStatus(collab),
+      voucher: getVoucherStatus(collab),
     });
   });
 

@@ -3,6 +3,7 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
 import MDButton from "components/MDButton";
+import MDBadge from "components/MDBadge";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -68,6 +69,13 @@ export default function Data() {
     </MDBox>
   );
 
+  const parseStatus = (partner) => {
+    if (partner.deletedAt) {
+      return <MDBadge badgeContent="Deleted" color="primary" size="md" />;
+    } else {
+      return <MDBadge badgeContent="Active" color="success" size="md" />;
+    }
+  };
   let collabs = {
     columns: [
       {
@@ -100,6 +108,7 @@ export default function Data() {
       //   align: "center",
       //   width: "30%",
       // },
+      { Header: "Status", accessor: "status", align: "center", width: "25%" },
       { Header: "edit", accessor: "edit", align: "center", width: "3%" },
       { Header: "delete", accessor: "delete", align: "center", width: "3%" },
     ],
@@ -147,6 +156,7 @@ export default function Data() {
             <Icon fontSize="small">edit</Icon>
           </MDTypography>
         ),
+        status: parseStatus(collab),
         delete: (
           <MDButton
             variant="text"

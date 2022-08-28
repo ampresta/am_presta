@@ -3,6 +3,7 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
 
+import MDBadge from "components/MDBadge";
 // Endpoint
 import { allCompaniesRoute, baseURL, DeleteInstances } from "utils/APIRoutes";
 
@@ -25,6 +26,7 @@ import axiosAuth from "services/authAxios";
 export default function Data() {
   const [allCompanies, setAllCompanies] = useState([]);
   const [confirmModel, setConfirmModel] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [tempCompanyId, setTempCompanyId] = useState(0);
 
   const [controller] = useMaterialUIController();
@@ -33,8 +35,14 @@ export default function Data() {
 
   useEffect(() => {
     const getAllCompanies = async () => {
-      const { data } = await axiosAuth.get(allCompaniesRoute);
-      setAllCompanies((prev) => data.msg);
+      const { data } = await axiosAuth.post(allCompaniesRoute, {
+        paranoid: false,
+      });
+      if (data.status) {
+        setAllCompanies(data.msg);
+        console.log("data=", data);
+        setLoading(true);
+      }
     };
     getAllCompanies();
   }, [updater]);
@@ -45,7 +53,7 @@ export default function Data() {
       id: id,
     });
     if (data.status) {
-      setAllCompanies(allCompanies.filter((company) => company.id !== id));
+      // setAllCompanies(allCompanies.filter((company) => company.id !== id));
       setConfirmModel(!confirmModel);
     } else {
       alert(data.msg);
@@ -73,6 +81,7 @@ export default function Data() {
       },
       { Header: "manager", accessor: "manager", align: "center" },
       { Header: "date", accessor: "date", align: "center", width: "25%" },
+      { Header: "Status", accessor: "status", align: "center", width: "25%" },
       { Header: "edit", accessor: "edit", align: "center", width: "3%" },
       { Header: "delete", accessor: "delete", align: "center", width: "3%" },
     ],
@@ -92,6 +101,13 @@ export default function Data() {
     rawData: allCompanies,
   };
 
+  const parseStatus = (partner) => {
+    if (partner.deletedAt) {
+      return <MDBadge badgeContent="Deleted" color="primary" size="md" />;
+    } else {
+      return <MDBadge badgeContent="Active" color="success" size="md" />;
+    }
+  };
   allCompanies.map((company) =>
     companies.rows.push({
       author: <Company image={company.image} name={company.name} />,
@@ -115,6 +131,7 @@ export default function Data() {
           {dateFormat(company.createdAt)}
         </MDTypography>
       ),
+      status: loading && parseStatus(company),
       edit: (
         <MDTypography
           component="a"
@@ -125,6 +142,7 @@ export default function Data() {
           <Icon fontSize="small">edit</Icon>
         </MDTypography>
       ),
+
       delete: (
         <MDButton
           variant="outlined"

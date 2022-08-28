@@ -12,6 +12,8 @@ const {
 module.exports = async (req, res) => {
   filters = {};
 
+  const { paranoid } = req.body;
+  filters.paranoid = paranoid !== undefined ? false : true;
   filters.include = [
     { model: Societe, attributes: ["name"] },
     {
@@ -110,10 +112,10 @@ module.exports = async (req, res) => {
     console.log(filters);
     try {
       const sessions = await Session.findAll(filters); // Implementing search
-      return res.json(sessions);
+      return res.send({ status: true, sessions });
     } catch (err) {
       console.log(err);
-      return res.send({ status: "error" });
+      return res.send({ status: false });
     }
   } else {
     filters.include.push({
@@ -127,6 +129,6 @@ module.exports = async (req, res) => {
     });
     // console.log(filters);
     const sessions = await Session.findAll(filters); // Implementing search
-    return res.send(sessions);
+    return res.send({ status: true, sessions });
   }
 };

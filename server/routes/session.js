@@ -14,7 +14,7 @@ const signedin = require("../middlewares/signedin");
 
 // router.use(signedin);
 // ampresta
-router.get("/browseam", browseSessionAdmin);
+router.all("/browseam", browseSessionAdmin);
 router.post("/addam", addSessionAdmin);
 //collab
 router.use("/browsecollab", checkCollaborateur);

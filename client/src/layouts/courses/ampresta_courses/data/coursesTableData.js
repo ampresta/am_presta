@@ -3,6 +3,7 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDProgress from "components/MDProgress";
 import MDButton from "components/MDButton";
+import MDBadge from "components/MDBadge";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -30,7 +31,9 @@ export default function Data() {
 
   useEffect(() => {
     const getAllCourses = async () => {
-      const { data } = await axiosAuth.get(allCoursesRoute);
+      const { data } = await axiosAuth.post(allCoursesRoute, {
+        paranoid: false,
+      });
       console.log(data);
       setAllCourses(data);
     };
@@ -43,7 +46,7 @@ export default function Data() {
       id: id,
     });
     if (data.status) {
-      setAllCourses(allCourses.filter((course) => course.id !== id));
+      // setAllCourses(allCourses.filter((course) => course.id !== id));
       setConfirmModel(!confirmModel);
     } else {
       alert(data.msg);
@@ -113,6 +116,7 @@ export default function Data() {
         align: "center",
         width: "25%",
       },
+      { Header: "Status", accessor: "status", align: "center", width: "25%" },
       { Header: "edit", accessor: "edit", align: "center", width: "3%" },
       { Header: "delete", accessor: "delete", align: "center", width: "3%" },
     ],
@@ -132,6 +136,13 @@ export default function Data() {
     rawData: allCourses,
   };
 
+  const parseStatus = (partner) => {
+    if (partner.deletedAt) {
+      return <MDBadge badgeContent="Deleted" color="primary" size="md" />;
+    } else {
+      return <MDBadge badgeContent="Active" color="success" size="md" />;
+    }
+  };
   allCourses.map((course) =>
     courses.rows.push({
       author: (
@@ -146,6 +157,7 @@ export default function Data() {
           {course.collabs}
         </MDTypography>
       ),
+      status: parseStatus(course),
       number_of_sessions: (
         <MDTypography variant="caption" color="text" fontWeight="medium">
           {course.sessions}
