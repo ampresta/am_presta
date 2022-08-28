@@ -10,7 +10,6 @@ import { Icon } from "@mui/material";
 
 // React Hooks
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 
 // import axios from "services/authAxios";
 import axios from "services/authAxios";
@@ -69,11 +68,9 @@ export default function Data(setSessionId) {
         style={{ border: "2px solid #2b85eb" }}
       />
       <MDBox ml={2} lineHeight={1}>
-        <Link to={`/sessions/details/${id}`}>
-          <MDTypography display="block" variant="button" fontWeight="medium">
-            {name}
-          </MDTypography>
-        </Link>
+        <MDTypography display="block" variant="button" fontWeight="medium">
+          {name}
+        </MDTypography>
         <MDTypography variant="caption">{company}</MDTypography>
       </MDBox>
     </MDBox>
@@ -99,10 +96,11 @@ export default function Data(setSessionId) {
     </MDBox>
   );
 
-  const [myProof, SetMyProof] = useState("");
+  const [myEndCourseProof, setMyEndCourseProof] = useState("");
+  const [myCertifCompletionProof, setMyCertifCompletionProof] = useState("");
 
   // allSessions.map((session) =>
-  //   SetMyProof(
+  //   setMyEndCourseProof(
   //     session.Session_Collabs[0].fincourse === null
   //       ? null
   //       : session.Session_Collabs[0].fincourse.file
@@ -229,7 +227,8 @@ export default function Data(setSessionId) {
 
     ShowMyProof: showMyProof && (
       <ProofModel
-        file={`${baseURL}/${myProof}`}
+        finCourse={`${baseURL}/${myEndCourseProof}`}
+        certifCompletion={`${baseURL}/${myCertifCompletionProof}`}
         open={showMyProof}
         onClose={setShowMyProof}
       />
@@ -287,7 +286,10 @@ export default function Data(setSessionId) {
               setSessionId(session);
               setOpenProofModel(dispatch, !openProofModel);
             }}
-            // disabled={session.Session_Collabs[index].fincourse.size !== 0}
+            disabled={
+              session.Session_Collabs[0].fincourse.status === "accepted" &&
+              session.Session_Collabs[0].certifs.status === "accepted"
+            }
           >
             &nbsp;Add Proof
           </MDButton>
@@ -304,10 +306,15 @@ export default function Data(setSessionId) {
             <MDButton
               variant="text"
               onClick={() => {
-                SetMyProof(
+                setMyEndCourseProof(
                   session.Session_Collabs[0].fincourse === null
                     ? null
                     : session.Session_Collabs[0].fincourse.file
+                );
+                setMyCertifCompletionProof(
+                  session.Session_Collabs[0].certifs === null
+                    ? null
+                    : session.Session_Collabs[0].certifs.file
                 );
                 setShowMyProof(true);
               }}

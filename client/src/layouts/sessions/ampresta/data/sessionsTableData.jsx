@@ -10,7 +10,7 @@ import Icon from "@mui/material/Icon";
 
 // React Hooks
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+
 // import axios from "services/authAxios";
 import axios from "services/authAxios";
 import {
@@ -84,11 +84,9 @@ export default function Data() {
         style={{ border: "2px solid #2b85eb" }}
       />
       <MDBox ml={2} lineHeight={1}>
-        <Link to={`/sessions/details/${id}`}>
-          <MDTypography display="block" variant="button" fontWeight="medium">
-            {name}
-          </MDTypography>
-        </Link>
+        <MDTypography display="block" variant="button" fontWeight="medium">
+          {name}
+        </MDTypography>
         <MDTypography variant="caption">{company}</MDTypography>
       </MDBox>
     </MDBox>

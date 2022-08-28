@@ -3,6 +3,7 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
 import MDButton from "components/MDButton";
+import MySnackBar from "components/MySnackBar";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -26,6 +27,7 @@ export default function Data() {
   const [allPartners, setAllPartners] = useState([]);
   const [confirmModel, setConfirmModel] = useState(false);
   const [tempPartnerId, setTempPartnerId] = useState(0);
+  const [openSnackBar, setOpenSnackBar] = useState(false);
 
   const [controller] = useMaterialUIController();
 
@@ -45,6 +47,7 @@ export default function Data() {
       id: id,
     });
     if (data.status) {
+      setOpenSnackBar(true);
       setAllPartners(allPartners.filter((course) => course.id !== id));
       setConfirmModel(!confirmModel);
     } else {
@@ -89,6 +92,15 @@ export default function Data() {
         onConfirmPopup={() => setConfirmModel(!confirmModel)}
         handleDetele={handleDelete}
         Id_Item={tempPartnerId}
+      />
+    ),
+
+    notifications: openSnackBar && (
+      <MySnackBar
+        color="error"
+        title="Partner Deleted Succesfully"
+        open={openSnackBar}
+        close={() => setOpenSnackBar(!openSnackBar)}
       />
     ),
 
