@@ -59,7 +59,6 @@ module.exports = async (req, res) => {
 
   const { nom } = await Session.findByPk(session);
   if (request) {
-    console.log(request);
     const cours = await Cours.findOne({
       attributes: ["nom"],
       include: {
@@ -90,7 +89,6 @@ module.exports = async (req, res) => {
     msg: "Collab Added",
   });
   } catch (err) {
-    console.log(err);
     return res.send({ status: false, msg: "Check your quota" });
   }
 };

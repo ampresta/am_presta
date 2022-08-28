@@ -1,6 +1,8 @@
 const sequelize = require("../../config/database");
 const Email = require("../../emails/Email");
+const socket = require("../../socket");
 const { Cours, Collaborateur, Request, User } = sequelize.models;
+const io = require("../../socket").get();
 
 module.exports = async (req, res) => {
   const collab = await Collaborateur.findByPk(req.collab);
@@ -36,11 +38,14 @@ module.exports = async (req, res) => {
       },
     });
     to_emails = [];
-    emails.map((email) => to_emails.push(email.email));
-    Email.sendRequest(to_emails, `${collab.prenom} ${collab.nom}`, crs.nom);
+    io.emit("notif", "test");
+
+    // io.emit("notif", "test");
+    // emails.map((email) => to_emails.push(email.email));
+    // Email.sendRequest(to_emails, `${collab.prenom} ${collab.nom}`, crs.nom);
+
     return res.send({ email: "sent", status: true, msg: "Request Created" });
   } catch (err) {
-    console.log(err);
     return res.send({ status: false, msg: "Error" });
   }
 };

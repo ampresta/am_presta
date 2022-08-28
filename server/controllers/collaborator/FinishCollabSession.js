@@ -13,7 +13,6 @@ module.exports = async (req, res) => {
     row.save();
     return res.send({ status: true, msg: "Good" });
   } catch (err) {
-    console.log(err);
     return res.send({ status: false });
   }
 };

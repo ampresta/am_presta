@@ -21,7 +21,6 @@ module.exports = async (req, res) => {
     });
     return res.send({ status: true, requests });
   } catch (err) {
-    console.log(err);
 
     return res.send({ status: false });
   }

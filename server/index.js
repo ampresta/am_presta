@@ -2,6 +2,9 @@ const cors = require("cors");
 const morgan = require("morgan");
 const express = require("express");
 const app = express();
+const server = require("http").createServer(app);
+const io = require("./socket.js").init(server);
+
 const db = require("./config/database");
 const login = require("./routes/login");
 const register = require("./routes/register");
@@ -15,6 +18,7 @@ const proof = require("./routes/proof");
 const provider = require("./routes/provider");
 const voucher = require("./routes/voucher");
 const logout = require("./routes/logout");
+const notifs = require("./routes/notifs");
 const multer = require("multer");
 const handleUpload = require("./controllers/upload/handleUpload");
 const deleteInstances = require("./controllers/delete/deleteInstances");
@@ -22,7 +26,6 @@ const deleteInstances = require("./controllers/delete/deleteInstances");
 const collaborateur = require("./routes/collaborateur");
 const quota = require("./routes/quota");
 const GetTypeController = require("./controllers/login/GetTypeController");
-const Email = require("./emails/Email");
 const changePhotoMiddleware = require("./middlewares/changePhotoMiddleware");
 //Database Setup
 try {
@@ -72,12 +75,24 @@ app.use("/api/collab", collaborateur);
 app.use("/api/proof", proof);
 app.use("/api/voucher", voucher);
 app.use("/api/upload", changePhotoMiddleware);
+app.use("/api/notifs", notifs);
+
 app.post("/api/upload", upload.single("image"), handleUpload);
 app.post("/api/delete", deleteInstances);
 app.post("/api/logout", logout);
 app.use("/api/media", express.static("media"));
 
-
 // Listener
 
-app.listen(PORT, () => console.log(`Server listening on ${PORT}...`));
+// Sockets
+io.on('connection', (socket) => {
+  console.log('Connection success', socket.id);
+
+  socket.on('disconnect', () => {
+    console.log('Connection disconnected', socket.id);
+  });
+})
+
+server.listen(PORT, () => console.log(`Server listening on ${PORT}...`));
+
+module.export = io;

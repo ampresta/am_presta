@@ -37,7 +37,6 @@ module.exports = async (req, res) => {
       collabs,
     });
   } catch (err) {
-    console.log(err);
     return res.send({ status: false });
   }
 };
