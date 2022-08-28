@@ -98,7 +98,7 @@ export default function Data() {
     notifications: openSnackBar && (
       <MySnackBar
         color="error"
-        title="Partner Deleted Succesfully"
+        title="Partner Deleted Successfully"
         open={openSnackBar}
         close={() => setOpenSnackBar(!openSnackBar)}
       />

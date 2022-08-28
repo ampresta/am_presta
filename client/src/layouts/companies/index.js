@@ -193,7 +193,7 @@ function Companies() {
       {openSnackBar && (
         <MySnackBar
           color="success"
-          title="Company Added Succesfully"
+          title="Company Added Successfully"
           open={openSnackBar}
           close={() => setOpenSnackBar(!openSnackBar)}
         />

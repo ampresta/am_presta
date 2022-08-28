@@ -40,7 +40,7 @@ function Sessions() {
   console.log("9abla", sessionId);
 
   return (
-    <DashboardLayout>
+    <DashboardLayout collab>
       <DashboardNavbar />
       {!openProofModel && (
         <MDBox pt={6} pb={1}>

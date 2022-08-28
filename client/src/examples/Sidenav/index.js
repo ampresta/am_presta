@@ -167,8 +167,8 @@ function Sidenav({ color, brand, routes, ...rest }) {
               component="img"
               src={brand}
               alt="Brand"
-              height="6rem"
-              width="auto"
+              width="12rem"
+              maxHeight="9rem"
             />
           )}
         </MDBox>
