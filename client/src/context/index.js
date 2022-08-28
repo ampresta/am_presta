@@ -147,10 +147,8 @@ const setFixedNavbar = (dispatch, value) =>
   dispatch({ type: "FIXED_NAVBAR", value });
 const setDirection = (dispatch, value) =>
   dispatch({ type: "DIRECTION", value });
-const setLayout = (dispatch, value) =>
-  dispatch({ type: "LAYOUT", value });
-const setDarkMode = (dispatch, value) =>
-  dispatch({ type: "DARKMODE", value });
+const setLayout = (dispatch, value) => dispatch({ type: "LAYOUT", value });
+const setDarkMode = (dispatch, value) => dispatch({ type: "DARKMODE", value });
 const setUpdater = (dispatch, value) =>
   dispatch({ type: "FORCEUPDATE", value });
 const setOpenRequestModel = (dispatch, value) =>

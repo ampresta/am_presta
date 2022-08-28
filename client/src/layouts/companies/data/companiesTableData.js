@@ -54,6 +54,7 @@ export default function Data() {
       id: id,
     });
     if (data.status) {
+      setOpenSnackBar(true);
       // setAllCompanies(allCompanies.filter((company) => company.id !== id));
       setConfirmModel(!confirmModel);
     } else {
@@ -102,7 +103,7 @@ export default function Data() {
     notifications: openSnackBar && (
       <MySnackBar
         color="error"
-        title="Partner Deleted Succesfully"
+        title="Company Deleted Successfully"
         open={openSnackBar}
         close={() => setOpenSnackBar(!openSnackBar)}
       />

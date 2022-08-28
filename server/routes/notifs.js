@@ -2,6 +2,7 @@ const { Router } = require("express");
 const browseNotifsCollab = require("../controllers/nontifs/browseNotifsCollab");
 const browseNotifsSoc = require("../controllers/nontifs/browseNotifsSoc");
 const readNotifsCollab = require("../controllers/nontifs/readNotifsCollab");
+const readOneNotif = require("../controllers/nontifs/readOneNotif");
 const readNotifsSoc = require("../controllers/nontifs/readNotifsSoc");
 const router = Router();
 
@@ -14,7 +15,9 @@ router.post("/browsesoc", browseNotifsSoc);
 router.use("/browsecollab", checkCollaborateur);
 router.post("/browsecollab", browseNotifsCollab);
 
-router.post("/readnotifcollab", readNotifsCollab);
-router.post("/readnotifsoc", readNotifsSoc);
+router.post("/readallnotifcollab", readNotifsCollab);
+router.post("/readallnotifsoc", readNotifsSoc);
+
+router.post("/readonenotif", readOneNotif)
 
 module.exports = router;

@@ -4,6 +4,7 @@ import MDTypography from "components/MDTypography";
 import MDProgress from "components/MDProgress";
 import MDButton from "components/MDButton";
 import MDBadge from "components/MDBadge";
+import MySnackBar from "components/MySnackBar";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -24,6 +25,7 @@ export default function Data() {
   const [allCourses, setAllCourses] = useState([]);
   const [confirmModel, setConfirmModel] = useState(false);
   const [tempCourseId, setTempCourseId] = useState(0);
+  const [openSnackBar, setOpenSnackBar] = useState(false);
 
   const [controller] = useMaterialUIController();
 
@@ -31,7 +33,7 @@ export default function Data() {
 
   useEffect(() => {
     const getAllCourses = async () => {
-      const { data } = await axiosAuth.post(allCoursesRoute, {
+      const { data } = await axiosAuth.get(allCoursesRoute, {
         paranoid: false,
       });
       console.log(data);
@@ -46,6 +48,7 @@ export default function Data() {
       id: id,
     });
     if (data.status) {
+      setOpenSnackBar(true);
       // setAllCourses(allCourses.filter((course) => course.id !== id));
       setConfirmModel(!confirmModel);
     } else {
@@ -130,6 +133,15 @@ export default function Data() {
         onConfirmPopup={() => setConfirmModel(!confirmModel)}
         handleDetele={handleDelete}
         Id_Item={tempCourseId}
+      />
+    ),
+
+    notifications: openSnackBar && (
+      <MySnackBar
+        color="success"
+        title="Course Added Succesfully"
+        open={openSnackBar}
+        close={() => setOpenSnackBar(!openSnackBar)}
       />
     ),
 

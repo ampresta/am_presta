@@ -12,10 +12,11 @@ const {
   Voucher,
   Request,
   User,
+  Cours,
 } = db.models;
 
 module.exports = async (req, res) => {
-  const { societe } = req.body;
+  const { societe } = req;
   try {
     const notifs = await Notifications_object.findAll({
       attributes: ["id", "read"],
@@ -60,7 +61,7 @@ module.exports = async (req, res) => {
                 model: Collaborateur,
                 where: {
                   SocieteId: societe,
-                  admin: true
+                  admin: true,
                 },
               },
             },
@@ -85,8 +86,15 @@ module.exports = async (req, res) => {
         },
         {
           model: Request,
+          include: {
+            model: Cours,
+            attributes: ["nom"],
+          },
         },
       ],
+      where: {
+        read: false,
+      },
     });
     return res.send(notifs);
   } catch (error) {

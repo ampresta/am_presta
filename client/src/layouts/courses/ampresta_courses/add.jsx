@@ -32,7 +32,7 @@ import {
   addCoursesRoute,
 } from "utils/APIRoutes";
 
-function AddCourses({ closeAddModel }) {
+function AddCourses({ closeAddModel, openSnackBar }) {
   const [formErrors, setFormErrors] = useState({
     coursename: "",
     provider: "",
@@ -109,6 +109,7 @@ function AddCourses({ closeAddModel }) {
 
         closeAddModel(false);
         setUpdater(dispatch, !updater);
+        openSnackBar(true);
       } else {
         alert(data.msg);
       }
@@ -128,7 +129,6 @@ function AddCourses({ closeAddModel }) {
     setCourse((prev) => ({ ...prev, provider }));
     setSelectedProvider(provider);
   };
-
 
   const validate = (values) => {
     const errors = {};
@@ -226,7 +226,6 @@ function AddCourses({ closeAddModel }) {
                 <FormHelperText error>{formErrors.provider}</FormHelperText>
               </FormControl>
             </MDBox>
-            
           </MDBox>
           <MDBox mb={2}>
             <MDInput
