@@ -71,7 +71,6 @@ function AddPartner({ closeAddModel, openSnackBar }) {
     }
   };
 
-  console.log(file);
 
   const handleChange = (event) => {
     const key = event.target.name;

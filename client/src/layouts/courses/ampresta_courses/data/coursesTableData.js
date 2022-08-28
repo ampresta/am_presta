@@ -21,7 +21,7 @@ import ConfirmPopup from "components/ConfirmPopup";
 import { useMaterialUIController } from "context";
 import axiosAuth from "services/authAxios";
 
-export default function Data() {
+export default function Data(setOpenAddModel) {
   const [allCourses, setAllCourses] = useState([]);
   const [confirmModel, setConfirmModel] = useState(false);
   const [tempCourseId, setTempCourseId] = useState(0);
@@ -90,6 +90,14 @@ export default function Data() {
       return " ";
     } else {
       return provider.nom;
+    }
+  };
+
+  const getDataByID = (id) => {
+    for (let i = 0; i < allCourses.length; i++) {
+      if (allCourses[i].id === id) {
+        return allCourses[i];
+      }
     }
   };
 
@@ -186,9 +194,17 @@ export default function Data() {
         />
       ),
       edit: (
-        <MDTypography variant="caption" color="text" fontWeight="medium">
-          <Icon fontSize="small">edit</Icon>
-        </MDTypography>
+        <MDButton
+          variant="text"
+          onClick={() => {
+            console.log(getDataByID(course.id));
+            setOpenAddModel(true);
+          }}
+        >
+          <MDTypography variant="caption" color="text" fontWeight="medium">
+            <Icon fontSize="small">edit</Icon>
+          </MDTypography>
+        </MDButton>
       ),
       delete: (
         <MDButton
