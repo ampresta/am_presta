@@ -37,19 +37,25 @@ const Request = (db) => {
           const { entity_type_id } = await Notifications_Entity.findOne({
             attributes: ["entity_type_id"],
             where: {
-              description: "Collab sent Request to enroll to course",
+              description: "sent a request to enroll to",
             },
           });
 
           const { SocieteId } = await Collaborateur.findByPk(CollaborateurId);
+          const { UserId } = await Collaborateur.findOne({
+            where: {
+              SocieteId,
+              admin: true,
+            },
+          });
 
           await Notifications_object.create(
             {
               RequestId: request.id,
               NotificationsEntityEntityTypeId: entity_type_id,
               Notification_change: {
-                actorId: CollaborateurId,
-                SocieteId: SocieteId,
+                emeteurId: CollaborateurId,
+                recepteurId: UserId,
               },
             },
             {
@@ -74,13 +80,22 @@ const Request = (db) => {
             Collaborateur,
           } = db.models;
 
-          const { SocieteId } = await Collaborateur.findByPk(CollaborateurId);
+          const recepteurCollab = await Collaborateur.findByPk(CollaborateurId);
+          const adminCollab = await Collaborateur.findOne({
+            where: {
+              SocieteId: recepteurCollab.SocieteId,
+              admin: true,
+            },
+          });
 
+          const emeteurId = adminCollab.UserId 
+          const recepteurId = recepteurCollab.UserId
+            
           let description;
           if (status == "accepted") {
-            description = "Request accepted";
+            description = "has accepted your request to enroll";
           } else if (status == "refused") {
-            description = "Request refused";
+            description = "has rejected your request to enroll"
           }
           const { entity_type_id } = await Notifications_Entity.findOne({
             attributes: ["entity_type_id"],
@@ -94,8 +109,8 @@ const Request = (db) => {
               RequestId: request.id,
               NotificationsEntityEntityTypeId: entity_type_id,
               Notification_change: {
-                actorId: CollaborateurId,
-                SocieteId: SocieteId,
+                emeteurId,
+                recepteurId,
               },
             },
             {
@@ -107,13 +122,6 @@ const Request = (db) => {
               ],
             }
           );
-          console.log("=================================");
-          console.log("=================================");
-          console.log("=================================");
-          console.log("created");
-          console.log("=================================");
-          console.log("=================================");
-          console.log("=================================");
           io.emit("notif");
         },
       },

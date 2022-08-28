@@ -77,8 +77,9 @@ module.exports = async (req, res) => {
       },
     });
     reqs.status = "accepted";
-    Email.sendAccepteResponse(email, "accepted", cours.nom, nom);
     await reqs.save();
+    
+    // Email.sendAccepteResponse(email, "accepted", cours.nom, nom);
   } else {
     Email.sendAddToSession(email, nom);
   }

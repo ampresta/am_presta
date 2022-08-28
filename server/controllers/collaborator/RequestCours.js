@@ -14,7 +14,7 @@ module.exports = async (req, res) => {
   if (!cours) {
     return res.sendStatus(403);
   }
-  try {
+  // try {
   const crs = await Cours.findByPk(cours);
   if (!crs) {
     return res.send({ status: false, msg: "Cours not found" });
@@ -44,7 +44,7 @@ module.exports = async (req, res) => {
   // Email.sendRequest(to_emails, `${collab.prenom} ${collab.nom}`, crs.nom);
 
   return res.send({ email: "sent", status: true, msg: "Request Created" });
-  } catch (err) {
-    return res.send({ status: false, msg: "Error" });
-  }
+  // } catch (err) {
+  //   return res.send({ status: false, msg: "Error" });
+  // }
 };
