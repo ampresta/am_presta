@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 // react-router components
 import { Link, useLocation } from "react-router-dom";
@@ -28,13 +28,25 @@ import {
 } from "examples/Navbars/DashboardNavbar/styles";
 
 // Material Dashboard 2 React context
-import { useMaterialUIController, setMiniSidenav } from "context";
+import {
+  useMaterialUIController,
+  setMiniSidenav,
+  setChangedNotif,
+} from "context";
+
+import { io } from "socket.io-client";
+import axios from "services/authAxios";
+import { addNotifRoute } from "utils/APIRoutes";
+import { getNotifsRoute } from "utils/APIRoutes";
 
 function DashboardNavbar({ absolute, light, isMini, collab }) {
   const [controller, dispatch] = useMaterialUIController();
-  const { miniSidenav, transparentNavbar, darkMode } = controller;
+  const { miniSidenav, transparentNavbar, darkMode, changedNotif } = controller;
   const [openMenu, setOpenMenu] = useState(false);
   const route = useLocation().pathname.split("/").slice(1);
+
+  const socket = useRef();
+  const [notifs, setNotifs] = useState(0);
 
   const handleMiniSidenav = () => setMiniSidenav(dispatch, !miniSidenav);
 
@@ -78,6 +90,28 @@ function DashboardNavbar({ absolute, light, isMini, collab }) {
     },
   });
 
+  // Get initial Notifs no ws
+  useEffect(() => {
+    const getNotifs = async () => {
+      const { data } = await axios.post(getNotifsRoute);
+      setChangedNotif(dispatch, data.length);
+    };
+    getNotifs();
+  }, []);
+
+  // Update Notifs using ws
+  useEffect(() => {
+    socket.current = io("http://127.0.0.1:8000");
+  }, [socket]);
+
+  useEffect(() => {
+    socket.current.on("notif", async () => {
+      console.log("notifs emited");
+      const { data } = await axios.post(getNotifsRoute);
+      setChangedNotif(dispatch, data.length);
+    });
+  }, [socket]);
+
   return (
     <AppBar
       position={"sticky"}
@@ -98,6 +132,38 @@ function DashboardNavbar({ absolute, light, isMini, collab }) {
         {isMini ? null : (
           <MDBox>
             <MDBox color={light ? "white" : "inherit"}>
+              <IconButton
+                size="small"
+                disableRipple
+                color="inherit"
+                sx={navbarIconButton}
+                aria-controls="notification-menu"
+                aria-haspopup="true"
+                variant="contained"
+                onClick={(event) => setOpenMenu(event.currentTarget)}
+                style={{ position: "relative" }}
+              >
+                <Icon style={{ zIndex: 1 }} sx={iconsStyle}>
+                  notifications
+                </Icon>
+                <span
+                  style={{
+                    position: "absolute",
+                    top: "0",
+                    rigth: "0",
+                    width: "20px",
+                    height: "20px",
+                    zIndex: 100,
+                    background: "red",
+                    color: "wheat",
+                    borderRadius: "50%",
+                    transform: "translate(8px, -8px)",
+                  }}
+                >
+                  {changedNotif}
+                </span>
+              </IconButton>
+
               <IconButton
                 size="small"
                 disableRipple

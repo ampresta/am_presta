@@ -37,6 +37,7 @@ import axios from "services/authAxios";
 import { setAccessToken } from "utils/accessToken";
 import React, { useState } from "react";
 
+
 function App() {
   const [controller, dispatch] = useMaterialUIController();
 
@@ -48,6 +49,8 @@ function App() {
   // const [type, setType] = useState("");
   const [image, setImage] = useState("");
 
+
+
   // Setting page scroll to 0 when changing the route
   useEffect(() => {
     document.documentElement.scrollTop = 0;
@@ -58,7 +61,6 @@ function App() {
     setTypeLoading(dispatch, true);
     const getRefreshToken = async () => {
       const { data } = await axios.get(refreshRoute);
-      console.log("Waiting Now");
       if (data && data.accesstoken) {
         setTypeLoading(dispatch, false);
         setAccessToken(data.accesstoken);

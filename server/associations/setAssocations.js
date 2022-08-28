@@ -36,7 +36,7 @@ module.exports = (db) => {
 
   //notif_ent - notif_Obj
 
-  Notifications_object.hasOne(Notifications_Entity);
+  Notifications_Entity.hasOne(Notifications_object);
 
   Notifications_object.belongsTo(Proof);
   Notifications_object.belongsTo(Voucher);

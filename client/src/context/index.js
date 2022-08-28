@@ -69,6 +69,10 @@ function reducer(state, action) {
       // console.log(`password changed to ${action.value}`);
       return { ...state, changedPassword: action.value };
     }
+    case "NOTIFICATIONS": {
+      // console.log(`notif changed to ${action.value}`);
+      return { ...state, changedNotif: action.value };
+    }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
     }
@@ -96,6 +100,7 @@ function MaterialUIControllerProvider({ children }) {
     loadingType: "init",
     accountType: false,
     changedPassword: false,
+    changedNotif: 0,
   };
 
   const [controller, dispatch] = useReducer(reducer, initialState);
@@ -142,35 +147,30 @@ const setFixedNavbar = (dispatch, value) =>
   dispatch({ type: "FIXED_NAVBAR", value });
 const setDirection = (dispatch, value) =>
   dispatch({ type: "DIRECTION", value });
-const setLayout = (dispatch, value) => dispatch({ type: "LAYOUT", value });
-const setDarkMode = (dispatch, value) => dispatch({ type: "DARKMODE", value });
-
+const setLayout = (dispatch, value) =>
+  dispatch({ type: "LAYOUT", value });
+const setDarkMode = (dispatch, value) =>
+  dispatch({ type: "DARKMODE", value });
 const setUpdater = (dispatch, value) =>
   dispatch({ type: "FORCEUPDATE", value });
-
 const setOpenRequestModel = (dispatch, value) =>
   dispatch({ type: "REQUESTMODEL", value });
-
 const setOpenProofModel = (dispatch, value) =>
   dispatch({ type: "PROOFPREVIEW", value });
-
 const setfileProofModel = (dispatch, value) =>
   dispatch({ type: "PROOFFILE", value });
-
 const setcollabProofModel = (dispatch, value) =>
   dispatch({ type: "PROOFCOLLAB", value });
-
 const setOpenSelectCollabs = (dispatch, value) =>
   dispatch({ type: "OPENSELECTCOLLABS", value });
-
 const setTypeLoading = (dispatch, value) =>
   dispatch({ type: "TYPELOADING", value });
-
 const setAccountType = (dispatch, value) =>
   dispatch({ type: "ACCOUNTTYPE", value });
-
 const setChangedPassword = (dispatch, value) =>
   dispatch({ type: "PASSWORDCHANGED", value });
+const setChangedNotif = (dispatch, value) =>
+  dispatch({ type: "NOTIFICATIONS", value });
 
 export {
   MaterialUIControllerProvider,
@@ -193,4 +193,5 @@ export {
   setChangedPassword,
   setAccountType,
   setTypeLoading,
+  setChangedNotif,
 };

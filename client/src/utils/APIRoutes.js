@@ -100,3 +100,8 @@ export const browseVouchersCollabRoute = `${baseURL}/voucher/browseCol`;
 export const addVouchersAdminRoute = `${baseURL}/voucher/add`;
 export const asignOneVoucherRoute = `${baseURL}/voucher/assign`;
 export const asignVoucherSessionRoute = `${baseURL}/voucher/assignall`;
+
+
+// Notifs
+export const addNotifRoute = `${baseURL}/notifs/add`;
+export const getNotifsRoute = `${baseURL}/notifs/browseSoc`;
