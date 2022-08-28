@@ -106,3 +106,4 @@ export const asignVoucherSessionRoute = `${baseURL}/voucher/assignall`;
 export const addNotifRoute = `${baseURL}/notifs/add`;
 export const getNotifsSocRoute = `${baseURL}/notifs/browsesoc`;
 export const getNotifsCollabRoute = `${baseURL}/notifs/browsecollab`;
+export const marknoptifReadRoute = `${baseURL}/notifs/readonenotif`;

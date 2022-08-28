@@ -37,9 +37,9 @@ import {
   setChangedNotif,
 } from "context";
 
-import { io } from "socket.io-client";
-import axios from "services/authAxios";
-import { getNotifsCollabRoute, getNotifsSocRoute } from "utils/APIRoutes";
+
+import notificationsData from "./data/notificationsData";
+import { markRead } from "./data/notificationsData";
 
 function DashboardNavbar({ absolute, light, isMini, collab }) {
   const [controller, dispatch] = useMaterialUIController();
@@ -54,7 +54,6 @@ function DashboardNavbar({ absolute, light, isMini, collab }) {
   const [openNotifsMenu, setOpenNotifsMenu] = useState(false);
   const route = useLocation().pathname.split("/").slice(1);
 
-  const socket = useRef();
 
   const handleMiniSidenav = () => setMiniSidenav(dispatch, !miniSidenav);
 
@@ -105,6 +104,7 @@ function DashboardNavbar({ absolute, light, isMini, collab }) {
           label={item.label}
           transmitter={item.transmitter}
           subject={item.subject}
+          onClick={() => markRead(item.id)}
         />
       ))}
     </Menu>
@@ -127,39 +127,6 @@ function DashboardNavbar({ absolute, light, isMini, collab }) {
   });
   console.log(accountType);
 
-  // Get initial Notifs no ws
-  useEffect(() => {
-    const getNotifs = async () => {
-      let route;
-      if (accountType === "Societe") {
-        route = getNotifsSocRoute
-      } else if (accountType === "Collab") {
-        route = getNotifsCollabRoute
-      }
-      const { data } = await axios.post(route);
-      setChangedNotif(dispatch, data.length);
-    };
-    getNotifs();
-  }, []);
-
-  // Update Notifs using ws
-  useEffect(() => {
-    socket.current = io("http://127.0.0.1:8000");
-  }, [socket]);
-
-  useEffect(() => {
-    socket.current.on("notif", async () => {
-      let route;
-      if (accountType === "Societe") {
-        route = getNotifsSocRoute
-      } else if (accountType === "Collab") {
-        route = getNotifsCollabRoute
-      }
-      console.log("notifs emited");
-      const { data } = await axios.post(route);
-      setChangedNotif(dispatch, data.length);
-    });
-  }, [socket]);
 
   return (
     <AppBar
@@ -193,7 +160,7 @@ function DashboardNavbar({ absolute, light, isMini, collab }) {
                   onClick={(event) => setOpenNotifsMenu(event.currentTarget)}
                 >
                   <Icon sx={iconsStyle}>notifications</Icon>
-                  {changedNotif > 1 && (
+                  {changedNotif > 0 && (
                     <MDBadge
                       badgeContent={changedNotif}
                       color="warning"

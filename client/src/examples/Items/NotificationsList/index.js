@@ -17,7 +17,7 @@ import MDTypography from "components/MDTypography";
 import menuItem from "examples/Items/NotificationsList/styles";
 
 const NotificationList = forwardRef(
-  ({ icon, label, route, transmitter, subject, ...rest }, ref) => (
+  ({ icon, label, route, transmitter, subject, onClick, ...rest }, ref) => (
     <MenuItem {...rest} ref={ref} sx={(theme) => menuItem(theme)}>
       <MDBox
         component={Link}
@@ -26,6 +26,7 @@ const NotificationList = forwardRef(
         alignItems="center"
         lineHeight={1}
         to={route}
+        onClick={onClick}
       >
         <MDTypography variant="body1" color="secondary" lineHeight={0.75}>
           {icon}
