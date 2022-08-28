@@ -67,10 +67,10 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Collaboraters",
-    key: "collaboraters",
+    name: "Collaborators",
+    key: "collaborators",
     icon: <Icon fontSize="small">groups</Icon>,
-    route: "/collaboraters",
+    route: "/collaborators",
     component: <Collabs />,
   },
   {

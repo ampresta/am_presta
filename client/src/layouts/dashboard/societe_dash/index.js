@@ -118,7 +118,7 @@ function Dashboard() {
               chart={data}
             />
           </Grid>
-          <Grid container item columnSpacing={2} rowSpacing={1} xs={12} lg={8}>
+          <Grid container item columnSpacing={2} rowSpacing={2} xs={12} lg={8}>
             <Grid item xs={12} md={12} lg={6}>
               <MDBox mb={1}>
                 <ComplexStatisticsCard
@@ -199,6 +199,20 @@ function Dashboard() {
           </Grid>
           <Grid item xs={12} md={12} lg={12}>
             <Card>
+              <MDBox
+                mx={2}
+                mt={-1}
+                py={3}
+                px={2}
+                variant="gradient"
+                bgColor="info"
+                borderRadius="lg"
+                coloredShadow="info"
+              >
+                <MDTypography variant="h6" color="white">
+                  Courses & Sessions Data
+                </MDTypography>
+              </MDBox>
               <DefaultLineChart chart={values}></DefaultLineChart>
             </Card>
           </Grid>

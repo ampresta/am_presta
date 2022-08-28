@@ -138,7 +138,7 @@ export default function Data() {
 
   const parseStatus = (partner) => {
     if (partner.deletedAt) {
-      return <MDBadge badgeContent="Deleted" color="primary" size="md" />;
+      return <MDBadge badgeContent="Deleted" color="error" size="md" />;
     } else {
       return <MDBadge badgeContent="Active" color="success" size="md" />;
     }

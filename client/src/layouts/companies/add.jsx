@@ -22,7 +22,7 @@ import { useMaterialUIController, setUpdater } from "context";
 
 import { registerRoute, uploadRoute } from "utils/APIRoutes";
 
-function AddCompanies({ closeAddModel }) {
+function AddCompanies({ closeAddModel, openSnackBar }) {
   const [formErrors, setFormErrors] = useState({
     username: "",
     f_name: "",
@@ -61,7 +61,6 @@ function AddCompanies({ closeAddModel }) {
       });
       const ID = data.id;
       if (data.status) {
-        
         const fd = new FormData();
         fd.append("image", file);
         fd.append("id", ID);
@@ -80,6 +79,7 @@ function AddCompanies({ closeAddModel }) {
 
         closeAddModel(false);
         setUpdater(dispatch, !updater);
+        openSnackBar(true);
       } else {
         alert(data.msg);
       }

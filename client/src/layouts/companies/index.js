@@ -26,13 +26,17 @@ import MDButton from "components/MDButton";
 import AddCompanies from "./add";
 
 import Papa from "papaparse";
+import MySnackBar from "components/MySnackBar";
 
 function Companies() {
-  const { columns, rows, confirmation, rawData } = companiesTableData();
+  const { columns, rows, confirmation, rawData, notifications } =
+    companiesTableData();
 
   const [openAddModel, setOpenAddModel] = useState(false);
 
   const [openCsvUploader, setOpenCsvUploader] = useState(false);
+
+  const [openSnackBar, setOpenSnackBar] = useState(false);
 
   const handleDownload = (title, type) => {
     let columns = [];
@@ -171,7 +175,12 @@ function Companies() {
           </Grid>
         </MDBox>
       )}
-      {openAddModel && <AddCompanies closeAddModel={setOpenAddModel} />}
+      {openAddModel && (
+        <AddCompanies
+          closeAddModel={setOpenAddModel}
+          openSnackBar={setOpenSnackBar}
+        />
+      )}
       {openCsvUploader && (
         <CsvUploader
           closeUploadModel={setOpenCsvUploader}
@@ -180,6 +189,15 @@ function Companies() {
         />
       )}
       {confirmation}
+      {notifications}
+      {openSnackBar && (
+        <MySnackBar
+          color="success"
+          title="Company Added Succesfully"
+          open={openSnackBar}
+          close={() => setOpenSnackBar(!openSnackBar)}
+        />
+      )}
     </DashboardLayout>
   );
 }

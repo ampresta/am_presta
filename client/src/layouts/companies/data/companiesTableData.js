@@ -2,8 +2,9 @@
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
-
 import MDBadge from "components/MDBadge";
+import MySnackBar from "components/MySnackBar";
+
 // Endpoint
 import { allCompaniesRoute, baseURL, DeleteInstances } from "utils/APIRoutes";
 
@@ -28,9 +29,9 @@ export default function Data() {
   const [confirmModel, setConfirmModel] = useState(false);
   const [loading, setLoading] = useState(false);
   const [tempCompanyId, setTempCompanyId] = useState(0);
+  const [openSnackBar, setOpenSnackBar] = useState(false);
 
   const [controller] = useMaterialUIController();
-
   const { updater } = controller;
 
   useEffect(() => {
@@ -79,7 +80,7 @@ export default function Data() {
         width: "40%",
         align: "left",
       },
-      { Header: "manager", accessor: "manager", align: "center" },
+      { Header: "manager", accessor: "manager", align: "center", width: "25%" },
       { Header: "date", accessor: "date", align: "center", width: "25%" },
       { Header: "Status", accessor: "status", align: "center", width: "25%" },
       { Header: "edit", accessor: "edit", align: "center", width: "3%" },
@@ -98,12 +99,21 @@ export default function Data() {
       />
     ),
 
+    notifications: openSnackBar && (
+      <MySnackBar
+        color="error"
+        title="Partner Deleted Succesfully"
+        open={openSnackBar}
+        close={() => setOpenSnackBar(!openSnackBar)}
+      />
+    ),
+
     rawData: allCompanies,
   };
 
   const parseStatus = (partner) => {
     if (partner.deletedAt) {
-      return <MDBadge badgeContent="Deleted" color="primary" size="md" />;
+      return <MDBadge badgeContent="Deleted" color="error" size="md" />;
     } else {
       return <MDBadge badgeContent="Active" color="success" size="md" />;
     }

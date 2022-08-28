@@ -14,7 +14,7 @@ function ProfilesList({ title, profiles, shadow }) {
       key={name}
       display="flex"
       alignItems="center"
-      py={1}
+      pt={1}
       mb={1}
       mt={1}
       lineHeight={0}
