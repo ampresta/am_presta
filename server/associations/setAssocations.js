@@ -22,10 +22,18 @@ module.exports = (db) => {
   } = db.models;
 
   //notif_chang - user
-  Notification_change.belongsTo(Collaborateur, {
-    foreignKey: "actorId",
+  Notification_change.belongsTo(User, {
+    as: "emetteur",
+    foreignKey: {
+      name: "emeteurId",
+    },
+    onDelete: "CASCADE",
   });
-  Notification_change.belongsTo(Societe, {
+  Notification_change.belongsTo(User, {
+    as: "recepteur",
+    foreignKey: {
+      name: "recepteurId",
+    },
     onDelete: "CASCADE",
   });
 

@@ -15,7 +15,7 @@ const {
 } = db.models;
 
 module.exports = async (req, res) => {
-  const { societe } = req.body;
+  const { collab } = req.body;
   try {
     const notifs = await Notifications_object.findAll({
       attributes: ["id", "read"],
@@ -59,8 +59,8 @@ module.exports = async (req, res) => {
                 ],
                 model: Collaborateur,
                 where: {
-                  SocieteId: societe,
-                  admin: true
+                  admin: false,
+                  id: collab,
                 },
               },
             },
