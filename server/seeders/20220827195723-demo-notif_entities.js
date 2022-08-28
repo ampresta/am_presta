@@ -89,6 +89,12 @@ module.exports = {
           createdAt: "2022-02-12",
           updatedAt: new Date(),
         },
+        {
+          entity: "Provider",
+          description: "Provider added",
+          createdAt: "2022-02-12",
+          updatedAt: new Date(),
+        },
       ],
       {}
     );

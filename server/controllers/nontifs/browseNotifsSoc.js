@@ -16,24 +16,26 @@ const {
 module.exports = async (req, res) => {
   try {
     const notifs = await Notifications_object.findAll({
-      // attributes: ["NotificationsEntityEntityTypeId", ],
+      attributes: ["id"],
       include: [
         {
           model: Notification_change,
           attributes: ["id"],
-          // include: {
-          //   model: Collaborateur,
-          //   attributes: ["nom", "prenom"],
-          // },
+          include: {
+            model: Collaborateur,
+            attributes: ["nom", "prenom"],
+          },
           where: {
             SocieteId: 1,
           },
         },
-        // {
-        //   model: Notifications_Entity,
-        // },
+        {
+          model: Notifications_Entity,
+          attributes: ["entity", "description"],
+        },
         {
           model: Provider,
+          attributes: ["nom", "image"],
         },
         {
           model: Session,
@@ -48,6 +50,9 @@ module.exports = async (req, res) => {
           model: Request,
         },
       ],
+      where: {
+        read: false,
+      },
     });
     return res.send(notifs);
   } catch (error) {

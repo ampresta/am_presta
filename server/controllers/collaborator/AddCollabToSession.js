@@ -9,7 +9,7 @@ module.exports = async (req, res) => {
     return res.sendStatus(403);
   }
 
-  try {
+  // try {
   const sess = await Session.findByPk(session, {
     where: {
       SocieteId: req.societe,
@@ -88,7 +88,7 @@ module.exports = async (req, res) => {
     status: true,
     msg: "Collab Added",
   });
-  } catch (err) {
-    return res.send({ status: false, msg: "Check your quota" });
-  }
+  // } catch (err) {
+  //   return res.send({ status: false, msg: "Check your quota" });
+  // }
 };
