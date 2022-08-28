@@ -155,11 +155,7 @@ function Partners() {
                   {!loading && details.description}
                 </MDTypography>
                 <MDBox px={1}>
-                  <Ratings
-                    rating={Math.floor(Math.random() * 2) + 4}
-                    fontSize="medium"
-                    color="warning"
-                  />
+                  <Ratings rating={5} fontSize="medium" color="warning" />
                 </MDBox>
                 <MDBox p={2} display="flex" alignItems="center">
                   {renderButton()}

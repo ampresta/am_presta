@@ -137,7 +137,7 @@ export default function Data() {
         </MDButton>
       );
     } else {
-      return <MDBadge badgeContent="Studying" color="note" size="md" />;
+      return <MDBadge badgeContent="Studying" color="info" size="md" />;
     }
   };
 
@@ -154,8 +154,8 @@ export default function Data() {
     const session_collab = collab.Session_Collabs[0];
     console.log(session_collab);
     if (
+      session_collab.fincourse &&
       session_collab.fincourse.status === "accepted" &&
-      // session_collab.fincourse.status &&
       !session_collab.Voucher
     ) {
       return (
@@ -173,6 +173,7 @@ export default function Data() {
         </MDBox>
       );
     } else if (
+      session_collab.fincourse &&
       session_collab.fincourse.status === "accepted" &&
       // session_collab.fincourse.status &&
       session_collab.Voucher
@@ -255,7 +256,7 @@ export default function Data() {
       author: (
         <Company
           image={allCollabs.length > 0 && collab.image}
-          name={allCollabs.length > 0 && ` ${collab.nom} ${collab.prenom}`}
+          name={allCollabs.length > 0 && `${collab.nom} ${collab.prenom}`}
         />
       ),
       fin_cours: (

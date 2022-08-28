@@ -51,7 +51,7 @@ function Data(props) {
         Header: "Number of certifs",
         accessor: "certifs",
         width: "50%",
-        align: "left",
+        align: "center",
       },
     ],
     rows: [],

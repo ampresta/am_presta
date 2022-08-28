@@ -17,8 +17,6 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 //import UseState Hook
 import { useEffect, useState } from "react";
 
-import DropFileInput from "components/DropFileInput/DropFileInput";
-
 // Axios
 import axios from "services/authAxios";
 
