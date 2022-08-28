@@ -21,7 +21,6 @@ module.exports = async (req, res) => {
   //   return res.json({ status: false, msg: "Username already used" });
 
   const DATA = [];
-  console.log(collabs);
   collabs.map(async (collab) => {
     const { username, nom, prenom, email, password } = collab;
 

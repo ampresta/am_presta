@@ -102,12 +102,10 @@ module.exports = async (req, res) => {
         filters.where = { ProviderId: provider };
       }
     }
-    console.log(filters);
     try {
       const cours = await Cours.findAll(filters); // Implementing search
       return res.json(cours);
     } catch (err) {
-      console.log(err);
       return res.send({ status: "error" });
     }
   } else {

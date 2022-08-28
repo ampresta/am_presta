@@ -181,7 +181,7 @@ function Partners() {
       {openSnackBar && (
         <MySnackBar
           color="success"
-          title="Partner Added Succesfully"
+          title="Partner Added Successfully"
           open={openSnackBar}
           close={() => setOpenSnackBar(!openSnackBar)}
         />

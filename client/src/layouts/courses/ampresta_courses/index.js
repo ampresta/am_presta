@@ -7,6 +7,7 @@ import Card from "@mui/material/Card";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
+import MySnackBar from "components/MySnackBar";
 
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
@@ -39,11 +40,12 @@ function Courses_am() {
     }
   }, []);
 
-  const { columns, rows, confirmation, rawData } = coursesTableData();
+  const { columns, rows, confirmation, rawData, notifications } =
+    coursesTableData();
 
   const [openAddModel, setOpenAddModel] = useState(false);
-
   const [openCsvUploader, setOpenCsvUploader] = useState(false);
+  const [openSnackBar, setOpenSnackBar] = useState(false);
 
   const handleDownload = (title, type) => {
     let data = [];
@@ -180,7 +182,12 @@ function Courses_am() {
           </Grid>
         </MDBox>
       )}
-      {openAddModel && <AddCompanies closeAddModel={setOpenAddModel} />}
+      {openAddModel && (
+        <AddCompanies
+          closeAddModel={setOpenAddModel}
+          openSnackBar={setOpenSnackBar}
+        />
+      )}
       {openCsvUploader && (
         <CsvUploader
           closeUploadModel={setOpenCsvUploader}
@@ -190,6 +197,15 @@ function Courses_am() {
       )}
 
       {confirmation}
+      {notifications}
+      {openSnackBar && (
+        <MySnackBar
+          color="success"
+          title="Course Added Successfully"
+          open={openSnackBar}
+          close={() => setOpenSnackBar(!openSnackBar)}
+        />
+      )}
     </DashboardLayout>
   );
 }

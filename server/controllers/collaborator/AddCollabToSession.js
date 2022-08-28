@@ -9,7 +9,7 @@ module.exports = async (req, res) => {
     return res.sendStatus(403);
   }
 
-  try {
+  // try {
   const sess = await Session.findByPk(session, {
     where: {
       SocieteId: req.societe,
@@ -59,7 +59,6 @@ module.exports = async (req, res) => {
 
   const { nom } = await Session.findByPk(session);
   if (request) {
-    console.log(request);
     const cours = await Cours.findOne({
       attributes: ["nom"],
       include: {
@@ -78,18 +77,19 @@ module.exports = async (req, res) => {
       },
     });
     reqs.status = "accepted";
-    Email.sendAccepteResponse(email, "accepted", cours.nom, nom);
     await reqs.save();
+    
+    // Email.sendAccepteResponse(email, "accepted", cours.nom, nom);
+  } else {
+    Email.sendAddToSession(email, nom);
   }
 
-  Email.sendAddToSession(email, nom);
 
   return res.send({
     status: true,
     msg: "Collab Added",
   });
-  } catch (err) {
-    console.log(err);
-    return res.send({ status: false, msg: "Check your quota" });
-  }
+  // } catch (err) {
+  //   return res.send({ status: false, msg: "Check your quota" });
+  // }
 };

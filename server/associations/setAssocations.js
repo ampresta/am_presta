@@ -16,7 +16,43 @@ module.exports = (db) => {
     Cours,
     SuperAdmin,
     Proof,
+    Notifications_Entity,
+    Notifications_object,
+    Notification_change,
   } = db.models;
+
+  //notif_chang - user
+  Notification_change.belongsTo(User, {
+    as: "emetteur",
+    foreignKey: {
+      name: "emeteurId",
+    },
+    onDelete: "CASCADE",
+  });
+  Notification_change.belongsTo(User, {
+    as: "recepteur",
+    foreignKey: {
+      name: "recepteurId",
+    },
+    onDelete: "CASCADE",
+  });
+
+  //notif_chang - notif_Obj
+  Notification_change.hasOne(Notifications_object);
+  Notifications_object.Notification_change =
+    Notifications_object.belongsTo(Notification_change);
+
+  //notif_ent - notif_Obj
+
+  Notifications_Entity.hasOne(Notifications_object);
+  Notifications_object.belongsTo(Notifications_Entity);
+
+  Notifications_object.belongsTo(Proof);
+  Notifications_object.belongsTo(Voucher);
+  Notifications_object.belongsTo(Request);
+  Notifications_object.belongsTo(Session);
+  Notifications_object.belongsTo(Provider);
+
   // Voucher Session_Collab
   Voucher.belongsTo(Session_Collab);
   Session_Collab.hasOne(Voucher);

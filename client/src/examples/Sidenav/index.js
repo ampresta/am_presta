@@ -21,7 +21,6 @@ import SidenavCollapse from "examples/Sidenav/SidenavCollapse";
 
 // Custom styles for the Sidenav
 import SidenavRoot from "examples/Sidenav/SidenavRoot";
-import sidenavLogoLabel from "examples/Sidenav/styles/sidenav";
 
 // Material Dashboard 2 React context
 import {
@@ -31,7 +30,7 @@ import {
   setWhiteSidenav,
 } from "context";
 
-function Sidenav({ color, brand, brandName, routes, ...rest }) {
+function Sidenav({ color, brand, routes, ...rest }) {
   const [controller, dispatch] = useMaterialUIController();
   const { miniSidenav, transparentSidenav, whiteSidenav, darkMode } =
     controller;
@@ -161,23 +160,17 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
           to="/dashboard"
           display="flex"
           alignItems="center"
+          justifyContent="center"
         >
           {brand && (
-            <MDBox component="img" src={brand} alt="Brand" width="12rem" />
+            <MDBox
+              component="img"
+              src={brand}
+              alt="Brand"
+              width="12rem"
+              maxHeight="9rem"
+            />
           )}
-          <MDBox
-            width={!brandName && "100%"}
-            sx={(theme) => sidenavLogoLabel(theme, { miniSidenav })}
-          >
-            <MDTypography
-              component="h6"
-              variant="button"
-              fontWeight="medium"
-              color={textColor}
-            >
-              {brandName}
-            </MDTypography>
-          </MDBox>
         </MDBox>
       </MDBox>
       <Divider
@@ -209,7 +202,6 @@ Sidenav.propTypes = {
     "dark",
   ]),
   brand: PropTypes.string,
-  brandName: PropTypes.string,
   routes: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 

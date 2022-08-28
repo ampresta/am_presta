@@ -1,4 +1,5 @@
-import { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useRef, useState } from "react";
 
 // react-router components
 import { Link, useLocation } from "react-router-dom";
@@ -15,10 +16,12 @@ import Icon from "@mui/material/Icon";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
+import MDBadge from "components/MDBadge";
 
 // Material Dashboard 2 React example components
 import Breadcrumbs from "examples/Breadcrumbs";
 import NotificationItem from "examples/Items/NotificationItem";
+import NotificationsList from "examples/Items/NotificationsList";
 
 // Custom styles for DashboardNavbar
 import {
@@ -28,17 +31,35 @@ import {
 } from "examples/Navbars/DashboardNavbar/styles";
 
 // Material Dashboard 2 React context
-import { useMaterialUIController, setMiniSidenav } from "context";
+import {
+  useMaterialUIController,
+  setMiniSidenav,
+  setChangedNotif,
+} from "context";
+
+
+import notificationsData from "./data/notificationsData";
+import { markRead } from "./data/notificationsData";
 
 function DashboardNavbar({ absolute, light, isMini, collab }) {
   const [controller, dispatch] = useMaterialUIController();
-  const { miniSidenav, transparentNavbar, darkMode } = controller;
+  const {
+    miniSidenav,
+    transparentNavbar,
+    darkMode,
+    changedNotif,
+    accountType,
+  } = controller;
   const [openMenu, setOpenMenu] = useState(false);
+  const [openNotifsMenu, setOpenNotifsMenu] = useState(false);
   const route = useLocation().pathname.split("/").slice(1);
+
 
   const handleMiniSidenav = () => setMiniSidenav(dispatch, !miniSidenav);
 
-  // Render the notifications menu
+  const NotifsData = notificationsData();
+
+  // Render the main menu
   const renderMenu = () => (
     <Menu
       anchorEl={openMenu}
@@ -62,6 +83,33 @@ function DashboardNavbar({ absolute, light, isMini, collab }) {
     </Menu>
   );
 
+  // Render the notifications menu
+  const renderNotifications = () => (
+    <Menu
+      anchorEl={openNotifsMenu}
+      anchorReference={null}
+      anchorOrigin={{
+        vertical: "bottom",
+        horizontal: "left",
+      }}
+      open={Boolean(openNotifsMenu)}
+      onClose={() => setOpenNotifsMenu(false)}
+      sx={{ mt: 2 }}
+    >
+      {NotifsData.map((item) => (
+        <NotificationsList
+          key={item.id}
+          icon={item.icon}
+          route={item.route}
+          label={item.label}
+          transmitter={item.transmitter}
+          subject={item.subject}
+          onClick={() => markRead(item.id)}
+        />
+      ))}
+    </Menu>
+  );
+
   // Styles for the navbar icons
   const iconsStyle = ({
     palette: { dark, white, text },
@@ -77,6 +125,8 @@ function DashboardNavbar({ absolute, light, isMini, collab }) {
       return colorValue;
     },
   });
+  console.log(accountType);
+
 
   return (
     <AppBar
@@ -98,6 +148,29 @@ function DashboardNavbar({ absolute, light, isMini, collab }) {
         {isMini ? null : (
           <MDBox>
             <MDBox color={light ? "white" : "inherit"}>
+              {(accountType === "Societe" || accountType === "Collab") && (
+                <IconButton
+                  size="small"
+                  disableRipple
+                  color="inherit"
+                  sx={navbarIconButton}
+                  aria-controls="notification-menu"
+                  aria-haspopup="true"
+                  variant="contained"
+                  onClick={(event) => setOpenNotifsMenu(event.currentTarget)}
+                >
+                  <Icon sx={iconsStyle}>notifications</Icon>
+                  {changedNotif > 0 && (
+                    <MDBadge
+                      badgeContent={changedNotif}
+                      color="warning"
+                      size="xs"
+                      sx={{ position: "absolute", ml: 2, mt: -2.5, zIndex: 2 }}
+                    />
+                  )}
+                </IconButton>
+              )}
+
               <IconButton
                 size="small"
                 disableRipple
@@ -123,6 +196,7 @@ function DashboardNavbar({ absolute, light, isMini, collab }) {
                 </Icon>
               </IconButton>
               {renderMenu()}
+              {renderNotifications()}
             </MDBox>
           </MDBox>
         )}

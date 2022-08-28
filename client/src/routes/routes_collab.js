@@ -55,9 +55,9 @@ const routes = [
   {
     type: "collapse",
     name: "My Requests",
-    key: "myRequests",
+    key: "requests",
     icon: <Icon fontSize="small">warning</Icon>,
-    route: "/myRequests",
+    route: "/requests",
     component: <MyRequests />,
   },
   {
