@@ -74,7 +74,8 @@ module.exports = async (req, res) => {
       ],
     ],
   };
-  filters.group = ["Cours.id", "Provider.id"];
+  filters.group = ["Cours.id", "Provider.id", "Cours.createdAt"];
+  filters.order = [["createdAt", "DESC"]];
   if (req.method == "POST") {
     const { search, provider } = req.body;
 

@@ -161,7 +161,7 @@ function AddQuota({ openAddModel, companyID }) {
                       variant="outlined"
                       fullWidth
                       name="quota"
-                      defaultValue={loading && result[index] ? result[index].quota : 0} // <--- hadi ra Vri walakin render laho ra2y akhar
+                      defaultValue={loading &&  result.length>0 && result[index]? result[index].quota : 0} // <--- hadi ra Vri walakin render laho ra2y akhar
                       onChange={(event) => handleChange(index, event)}
                     />
                   </MDBox>

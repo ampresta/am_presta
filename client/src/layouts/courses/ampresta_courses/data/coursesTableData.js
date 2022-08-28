@@ -17,7 +17,7 @@ import { allCoursesRoute, baseURL, DeleteInstances } from "utils/APIRoutes";
 import ConfirmPopup from "components/ConfirmPopup";
 
 // Material Dashboard 2 React contexts
-import { useMaterialUIController } from "context";
+import { setUpdater, useMaterialUIController } from "context";
 import axiosAuth from "services/authAxios";
 
 export default function Data() {
@@ -25,7 +25,7 @@ export default function Data() {
   const [confirmModel, setConfirmModel] = useState(false);
   const [tempCourseId, setTempCourseId] = useState(0);
 
-  const [controller] = useMaterialUIController();
+  const [controller, dispatch] = useMaterialUIController();
 
   const { updater } = controller;
 
@@ -47,6 +47,8 @@ export default function Data() {
     });
     if (data.status) {
       // setAllCourses(allCourses.filter((course) => course.id !== id));
+      //
+      setUpdater(dispatch, !updater);
       setConfirmModel(!confirmModel);
     } else {
       alert(data.msg);
@@ -178,12 +180,12 @@ export default function Data() {
           <Icon fontSize="small">edit</Icon>
         </MDTypography>
       ),
-      delete: (
+      delete: !course.deletedAt ? (
         <MDButton
           variant="text"
           onClick={() => {
             setConfirmModel(!confirmModel);
-            setTempCourseId(course.id);
+            tempCourseId(course.id);
           }}
         >
           <MDTypography variant="caption" color="text" fontWeight="medium">
@@ -192,6 +194,12 @@ export default function Data() {
             </Icon>
           </MDTypography>
         </MDButton>
+      ) : (
+        <MDTypography variant="caption" color="text" fontWeight="medium">
+          <Icon fontSize="small" color="secondary">
+            delete
+          </Icon>
+        </MDTypography>
       ),
     })
   );
