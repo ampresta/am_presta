@@ -119,7 +119,7 @@ function ProfileInfoCard({
             <MDBox
               component="form"
               role="form"
-              // onSubmit={(event) => handleSubmit(event)}
+              onSubmit={(event) => updateProfile(event)}
             >
               <MDBox
                 display="flex"
@@ -206,7 +206,10 @@ function ProfileInfoCard({
                   variant="gradient"
                   color="info"
                   sx={{ width: "25%", mr: "5px" }}
-                  onClick={(e) => updateProfile(e)}
+                  onClick={(e) => {
+                    updateProfile(e);
+                    SetEdit(!edit);
+                  }}
                 >
                   Submit
                 </MDButton>

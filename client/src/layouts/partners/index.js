@@ -30,14 +30,12 @@ import partnersTableData from "layouts/partners/data/partnersTableData";
 import Papa from "papaparse";
 
 function Partners() {
-  const { columns, rows, confirmation, rawData, notifications } =
-    partnersTableData();
-
   const [openAddModel, setOpenAddModel] = useState(false);
-
   const [openCsvUploader, setOpenCsvUploader] = useState(false);
-
   const [openSnackBar, setOpenSnackBar] = useState(false);
+
+  const { columns, rows, confirmation, rawData, notifications, sendEdit } =
+    partnersTableData(setOpenAddModel);
 
   const handleDownload = (title, type) => {
     let data = [];
@@ -167,6 +165,7 @@ function Partners() {
         <AddPartner
           closeAddModel={setOpenAddModel}
           openSnackBar={setOpenSnackBar}
+          sendEdit={sendEdit}
         />
       )}
       {openCsvUploader && (

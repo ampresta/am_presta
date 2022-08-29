@@ -27,8 +27,9 @@ export default function Data(setOpenAddModel) {
   const [tempCourseId, setTempCourseId] = useState(0);
   const [openSnackBar, setOpenSnackBar] = useState(false);
 
-  const [controller, dispatch] = useMaterialUIController();
+  const [sendEdit, setSendEdit] = useState([]);
 
+  const [controller, dispatch] = useMaterialUIController();
   const { updater } = controller;
 
   useEffect(() => {
@@ -36,7 +37,6 @@ export default function Data(setOpenAddModel) {
       const { data } = await axiosAuth.get(allCoursesRoute, {
         paranoid: false,
       });
-      console.log(data);
       setAllCourses(data);
     };
     getAllCourses();
@@ -48,11 +48,10 @@ export default function Data(setOpenAddModel) {
       id: id,
     });
     if (data.status) {
-      setOpenSnackBar(true);
       // setAllCourses(allCourses.filter((course) => course.id !== id));
-      //
       setUpdater(dispatch, !updater);
       setConfirmModel(!confirmModel);
+      setOpenSnackBar(true);
     } else {
       alert(data.msg);
     }
@@ -98,7 +97,7 @@ export default function Data(setOpenAddModel) {
   const getDataByID = (id) => {
     for (let i = 0; i < allCourses.length; i++) {
       if (allCourses[i].id === id) {
-        return allCourses[i];
+        setSendEdit(allCourses[i]);
       }
     }
   };
@@ -115,13 +114,13 @@ export default function Data(setOpenAddModel) {
         Header: "enrolled",
         accessor: "enrolled",
         align: "center",
-        width: "15%",
+        width: "25%",
       },
       {
         Header: "number of sessions",
         accessor: "number_of_sessions",
         align: "center",
-        width: "15%",
+        width: "25%",
       },
       {
         Header: "certified students",
@@ -130,8 +129,8 @@ export default function Data(setOpenAddModel) {
         width: "25%",
       },
       { Header: "Status", accessor: "status", align: "center", width: "25%" },
-      { Header: "edit", accessor: "edit", align: "center", width: "3%" },
-      { Header: "delete", accessor: "delete", align: "center", width: "3%" },
+      { Header: "edit", accessor: "edit", align: "center", width: "2%" },
+      { Header: "delete", accessor: "delete", align: "center", width: "2%" },
     ],
 
     rows: [],
@@ -148,18 +147,20 @@ export default function Data(setOpenAddModel) {
 
     notifications: openSnackBar && (
       <MySnackBar
-        color="success"
-        title="Course Added Succesfully"
+        color="error"
+        title="Course Deleted Succesfully"
         open={openSnackBar}
         close={() => setOpenSnackBar(!openSnackBar)}
       />
     ),
 
+    sendEdit: sendEdit,
+
     rawData: allCourses,
   };
 
-  const parseStatus = (partner) => {
-    if (partner.deletedAt) {
+  const parseStatus = (course) => {
+    if (course.deletedAt) {
       return <MDBadge badgeContent="Deleted" color="error" size="md" />;
     } else {
       return <MDBadge badgeContent="Active" color="success" size="md" />;
@@ -199,22 +200,25 @@ export default function Data(setOpenAddModel) {
         <MDButton
           variant="text"
           onClick={() => {
-            console.log(getDataByID(course.id));
+            getDataByID(course.id);
             setOpenAddModel(true);
           }}
+          disabled={course.deletedAt !== null}
         >
           <MDTypography variant="caption" color="text" fontWeight="medium">
             <Icon fontSize="small">edit</Icon>
           </MDTypography>
         </MDButton>
       ),
-      delete: !course.deletedAt ? (
+
+      delete: (
         <MDButton
           variant="text"
           onClick={() => {
             setConfirmModel(!confirmModel);
-            tempCourseId(course.id);
+            setTempCourseId(course.id);
           }}
+          disabled={course.deletedAt !== null}
         >
           <MDTypography variant="caption" color="text" fontWeight="medium">
             <Icon fontSize="small" color="primary">
@@ -222,12 +226,6 @@ export default function Data(setOpenAddModel) {
             </Icon>
           </MDTypography>
         </MDButton>
-      ) : (
-        <MDTypography variant="caption" color="text" fontWeight="medium">
-          <Icon fontSize="small" color="secondary">
-            delete
-          </Icon>
-        </MDTypography>
       ),
     })
   );
