@@ -12,6 +12,9 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
+import axios from "services/authAxios";
+import { ChangePasswordRoute } from "utils/APIRoutes";
+import { validatepasswordRoute } from "utils/APIRoutes";
 
 function ChangePassword({ shadow }) {
   const [formErrors, setFormErrors] = useState({
@@ -27,11 +30,10 @@ function ChangePassword({ shadow }) {
   });
 
   const handleSubmit = async (event) => {
-    const { current_password, new_password, confirm_password } = details;
+    const { new_password } = details;
     event.preventDefault();
     setFormErrors(validate(details));
-
-    console.log(details);
+    await axios.post(ChangePasswordRoute, {password: new_password});
   };
 
   const handleChange = (event) => {
@@ -42,9 +44,17 @@ function ChangePassword({ shadow }) {
 
   const validate = (values) => {
     const errors = {};
+    validate_current_password(values.current_password).then((status) => {
+      console.log(status);
+      if (!status) {
+        errors.current_password = "Current Password is not correct!";
+      }
+    });
+
     if (!values.current_password) {
       errors.current_password = "Current Password is required !";
     }
+
     if (!values.new_password) {
       errors.new_password = "New Password is required !";
     }
@@ -54,7 +64,13 @@ function ChangePassword({ shadow }) {
     if (values.confirm_password !== values.new_password) {
       errors.confirm_password = "Password don't match";
     }
+
     return errors;
+  };
+
+  const validate_current_password = async (password) => {
+    const { data } = await axios.post(validatepasswordRoute, { password });
+    return data.status;
   };
 
   return (
