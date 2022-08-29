@@ -1,18 +1,11 @@
 import { useEffect, useState } from "react";
 
 // react-router-dom components
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 // @mui material components
 import Card from "@mui/material/Card";
 import Switch from "@mui/material/Switch";
-import Grid from "@mui/material/Grid";
-import MuiLink from "@mui/material/Link";
-
-// @mui icons
-import FacebookIcon from "@mui/icons-material/Facebook";
-import GitHubIcon from "@mui/icons-material/GitHub";
-import GoogleIcon from "@mui/icons-material/Google";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -25,22 +18,22 @@ import BasicLayout from "layouts/authentication/components/BasicLayout";
 
 // Images
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
-import axios from "services/authAxios";
-import { loginRoute } from "utils/APIRoutes";
+
 import authService from "services/auth.service";
 import { getAccessToken } from "utils/accessToken";
 
 import {
   useMaterialUIController,
-  setDarkMode,
   setAccountType,
   setChangedPassword,
 } from "context";
+
 function Basic() {
   const navigate = useNavigate();
 
   const [controller, dispatch] = useMaterialUIController();
-const {loadingType}=controller
+  const { loadingType } = controller;
+
   useEffect(() => {
     if (getAccessToken() !== "") {
       navigate("/dashboard");
@@ -90,43 +83,6 @@ const {loadingType}=controller
           <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
             Sign in
           </MDTypography>
-          {/* <Grid
-            container
-            spacing={3}
-            justifyContent="center"
-            sx={{ mt: 1, mb: 2 }}
-          >
-            <Grid item xs={2}>
-              <MDTypography
-                component={MuiLink}
-                href="#"
-                variant="body1"
-                color="white"
-              >
-                <FacebookIcon color="inherit" />
-              </MDTypography>
-            </Grid>
-            <Grid item xs={2}>
-              <MDTypography
-                component={MuiLink}
-                href="#"
-                variant="body1"
-                color="white"
-              >
-                <GitHubIcon color="inherit" />
-              </MDTypography>
-            </Grid>
-            <Grid item xs={2}>
-              <MDTypography
-                component={MuiLink}
-                href="#"
-                variant="body1"
-                color="white"
-              >
-                <GoogleIcon color="inherit" />
-              </MDTypography>
-            </Grid>
-          </Grid> */}
         </MDBox>
         <MDBox pt={4} pb={3} px={3}>
           <MDBox

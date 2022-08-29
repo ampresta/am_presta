@@ -87,19 +87,11 @@ function Overview() {
   const paginate = [
     {
       label: "Profile",
-      icon: (
-        <Icon fontSize="small" sx={{ mt: -0.25 }}>
-          person
-        </Icon>
-      ),
+      icon: <Icon fontSize="small">person</Icon>,
     },
     {
       label: "Password",
-      icon: (
-        <Icon fontSize="small" sx={{ mt: -0.25 }}>
-          key
-        </Icon>
-      ),
+      icon: <Icon fontSize="small">key</Icon>,
     },
   ];
 

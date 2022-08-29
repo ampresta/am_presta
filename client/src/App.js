@@ -37,7 +37,6 @@ import axios from "services/authAxios";
 import { setAccessToken } from "utils/accessToken";
 import React, { useState } from "react";
 
-
 function App() {
   const [controller, dispatch] = useMaterialUIController();
 
@@ -48,8 +47,6 @@ function App() {
 
   // const [type, setType] = useState("");
   const [image, setImage] = useState("");
-
-
 
   // Setting page scroll to 0 when changing the route
   useEffect(() => {
