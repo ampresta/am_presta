@@ -23,20 +23,21 @@ import ConfirmPopup from "components/ConfirmPopup";
 // Material Dashboard 2 React contexts
 import { useMaterialUIController } from "context";
 
-export default function Data() {
+export default function Data(setOpenAddModel) {
   const [allPartners, setAllPartners] = useState([]);
   const [confirmModel, setConfirmModel] = useState(false);
   const [tempPartnerId, setTempPartnerId] = useState(0);
   const [openSnackBar, setOpenSnackBar] = useState(false);
 
-  const [controller] = useMaterialUIController();
+  const [sendEdit, setSendEdit] = useState([]);
 
+  const [controller] = useMaterialUIController();
   const { updater } = controller;
 
   useEffect(() => {
     const getAllPartners = async () => {
       const { data } = await axiosAuth.get(allPartnersRoute);
-      setAllPartners((prev) => data);
+      setAllPartners(data);
     };
     getAllPartners();
   }, [updater]);
@@ -65,6 +66,14 @@ export default function Data() {
       </MDBox>
     </MDBox>
   );
+
+  const getDataByID = (id) => {
+    for (let i = 0; i < allPartners.length; i++) {
+      if (allPartners[i].id === id) {
+        setSendEdit(allPartners[i]);
+      }
+    }
+  };
 
   let partners = {
     columns: [
@@ -105,6 +114,8 @@ export default function Data() {
     ),
 
     rawData: allPartners,
+
+    sendEdit: sendEdit,
   };
   try {
     allPartners.map((partner) =>
@@ -116,9 +127,17 @@ export default function Data() {
           </MDTypography>
         ),
         edit: (
-          <MDTypography variant="caption" color="text" fontWeight="medium">
-            <Icon fontSize="small">edit</Icon>
-          </MDTypography>
+          <MDButton
+            variant="text"
+            onClick={() => {
+              getDataByID(partner.id);
+              setOpenAddModel(true);
+            }}
+          >
+            <MDTypography variant="caption" color="text" fontWeight="medium">
+              <Icon fontSize="small">edit</Icon>
+            </MDTypography>
+          </MDButton>
         ),
         delete: (
           <MDButton

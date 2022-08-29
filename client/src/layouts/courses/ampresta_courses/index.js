@@ -18,7 +18,7 @@ import DataTable from "examples/Tables/DataTable";
 import Icon from "@mui/material/Icon";
 
 //Add companies component
-import AddCompanies from "./add";
+import AddCourses from "./add";
 
 // Hook
 import { useEffect, useState } from "react";
@@ -44,7 +44,7 @@ function Courses_am() {
   const [openCsvUploader, setOpenCsvUploader] = useState(false);
   const [openSnackBar, setOpenSnackBar] = useState(false);
 
-  const { columns, rows, confirmation, rawData, notifications } =
+  const { columns, rows, confirmation, rawData, notifications, sendEdit } =
     coursesTableData(setOpenAddModel);
 
   const handleDownload = (title, type) => {
@@ -92,8 +92,6 @@ function Courses_am() {
     a.click();
     document.body.removeChild(a);
   };
-
-  console.log("am");
 
   return (
     <DashboardLayout>
@@ -183,9 +181,10 @@ function Courses_am() {
         </MDBox>
       )}
       {openAddModel && (
-        <AddCompanies
+        <AddCourses
           closeAddModel={setOpenAddModel}
           openSnackBar={setOpenSnackBar}
+          sendEdit={sendEdit}
         />
       )}
       {openCsvUploader && (

@@ -21,7 +21,7 @@ import axiosAuth from "services/authAxios";
 import { useMaterialUIController, setUpdater } from "context";
 import { addPartnersRoute, uploadRoute } from "utils/APIRoutes";
 
-function AddPartner({ closeAddModel, openSnackBar }) {
+function AddPartner({ closeAddModel, openSnackBar, sendEdit }) {
   const [formErrors, setFormErrors] = useState({
     nom: "",
   });
@@ -71,7 +71,6 @@ function AddPartner({ closeAddModel, openSnackBar }) {
     }
   };
 
-
   const handleChange = (event) => {
     const key = event.target.name;
     const value = event.target.value;
@@ -87,6 +86,8 @@ function AddPartner({ closeAddModel, openSnackBar }) {
     }
     return errors;
   };
+
+  console.log(file);
 
   return (
     <Card sx={{ mt: "50px" }}>
@@ -133,6 +134,7 @@ function AddPartner({ closeAddModel, openSnackBar }) {
               name="nom"
               onChange={(e) => handleChange(e)}
               error={formErrors.coursename}
+              defaultValue={sendEdit.nom}
             />
             <FormHelperText error>{formErrors.coursename}</FormHelperText>
           </MDBox>

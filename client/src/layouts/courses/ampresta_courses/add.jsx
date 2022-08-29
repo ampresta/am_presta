@@ -32,7 +32,7 @@ import {
   addCoursesRoute,
 } from "utils/APIRoutes";
 
-function AddCourses({ closeAddModel, openSnackBar }) {
+function AddCourses({ closeAddModel, openSnackBar, sendEdit }) {
   const [formErrors, setFormErrors] = useState({
     coursename: "",
     provider: "",
@@ -116,6 +116,8 @@ function AddCourses({ closeAddModel, openSnackBar }) {
     }
   };
 
+  console.log(sendEdit);
+
   const handleChange = (event) => {
     const key = event.target.name;
     const value = event.target.value;
@@ -190,6 +192,7 @@ function AddCourses({ closeAddModel, openSnackBar }) {
                 name="nom"
                 onChange={(e) => handleChange(e)}
                 error={formErrors.coursename}
+                defaultValue={sendEdit.nom}
               />
               <FormHelperText error>{formErrors.coursename}</FormHelperText>
             </MDBox>
@@ -204,7 +207,6 @@ function AddCourses({ closeAddModel, openSnackBar }) {
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   value={selectedProvider.name}
-                  label="Age"
                   onChange={(e) => handleSelectedProvider(e)}
                   MenuProps={{
                     PaperProps: {
@@ -236,6 +238,7 @@ function AddCourses({ closeAddModel, openSnackBar }) {
               fullWidth
               onChange={(e) => handleChange(e)}
               error={formErrors.description}
+              defaultValue={sendEdit.description}
             />
             <FormHelperText error>{formErrors.description}</FormHelperText>
           </MDBox>

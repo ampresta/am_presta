@@ -145,7 +145,6 @@ export default function Data() {
       status: loading && parseStatus(company),
       edit: (
         <MDTypography
-          component="a"
           variant="caption"
           color="text"
           fontWeight="medium"
@@ -161,9 +160,9 @@ export default function Data() {
             setConfirmModel(!confirmModel);
             setTempCompanyId(company.id);
           }}
+          disabled={company.deletedAt}
         >
           <MDTypography
-            component="a"
             variant="caption"
             color="text"
             fontWeight="medium"

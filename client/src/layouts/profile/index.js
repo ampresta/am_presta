@@ -76,14 +76,12 @@ function Overview() {
   const updateProfile = async (event) => {
     event.preventDefault();
     console.log("update");
-    axios
-      .post(updateProfileRoute, {
-        nom: userNom,
-        prenom: userPrenom,
-        email: infosProfile.emailPerso,
-        username: infosProfile.username,
-      })
-      .then(window.location.reload());
+    axios.post(updateProfileRoute, {
+      nom: userNom,
+      prenom: userPrenom,
+      email: infosProfile.emailPerso,
+      username: infosProfile.username,
+    });
   };
 
   const paginate = [
