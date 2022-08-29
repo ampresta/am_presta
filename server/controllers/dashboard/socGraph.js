@@ -73,9 +73,9 @@ module.exports = async (req, res) => {
         results[i] = 0;
       }
     }
-    results.push({});
+    result.push(results[i]);
   }
   return res.send({
-    results,
+    result,
   });
 };

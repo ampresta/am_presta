@@ -18,7 +18,7 @@ import PopularCoursesList from "examples/Lists/PopularCoursesList";
 import authorsTableData from "./data/companiesTableData";
 import popularCoursesListData from "./data/popularCoursesListData";
 import DataTable from "examples/Tables/DataTable";
-
+import quotaGraph from "./data/quotaGraph";
 // Hooks
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -61,19 +61,6 @@ function Dashboard() {
     fetchCards("collab").catch(console.error);
   }, []);
 
-  const data = {
-    labels: ["Huawei", "Juniper", "Oracle", "Cisco"],
-    datasets: {
-      color: "success",
-      data: [30, 90, 40, 10],
-      fill: true,
-      label: "Referral",
-      maxBarThickness: 6,
-      pointBackgroundColor: "#344767",
-      pointRadius: 3,
-    },
-  };
-
   const values = {
     labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
     datasets: [
@@ -115,7 +102,7 @@ function Dashboard() {
             <PolarChart
               icon={{ color: "success", component: "pie_chart" }}
               title="My Quota"
-              chart={data}
+              chart={quotaGraph()}
             />
           </Grid>
           <Grid container item columnSpacing={2} rowSpacing={2} xs={12} lg={8}>
