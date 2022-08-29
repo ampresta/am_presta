@@ -2,7 +2,7 @@ const sequelize = require("sequelize");
 const db = require("../../config/database");
 const { Collaborateur, Session_Collab, Proof } = db.models;
 module.exports = async (req, res) => {
-  const length = 12;
+  const length = 9;
   result = [];
   let filters = {
     raw: true,
@@ -76,34 +76,33 @@ module.exports = async (req, res) => {
       };
     }
     chart = await Collaborateur.findAll(filters);
-    if (chart.length == 0) {
-      results = Array(length).fill(0);
-    } else {
+    let results = "0".repeat(length).split("");
+    if (chart.length > 0) {
       const date = Date();
+      console.log(date);
       const new_date = new Date(date);
       final_year = new_date.getFullYear();
-      final_month = new_date.getMonth();
-      results = [];
+      final_month = new_date.getMonth() + 1;
       d = chart.slice(-length);
-      console.log(d);
+      console.log("heeey", index, d);
       d_length = d.length;
-      console.log(d_length);
+      console.log(final_year, final_month);
       m = final_month;
       y = final_year;
       res_index = 1;
       d_index = d.length - 1;
       while (true) {
         val = 0;
+        console.log(index, d[d_index], m, y);
         if (m == parseInt(d[d_index].month) && y == parseInt(d[d_index].year)) {
           val = parseInt(d[d_index].count);
-
           d_index--;
-          console.log(d_index);
           if (d_index < -1) {
             break;
           }
         }
         results[length - res_index] = val;
+        console.log("inside", results, val, length - res_index);
         res_index++;
         // console.log(res_index);
         if (res_index == d_length + 1) {
@@ -116,11 +115,9 @@ module.exports = async (req, res) => {
         }
       }
       // console.log(length, d_length);
-      for (i = 0; i < length - d_length; i++) {
-        results[i] = 0;
-      }
     }
     result.push(results);
+    console.log("result", index, results);
   }
   return res.send({
     status: true,

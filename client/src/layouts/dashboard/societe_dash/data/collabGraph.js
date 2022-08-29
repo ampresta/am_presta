@@ -4,11 +4,22 @@ import { graphsSocRoute } from "utils/APIRoutes";
 
 const CompaniesGraph = () => {
   const [allCompaniesData, setAllCompaniesData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const today = new Date();
+  let lastSixMonths = [];
+
+  for (var i = 9; i > 0; i -= 1) {
+    const date = new Date(today.getFullYear(), today.getMonth() - i, 1);
+    lastSixMonths.push(date.toLocaleDateString("en-US", { month: "short" }));
+  }
+
+  let months = lastSixMonths.reverse();
 
   useEffect(() => {
     const getCompaniesData = async () => {
       const { data } = await axios.post(graphsSocRoute);
       if (data.status) {
+        setLoading(true);
         setAllCompaniesData(data);
         console.log("heet", data);
       }
@@ -18,12 +29,14 @@ const CompaniesGraph = () => {
 
   console.log("heet", allCompaniesData);
   const values = {
-    labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    labels: months,
     datasets: [
       {
-        label: "Total Courses",
+        label: "Total Collaborators",
         color: "success",
-        data: [50, 40, 300, 220, 500, 250, 400, 230, 400],
+        data:
+          loading && allCompaniesData.result ? allCompaniesData.result[0] : [],
+        // data: ["0", "20", 40],
         tension: 0,
         pointRadius: 3,
         borderWidth: 4,
@@ -34,9 +47,11 @@ const CompaniesGraph = () => {
         maxBarThickness: 6,
       },
       {
-        label: "Total Sessions",
+        label: "Total Certifications",
         color: "info",
-        data: [30, 90, 40, 140, 290, 290, 340, 230, 200],
+        data:
+          loading && allCompaniesData.result ? allCompaniesData.result[1] : [],
+        // data: [],
         tension: 0,
         pointRadius: 3,
         borderWidth: 4,

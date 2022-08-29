@@ -82,11 +82,6 @@ function Dashboard() {
                   icon="business"
                   title="Total Sessions"
                   count={sessionsCount}
-                  percentage={{
-                    color: "success",
-                    amount: "+55%",
-                    label: "than lask month",
-                  }}
                 />
               </MDBox>
             </Grid>
@@ -97,11 +92,6 @@ function Dashboard() {
                   title="Total Collaborators"
                   color="info"
                   count={collaboratorsCount}
-                  percentage={{
-                    color: "success",
-                    amount: "+12%",
-                    label: "than last month",
-                  }}
                 />
               </MDBox>
             </Grid>
@@ -166,7 +156,7 @@ function Dashboard() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Courses & Sessions Data
+                  Collaborators
                 </MDTypography>
               </MDBox>
               <DefaultLineChart chart={collabGraph()}></DefaultLineChart>
