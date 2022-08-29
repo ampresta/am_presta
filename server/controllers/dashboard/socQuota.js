@@ -9,14 +9,16 @@ module.exports = async (req, res) => {
     },
     include: {
       model: Provider,
-      attributes: ["nom"],
+      attributes: ["nom", "image"],
     },
   });
   const providers = [];
   const quotas = [];
+  const images = [];
   quota.forEach((e) => {
     providers.push(e.Provider.nom);
     quotas.push(e.quota);
+    images.push(e.Provider.image);
   });
-  return res.send({ status: true, providers, quotas });
+  return res.send({ status: true, images, providers, quotas });
 };

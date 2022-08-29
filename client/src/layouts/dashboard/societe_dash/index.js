@@ -12,7 +12,6 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
 
 //component
-import PopularCoursesList from "examples/Lists/PopularCoursesList";
 
 // Data
 import authorsTableData from "./data/companiesTableData";
@@ -35,6 +34,8 @@ import DefaultLineChart from "examples/Charts/LineCharts/DefaultLineChart";
 function Dashboard() {
   const { columns, rows } = authorsTableData();
 
+  const { columns: quotacolumns, rows: quotarows } = popularCoursesListData();
+  console.log(quotacolumns, quotarows);
   const [sessionsCount, setSessionsCount] = useState(0);
   const [collaboratorsCount, setCollabsCount] = useState(0);
 
@@ -137,10 +138,31 @@ function Dashboard() {
             </Grid>
 
             <Grid item xs={12} md={12} lg={4}>
-              <PopularCoursesList
-                title="Recent courses"
-                profiles={popularCoursesListData()}
-              />
+              <MDBox
+                mx={2}
+                mt={-1}
+                py={3}
+                px={2}
+                variant="gradient"
+                bgColor="primary"
+                borderRadius="lg"
+                coloredShadow="primary"
+                display="flex"
+                justifyContent="space-between"
+              >
+                <MDTypography variant="h6" color="white">
+                  Quotas
+                </MDTypography>
+              </MDBox>
+              <MDBox pt={2}>
+                <DataTable
+                  table={{ columns: quotacolumns, rows: quotarows }}
+                  isSorted={false}
+                  entriesPerPage={false}
+                  showTotalEntries={false}
+                  noEndBorder
+                />
+              </MDBox>
             </Grid>
           </Grid>
           <Grid item xs={12} md={12} lg={12}>
