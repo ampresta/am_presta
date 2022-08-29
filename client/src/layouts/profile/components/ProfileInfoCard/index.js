@@ -17,40 +17,26 @@ import MDButton from "components/MDButton";
 import MDAvatar from "components/MDAvatar";
 
 // Images
-import burceMars from "assets/images/bruce-mars.jpg";
-import { useEffect } from "react";
+import { baseURL } from "utils/APIRoutes";
 
-function ProfileInfoCard({ shadow }) {
-  const labels = [];
-  const values = [];
+function ProfileInfoCard({
+  shadow,
+  labels,
+  values,
+  userAvatar,
+  userSociete,
+  userNom,
+  userPrenom,
+  handleChange,
+  updateProfile,
+  handleChangeNom,
+  handleChangePrenom,
+}) {
   const [edit, SetEdit] = useState(false);
-
-  const [infosProfile, setInfosProfile] = useState({
-    Bio: "Hi, I’m Alec Thompson, Decisions: If you can’t decide, the answer is no. If two equally difficult paths, choose the one more painful in the short term.",
-    fullName: "Rachid Jehouh",
-    emailPerso: "rachid.jehouh@gmail.com",
-    emailInstitu: "rachid.jehouh@institute-eca.ma",
-  });
-
-  console.log(infosProfile);
-
-  const handleChange = (event) => {
-    setInfosProfile((prev) => {
-      return { ...prev, [event.target.name]: event.target.value };
-    });
-  };
-
-  // Convert this form `objectKey` of the object key in to this `object key`
-  Object.keys(infosProfile).forEach((el) => {
-    labels.push(el);
-  });
 
   const refactorName = (label) => {
     return label.split(/(?=[A-Z])/).join(" ");
   };
-
-  // Push the object values into the values array
-  Object.values(infosProfile).forEach((el) => values.push(el));
 
   // Render the card info items
   const renderItems = labels.map((label, key) => (
@@ -77,15 +63,20 @@ function ProfileInfoCard({ shadow }) {
     <Card sx={{ height: "100%", boxShadow: !shadow && "none" }}>
       <Grid container spacing={3} alignItems="center">
         <Grid item>
-          <MDAvatar src={burceMars} alt="profile-image" size="xl" shadow="xl" />
+          <MDAvatar
+            src={`${baseURL}/${userAvatar}`}
+            alt="profile-image"
+            size="xl"
+            shadow="xl"
+          />
         </Grid>
         <Grid item>
           <MDBox height="100%" mt={0.5} lineHeight={1}>
             <MDTypography variant="h5" fontWeight="medium">
-              Rachid Jehouh
+              {`${userNom} ${userPrenom}`}
             </MDTypography>
             <MDTypography variant="button" color="text" fontWeight="regular">
-              ENSAM Student
+              {userSociete}
             </MDTypography>
           </MDBox>
         </Grid>
@@ -130,6 +121,56 @@ function ProfileInfoCard({ shadow }) {
               role="form"
               // onSubmit={(event) => handleSubmit(event)}
             >
+              <MDBox
+                display="flex"
+                justifyContent="space-around"
+                alignItems="center"
+                py={1}
+              >
+                <MDTypography
+                  variant="button"
+                  fontWeight="bold"
+                  textTransform="capitalize"
+                >
+                  Nom&nbsp; :
+                </MDTypography>
+
+                <MDInput
+                  type="text"
+                  label="nom"
+                  name="nom"
+                  defaultValue={userNom}
+                  sx={{ width: "60%" }}
+                  multiline
+                  onChange={(e) => handleChangeNom(e.target.value)}
+                ></MDInput>
+              </MDBox>
+
+              <MDBox
+                display="flex"
+                justifyContent="space-around"
+                alignItems="center"
+                py={1}
+              >
+                <MDTypography
+                  variant="button"
+                  fontWeight="bold"
+                  textTransform="capitalize"
+                >
+                  Prenom&nbsp; :
+                </MDTypography>
+
+                <MDInput
+                  type="text"
+                  label="Prenom"
+                  name="Prenom"
+                  defaultValue={userPrenom}
+                  sx={{ width: "60%" }}
+                  multiline
+                  onChange={(e) => handleChangePrenom(e.target.value)}
+                ></MDInput>
+              </MDBox>
+
               {labels.map((label, key) => (
                 <MDBox
                   key={label}
@@ -145,15 +186,16 @@ function ProfileInfoCard({ shadow }) {
                   >
                     {refactorName(label)}&nbsp; :
                   </MDTypography>
+
                   <MDInput
                     disabled={label === "emailInstitu"}
                     type="text"
                     label={refactorName(label)}
                     name={label}
                     defaultValue={values[key]}
-                    onChange={(e) => handleChange(e)}
                     sx={{ width: "60%" }}
                     multiline
+                    onChange={(e) => handleChange(e)}
                   ></MDInput>
                 </MDBox>
               ))}
@@ -164,6 +206,7 @@ function ProfileInfoCard({ shadow }) {
                   variant="gradient"
                   color="info"
                   sx={{ width: "25%", mr: "5px" }}
+                  onClick={(e) => updateProfile(e)}
                 >
                   Submit
                 </MDButton>

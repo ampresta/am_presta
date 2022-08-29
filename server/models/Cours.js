@@ -35,7 +35,6 @@ const Cours = (db) => {
             });
 
             cours.image = provider.image;
-            console.log("HEEEEEEELP");
             console.log(cours.image);
             console.log(provider);
           }

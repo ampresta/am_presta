@@ -19,6 +19,7 @@ const provider = require("./routes/provider");
 const voucher = require("./routes/voucher");
 const logout = require("./routes/logout");
 const notifs = require("./routes/notifs");
+const profile = require("./routes/profile");
 const multer = require("multer");
 const handleUpload = require("./controllers/upload/handleUpload");
 const deleteInstances = require("./controllers/delete/deleteInstances");
@@ -76,6 +77,7 @@ app.use("/api/proof", proof);
 app.use("/api/voucher", voucher);
 app.use("/api/upload", changePhotoMiddleware);
 app.use("/api/notifs", notifs);
+app.use("/api/profile", profile);
 
 app.post("/api/upload", upload.single("image"), handleUpload);
 app.post("/api/delete", deleteInstances);
