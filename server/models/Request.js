@@ -28,12 +28,8 @@ const Request = (db) => {
         afterCreate: async (request, options) => {
           const { CollaborateurId } = request;
           const db = require("../config/database");
-          const {
-            Notification_change,
-            Notifications_object,
-            Notifications_Entity,
-            Collaborateur,
-          } = db.models;
+          const { Notifications_object, Notifications_Entity, Collaborateur } =
+            db.models;
           const { entity_type_id } = await Notifications_Entity.findOne({
             attributes: ["entity_type_id"],
             where: {
@@ -42,7 +38,7 @@ const Request = (db) => {
           });
 
           const { SocieteId } = await Collaborateur.findByPk(CollaborateurId);
-          const { UserId } = await Collaborateur.findOne({
+          const admin = await Collaborateur.findOne({
             where: {
               SocieteId,
               admin: true,
@@ -55,7 +51,7 @@ const Request = (db) => {
               NotificationsEntityEntityTypeId: entity_type_id,
               Notification_change: {
                 emeteurId: CollaborateurId,
-                recepteurId: UserId,
+                recepteurId: admin.id,
               },
             },
             {
@@ -74,7 +70,6 @@ const Request = (db) => {
           const { CollaborateurId } = request;
           const db = require("../config/database");
           const {
-            Notification_change,
             Notifications_object,
             Notifications_Entity,
             Collaborateur,
@@ -88,8 +83,8 @@ const Request = (db) => {
             },
           });
 
-          const emeteurId = adminCollab.UserId 
-          const recepteurId = recepteurCollab.UserId
+          const emeteurId = adminCollab.id 
+          const recepteurId = recepteurCollab.id
             
           let description;
           if (status == "accepted") {

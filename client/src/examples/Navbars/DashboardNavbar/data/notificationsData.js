@@ -80,7 +80,7 @@ export default function Data() {
 
   if (Array.isArray(notifs) && notifs.length > 0) {
     notifs.map((notif) => {
-      const { nom, prenom } = notif.Notification_change.emetteur.Collaborateur;
+      const { nom, prenom } = notif.Notification_change.emetteur;
       const { description, entity } = notif.Notifications_Entity;
       const notif_content = generate_notif(
         notif,

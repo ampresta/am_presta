@@ -27,42 +27,33 @@ module.exports = async (req, res) => {
           attributes: ["id"],
           include: [
             {
-              attributes: ["id"],
               required: true,
-              model: User,
+              model: Collaborateur,
               as: "emetteur",
-              include: {
-                model: Collaborateur,
-                attributes: [
-                  "nom",
-                  "prenom",
-                  "admin",
-                  "SocieteId",
-                  "UserId",
-                  "image",
-                ],
-              },
+              attributes: [
+                "nom",
+                "prenom",
+                "admin",
+                "SocieteId",
+                "UserId",
+                "image",
+              ],
             },
             {
-              attributes: ["id"],
-              required: true,
-              model: User,
+              model: Collaborateur,
               as: "recepteur",
-              include: {
-                required: true,
-                attributes: [
-                  "nom",
-                  "prenom",
-                  "admin",
-                  "SocieteId",
-                  "UserId",
-                  "image",
-                ],
-                model: Collaborateur,
-                where: {
-                  admin: false,
-                  id: collab,
-                },
+              required: true,
+              attributes: [
+                "nom",
+                "prenom",
+                "admin",
+                "SocieteId",
+                "UserId",
+                "image",
+              ],
+              where: {
+                admin: false,
+                id: collab,
               },
             },
           ],
@@ -93,8 +84,8 @@ module.exports = async (req, res) => {
         },
       ],
       where: {
-        read: false
-      }
+        read: false,
+      },
     });
     return res.send(notifs);
   } catch (error) {
