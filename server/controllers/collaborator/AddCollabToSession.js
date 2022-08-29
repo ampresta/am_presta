@@ -58,6 +58,7 @@ module.exports = async (req, res) => {
   sess.Cour.Provider.Quota[0].save();
 
   const { nom } = await Session.findByPk(session);
+
   if (request) {
     const cours = await Cours.findOne({
       attributes: ["nom"],
