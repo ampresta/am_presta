@@ -19,6 +19,7 @@ import authorsTableData from "./data/companiesTableData";
 import popularCoursesListData from "./data/popularCoursesListData";
 import DataTable from "examples/Tables/DataTable";
 import quotaGraph from "./data/quotaGraph";
+import collabGraph from "./data/collabGraph";
 // Hooks
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -60,38 +61,6 @@ function Dashboard() {
     fetchCards("challenge").catch(console.error);
     fetchCards("collab").catch(console.error);
   }, []);
-
-  const values = {
-    labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-    datasets: [
-      {
-        label: "Total Courses",
-        color: "success",
-        data: [50, 40, 300, 220, 500, 250, 400, 230, 400],
-        tension: 0,
-        pointRadius: 3,
-        borderWidth: 4,
-        backgroundColor: "transparent",
-        fill: true,
-        pointBackgroundColor: "#1A73E8",
-        borderColor: "#1A73E8",
-        maxBarThickness: 6,
-      },
-      {
-        label: "Total Sessions",
-        color: "info",
-        data: [30, 90, 40, 140, 290, 290, 340, 230, 200],
-        tension: 0,
-        pointRadius: 3,
-        borderWidth: 4,
-        backgroundColor: "transparent",
-        fill: true,
-        pointBackgroundColor: "#344767",
-        borderColor: "#344767",
-        maxBarThickness: 6,
-      },
-    ],
-  };
 
   return (
     <DashboardLayout>
@@ -200,7 +169,7 @@ function Dashboard() {
                   Courses & Sessions Data
                 </MDTypography>
               </MDBox>
-              <DefaultLineChart chart={values}></DefaultLineChart>
+              <DefaultLineChart chart={collabGraph()}></DefaultLineChart>
             </Card>
           </Grid>
         </Grid>

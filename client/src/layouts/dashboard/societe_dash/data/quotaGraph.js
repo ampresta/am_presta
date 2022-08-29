@@ -6,7 +6,7 @@ const CompaniesGraph = () => {
   const [allCompaniesData, setAllCompaniesData] = useState([]);
 
   useEffect(() => {
-    const getCompaniesData = async (type, length) => {
+    const getCompaniesData = async () => {
       const { data } = await axios.post(quotaSocRoute);
       if (data.status) {
         setAllCompaniesData(data);

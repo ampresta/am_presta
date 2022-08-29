@@ -2,49 +2,100 @@ const sequelize = require("sequelize");
 const db = require("../../config/database");
 const { Collaborateur, Session_Collab, Proof } = db.models;
 module.exports = async (req, res) => {
+  const length = 12;
   result = [];
-  filters = {
+  let filters = {
+    raw: true,
+    where: {
+      SocieteId: req.societe,
+    },
     attributes: [
-      [db.fn("count", db.col("id")), "count"],
-      [db.fn("extract", sequelize.literal('month FROM "createdAt"')), "month"],
+      [sequelize.fn("count", sequelize.col("Collaborateur.id")), "count"],
+      [
+        db.fn(
+          "extract",
+          sequelize.literal('month FROM "Collaborateur"."createdAt"')
+        ),
+        "month",
+      ],
 
-      [db.fn("extract", sequelize.literal('year FROM "createdAt"')), "year"],
+      [
+        sequelize.fn(
+          "extract",
+          sequelize.literal('year FROM "Collaborateur"."createdAt"')
+        ),
+        "year",
+      ],
     ],
     group: ["month", "year"],
     order: [sequelize.literal("year"), sequelize.literal("month")],
   };
   for (let index = 0; index < 2; index++) {
     if (index == 1) {
-      filters.include = {
-        model: Session_Collab,
-        include: Proof,
-        as: "certifs",
+      filters = {
+        raw: true,
         where: {
-          status: true,
+          SocieteId: req.societe,
         },
+        include: {
+          model: Session_Collab,
+          attributes: [],
+          required: true,
+          include: {
+            model: Proof,
+            as: "certifs",
+            attributes: [],
+            where: {
+              status: "accepted",
+            },
+          },
+        },
+        attributes: [
+          [sequelize.fn("count", sequelize.col("Collaborateur.id")), "count"],
+          [
+            sequelize.fn(
+              "extract",
+              sequelize.literal(
+                'month FROM "Session_Collabs->certifs"."createdAt"'
+              )
+            ),
+            "month",
+          ],
+          [
+            sequelize.fn(
+              "extract",
+              sequelize.literal(
+                'year FROM "Session_Collabs->certifs"."createdAt"'
+              )
+            ),
+            "year",
+          ],
+        ],
+        group: ["month", "year"],
+        order: [sequelize.literal("year"), sequelize.literal("month")],
       };
     }
     chart = await Collaborateur.findAll(filters);
     if (chart.length == 0) {
       results = Array(length).fill(0);
     } else {
-      final_year = chart.at(-1).dataValues.year;
-      final_month = chart.at(-1).dataValues.month;
+      const date = Date();
+      const new_date = new Date(date);
+      final_year = new_date.getFullYear();
+      final_month = new_date.getMonth();
       results = [];
       d = chart.slice(-length);
+      console.log(d);
       d_length = d.length;
+      console.log(d_length);
       m = final_month;
       y = final_year;
       res_index = 1;
       d_index = d.length - 1;
       while (true) {
         val = 0;
-        ex = false;
-        if (
-          m == parseInt(d[d_index].dataValues.month) &&
-          y == parseInt(d[d_index].dataValues.year)
-        ) {
-          val = parseInt(d[d_index].dataValues.count);
+        if (m == parseInt(d[d_index].month) && y == parseInt(d[d_index].year)) {
+          val = parseInt(d[d_index].count);
 
           d_index--;
           console.log(d_index);
@@ -63,19 +114,16 @@ module.exports = async (req, res) => {
           m = 12;
           y--;
         }
-
-        if (ex) {
-          break;
-        }
       }
       // console.log(length, d_length);
       for (i = 0; i < length - d_length; i++) {
         results[i] = 0;
       }
     }
-    result.push(results[i]);
+    result.push(results);
   }
   return res.send({
+    status: true,
     result,
   });
 };
