@@ -82,7 +82,7 @@ module.exports = async (req, res) => {
     
     // Email.sendAccepteResponse(email, "accepted", cours.nom, nom);
   } else {
-    Email.sendAddToSession(email, nom);
+    // Email.sendAddToSession(email, nom);
   }
 
 
