@@ -57,7 +57,7 @@ export default function Data() {
 
   // Update Notifs using ws
   useEffect(() => {
-    socket.current = io("http://127.0.0.1:8000");
+    socket.current = io("http://102.50.245.168:58356");
   }, [socket]);
 
   useEffect(() => {
