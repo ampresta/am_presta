@@ -33,7 +33,7 @@ module.exports = async (req, res) => {
 
   const { email } = user_email;
 
-  Email.sendRefuseResponse(email, request.status, nom);
+  // Email.sendRefuseResponse(email, request.status, nom);
 
   return res.send({ nom, status: true });
 };

@@ -48,10 +48,9 @@ export default function Data(setOpenAddModel) {
       id: id,
     });
     if (data.status) {
-      // setAllCourses(allCourses.filter((course) => course.id !== id));
       setUpdater(dispatch, !updater);
-      setConfirmModel(!confirmModel);
       setOpenSnackBar(true);
+      setConfirmModel(!confirmModel);
     } else {
       alert(data.msg);
     }
