@@ -12,7 +12,7 @@ import { allCompaniesRoute, baseURL, DeleteInstances } from "utils/APIRoutes";
 import { useState, useEffect } from "react";
 
 // Material Dashboard 2 React contexts
-import { useMaterialUIController } from "context";
+import { useMaterialUIController, setUpdater } from "context";
 
 // Axios
 // @mui icons
@@ -31,7 +31,7 @@ export default function Data() {
   const [tempCompanyId, setTempCompanyId] = useState(0);
   const [openSnackBar, setOpenSnackBar] = useState(false);
 
-  const [controller] = useMaterialUIController();
+  const [controller, dispatch] = useMaterialUIController();
   const { updater } = controller;
 
   useEffect(() => {
@@ -41,7 +41,6 @@ export default function Data() {
       });
       if (data.status) {
         setAllCompanies(data.msg);
-        console.log("data=", data);
         setLoading(true);
       }
     };
@@ -54,8 +53,8 @@ export default function Data() {
       id: id,
     });
     if (data.status) {
+      setUpdater(dispatch, !updater);
       setOpenSnackBar(true);
-      // setAllCompanies(allCompanies.filter((company) => company.id !== id));
       setConfirmModel(!confirmModel);
     } else {
       alert(data.msg);
@@ -81,11 +80,11 @@ export default function Data() {
         width: "40%",
         align: "left",
       },
-      { Header: "manager", accessor: "manager", align: "center", width: "25%" },
-      { Header: "date", accessor: "date", align: "center", width: "25%" },
-      { Header: "Status", accessor: "status", align: "center", width: "25%" },
-      { Header: "edit", accessor: "edit", align: "center", width: "3%" },
-      { Header: "delete", accessor: "delete", align: "center", width: "3%" },
+      { Header: "manager", accessor: "manager", align: "center", width: "15%" },
+      { Header: "date", accessor: "date", align: "center", width: "15%" },
+      { Header: "Status", accessor: "status", align: "center", width: "15%" },
+      { Header: "edit", accessor: "edit", align: "center", width: "1%" },
+      { Header: "delete", accessor: "delete", align: "center", width: "1%" },
     ],
 
     rows: [],
@@ -119,38 +118,34 @@ export default function Data() {
       return <MDBadge badgeContent="Active" color="success" size="md" />;
     }
   };
+
   allCompanies.map((company) =>
     companies.rows.push({
       author: <Company image={company.image} name={company.name} />,
       manager: (
-        <MDTypography
-          component="a"
-          variant="caption"
-          color="text"
-          fontWeight="medium"
-        >
+        <MDTypography variant="caption" color="text" fontWeight="medium">
           {company.Collaborateurs[0].nom} {company.Collaborateurs[0].prenom}
         </MDTypography>
       ),
       date: (
-        <MDTypography
-          component="a"
-          variant="caption"
-          color="text"
-          fontWeight="medium"
-        >
+        <MDTypography variant="caption" color="text" fontWeight="medium">
           {dateFormat(company.createdAt)}
         </MDTypography>
       ),
       status: loading && parseStatus(company),
       edit: (
-        <MDTypography
-          variant="caption"
-          color="text"
-          fontWeight="medium"
+        <MDButton
+          variant="outlined"
+          onClick={() => {
+            setConfirmModel(!confirmModel);
+            setTempCompanyId(company.id);
+          }}
+          disabled={company.deletedAt}
         >
-          <Icon fontSize="small">edit</Icon>
-        </MDTypography>
+          <MDTypography variant="caption" color="text" fontWeight="medium">
+            <Icon fontSize="small">edit</Icon>
+          </MDTypography>
+        </MDButton>
       ),
 
       delete: (
@@ -162,11 +157,7 @@ export default function Data() {
           }}
           disabled={company.deletedAt}
         >
-          <MDTypography
-            variant="caption"
-            color="text"
-            fontWeight="medium"
-          >
+          <MDTypography variant="caption" color="text" fontWeight="medium">
             <Icon fontSize="small" color="primary">
               delete
             </Icon>
