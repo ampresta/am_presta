@@ -1,8 +1,11 @@
 const cors = require("cors");
 const morgan = require("morgan");
 const express = require("express");
+const app = express();
+const server = require("http").createServer(app);
+const io = require("./socket.js").init(server);
 
-const db = require("./config/database")
+const db = require("./config/database");
 const login = require("./routes/login");
 const register = require("./routes/register");
 const societe = require("./routes/societe");
@@ -40,7 +43,6 @@ try {
 //     credentials: true,
 //   })
 // );
-const app = express();
 app.use(cors({ credentials: true, origin: "*" }));
 
 app.use(morgan("tiny"));
@@ -85,7 +87,14 @@ app.use("/api/media", express.static("media"));
 // Listener
 
 // Sockets
+io.on('connection', (socket) => {
+  console.log('Connection success', socket.id);
 
-const server = require("http").createServer(app);
+  socket.on('disconnect', () => {
+    console.log('Connection disconnected', socket.id);
+  });
+})
+
 server.listen(PORT, () => console.log(`Server listening on ${PORT}...`));
 
+module.export = io;
