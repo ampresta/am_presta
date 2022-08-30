@@ -65,7 +65,7 @@ function Dashboard() {
     labels: ["Huawei", "Juniper", "Oracle", "Cisco"],
     datasets: {
       color: "success",
-      data: [30, 90, 40, 10],
+      data: [30, 90, 40, 60],
       fill: true,
       label: "Referral",
       maxBarThickness: 6,
