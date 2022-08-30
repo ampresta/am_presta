@@ -80,7 +80,7 @@ module.exports = async (req, res) => {
         attributes: ["id", "image", "nom"],
         include: {
           model: Provider,
-          attributes: ["nom"],
+          attributes: ["nom", "id"],
           required: true,
           where: {
             id: provider,
@@ -95,7 +95,7 @@ module.exports = async (req, res) => {
         include: {
           model: Provider,
           required: true,
-          attributes: ["nom"],
+          attributes: ["nom", "id"],
         },
       });
     }
@@ -114,7 +114,7 @@ module.exports = async (req, res) => {
       attributes: ["id", "image", "nom"],
       include: {
         model: Provider,
-        attributes: ["nom"],
+        attributes: ["nom", "id"],
       },
     });
     // console.log(filters);
