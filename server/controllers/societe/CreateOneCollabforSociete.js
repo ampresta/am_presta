@@ -52,7 +52,7 @@ module.exports = async (req, res) => {
         include: [{ association: User.Collaborateur }],
       }
     );
-    Email.sendRegister(email, username, password, societe.name);
+    Email.sendRegister(email, email_institu, username, password, societe.name);
     return res.send({
       status: true,
       msg: "Users Created Successfully",

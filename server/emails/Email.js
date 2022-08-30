@@ -1,8 +1,6 @@
 const nodemailer = require("nodemailer");
-const hbs = require("nodemailer-express-handlebars");
 const { google } = require("googleapis");
 const path = require("path");
-const getRequest = require("./utils");
 
 require("dotenv").config({ path: "../.env" });
 
@@ -27,15 +25,6 @@ class Email {
   constructor(email, name) {
     this.email = email;
     this.from_email = `"${name}" <${email}>`;
-    this.hbs_config = {
-      viewEngine: {
-        extName: ".handlebars",
-        partialsDir: path.resolve(__dirname, "views"),
-        defaultLayout: false,
-      },
-      viewPath: path.resolve(__dirname, "views"),
-      extName: ".handlebars",
-    };
   }
 
   getTransporter = async () => {
@@ -58,9 +47,11 @@ class Email {
 
   sendRegister = async (
     to_email,
+    institutional,
     username,
     password,
     societe,
+    admin = false,
     logo = "",
     url = "http://127.0.0.1:3000/login"
   ) => {
@@ -68,8 +59,9 @@ class Email {
       from: this.from_email,
       to: to_email,
       subject: `Welcome to ${societe}`,
-      text: "",
-      template: "welcome",
+      text: admin
+        ? `Hello ${username},\n\nYou have been successfully named admin of ${societe}.\n\nYour login is: ${username}.\n Your password is: ${password}\n\nYou can access the platform at ${url}.\n\nRegards,\n${societe}`
+        : `Hello ${username},\n\nYou have been successfully registered to ${societe}.\n\nYour login is: ${username}.\n Your password is: ${password}\n\nYou can access your courses using your institutional email: ${institutional}\n\nYou can access the platform at ${url}.\n\nRegards,\n${societe}`,
       context: {
         username,
         password,
@@ -78,7 +70,6 @@ class Email {
       },
     };
     this.getTransporter()
-      .then((transporter) => transporter.use("compile", hbs(this.hbs_config)))
       .then((transporter) => transporter.sendMail(options))
       .then((info) => {
         console.log("Email sent");

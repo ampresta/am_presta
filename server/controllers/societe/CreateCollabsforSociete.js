@@ -33,6 +33,7 @@ module.exports = async (req, res) => {
         username = `${nom}.${prenom}${i}`;
         i++;
       }
+
       email_institu = `${username}@institute-eca.ma`;
       const hash = await argon2.hash(password + pep);
       await User.create(
@@ -53,7 +54,13 @@ module.exports = async (req, res) => {
           include: [{ association: User.Collaborateur }],
         }
       );
-      Email.sendRegister(email, username, password, societe.name);
+      Email.sendRegister(
+        email,
+        email_institu,
+        username,
+        password,
+        societe.name
+      );
     } catch (err) {
       return res.send({ msg: "error " + err });
     }
