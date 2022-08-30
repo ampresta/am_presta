@@ -23,16 +23,22 @@ import { baseURL, allCompanyCoursesRoute } from "utils/APIRoutes";
 
 function Catalogue() {
   const [allCourses, setAllCourses] = useState([]);
-  const [stockedCourses, setStockedCourses] = useState([]);
   const [allPartners, setAllPartners] = useState([]);
-  const [openFilter, setOpenFilter] = useState(false);
+  const [filterby, setFilterBy] = useState(null);
+
+  const filterCourses = (providerId) => {
+    if (providerId === null || providerId === -1) {
+      return allCourses;
+    } else {
+      return allCourses.filter((course) => course.ProviderId === providerId);
+    }
+  };
 
   // const [chosenPartners, setchosenPartners] = useState([]);
   useEffect(() => {
     const getAllCourses = async () => {
       const { data } = await axiosAuth.get(allCompanyCoursesRoute);
       setAllCourses(data.cours);
-      setStockedCourses(data.cours);
     };
     getAllCourses();
   }, []);
@@ -47,7 +53,7 @@ function Catalogue() {
 
   const coursesData = [];
 
-  allCourses.map((course) =>
+  filterCourses(filterby).map((course) =>
     coursesData.push({
       id: course.id,
       image: course.image,
@@ -85,24 +91,7 @@ function Catalogue() {
       </Grid>
     )
   );
-  const handleProvider = (e) => {
-    if (e === -1) {
-      setAllCourses(stockedCourses);
-    } else {
-      // setchosenPartners((prev) => [...prev, e]);
-      // let arr = [e];
-      // arr.concat(chosenPartners);
-      const getAllCourses = async () => {
-        const { data } = await axiosAuth.post(CoursesCatalogue, {
-          // provider: [chosenPartners, e],
-          provider: [e],
-        });
-        setAllCourses(data.cours);
-      };
-      // console.log("chosen", chosenPartners);
-      getAllCourses();
-    }
-  };
+ 
 
   return (
     <MDBox pb={3}>
@@ -150,7 +139,7 @@ function Catalogue() {
                 {partnersData.map((item) => (
                   <MDButton
                     key={item.id}
-                    onClick={() => handleProvider(item.id)}
+                    onClick={() => setFilterBy(item.id)}
                     variant="text"
                     color="dark"
                     size="small"
