@@ -22,7 +22,8 @@ export const topCoursesRoute = `${baseURL}/dashboard/topcourses`;
 export const CollabDashboard = `${baseURL}/dashboard/collab`;
 // Societe Dashboard
 export const SocCardsRoute = `${baseURL}/dashboard/soccards`;
-export const graphsSocRoute = `${baseURL}/dashboard/amgraphs`;
+export const graphsSocRoute = `${baseURL}/dashboard/socgraph`;
+export const quotaSocRoute = `${baseURL}/dashboard/socquota`;
 export const topCollabRoute = `${baseURL}/dashboard/soccollab`;
 export const topChallengesRoute = `${baseURL}/dashboard/topcourses`;
 
@@ -101,7 +102,6 @@ export const addVouchersAdminRoute = `${baseURL}/voucher/add`;
 export const asignOneVoucherRoute = `${baseURL}/voucher/assign`;
 export const asignVoucherSessionRoute = `${baseURL}/voucher/assignall`;
 
-
 // Notifs
 export const addNotifRoute = `${baseURL}/notifs/add`;
 export const getNotifsSocRoute = `${baseURL}/notifs/browsesoc`;
@@ -109,6 +109,7 @@ export const getNotifsCollabRoute = `${baseURL}/notifs/browsecollab`;
 export const marknoptifReadRoute = `${baseURL}/notifs/readonenotif`;
 
 // Profile
-export const getProfileRoute = `${baseURL}/profile/`
-export const updateProfileRoute = `${baseURL}/profile/update`
-export const validatepasswordRoute = `${baseURL}/profile/validatepassword`
+export const getProfileRoute = `${baseURL}/profile/`;
+export const updateProfileRoute = `${baseURL}/profile/update`;
+export const validatepasswordRoute = `${baseURL}/profile/validatepassword`;
+

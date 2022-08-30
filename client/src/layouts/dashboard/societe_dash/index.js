@@ -12,13 +12,13 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
 
 //component
-import PopularCoursesList from "examples/Lists/PopularCoursesList";
 
 // Data
 import authorsTableData from "./data/companiesTableData";
 import popularCoursesListData from "./data/popularCoursesListData";
 import DataTable from "examples/Tables/DataTable";
-
+import quotaGraph from "./data/quotaGraph";
+import collabGraph from "./data/collabGraph";
 // Hooks
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -34,6 +34,8 @@ import DefaultLineChart from "examples/Charts/LineCharts/DefaultLineChart";
 function Dashboard() {
   const { columns, rows } = authorsTableData();
 
+  const { columns: quotacolumns, rows: quotarows } = popularCoursesListData();
+  console.log(quotacolumns, quotarows);
   const [sessionsCount, setSessionsCount] = useState(0);
   const [collaboratorsCount, setCollabsCount] = useState(0);
 
@@ -61,51 +63,6 @@ function Dashboard() {
     fetchCards("collab").catch(console.error);
   }, []);
 
-  const data = {
-    labels: ["Huawei", "Juniper", "Oracle", "Cisco"],
-    datasets: {
-      color: "success",
-      data: [30, 90, 40, 60],
-      fill: true,
-      label: "Referral",
-      maxBarThickness: 6,
-      pointBackgroundColor: "#344767",
-      pointRadius: 3,
-    },
-  };
-
-  const values = {
-    labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-    datasets: [
-      {
-        label: "Total Courses",
-        color: "success",
-        data: [50, 40, 300, 220, 500, 250, 400, 230, 400],
-        tension: 0,
-        pointRadius: 3,
-        borderWidth: 4,
-        backgroundColor: "transparent",
-        fill: true,
-        pointBackgroundColor: "#1A73E8",
-        borderColor: "#1A73E8",
-        maxBarThickness: 6,
-      },
-      {
-        label: "Total Sessions",
-        color: "info",
-        data: [30, 90, 40, 140, 290, 290, 340, 230, 200],
-        tension: 0,
-        pointRadius: 3,
-        borderWidth: 4,
-        backgroundColor: "transparent",
-        fill: true,
-        pointBackgroundColor: "#344767",
-        borderColor: "#344767",
-        maxBarThickness: 6,
-      },
-    ],
-  };
-
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -115,7 +72,7 @@ function Dashboard() {
             <PolarChart
               icon={{ color: "success", component: "pie_chart" }}
               title="My Quota"
-              chart={data}
+              chart={quotaGraph()}
             />
           </Grid>
           <Grid container item columnSpacing={2} rowSpacing={2} xs={12} lg={8}>
@@ -126,11 +83,6 @@ function Dashboard() {
                   icon="business"
                   title="Total Sessions"
                   count={sessionsCount}
-                  percentage={{
-                    color: "success",
-                    amount: "+55%",
-                    label: "than lask month",
-                  }}
                 />
               </MDBox>
             </Grid>
@@ -141,11 +93,6 @@ function Dashboard() {
                   title="Total Collaborators"
                   color="info"
                   count={collaboratorsCount}
-                  percentage={{
-                    color: "success",
-                    amount: "+12%",
-                    label: "than last month",
-                  }}
                 />
               </MDBox>
             </Grid>
@@ -191,10 +138,31 @@ function Dashboard() {
             </Grid>
 
             <Grid item xs={12} md={12} lg={4}>
-              <PopularCoursesList
-                title="Recent courses"
-                profiles={popularCoursesListData()}
-              />
+              <MDBox
+                mx={2}
+                mt={-1}
+                py={3}
+                px={2}
+                variant="gradient"
+                bgColor="primary"
+                borderRadius="lg"
+                coloredShadow="primary"
+                display="flex"
+                justifyContent="space-between"
+              >
+                <MDTypography variant="h6" color="white">
+                  Quotas
+                </MDTypography>
+              </MDBox>
+              <MDBox pt={2}>
+                <DataTable
+                  table={{ columns: quotacolumns, rows: quotarows }}
+                  isSorted={false}
+                  entriesPerPage={false}
+                  showTotalEntries={false}
+                  noEndBorder
+                />
+              </MDBox>
             </Grid>
           </Grid>
           <Grid item xs={12} md={12} lg={12}>
@@ -210,10 +178,10 @@ function Dashboard() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Courses & Sessions Data
+                  Collaborators
                 </MDTypography>
               </MDBox>
-              <DefaultLineChart chart={values}></DefaultLineChart>
+              <DefaultLineChart chart={collabGraph()}></DefaultLineChart>
             </Card>
           </Grid>
         </Grid>
