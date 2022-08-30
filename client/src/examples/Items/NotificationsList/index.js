@@ -47,11 +47,11 @@ const NotificationList = forwardRef(
 
 // Typechecking props for the NotificationList
 NotificationList.propTypes = {
-  icon: PropTypes.node.isRequired,
-  label: PropTypes.string.isRequired,
-  route: PropTypes.string.isRequired,
-  transmitter: PropTypes.string.isRequired,
-  subject: PropTypes.string.isRequired,
+  icon: PropTypes.node,
+  label: PropTypes.string,
+  route: PropTypes.string,
+  transmitter: PropTypes.string,
+  subject: PropTypes.string,
 };
 
 export default NotificationList;
