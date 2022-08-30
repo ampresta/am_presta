@@ -11,9 +11,11 @@ const RefuseCollabRequest = require("../controllers/collaborator/RefuseCollabReq
 const RequestCours = require("../controllers/collaborator/RequestCours");
 const checkCollaborateur = require("../middlewares/checkCollaborateur");
 const checkSociete = require("../middlewares/checkSociete");
+const checkSuperAdmin = require("../middlewares/checkSuperAdmin");
 const router = Router();
 
 // router.use(signedin);
+router.use("/browseadmin", checkSuperAdmin);
 router.get("/browseadmin", browseCollabsAdmin);
 // Collab routes
 

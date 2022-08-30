@@ -34,7 +34,7 @@ function Dashboard() {
       icon: "warning",
       title: "My Requests",
       description: "All requests I sent to enroll in a course",
-      route: "/myRequests",
+      route: "/requests",
       value: loading && collabdata.requests,
     },
     {

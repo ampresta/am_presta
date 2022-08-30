@@ -31,6 +31,9 @@ models = [
   require("../models/SuperAdmin"),
   require("../models/Users"),
   require("../models/Cours"),
+  require("../models/Notifications_Entity"),
+  require("../models/Notifications_object"),
+  require("../models/Notification_change"),
 ];
 for (model of models) {
   model(sequelize);

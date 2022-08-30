@@ -4,6 +4,7 @@ import MDTypography from "components/MDTypography";
 import MDProgress from "components/MDProgress";
 import Grid from "@mui/material/Grid";
 import MDButton from "components/MDButton";
+import MDBadge from "components/MDBadge";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -32,6 +33,7 @@ export default function Data() {
   const [allSessions, setAllSessions] = useState([]);
   const [tempSessionId, setTempSessionId] = useState(0);
   const [confirmModel, setConfirmModel] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [providers, setProviders] = useState([
     {
       id: "",
@@ -45,8 +47,13 @@ export default function Data() {
 
   useEffect(() => {
     const getAllSessions = async () => {
-      const { data } = await axios.get(AllSessionsAdminRoute);
-      setAllSessions(data);
+      const { data } = await axios.post(AllSessionsAdminRoute, {
+        paranoid: false,
+      });
+      if (data.status) {
+        setAllSessions(data.sessions);
+        setLoading(true);
+      }
     };
     getAllSessions();
   }, [updater]);
@@ -67,7 +74,7 @@ export default function Data() {
       id: id,
     });
     if (data.status) {
-      setAllSessions(allSessions.filter((session) => session.id !== id));
+      // setAllSessions(allSessions.filter((session) => session.id !== id));
       setConfirmModel(!confirmModel);
     } else {
       alert(data.msg);
@@ -123,6 +130,13 @@ export default function Data() {
     </MDBox>
   );
 
+  const parseStatus = (partner) => {
+    if (partner.deletedAt) {
+      return <MDBadge badgeContent="Deleted" color="error" size="md" />;
+    } else {
+      return <MDBadge badgeContent="Active" color="success" size="md" />;
+    }
+  };
   let sessions = {
     columns: [
       {
@@ -161,6 +175,7 @@ export default function Data() {
         align: "center",
         width: "15%",
       },
+      { Header: "Status", accessor: "status", align: "center", width: "25%" },
       { Header: "edit", accessor: "edit", align: "center" },
       { Header: "delete", accessor: "delete", align: "center" },
     ],
@@ -196,9 +211,9 @@ export default function Data() {
       </Grid>
     ),
   };
-  if (allSessions.length === 0 || !Array.isArray(allSessions)) {
+  if (loading && (allSessions.length === 0 || !Array.isArray(allSessions))) {
     sessions.rows.push({ author: "No Sessions Available" });
-  } else {
+  } else if (loading) {
     allSessions.map((session) =>
       sessions.rows.push({
         author: (
@@ -229,6 +244,7 @@ export default function Data() {
             {session.Cour.Provider.nom}
           </MDTypography>
         ),
+        status: parseStatus(session),
         enrolled: (
           <MDTypography
             component="a"

@@ -11,12 +11,16 @@ const signedin = require("../middlewares/signedin");
 const checkCollaborateur = require("../middlewares/checkCollaborateur");
 const browseCourseDetails = require("../controllers/cours/browseCourseDetails");
 const browseCoursDetailsSoc = require("../controllers/cours/browseCoursDetailsSoc");
+const checkSuperAdmin = require("../middlewares/checkSuperAdmin");
 
 // router.use(signedin);
 // Please don't change the order
 // Super Admin Links
+router.use("/browse", checkSuperAdmin);
 router.all("/browse", browseCourse);
 
+router.use("/add", checkSuperAdmin);
+router.post("/add", addCours);
 // Collaborator routes
 router.use("/catalogue", checkCollaborateur);
 router.all("/catalogue", courseCatalogue);
@@ -26,7 +30,6 @@ router.all("/detail", browseCourseDetails);
 // router.use("/add", CheckSuperAdmin);
 // router.use("/browse", CheckSuperAdmin);
 
-router.post("/add", addCours);
 // router.all("/browse", browseCourse);
 router.use(checkSociete);
 router.use("/browsesoc", checkSociete);

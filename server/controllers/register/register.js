@@ -3,6 +3,7 @@ const db = require("../../config/database");
 const Email = require("../../emails/Email");
 const { Collaborateur, Societe, User } = db.models;
 module.exports = async (req, res) => {
+  let user = null;
   try {
     const { username, nom, prenom, societe, email } = req.body;
 
@@ -25,7 +26,7 @@ module.exports = async (req, res) => {
       .map(() => ((Math.random() * 36) | 0).toString(36))
       .join("");
     const hash = await argon2.hash(password + pep);
-    const user = await User.create(
+    user = await User.create(
       {
         username: username,
         password: hash,
@@ -54,6 +55,14 @@ module.exports = async (req, res) => {
       id: user.Collaborateur.SocieteId,
     });
   } catch (err) {
+    // collab = await user.getCollaborator();
+    // soc = await collab.getSociete();
+    // console.log(collab);
+
+    // console.log(soc);
+    // await soc.destroy({ force: true });
+    // await collab.destroy({ force: true });
+    // await user.destroy({ force: true });
     return res.send({ msg: "error " + err });
   }
 };

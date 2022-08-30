@@ -4,7 +4,9 @@ const { Session_Collab, Proof, Cours, Session, Provider, Collaborateur } =
   db.models;
 module.exports = async (req, res) => {
   filters = {};
-
+  const { paranoid } = req.body;
+  console.log(paranoid);
+  filters.paranoid = paranoid !== undefined ? false : true;
   filters.include = [
     {
       model: Session,
@@ -72,7 +74,8 @@ module.exports = async (req, res) => {
       ],
     ],
   };
-  filters.group = ["Cours.id", "Provider.id"];
+  filters.group = ["Cours.id", "Provider.id", "Cours.createdAt"];
+  filters.order = [["createdAt", "DESC"]];
   if (req.method == "POST") {
     const { search, provider } = req.body;
 
@@ -99,12 +102,10 @@ module.exports = async (req, res) => {
         filters.where = { ProviderId: provider };
       }
     }
-    console.log(filters);
     try {
       const cours = await Cours.findAll(filters); // Implementing search
       return res.json(cours);
     } catch (err) {
-      console.log(err);
       return res.send({ status: "error" });
     }
   } else {

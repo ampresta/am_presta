@@ -118,7 +118,7 @@ class Email {
     status,
     course,
     logo = "",
-    url = "http://127.0.0.1:3000/myRequests"
+    url = "http://127.0.0.1:3000/requests"
   ) => {
     const options = {
       from: this.from_email,

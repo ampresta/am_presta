@@ -10,13 +10,20 @@ const soccards = require("../controllers/dashboard/soccards");
 const socCollabTable = require("../controllers/dashboard/socCollabTable");
 const collabDashboard = require("../controllers/dashboard/collabDashboard");
 const checkCollaborateur = require("../middlewares/checkCollaborateur");
+const checkSuperAdmin = require("../middlewares/checkSuperAdmin");
+const socGraph = require("../controllers/dashboard/socGraph");
+const socQuota = require("../controllers/dashboard/socQuota");
 
 // router.use(signedin);
 
 const router = Router();
+router.use("/amcards", checkSuperAdmin);
 router.post("/amcards", amcards);
+router.use("/amtable", checkSuperAdmin);
 router.post("/amtable", amtable);
+router.use("/amgraphs", checkSuperAdmin);
 router.post("/amgraphs", amgraphs);
+router.use("/topcourses", checkSuperAdmin);
 router.post("/topcourses", amtop);
 // Collab dash
 
@@ -26,4 +33,6 @@ router.get("/collab", collabDashboard);
 router.use(checkSociete);
 router.post("/soccards", soccards);
 router.post("/soccollab", socCollabTable);
+router.post("/socgraph", socGraph);
+router.post("/socquota", socQuota);
 module.exports = router;

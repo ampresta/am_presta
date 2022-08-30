@@ -1,7 +1,6 @@
 // @mui material components
 import Card from "@mui/material/Card";
 import Icon from "@mui/material/Icon";
-import FormHelperText from "@mui/material/FormHelperText";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -161,7 +160,14 @@ function AddQuota({ openAddModel, companyID }) {
                       variant="outlined"
                       fullWidth
                       name="quota"
-                      defaultValue={quota.length >0 ? result[index].quota:0} // <--- hadi ra Vri walakin render laho ra2y akhar
+                      defaultValue={
+                        loading &&
+                        Array.isArray(result) &&
+                        result.length > 0 &&
+                        result[index]
+                          ? result[index].quota
+                          : 0
+                      } // <--- hadi ra Vri walakin render laho ra2y akhar
                       onChange={(event) => handleChange(index, event)}
                     />
                   </MDBox>

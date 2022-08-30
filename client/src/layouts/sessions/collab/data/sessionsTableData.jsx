@@ -287,6 +287,8 @@ export default function Data(setSessionId) {
               setOpenProofModel(dispatch, !openProofModel);
             }}
             disabled={
+              session.Session_Collabs[0].fincourse &&
+              session.Session_Collabs[0].certifs &&
               session.Session_Collabs[0].fincourse.status === "accepted" &&
               session.Session_Collabs[0].certifs.status === "accepted"
             }

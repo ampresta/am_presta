@@ -8,9 +8,9 @@ import MDBox from "components/MDBox";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
+import MenuItem from "@mui/material/MenuItem";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
@@ -32,7 +32,7 @@ import {
   addCoursesRoute,
 } from "utils/APIRoutes";
 
-function AddCourses({ closeAddModel }) {
+function AddCourses({ closeAddModel, openSnackBar, sendEdit }) {
   const [formErrors, setFormErrors] = useState({
     coursename: "",
     provider: "",
@@ -109,11 +109,14 @@ function AddCourses({ closeAddModel }) {
 
         closeAddModel(false);
         setUpdater(dispatch, !updater);
+        openSnackBar(true);
       } else {
         alert(data.msg);
       }
     }
   };
+
+  console.log(sendEdit);
 
   const handleChange = (event) => {
     const key = event.target.name;
@@ -128,8 +131,6 @@ function AddCourses({ closeAddModel }) {
     setCourse((prev) => ({ ...prev, provider }));
     setSelectedProvider(provider);
   };
-
-  console.log(selectedProvider);
 
   const validate = (values) => {
     const errors = {};
@@ -191,6 +192,7 @@ function AddCourses({ closeAddModel }) {
                 name="nom"
                 onChange={(e) => handleChange(e)}
                 error={formErrors.coursename}
+                defaultValue={sendEdit.nom}
               />
               <FormHelperText error>{formErrors.coursename}</FormHelperText>
             </MDBox>
@@ -205,7 +207,6 @@ function AddCourses({ closeAddModel }) {
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   value={selectedProvider.name}
-                  label="Age"
                   onChange={(e) => handleSelectedProvider(e)}
                   MenuProps={{
                     PaperProps: {
@@ -227,7 +228,6 @@ function AddCourses({ closeAddModel }) {
                 <FormHelperText error>{formErrors.provider}</FormHelperText>
               </FormControl>
             </MDBox>
-            
           </MDBox>
           <MDBox mb={2}>
             <MDInput
@@ -238,6 +238,7 @@ function AddCourses({ closeAddModel }) {
               fullWidth
               onChange={(e) => handleChange(e)}
               error={formErrors.description}
+              defaultValue={sendEdit.description}
             />
             <FormHelperText error>{formErrors.description}</FormHelperText>
           </MDBox>

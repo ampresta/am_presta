@@ -1,5 +1,6 @@
 const db = require("../../config/database");
 const { Cours } = db.models;
+
 module.exports = async (req, res) => {
   cours = req.body["nom"];
   provider = req.body["provider"];
@@ -13,7 +14,6 @@ module.exports = async (req, res) => {
       ProviderId: provider,
       description: description,
     });
-    console.log(coursObj);
     return res.json({
       status: true,
       msg: "Course added",

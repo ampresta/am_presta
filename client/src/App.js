@@ -58,7 +58,6 @@ function App() {
     setTypeLoading(dispatch, true);
     const getRefreshToken = async () => {
       const { data } = await axios.get(refreshRoute);
-      console.log("Waiting Now");
       if (data && data.accesstoken) {
         setTypeLoading(dispatch, false);
         setAccessToken(data.accesstoken);

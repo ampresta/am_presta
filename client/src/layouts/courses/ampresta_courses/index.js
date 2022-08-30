@@ -7,6 +7,7 @@ import Card from "@mui/material/Card";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
+import MySnackBar from "components/MySnackBar";
 
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
@@ -17,7 +18,7 @@ import DataTable from "examples/Tables/DataTable";
 import Icon from "@mui/material/Icon";
 
 //Add companies component
-import AddCompanies from "./add";
+import AddCourses from "./add";
 
 // Hook
 import { useEffect, useState } from "react";
@@ -39,11 +40,12 @@ function Courses_am() {
     }
   }, []);
 
-  const { columns, rows, confirmation, rawData } = coursesTableData();
-
   const [openAddModel, setOpenAddModel] = useState(false);
-
   const [openCsvUploader, setOpenCsvUploader] = useState(false);
+  const [openSnackBar, setOpenSnackBar] = useState(false);
+
+  const { columns, rows, confirmation, rawData, notifications, sendEdit } =
+    coursesTableData(setOpenAddModel);
 
   const handleDownload = (title, type) => {
     let data = [];
@@ -90,8 +92,6 @@ function Courses_am() {
     a.click();
     document.body.removeChild(a);
   };
-
-  console.log("am");
 
   return (
     <DashboardLayout>
@@ -180,7 +180,13 @@ function Courses_am() {
           </Grid>
         </MDBox>
       )}
-      {openAddModel && <AddCompanies closeAddModel={setOpenAddModel} />}
+      {openAddModel && (
+        <AddCourses
+          closeAddModel={setOpenAddModel}
+          openSnackBar={setOpenSnackBar}
+          sendEdit={sendEdit}
+        />
+      )}
       {openCsvUploader && (
         <CsvUploader
           closeUploadModel={setOpenCsvUploader}
@@ -190,6 +196,15 @@ function Courses_am() {
       )}
 
       {confirmation}
+      {notifications}
+      {openSnackBar && (
+        <MySnackBar
+          color="success"
+          title="Course Added Successfully"
+          open={openSnackBar}
+          close={() => setOpenSnackBar(!openSnackBar)}
+        />
+      )}
     </DashboardLayout>
   );
 }

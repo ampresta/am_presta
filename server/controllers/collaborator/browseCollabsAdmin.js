@@ -4,6 +4,7 @@ const { Societe, Collaborateur, Session_Collab, Proof } = db.models;
 
 module.exports = async (req, res) => {
   const collabs = await Collaborateur.findAll({
+    paranoid: false,
     include: [
       {
         model: Societe,

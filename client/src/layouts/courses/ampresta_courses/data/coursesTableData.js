@@ -3,6 +3,8 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDProgress from "components/MDProgress";
 import MDButton from "components/MDButton";
+import MDBadge from "components/MDBadge";
+import MySnackBar from "components/MySnackBar";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -16,22 +18,25 @@ import { allCoursesRoute, baseURL, DeleteInstances } from "utils/APIRoutes";
 import ConfirmPopup from "components/ConfirmPopup";
 
 // Material Dashboard 2 React contexts
-import { useMaterialUIController } from "context";
+import { setUpdater, useMaterialUIController } from "context";
 import axiosAuth from "services/authAxios";
 
-export default function Data() {
+export default function Data(setOpenAddModel) {
   const [allCourses, setAllCourses] = useState([]);
   const [confirmModel, setConfirmModel] = useState(false);
   const [tempCourseId, setTempCourseId] = useState(0);
+  const [openSnackBar, setOpenSnackBar] = useState(false);
 
-  const [controller] = useMaterialUIController();
+  const [sendEdit, setSendEdit] = useState([]);
 
+  const [controller, dispatch] = useMaterialUIController();
   const { updater } = controller;
 
   useEffect(() => {
     const getAllCourses = async () => {
-      const { data } = await axiosAuth.get(allCoursesRoute);
-      console.log(data);
+      const { data } = await axiosAuth.get(allCoursesRoute, {
+        paranoid: false,
+      });
       setAllCourses(data);
     };
     getAllCourses();
@@ -43,8 +48,10 @@ export default function Data() {
       id: id,
     });
     if (data.status) {
-      setAllCourses(allCourses.filter((course) => course.id !== id));
+      // setAllCourses(allCourses.filter((course) => course.id !== id));
+      setUpdater(dispatch, !updater);
       setConfirmModel(!confirmModel);
+      setOpenSnackBar(true);
     } else {
       alert(data.msg);
     }
@@ -87,6 +94,14 @@ export default function Data() {
     }
   };
 
+  const getDataByID = (id) => {
+    for (let i = 0; i < allCourses.length; i++) {
+      if (allCourses[i].id === id) {
+        setSendEdit(allCourses[i]);
+      }
+    }
+  };
+
   let courses = {
     columns: [
       {
@@ -99,13 +114,13 @@ export default function Data() {
         Header: "enrolled",
         accessor: "enrolled",
         align: "center",
-        width: "15%",
+        width: "25%",
       },
       {
         Header: "number of sessions",
         accessor: "number_of_sessions",
         align: "center",
-        width: "15%",
+        width: "25%",
       },
       {
         Header: "certified students",
@@ -113,8 +128,9 @@ export default function Data() {
         align: "center",
         width: "25%",
       },
-      { Header: "edit", accessor: "edit", align: "center", width: "3%" },
-      { Header: "delete", accessor: "delete", align: "center", width: "3%" },
+      { Header: "Status", accessor: "status", align: "center", width: "25%" },
+      { Header: "edit", accessor: "edit", align: "center", width: "2%" },
+      { Header: "delete", accessor: "delete", align: "center", width: "2%" },
     ],
 
     rows: [],
@@ -129,9 +145,27 @@ export default function Data() {
       />
     ),
 
+    notifications: openSnackBar && (
+      <MySnackBar
+        color="error"
+        title="Course Deleted Succesfully"
+        open={openSnackBar}
+        close={() => setOpenSnackBar(!openSnackBar)}
+      />
+    ),
+
+    sendEdit: sendEdit,
+
     rawData: allCourses,
   };
 
+  const parseStatus = (course) => {
+    if (course.deletedAt) {
+      return <MDBadge badgeContent="Deleted" color="error" size="md" />;
+    } else {
+      return <MDBadge badgeContent="Active" color="success" size="md" />;
+    }
+  };
   allCourses.map((course) =>
     courses.rows.push({
       author: (
@@ -146,6 +180,7 @@ export default function Data() {
           {course.collabs}
         </MDTypography>
       ),
+      status: parseStatus(course),
       number_of_sessions: (
         <MDTypography variant="caption" color="text" fontWeight="medium">
           {course.sessions}
@@ -162,10 +197,20 @@ export default function Data() {
         />
       ),
       edit: (
-        <MDTypography variant="caption" color="text" fontWeight="medium">
-          <Icon fontSize="small">edit</Icon>
-        </MDTypography>
+        <MDButton
+          variant="text"
+          onClick={() => {
+            getDataByID(course.id);
+            setOpenAddModel(true);
+          }}
+          disabled={course.deletedAt !== null}
+        >
+          <MDTypography variant="caption" color="text" fontWeight="medium">
+            <Icon fontSize="small">edit</Icon>
+          </MDTypography>
+        </MDButton>
       ),
+
       delete: (
         <MDButton
           variant="text"
@@ -173,6 +218,7 @@ export default function Data() {
             setConfirmModel(!confirmModel);
             setTempCourseId(course.id);
           }}
+          disabled={course.deletedAt !== null}
         >
           <MDTypography variant="caption" color="text" fontWeight="medium">
             <Icon fontSize="small" color="primary">
