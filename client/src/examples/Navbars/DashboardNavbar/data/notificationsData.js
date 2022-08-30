@@ -11,16 +11,26 @@ import { marknoptifReadRoute } from "utils/APIRoutes";
 const generate_notif = (data, entity, description, emetteur, id) => {
   switch (entity) {
     case "Request":
-      const cours = data.Request.Cour.nom;
-      const notif_component = {
+      if (data.Request !== null) {
+        const cours = data.Request.Cour.nom;
+        const notif_component = {
+          id,
+          icon: <Icon>warning</Icon>,
+          route: "/requests",
+          label: description,
+          transmitter: emetteur,
+          subject: cours,
+        };
+        return notif_component;
+      }
+      return{
         id,
         icon: <Icon>warning</Icon>,
         route: "/requests",
         label: description,
         transmitter: emetteur,
-        subject: cours,
+        subject: "",
       };
-      return notif_component;
 
     default:
       break;
