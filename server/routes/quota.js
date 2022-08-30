@@ -8,7 +8,7 @@ const checkSuperAdmin = require("../middlewares/checkSuperAdmin");
 const r = Router();
 // const signedin = require("../middlewares/signedin");
 
-r.use(checkSuperAdmin);
+// r.use(checkSuperAdmin);
 
 r.post("/add", addQuota);
 
