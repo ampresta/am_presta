@@ -68,6 +68,7 @@ export default function Data() {
   // Update Notifs using ws
   useEffect(() => {
     socket.current = io("http://127.0.0.1:8000");
+    console.log(socket.current);
   }, [socket]);
 
   useEffect(() => {
@@ -83,6 +84,8 @@ export default function Data() {
       setChangedNotif(dispatch, data.length);
     });
   }, [socket]);
+
+
 
   const notificationsData = [];
 
