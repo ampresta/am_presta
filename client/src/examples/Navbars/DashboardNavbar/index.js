@@ -33,9 +33,9 @@ import {
 // Material Dashboard 2 React context
 import { useMaterialUIController, setMiniSidenav } from "context";
 
-
 import notificationsData from "./data/notificationsData";
 import { markRead } from "./data/notificationsData";
+import MDTypography from "components/MDTypography";
 
 function DashboardNavbar({ absolute, light, isMini, collab }) {
   const [controller, dispatch] = useMaterialUIController();
@@ -48,8 +48,8 @@ function DashboardNavbar({ absolute, light, isMini, collab }) {
   } = controller;
   const [openMenu, setOpenMenu] = useState(false);
   const [openNotifsMenu, setOpenNotifsMenu] = useState(false);
-  const route = useLocation().pathname.split("/").slice(1);
 
+  const route = useLocation().pathname.split("/").slice(1);
 
   const handleMiniSidenav = () => setMiniSidenav(dispatch, !miniSidenav);
 
@@ -80,31 +80,48 @@ function DashboardNavbar({ absolute, light, isMini, collab }) {
   );
 
   // Render the notifications menu
-  const renderNotifications = () => (
-    <Menu
-      anchorEl={openNotifsMenu}
-      anchorReference={null}
-      anchorOrigin={{
-        vertical: "bottom",
-        horizontal: "left",
-      }}
-      open={Boolean(openNotifsMenu)}
-      onClose={() => setOpenNotifsMenu(false)}
-      sx={{ mt: 2 }}
-    >
-      {NotifsData.map((item) => (
-        <NotificationsList
-          key={item.id}
-          icon={item.icon}
-          route={item.route}
-          label={item.label}
-          transmitter={item.transmitter}
-          subject={item.subject}
-          onClick={() => markRead(item.id)}
-        />
-      ))}
-    </Menu>
-  );
+  const renderNotifications = () =>
+    NotifsData.length !== 0 ? (
+      <Menu
+        anchorEl={openNotifsMenu}
+        anchorReference={null}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+        open={Boolean(openNotifsMenu)}
+        onClose={() => setOpenNotifsMenu(false)}
+        sx={{ mt: 2 }}
+      >
+        {NotifsData.map((item) => (
+          <NotificationsList
+            key={item.id}
+            icon={item.icon}
+            route={item.route}
+            label={item.label}
+            transmitter={item.transmitter}
+            subject={item.subject}
+            onClick={() => markRead(item.id)}
+          />
+        ))}
+      </Menu>
+    ) : (
+      <Menu
+        anchorEl={openNotifsMenu}
+        anchorReference={null}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+        open={Boolean(openNotifsMenu)}
+        onClose={() => setOpenNotifsMenu(false)}
+        sx={{ mt: 2 }}
+      >
+        <MDTypography variant="text" color="info">
+          No notifications available !
+        </MDTypography>
+      </Menu>
+    );
 
   // Styles for the navbar icons
   const iconsStyle = ({
@@ -121,8 +138,6 @@ function DashboardNavbar({ absolute, light, isMini, collab }) {
       return colorValue;
     },
   });
-  console.log(accountType);
-
 
   return (
     <AppBar

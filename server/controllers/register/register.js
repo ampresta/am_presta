@@ -48,7 +48,7 @@ module.exports = async (req, res) => {
         ],
       }
     );
-    Email.sendRegister(email, username, password, societe);
+    Email.sendRegister(email, "", username, password, societe, true);
     return res.send({
       status: true,
       msg: "User Created Successfully",

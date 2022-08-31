@@ -52,13 +52,13 @@ module.exports = async (req, res) => {
 
       res.cookie("jbid", refreshtoken, {
         httpOnly: true,
-        sameSite: "None",
-        secure: true,
+       // sameSite: "None",
+	      //        secure: true,
       });
       accesstoken = sign(payload, process.env.JWTSALT, {
         expiresIn: "15m",
       });
-      return res.json({ status: true, accesstoken, type, changedpass });
+      return res.json({ status: true, accesstoken, type, changedpass,id:user.id });
     }
 
     return res.send({ status: false, msg: "Username or Password incorrect" });

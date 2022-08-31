@@ -11,16 +11,26 @@ import { marknoptifReadRoute } from "utils/APIRoutes";
 const generate_notif = (data, entity, description, emetteur, id) => {
   switch (entity) {
     case "Request":
-      const cours = data.Request.Cour.nom;
-      const notif_component = {
+      if (data.Request !== null) {
+        const cours = data.Request.Cour.nom;
+        const notif_component = {
+          id,
+          icon: <Icon>warning</Icon>,
+          route: "/requests",
+          label: description,
+          transmitter: emetteur,
+          subject: cours,
+        };
+        return notif_component;
+      }
+      return{
         id,
         icon: <Icon>warning</Icon>,
         route: "/requests",
         label: description,
         transmitter: emetteur,
-        subject: cours,
+        subject: "",
       };
-      return notif_component;
 
     default:
       break;
@@ -33,7 +43,7 @@ export const markRead = async (notifId) => {
 
 export default function Data() {
   const [controller, dispatch] = useMaterialUIController();
-  const { accountType } = controller;
+  const { accountType,userId } = controller;
 
   const [notifs, setNotifs] = useState(null);
 
@@ -57,11 +67,22 @@ export default function Data() {
 
   // Update Notifs using ws
   useEffect(() => {
-    socket.current = io("http://127.0.0.1:8000");
+    socket.current = io("ws://102.50.245.168:58356/ws");
+
   }, [socket]);
 
   useEffect(() => {
-    socket.current.on("notif", async () => {
+     const socket_=new WebSocket("ws://102.50.245.168:58356/ws")
+	  socket_.onopen = function(e) {
+	  socket_.send(JSON.stringify({
+		    type: "join",
+		  username:userId
+	  }));
+	  }
+	  socket_.addEventListener('message',async (event) => {
+		      console.log('Message from server ', event.data);
+     const  data=JSON.parse(event.data);
+		  if(data.type==="notif"){
       let route;
       if (accountType === "Societe") {
         route = getNotifsSocRoute;
@@ -71,8 +92,10 @@ export default function Data() {
       const { data } = await axios.post(route);
       setNotifs(data);
       setChangedNotif(dispatch, data.length);
-    });
+		  }});
   }, [socket]);
+
+
 
   const notificationsData = [];
 

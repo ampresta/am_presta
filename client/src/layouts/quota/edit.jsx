@@ -25,15 +25,9 @@ import {
 import { useMaterialUIController, setUpdater } from "context";
 
 function AddQuota({ openAddModel, companyID }) {
-  const [providers, setProviders] = useState([
-    {
-      id: "",
-      nom: "",
-      quota: "",
-    },
-  ]);
+  const [providers, setProviders] = useState([]);
 
-  const [quota, setQuota] = useState(0);
+  // const [quota, setQuota] = useState(0);
   const [result, setResult] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -42,33 +36,23 @@ function AddQuota({ openAddModel, companyID }) {
 
   useEffect(() => {
     const getAllPartners = async () => {
-      const { data } = await axios.post(AllQuotaRoute);
-      if (data.status) {
-        setQuota(data.quotas);
-        const filter = data.quotas.reduce((r, a) => {
-          r[a.SocieteId] = r[a.SocieteId] || [];
-          r[a.SocieteId].push(a);
-          return r;
-        }, Object.create(null));
-        setResult(filter[companyID]);
+      axios.post(AllQuotaRoute, { SocieteId: companyID }).then((response) => {
+        const { data } = response;
+        let temp = [];
+        data.map((provider) => {
+          let quota = 0;
+          if (provider.Quota.length > 0) {
+            quota = provider.Quota[0].quota;
+          }
+          temp.push({
+            id: provider.id,
+            nom: provider.nom,
+            quota: quota,
+          });
+        });
+        setProviders(temp);
         setLoading(true);
-      }
-    };
-    getAllPartners();
-  }, []);
-
-  console.log("ID aba", companyID);
-
-  // result.map((item, key) => console.log(result[key].quota));
-
-  useEffect(() => {
-    const getAllPartners = async () => {
-      const { data } = await axios.get(allPartnersRoute);
-      let temp = [];
-      data.map((provider) =>
-        temp.push({ id: provider.id, nom: provider.nom, quota })
-      );
-      setProviders(temp);
+      });
     };
     getAllPartners();
   }, []);
@@ -100,7 +84,7 @@ function AddQuota({ openAddModel, companyID }) {
     values[index].quota = quota;
     setProviders(values);
   };
-
+  console.log(loading);
   return (
     <Card sx={{ mt: "50px" }}>
       {loading && (
@@ -119,7 +103,7 @@ function AddQuota({ openAddModel, companyID }) {
             mb={1}
           >
             <MDTypography variant="h6" color="white">
-              {quota.length !== 0 ? "Add Quota" : "Edit Quota"}
+              Edit Quota
             </MDTypography>
 
             <MDButton
@@ -160,14 +144,7 @@ function AddQuota({ openAddModel, companyID }) {
                       variant="outlined"
                       fullWidth
                       name="quota"
-                      defaultValue={
-                        loading &&
-                        Array.isArray(result) &&
-                        result.length > 0 &&
-                        result[index]
-                          ? result[index].quota
-                          : 0
-                      } // <--- hadi ra Vri walakin render laho ra2y akhar
+                      defaultValue={provider.quota} // <--- hadi ra Vri walakin render laho ra2y akhar
                       onChange={(event) => handleChange(index, event)}
                     />
                   </MDBox>

@@ -3,4 +3,6 @@ client/node_modules/
 server/.env
 server/config/config.json
 server/.env
-
+logs/*
+logs
+*.swp
