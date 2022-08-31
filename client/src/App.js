@@ -156,7 +156,10 @@ function App() {
         {/* {<Route path="*" element={<Navigate to="/dashboard" />} />} */}
 
         {!accountType && loadingType !== true && (
-          <Route path="*" element={<Navigate to="/login" />} />
+          <Route
+            path="*"
+            element={<Navigate to="/login" state={{ prevPath: pathname }} />}
+          />
         )}
       </Routes>
     </ThemeProvider>
