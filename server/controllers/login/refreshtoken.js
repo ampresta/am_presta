@@ -34,12 +34,12 @@ module.exports = async (req, res) => {
     });
     res.cookie("jbid", refreshtoken, {
       httpOnly: true,
-//      secure: true,
-  //    sameSite: "None",
+      secure: true,
+      sameSite: "None",
     });
     return res.send({
       status: true,
-	    id:payload.user_id,
+      id: payload.user_id,
       accesstoken,
       type: payload.type,
       changedpass,
