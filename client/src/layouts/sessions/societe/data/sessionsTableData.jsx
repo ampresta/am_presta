@@ -39,6 +39,17 @@ export default function Data() {
       nom: "",
     },
   ]);
+  const [filterby, setFilterBy] = useState(null);
+
+  const filterSessions = (providerId) => {
+    if (providerId === null || providerId === -1) {
+      return allSessions;
+    } else {
+      return allSessions.filter(
+        (session) => session.Cour.Provider.id === providerId
+      );
+    }
+  };
 
   const [controller] = useMaterialUIController();
 
@@ -47,6 +58,8 @@ export default function Data() {
   useEffect(() => {
     const getAllSessions = async () => {
       const { data } = await axios.get(allSessionsRoute);
+      console.log(data);
+
       setAllSessions(data);
     };
     getAllSessions();
@@ -57,6 +70,7 @@ export default function Data() {
       const { data } = await axios.get(allPartnersRoute);
       let temp = [];
       data.map((provider) => temp.push({ id: provider.id, nom: provider.nom }));
+      temp.unshift({ id: -1, nom: "ALL" });
       setProviders(temp);
     };
     getAllPartners();
@@ -196,9 +210,8 @@ export default function Data() {
               size="small"
               color="success"
               sx={{ width: "100%" }}
-              href={`https://www.google.com/search?q=${provider.nom}`}
               target="_blank"
-              onClick={() => console.log(provider.id)}
+              onClick={() => setFilterBy(provider.id)}
             >
               {provider.nom}
             </MDButton>
@@ -210,7 +223,7 @@ export default function Data() {
   if (allSessions.length === 0 || !Array.isArray(allSessions)) {
     sessions.rows.push({ author: "No Sessions Available" });
   } else {
-    allSessions.map((session) =>
+    filterSessions(filterby).map((session) =>
       sessions.rows.push({
         author: (
           <Company

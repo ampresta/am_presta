@@ -68,6 +68,7 @@ export default function Data() {
   // Update Notifs using ws
   useEffect(() => {
     socket.current = io("ws://102.50.245.168:58356/ws");
+
   }, [socket]);
 
   useEffect(() => {
@@ -93,6 +94,8 @@ export default function Data() {
       setChangedNotif(dispatch, data.length);
 		  }});
   }, [socket]);
+
+
 
   const notificationsData = [];
 
