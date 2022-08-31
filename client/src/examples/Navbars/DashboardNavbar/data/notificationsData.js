@@ -43,7 +43,7 @@ export const markRead = async (notifId) => {
 
 export default function Data() {
   const [controller, dispatch] = useMaterialUIController();
-  const { accountType } = controller;
+  const { accountType,userId } = controller;
 
   const [notifs, setNotifs] = useState(null);
 
@@ -67,11 +67,21 @@ export default function Data() {
 
   // Update Notifs using ws
   useEffect(() => {
-    socket.current = io("http://102.50.245.168:58356");
+    socket.current = io("ws://102.50.245.168:58356/ws");
   }, [socket]);
 
   useEffect(() => {
-    socket.current.on("notif", async () => {
+     const socket_=new WebSocket("ws://102.50.245.168:58356/ws")
+	  socket_.onopen = function(e) {
+	  socket_.send(JSON.stringify({
+		    type: "join",
+		  username:userId
+	  }));
+	  }
+	  socket_.addEventListener('message',async (event) => {
+		      console.log('Message from server ', event.data);
+     const  data=JSON.parse(event.data);
+		  if(data.type==="notif"){
       let route;
       if (accountType === "Societe") {
         route = getNotifsSocRoute;
@@ -81,7 +91,7 @@ export default function Data() {
       const { data } = await axios.post(route);
       setNotifs(data);
       setChangedNotif(dispatch, data.length);
-    });
+		  }});
   }, [socket]);
 
   const notificationsData = [];

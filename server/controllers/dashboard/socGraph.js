@@ -79,21 +79,21 @@ module.exports = async (req, res) => {
     let results = "0".repeat(length).split("");
     if (chart.length > 0) {
       const date = Date();
-      console.log(date);
+       // (date);
       const new_date = new Date(date);
       final_year = new_date.getFullYear();
       final_month = new_date.getMonth() + 1;
       d = chart.slice(-length);
-      console.log("heeey", index, d);
+       // ("heeey", index, d);
       d_length = d.length;
-      console.log(final_year, final_month);
+       // (final_year, final_month);
       m = final_month;
       y = final_year;
       res_index = 1;
       d_index = d.length - 1;
       while (true) {
         val = 0;
-        console.log(index, d[d_index], m, y);
+         // (index, d[d_index], m, y);
         if (m == parseInt(d[d_index].month) && y == parseInt(d[d_index].year)) {
           val = parseInt(d[d_index].count);
           d_index--;
@@ -102,9 +102,9 @@ module.exports = async (req, res) => {
           }
         }
         results[length - res_index] = val;
-        console.log("inside", results, val, length - res_index);
+         // ("inside", results, val, length - res_index);
         res_index++;
-        // console.log(res_index);
+        //  // (res_index);
         if (res_index == d_length + 1) {
           break;
         }
@@ -114,10 +114,10 @@ module.exports = async (req, res) => {
           y--;
         }
       }
-      // console.log(length, d_length);
+      //  // (length, d_length);
     }
     result.push(results);
-    console.log("result", index, results);
+     // ("result", index, results);
   }
   return res.send({
     status: true,
