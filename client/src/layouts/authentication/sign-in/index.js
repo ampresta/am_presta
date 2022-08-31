@@ -36,7 +36,13 @@ function Basic(props) {
 
   useEffect(() => {
     if (getAccessToken() !== "") {
-      if (state && state.prevPath && state.prevPath !== "/login") {
+      console.log(state);
+      if (
+        state &&
+        state.prevPath &&
+        state.prevPath !== "/" &&
+        state.prevPath !== "/login"
+      ) {
         navigate(state.prevPath);
       } else navigate("/dashboard");
     }
