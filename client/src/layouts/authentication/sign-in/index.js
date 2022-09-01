@@ -28,15 +28,23 @@ import {
   setChangedPassword,
 } from "context";
 
-function Basic() {
+function Basic(props) {
   const navigate = useNavigate();
-
+  const { state } = useLocation();
   const [controller, dispatch] = useMaterialUIController();
   const { loadingType } = controller;
 
   useEffect(() => {
     if (getAccessToken() !== "") {
-      navigate("/dashboard");
+      console.log(state);
+      if (
+        state &&
+        state.prevPath &&
+        state.prevPath !== "/" &&
+        state.prevPath !== "/login"
+      ) {
+        navigate(state.prevPath);
+      } else navigate("/dashboard");
     }
   }, [loadingType]);
 

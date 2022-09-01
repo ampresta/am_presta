@@ -18,7 +18,7 @@ import { allCoursesRoute, baseURL, DeleteInstances } from "utils/APIRoutes";
 import ConfirmPopup from "components/ConfirmPopup";
 
 // Material Dashboard 2 React contexts
-import { setUpdater, useMaterialUIController } from "context";
+import { setUpdater, useMaterialUIController, setToastInfos } from "context";
 import axiosAuth from "services/authAxios";
 
 export default function Data(setOpenAddModel) {
@@ -30,7 +30,7 @@ export default function Data(setOpenAddModel) {
   const [sendEdit, setSendEdit] = useState([]);
 
   const [controller, dispatch] = useMaterialUIController();
-  const { updater } = controller;
+  const { updater, toastInfos } = controller;
 
   useEffect(() => {
     const getAllCourses = async () => {
@@ -49,10 +49,18 @@ export default function Data(setOpenAddModel) {
     });
     if (data.status) {
       setUpdater(dispatch, !updater);
+      setToastInfos(dispatch, {
+        color: "error",
+        message: "Course Deleted Successfully",
+      });
       setOpenSnackBar(true);
       setConfirmModel(!confirmModel);
     } else {
-      alert(data.msg);
+      setToastInfos(dispatch, {
+        color: "warning",
+        message: data.msg,
+      });
+      setOpenSnackBar(true);
     }
   };
 
@@ -146,8 +154,8 @@ export default function Data(setOpenAddModel) {
 
     notifications: openSnackBar && (
       <MySnackBar
-        color="error"
-        title="Course Deleted Succesfully"
+        color={toastInfos.color}
+        title={toastInfos.message}
         open={openSnackBar}
         close={() => setOpenSnackBar(!openSnackBar)}
       />

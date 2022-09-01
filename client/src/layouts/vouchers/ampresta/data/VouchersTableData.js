@@ -3,6 +3,7 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
 import MDButton from "components/MDButton";
+import MySnackBar from "components/MySnackBar";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -14,23 +15,26 @@ import { useState, useEffect } from "react";
 import axiosAuth from "services/authAxios";
 
 // Api Endpoint
-import { baseURL, DeleteInstances } from "utils/APIRoutes";
+import {
+  baseURL,
+  DeleteInstances,
+  browseVouchersAdminRoute,
+} from "utils/APIRoutes";
 
 // ConfirmPoppup component
 import ConfirmPopup from "components/ConfirmPopup";
 
 // Material Dashboard 2 React contexts
-import { useMaterialUIController } from "context";
-import { browseVouchersAdminRoute } from "utils/APIRoutes";
+import { useMaterialUIController, setUpdater, setToastInfos } from "context";
 
 export default function Data() {
   const [allVouchers, setAllVouchers] = useState([]);
   const [confirmModel, setConfirmModel] = useState(false);
   const [tempPartnerId, setTempPartnerId] = useState(0);
+  const [openSnackBar, setOpenSnackBar] = useState(false);
 
-  const [controller] = useMaterialUIController();
-
-  const { updater } = controller;
+  const [controller, dispatch] = useMaterialUIController();
+  const { updater, toastInfos } = controller;
 
   useEffect(() => {
     const getAllVouchers = async () => {
@@ -45,11 +49,22 @@ export default function Data() {
       model: "Voucher",
       id: id,
     });
+
     if (data.status) {
       setAllVouchers(allVouchers.filter((voucher) => voucher.id !== id));
+      setUpdater(dispatch, !updater);
+      setToastInfos(dispatch, {
+        color: "error",
+        message: "Voucher Deleted Successfully",
+      });
+      setOpenSnackBar(true);
       setConfirmModel(!confirmModel);
     } else {
-      alert(data.msg);
+      setToastInfos(dispatch, {
+        color: "warning",
+        message: data.msg,
+      });
+      setOpenSnackBar(true);
     }
   };
 
@@ -100,48 +115,56 @@ export default function Data() {
       />
     ),
 
+    notifications: openSnackBar && (
+      <MySnackBar
+        color={toastInfos.color}
+        title={toastInfos.message}
+        open={openSnackBar}
+        close={() => setOpenSnackBar(!openSnackBar)}
+      />
+    ),
+
     rawData: allVouchers,
   };
-  try {
-    allVouchers.map((voucher) =>
-      vouchers.rows.push({
-        provider: (
-          <Company name={voucher.Provider.nom} image={voucher.Provider.image} />
-        ),
 
-        societe: (
+  allVouchers.map((voucher) =>
+    vouchers.rows.push({
+      provider: (
+        <Company name={voucher.Provider.nom} image={voucher.Provider.image} />
+      ),
+
+      societe: (
+        <MDTypography variant="caption" color="text" fontWeight="medium">
+          {voucher.Societe.name}
+        </MDTypography>
+      ),
+      value: (
+        <MDTypography variant="caption" color="text" fontWeight="medium">
+          {voucher.code}
+        </MDTypography>
+      ),
+      edit: (
+        <MDTypography variant="caption" color="text" fontWeight="medium">
+          <Icon fontSize="small">edit</Icon>
+        </MDTypography>
+      ),
+      delete: (
+        <MDButton
+          variant="text"
+          onClick={() => {
+            setConfirmModel(!confirmModel);
+            setTempPartnerId(voucher.id);
+          }}
+        >
           <MDTypography variant="caption" color="text" fontWeight="medium">
-            {voucher.Societe.name}
+            <Icon fontSize="small" color="primary">
+              delete
+            </Icon>
           </MDTypography>
-        ),
-        value: (
-          <MDTypography variant="caption" color="text" fontWeight="medium">
-            {voucher.code}
-          </MDTypography>
-        ),
-        edit: (
-          <MDTypography variant="caption" color="text" fontWeight="medium">
-            <Icon fontSize="small">edit</Icon>
-          </MDTypography>
-        ),
-        delete: (
-          <MDButton
-            variant="text"
-            onClick={() => {
-              setConfirmModel(!confirmModel);
-              setTempPartnerId(voucher.id);
-            }}
-          >
-            <MDTypography variant="caption" color="text" fontWeight="medium">
-              <Icon fontSize="small" color="primary">
-                delete
-              </Icon>
-            </MDTypography>
-          </MDButton>
-        ),
-      })
-    );
-  } catch (error) {}
+        </MDButton>
+      ),
+    })
+  );
 
   return vouchers;
 }

@@ -3,26 +3,27 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
 import MDBadge from "components/MDBadge";
+import MDButton from "components/MDButton";
 import MySnackBar from "components/MySnackBar";
+
+// @mui icons
+import Icon from "@mui/material/Icon";
 
 // Endpoint
 import { allCompaniesRoute, baseURL, DeleteInstances } from "utils/APIRoutes";
+import { dateFormat } from "utils/Helper";
 
 //React Hook
 import { useState, useEffect } from "react";
 
 // Material Dashboard 2 React contexts
-import { useMaterialUIController, setUpdater } from "context";
+import { useMaterialUIController, setUpdater, setToastInfos } from "context";
 
 // Axios
-// @mui icons
-import Icon from "@mui/material/Icon";
-import { dateFormat } from "utils/Helper";
+import axiosAuth from "services/authAxios";
 
 // ConfirmPoppup component
 import ConfirmPopup from "components/ConfirmPopup";
-import MDButton from "components/MDButton";
-import axiosAuth from "services/authAxios";
 
 export default function Data() {
   const [allCompanies, setAllCompanies] = useState([]);
@@ -32,7 +33,7 @@ export default function Data() {
   const [openSnackBar, setOpenSnackBar] = useState(false);
 
   const [controller, dispatch] = useMaterialUIController();
-  const { updater } = controller;
+  const { updater, toastInfos } = controller;
 
   useEffect(() => {
     const getAllCompanies = async () => {
@@ -54,10 +55,18 @@ export default function Data() {
     });
     if (data.status) {
       setUpdater(dispatch, !updater);
+      setToastInfos(dispatch, {
+        color: "error",
+        message: "Company Deleted Successfully",
+      });
       setOpenSnackBar(true);
       setConfirmModel(!confirmModel);
     } else {
-      alert(data.msg);
+      setToastInfos(dispatch, {
+        color: "warning",
+        message: data.msg,
+      });
+      setOpenSnackBar(true);
     }
   };
 
@@ -101,8 +110,8 @@ export default function Data() {
 
     notifications: openSnackBar && (
       <MySnackBar
-        color="error"
-        title="Company Deleted Successfully"
+        color={toastInfos.color}
+        title={toastInfos.message}
         open={openSnackBar}
         close={() => setOpenSnackBar(!openSnackBar)}
       />
@@ -134,14 +143,7 @@ export default function Data() {
       ),
       status: loading && parseStatus(company),
       edit: (
-        <MDButton
-          variant="outlined"
-          onClick={() => {
-            setConfirmModel(!confirmModel);
-            setTempCompanyId(company.id);
-          }}
-          disabled={company.deletedAt}
-        >
+        <MDButton variant="outlined" disabled={company.deletedAt}>
           <MDTypography variant="caption" color="text" fontWeight="medium">
             <Icon fontSize="small">edit</Icon>
           </MDTypography>

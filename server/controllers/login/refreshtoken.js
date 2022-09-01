@@ -39,6 +39,7 @@ module.exports = async (req, res) => {
     });
     return res.send({
       status: true,
+      id: payload.user_id,
       accesstoken,
       type: payload.type,
       changedpass,

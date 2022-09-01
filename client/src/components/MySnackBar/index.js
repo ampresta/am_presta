@@ -18,14 +18,14 @@ export default function MySnackBar({ title, color, open, close }) {
       <Snackbar
         open={open}
         TransitionComponent={Fade}
-        autoHideDuration={4000}
+        autoHideDuration={3000}
         onClose={close}
         anchorOrigin={{
           vertical: "top",
           horizontal: "right",
         }}
       >
-        <MDBox minWidth="20rem" maxWidth="100%" shadow="xs" borderRadius="md">
+        <MDBox minWidth="20rem" shadow="xs" borderRadius="md">
           <Alert onClose={close} severity={color}>
             {title}
           </Alert>

@@ -3,6 +3,7 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
 import MDButton from "components/MDButton";
+import MySnackBar from "components/MySnackBar";
 
 import Icon from "@mui/material/Icon";
 // React Hooks
@@ -13,31 +14,31 @@ import { dateFormat } from "utils/Helper";
 
 // Api Endpoint
 import axiosAuth from "services/authAxios";
-import { allRequestsRoute, baseURL } from "utils/APIRoutes";
+import { allRequestsRoute, baseURL, RefuseRequestRoute } from "utils/APIRoutes";
 
 // ConfirmPoppup component
 import ConfirmPopup from "components/ConfirmPopup";
 
 // Material Dashboard 2 React contexts
-import { useMaterialUIController, setOpenRequestModel } from "context";
+import {
+  useMaterialUIController,
+  setOpenRequestModel,
+  setToastInfos,
+} from "context";
 
 // ChooseSession
 import ChooseSession from "../ChooseSession";
-import { RefuseRequestRoute } from "utils/APIRoutes";
 
 export default function Data() {
-  // temp data for static display
-
   const [allRequests, setAllRequests] = useState([]);
   const [confirmModel, setConfirmModel] = useState(false);
   const [tempCourseId, setTempCourseId] = useState(0);
-
   const [confirmCourseId, setconfirmCourseId] = useState(0);
   const [collabId, setcollabId] = useState(0);
+  const [openSnackBar, setOpenSnackBar] = useState(false);
 
   const [controller, dispatch] = useMaterialUIController();
-
-  const { openRequestModel } = controller;
+  const { openRequestModel, toastInfos } = controller;
 
   useEffect(() => {
     const getAllRequests = async () => {
@@ -53,9 +54,18 @@ export default function Data() {
     });
     if (data.status) {
       setAllRequests(allRequests.filter((course) => course.id !== id));
+      setToastInfos(dispatch, {
+        color: "error",
+        message: "Request Refused",
+      });
+      setOpenSnackBar(true);
       setConfirmModel(!confirmModel);
     } else {
-      alert(data.msg);
+      setToastInfos(dispatch, {
+        color: "warning",
+        message: data.msg,
+      });
+      setOpenSnackBar(true);
     }
   };
 
@@ -116,6 +126,16 @@ export default function Data() {
         Id_Item={tempCourseId}
       />
     ),
+
+    notifications: openSnackBar && (
+      <MySnackBar
+        color={toastInfos.color}
+        title={toastInfos.message}
+        open={openSnackBar}
+        close={() => setOpenSnackBar(!openSnackBar)}
+      />
+    ),
+
     sessions: openRequestModel && (
       <ChooseSession
         cours={confirmCourseId}

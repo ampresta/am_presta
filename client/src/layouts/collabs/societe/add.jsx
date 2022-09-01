@@ -18,11 +18,11 @@ import DropFileInput from "components/DropFileInput/DropFileInput";
 import axiosAuth from "services/authAxios";
 
 // Material Dashboard 2 React contexts
-import { useMaterialUIController, setUpdater } from "context";
+import { useMaterialUIController, setUpdater, setToastInfos } from "context";
 
 import { addCollabsRoute, uploadRoute } from "utils/APIRoutes";
 
-function AddCollab({ closeAddModel }) {
+function AddCollab({ closeAddModel, openSnackBar }) {
   const [formErrors, setFormErrors] = useState({
     nom: "",
     prenom: "",
@@ -42,7 +42,6 @@ function AddCollab({ closeAddModel }) {
   const { updater } = controller;
 
   const handleSubmit = async (event) => {
-    const { nom } = collaborator;
     event.preventDefault();
     setFormErrors(validate(collaborator));
     if (Object.keys(validate(collaborator)).length === 0) {
@@ -75,8 +74,14 @@ function AddCollab({ closeAddModel }) {
 
         closeAddModel(false);
         setUpdater(dispatch, !updater);
+        setToastInfos(dispatch, {
+          color: "success",
+          message: "Collaborator Added Successfully",
+        });
+        openSnackBar(true);
       } else {
-        alert(data.msg);
+        setToastInfos(dispatch, { color: "warning", message: data.msg });
+        openSnackBar(true);
       }
     }
   };

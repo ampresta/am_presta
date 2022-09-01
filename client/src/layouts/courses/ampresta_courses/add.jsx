@@ -23,7 +23,7 @@ import { useState } from "react";
 import axiosAuth from "services/authAxios";
 
 // Material Dashboard 2 React contexts
-import { useMaterialUIController, setUpdater } from "context";
+import { useMaterialUIController, setUpdater, setToastInfos } from "context";
 
 import { useEffect } from "react";
 import {
@@ -63,7 +63,6 @@ function AddCourses({ closeAddModel, openSnackBar, sendEdit }) {
   ]);
 
   const [controller, dispatch] = useMaterialUIController();
-
   const { updater } = controller;
 
   useEffect(() => {
@@ -109,14 +108,20 @@ function AddCourses({ closeAddModel, openSnackBar, sendEdit }) {
 
         closeAddModel(false);
         setUpdater(dispatch, !updater);
+        setToastInfos(dispatch, {
+          color: "success",
+          message: "Course Added Successfully",
+        });
         openSnackBar(true);
       } else {
-        alert(data.msg);
+        setToastInfos(dispatch, {
+          color: "warning",
+          message: data.msg,
+        });
+        openSnackBar(true);
       }
     }
   };
-
-  console.log(sendEdit);
 
   const handleChange = (event) => {
     const key = event.target.name;

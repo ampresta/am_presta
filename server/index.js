@@ -3,8 +3,10 @@ const morgan = require("morgan");
 const express = require("express");
 const app = express();
 const server = require("http").createServer(app);
-const io = require("./socket.js").init(server);
-
+//const  ioApp = require('http').createServer(handler);
+//console.log("server",ioApp)
+// const   io  =require( "socket.io-client");
+//const io = require("./socket.js").init(server);
 const db = require("./config/database");
 const login = require("./routes/login");
 const register = require("./routes/register");
@@ -28,6 +30,7 @@ const collaborateur = require("./routes/collaborateur");
 const quota = require("./routes/quota");
 const GetTypeController = require("./controllers/login/GetTypeController");
 const changePhotoMiddleware = require("./middlewares/changePhotoMiddleware");
+const sockets = require("./socket.js");
 //Database Setup
 try {
   db.authenticate();
@@ -48,7 +51,7 @@ app.use(cors({ credentials: true, origin: "http://127.0.0.1:3000" }));
 app.use(morgan("tiny"));
 app.use(express.json());
 require("dotenv").config();
-
+// app.set("trust proxy", true);
 // FILE STORAGE
 const STORAGE = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -87,14 +90,9 @@ app.use("/api/media", express.static("media"));
 // Listener
 
 // Sockets
-io.on('connection', (socket) => {
-  console.log('Connection success', socket.id);
-
-  socket.on('disconnect', () => {
-    console.log('Connection disconnected', socket.id);
-  });
-})
+function handler(req, res) {
+  res.writeHead(200).end({});
+}
+//ioApp.listen(8888);
 
 server.listen(PORT, () => console.log(`Server listening on ${PORT}...`));
-
-module.export = io;

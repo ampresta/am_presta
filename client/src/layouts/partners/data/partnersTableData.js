@@ -21,7 +21,7 @@ import { baseURL, allPartnersRoute, DeleteInstances } from "utils/APIRoutes";
 import ConfirmPopup from "components/ConfirmPopup";
 
 // Material Dashboard 2 React contexts
-import { useMaterialUIController } from "context";
+import { useMaterialUIController, setToastInfos } from "context";
 
 export default function Data(setOpenAddModel) {
   const [allPartners, setAllPartners] = useState([]);
@@ -31,8 +31,8 @@ export default function Data(setOpenAddModel) {
 
   const [sendEdit, setSendEdit] = useState([]);
 
-  const [controller] = useMaterialUIController();
-  const { updater } = controller;
+  const [controller, dispatch] = useMaterialUIController();
+  const { updater, toastInfos } = controller;
 
   useEffect(() => {
     const getAllPartners = async () => {
@@ -50,9 +50,18 @@ export default function Data(setOpenAddModel) {
     if (data.status) {
       setOpenSnackBar(true);
       setAllPartners(allPartners.filter((course) => course.id !== id));
+      setToastInfos(dispatch, {
+        color: "error",
+        message: "Partner Deleted Successfully",
+      });
+      setOpenSnackBar(true);
       setConfirmModel(!confirmModel);
     } else {
-      alert(data.msg);
+      setToastInfos(dispatch, {
+        color: "warning",
+        message: data.msg,
+      });
+      setOpenSnackBar(true);
     }
   };
 
@@ -106,8 +115,8 @@ export default function Data(setOpenAddModel) {
 
     notifications: openSnackBar && (
       <MySnackBar
-        color="error"
-        title="Partner Deleted Successfully"
+        color={toastInfos.color}
+        title={toastInfos.message}
         open={openSnackBar}
         close={() => setOpenSnackBar(!openSnackBar)}
       />

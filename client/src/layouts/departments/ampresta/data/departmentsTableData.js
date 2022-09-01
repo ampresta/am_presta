@@ -3,6 +3,7 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
 import MDBadge from "components/MDBadge";
+import MySnackBar from "components/MySnackBar";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -20,16 +21,16 @@ import { allDepartmentsAdminRoute, DeleteInstances } from "utils/APIRoutes";
 import ConfirmPopup from "components/ConfirmPopup";
 
 // Material Dashboard 2 React contexts
-import { setUpdater, useMaterialUIController } from "context";
+import { setUpdater, useMaterialUIController, setToastInfos } from "context";
 
 export default function Data() {
   const [AllDepartements, setAllDepartements] = useState([]);
   const [confirmModel, setConfirmModel] = useState(false);
   const [tempDepartmentId, setTempDepartmentId] = useState(0);
+  const [openSnackBar, setOpenSnackBar] = useState(false);
 
   const [controller, dispatch] = useMaterialUIController();
-
-  const { updater } = controller;
+  const { updater, toastInfos } = controller;
 
   useEffect(() => {
     const getAllDepartements = async () => {
@@ -49,22 +50,21 @@ export default function Data() {
     });
     if (data.status) {
       setUpdater(dispatch, !updater);
-      // AllDepartements.filter((departement) => departement.id !== id)
+      setToastInfos(dispatch, {
+        color: "error",
+        message: "Department Deleted Successfully",
+      });
+      setOpenSnackBar(true);
       setConfirmModel(!confirmModel);
     } else {
-      alert(data.msg);
+      setToastInfos(dispatch, {
+        color: "warning",
+        message: data.msg,
+      });
+      setOpenSnackBar(true);
     }
   };
 
-  // const Company = ({ name }) => (
-  //   <MDBox display="flex" alignItems="center" lineHeight={1}>
-  //     <MDBox lineHeight={1}>
-  //       <MDTypography display="block" variant="button" fontWeight="medium">
-  //         {name}
-  //       </MDTypography>
-  //     </MDBox>
-  //   </MDBox>
-  // );VV
   const Company = ({ name, company }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDBox ml={2} lineHeight={1}>
@@ -75,6 +75,7 @@ export default function Data() {
       </MDBox>
     </MDBox>
   );
+
   let departements = {
     columns: [
       {
@@ -109,11 +110,20 @@ export default function Data() {
         Id_Item={tempDepartmentId}
       />
     ),
+
+    notifications: openSnackBar && (
+      <MySnackBar
+        color={toastInfos.color}
+        title={toastInfos.message}
+        open={openSnackBar}
+        close={() => setOpenSnackBar(!openSnackBar)}
+      />
+    ),
   };
 
   const parseStatus = (partner) => {
     if (partner.deletedAt) {
-      return <MDBadge badgeContent="Deleted" color="primary" size="md" />;
+      return <MDBadge badgeContent="Deleted" color="error" size="md" />;
     } else {
       return <MDBadge badgeContent="Active" color="success" size="md" />;
     }
@@ -129,22 +139,21 @@ export default function Data() {
         </MDTypography>
       ),
       Number_of_challenges: parseStatus(department),
-      edit: !department.deletedAt ? (
-        <MDTypography variant="caption" color="text" fontWeight="medium">
-          <Icon fontSize="small">edit</Icon>
-        </MDTypography>
-      ) : (
-        <MDTypography variant="caption" color="text" fontWeight="medium">
-          <Icon fontSize="small">edit</Icon>
-        </MDTypography>
+      edit: (
+        <MDButton variant="outlined" disabled={department.deletedAt}>
+          <MDTypography variant="caption" color="text" fontWeight="medium">
+            <Icon fontSize="small">edit</Icon>
+          </MDTypography>
+        </MDButton>
       ),
-      delete: !department.deletedAt ? (
+      delete: (
         <MDButton
-          variant="text"
+          variant="outlined"
           onClick={() => {
             setConfirmModel(!confirmModel);
             setTempDepartmentId(department.id);
           }}
+          disabled={department.deletedAt}
         >
           <MDTypography variant="caption" color="text" fontWeight="medium">
             <Icon fontSize="small" color="primary">
@@ -152,12 +161,6 @@ export default function Data() {
             </Icon>
           </MDTypography>
         </MDButton>
-      ) : (
-        <MDTypography variant="caption" color="text" fontWeight="medium">
-          <Icon fontSize="small" color="secondary">
-            delete
-          </Icon>
-        </MDTypography>
       ),
     })
   );

@@ -2,17 +2,17 @@
 import Card from "@mui/material/Card";
 import Icon from "@mui/material/Icon";
 import FormHelperText from "@mui/material/FormHelperText";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
 
 //import UseState Hook
 import { useState, useEffect } from "react";
@@ -21,11 +21,11 @@ import { useState, useEffect } from "react";
 import axios from "services/authAxios";
 
 // Material Dashboard 2 React contexts
-import { useMaterialUIController, setUpdater } from "context";
+import { useMaterialUIController, setUpdater, setToastInfos } from "context";
 
 import { allCompanyCoursesRoute, addSessionsRoute } from "utils/APIRoutes";
 
-function AddSession({ closeAddModel }) {
+function AddSession({ closeAddModel, openSnackBar }) {
   const [formErrors, setFormErrors] = useState({
     nom: "",
     course: "",
@@ -55,7 +55,6 @@ function AddSession({ closeAddModel }) {
   const [courses, setCourses] = useState([]);
 
   const [controller, dispatch] = useMaterialUIController();
-
   const { updater } = controller;
 
   useEffect(() => {
@@ -81,8 +80,14 @@ function AddSession({ closeAddModel }) {
       if (data.status) {
         closeAddModel(false);
         setUpdater(dispatch, !updater);
+        setToastInfos(dispatch, {
+          color: "success",
+          message: "Session Added Successfully",
+        });
+        openSnackBar(true);
       } else {
-        alert(data.msg);
+        setToastInfos(dispatch, { color: "warning", message: data.msg });
+        openSnackBar(true);
       }
     }
   };

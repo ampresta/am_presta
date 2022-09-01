@@ -16,7 +16,12 @@ import axios from "services/authAxios";
 import { ChangePasswordRoute } from "utils/APIRoutes";
 import { validatepasswordRoute } from "utils/APIRoutes";
 
-function ChangePassword({ shadow }) {
+// Material Dashboard 2 React contexts
+import { useMaterialUIController, setToastInfos } from "context";
+
+function ChangePassword({ shadow, setOpenSnackBar }) {
+  const [, dispatch] = useMaterialUIController();
+
   const [formErrors, setFormErrors] = useState({
     current_password: "",
     new_password: "",
@@ -33,7 +38,20 @@ function ChangePassword({ shadow }) {
     const { new_password } = details;
     event.preventDefault();
     setFormErrors(validate(details));
-    await axios.post(ChangePasswordRoute, {password: new_password});
+    const { data } = await axios.post(ChangePasswordRoute, {
+      password: new_password,
+    });
+
+    if (data.status) {
+      setToastInfos(dispatch, {
+        color: "success",
+        message: "Password Updated Successfully",
+      });
+      setOpenSnackBar(true);
+    } else {
+      setToastInfos(dispatch, { color: "warning", message: data.msg });
+      setOpenSnackBar(true);
+    }
   };
 
   const handleChange = (event) => {

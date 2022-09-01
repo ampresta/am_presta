@@ -7,6 +7,7 @@ const {
   Cours,
   Collaborateur,
   Session,
+  Voucher,
 } = db.models;
 module.exports = async (req, res) => {
   const { model, id } = req.body;
@@ -24,6 +25,8 @@ module.exports = async (req, res) => {
     Model = Session;
   } else if (model == "Departement") {
     Model = Departement;
+  } else if (model == "Voucher") {
+    Model = Voucher;
   } else {
     return res.sendStatus(404);
   }

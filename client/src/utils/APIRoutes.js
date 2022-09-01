@@ -112,4 +112,3 @@ export const marknoptifReadRoute = `${baseURL}/notifs/readonenotif`;
 export const getProfileRoute = `${baseURL}/profile/`;
 export const updateProfileRoute = `${baseURL}/profile/update`;
 export const validatepasswordRoute = `${baseURL}/profile/validatepassword`;
-

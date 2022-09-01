@@ -17,10 +17,10 @@ import { useState } from "react";
 // import axiosAuth from "services/authAxios";
 import axios from "services/authAxios";
 
-// Material Dashboard 2 React contexts
-import { useMaterialUIController, setUpdater } from "context";
-
 import { registerRoute, uploadRoute } from "utils/APIRoutes";
+
+// Material Dashboard 2 React contexts
+import { useMaterialUIController, setUpdater, setToastInfos } from "context";
 
 function AddCompanies({ closeAddModel, openSnackBar }) {
   const [formErrors, setFormErrors] = useState({
@@ -40,10 +40,8 @@ function AddCompanies({ closeAddModel, openSnackBar }) {
   });
 
   const [file, setFile] = useState(null);
-  console.log(file);
 
   const [controller, dispatch] = useMaterialUIController();
-
   const { updater } = controller;
 
   const handleSubmit = async (event) => {
@@ -79,9 +77,14 @@ function AddCompanies({ closeAddModel, openSnackBar }) {
 
         closeAddModel(false);
         setUpdater(dispatch, !updater);
+        setToastInfos(dispatch, {
+          color: "success",
+          message: "Company Added Successfully",
+        });
         openSnackBar(true);
       } else {
-        alert(data.msg);
+        setToastInfos(dispatch, { color: "warning", message: data.msg });
+        openSnackBar(true);
       }
     }
   };

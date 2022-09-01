@@ -3,6 +3,7 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
 import MDButton from "components/MDButton";
+import MySnackBar from "components/MySnackBar";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -20,16 +21,16 @@ import { baseURL, DeleteInstances, browseCollabsRoute } from "utils/APIRoutes";
 import ConfirmPopup from "components/ConfirmPopup";
 
 // Material Dashboard 2 React contexts
-import { useMaterialUIController } from "context";
+import { useMaterialUIController, setToastInfos } from "context";
 
 export default function Data() {
   const [allCollabs, setAllCollabs] = useState([]);
   const [confirmModel, setConfirmModel] = useState(false);
   const [tempPartnerId, setTempPartnerId] = useState(0);
+  const [openSnackBar, setOpenSnackBar] = useState(false);
 
-  const [controller] = useMaterialUIController();
-
-  const { updater } = controller;
+  const [controller, dispatch] = useMaterialUIController();
+  const { updater, toastInfos } = controller;
 
   useEffect(() => {
     const getAllCollabs = async () => {
@@ -46,9 +47,18 @@ export default function Data() {
     });
     if (data.status) {
       setAllCollabs(allCollabs.filter((course) => course.id !== id));
+      setToastInfos(dispatch, {
+        color: "error",
+        message: "Collaborator Deleted Successfully",
+      });
+      setOpenSnackBar(true);
       setConfirmModel(!confirmModel);
     } else {
-      alert(data.msg);
+      setToastInfos(dispatch, {
+        color: "warning",
+        message: data.msg,
+      });
+      setOpenSnackBar(true);
     }
   };
 
@@ -88,12 +98,6 @@ export default function Data() {
         align: "center",
         width: "30%",
       },
-      // {
-      //   Header: "Departmenet",
-      //   accessor: "departmenet",
-      //   align: "center",
-      //   width: "30%",
-      // },
       { Header: "edit", accessor: "edit", align: "center", width: "3%" },
       { Header: "delete", accessor: "delete", align: "center", width: "3%" },
     ],
@@ -106,6 +110,15 @@ export default function Data() {
         onConfirmPopup={() => setConfirmModel(!confirmModel)}
         handleDetele={handleDelete}
         Id_Item={tempPartnerId}
+      />
+    ),
+
+    notifications: openSnackBar && (
+      <MySnackBar
+        color={toastInfos.color}
+        title={toastInfos.message}
+        open={openSnackBar}
+        close={() => setOpenSnackBar(!openSnackBar)}
       />
     ),
 
