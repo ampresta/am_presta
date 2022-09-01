@@ -4,6 +4,8 @@ const path = require("path");
 
 require("dotenv").config({ path: "../.env" });
 
+const baseURL = "https://institute-eca.ma";
+
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLEINT_SECRET = process.env.CLEINT_SECRET;
 const REDIRECT_URI = process.env.REDIRECT_URI;
@@ -53,15 +55,15 @@ class Email {
     societe,
     admin = false,
     logo = "",
-    url = "http://127.0.0.1:3000/login"
+    url = `${baseURL}/login`
   ) => {
     const options = {
       from: this.from_email,
       to: to_email,
       subject: `Welcome to ${societe}`,
       text: admin
-        ? `Hello ${username},\n\nYou have been successfully named admin of ${societe}.\n\nYour login is: ${username}.\n Your password is: ${password}\n\nYou can access the platform at ${url}.\n\nRegards,\n${societe}`
-        : `Hello ${username},\n\nYou have been successfully registered to ${societe}.\n\nYour login is: ${username}.\n Your password is: ${password}\n\nYou can access your courses using your institutional email: ${institutional}\n\nYou can access the platform at ${url}.\n\nRegards,\n${societe}`,
+        ? `Hello ${username},\n\nYou have been successfully named admin of ${societe}.\n\nYour login is: ${username}\n Your password is: ${password}\n\nYou can access the platform at ${url}.\n\nRegards,\n${societe}`
+        : `Hello ${username},\n\nYou have been successfully registered to ${societe}.\n\nYour login is: ${username}\n Your password is: ${password}\n\nTo access your courses on the correspanding pateforms, use your institutional email: ${institutional}\n\nYou can access the platform at ${url}.\n\nRegards,\n${societe}`,
       context: {
         username,
         password,
@@ -81,7 +83,7 @@ class Email {
     name,
     course,
     logo = "",
-    url = "http://127.0.0.1:3000/requests"
+    url = `${baseURL}/requests`
   ) => {
     const options = {
       from: this.from_email,
@@ -109,7 +111,7 @@ class Email {
     status,
     course,
     logo = "",
-    url = "http://127.0.0.1:3000/requests"
+    url = `${baseURL}/requests`
   ) => {
     const options = {
       from: this.from_email,
@@ -138,7 +140,7 @@ class Email {
     course,
     session,
     logo = "",
-    url = "http://127.0.0.1:3000/mySessions"
+    url = `${baseURL}/sessions`
   ) => {
     const options = {
       from: this.from_email,
@@ -166,7 +168,7 @@ class Email {
     to_email,
     session,
     logo = "",
-    url = "http://127.0.0.1:3000/mySessions"
+    url = `${baseURL}/sessions`
   ) => {
     const options = {
       from: this.from_email,
