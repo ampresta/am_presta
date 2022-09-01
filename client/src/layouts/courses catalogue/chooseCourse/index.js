@@ -12,12 +12,11 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 
 // Material Dashboard 2 React contexts
-import { useMaterialUIController, setUpdater } from "context";
+import { useMaterialUIController, setUpdater, setToastInfos } from "context";
 
 import Ratings from "components/Ratings";
 
 import axiosAuth from "services/authAxios";
-
 import { useParams } from "react-router-dom";
 
 import { useEffect, useState } from "react";
@@ -26,15 +25,17 @@ import {
   CoursesDetailsRoute,
   baseURL,
 } from "utils/APIRoutes";
+import MySnackBar from "components/MySnackBar";
 
 function Partners() {
+  const [controller, dispatch] = useMaterialUIController();
+  const { updater, toastInfos } = controller;
+
   const { id } = useParams();
   const [details, setDetails] = useState([]);
   const [loading, setLoading] = useState(true);
-
   const [enrolled, setEnrolled] = useState(false);
-  const [controller, dispatch] = useMaterialUIController();
-  const { updater } = controller;
+  const [openSnackBar, setOpenSnackBar] = useState(false);
 
   useEffect(() => {
     const getDetail = async () => {
@@ -56,9 +57,20 @@ function Partners() {
     if (data.status) {
       setUpdater(dispatch, updater);
       setEnrolled(true);
-      console.log("requeest sent");
+      setToastInfos(dispatch, {
+        color: "success",
+        message: "Request Sent Successfully",
+      });
+      setOpenSnackBar(true);
+    } else {
+      setToastInfos(dispatch, {
+        color: "warning",
+        message: data.msg,
+      });
+      setOpenSnackBar(true);
     }
   };
+
   const renderButton = () => {
     if (!loading && (details.request > 0 || enrolled)) {
       return (
@@ -193,10 +205,17 @@ function Partners() {
               </MDBox>
             </Grid>
           </Grid>
-
-          <MDBox></MDBox>
         </Card>
       </MDBox>
+
+      {openSnackBar && (
+        <MySnackBar
+          color={toastInfos.color}
+          title={toastInfos.message}
+          open={openSnackBar}
+          close={() => setOpenSnackBar(!openSnackBar)}
+        />
+      )}
     </DashboardLayout>
   );
 }

@@ -225,7 +225,7 @@ export default function Data(setOpenAddModel) {
             setConfirmModel(!confirmModel);
             setTempCourseId(course.id);
           }}
-          disabled={course.deletedAt !== null}
+          disabled={course.deletedAt}
         >
           <MDTypography variant="caption" color="text" fontWeight="medium">
             <Icon fontSize="small" color="primary">

@@ -5,14 +5,13 @@ import Card from "@mui/material/Card";
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-import MDButton from "components/MDButton";
 
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 
 // Material Dashboard 2 React contexts
-import { useMaterialUIController, setUpdater } from "context";
+import { useMaterialUIController } from "context";
 
 import Ratings from "components/Ratings";
 
@@ -28,8 +27,7 @@ function Partners() {
   const [details, setDetails] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const [enrolled, setEnrolled] = useState(false);
-  const [controller, dispatch] = useMaterialUIController();
+  const [controller] = useMaterialUIController();
   const { updater } = controller;
 
   useEffect(() => {
@@ -75,6 +73,7 @@ function Partners() {
                   alt=""
                   width="100%"
                   height="auto"
+                  maxHeight="400px"
                   style={{
                     borderRadius: "12px",
                     border: "3px solid #39393f",

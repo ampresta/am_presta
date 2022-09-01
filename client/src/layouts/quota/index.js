@@ -5,6 +5,7 @@ import Card from "@mui/material/Card";
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
+import MySnackBar from "components/MySnackBar";
 
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
@@ -26,13 +27,13 @@ import axios from "services/authAxios";
 import { AllQuotaSocRoute } from "utils/APIRoutes";
 
 function Overview() {
+  const [controller] = useMaterialUIController();
+  const { updater, toastInfos } = controller;
+
   const [openAddModel, setOpenAddModel] = useState(false);
   const [allCompanies, setAllCompanies] = useState([]);
   const [companyID, setCompanyID] = useState(-1);
-
-  const [controller] = useMaterialUIController();
-
-  const { updater } = controller;
+  const [openSnackBar, setOpenSnackBar] = useState(false);
 
   useEffect(() => {
     const getAllCompanies = async () => {
@@ -91,7 +92,19 @@ function Overview() {
         </MDBox>
       )}
       {openAddModel && (
-        <AddQuota openAddModel={setOpenAddModel} companyID={companyID} />
+        <AddQuota
+          openAddModel={setOpenAddModel}
+          companyID={companyID}
+          openSnackBar={setOpenSnackBar}
+        />
+      )}
+      {openSnackBar && (
+        <MySnackBar
+          color={toastInfos.color}
+          title={toastInfos.message}
+          open={openSnackBar}
+          close={() => setOpenSnackBar(!openSnackBar)}
+        />
       )}
     </DashboardLayout>
   );

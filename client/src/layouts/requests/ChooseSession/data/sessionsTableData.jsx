@@ -1,6 +1,7 @@
 // @mui material components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
+import MySnackBar from "components/MySnackBar";
 import Checkbox from "@mui/material/Checkbox";
 
 // React Hooks
@@ -18,17 +19,18 @@ import {
 } from "utils/APIRoutes";
 
 // Material Dashboard 2 React contexts
-import { useMaterialUIController } from "context";
+import { useMaterialUIController, setToastInfos } from "context";
 
 export default function Data(cours, collab) {
+  const [controller, dispatch] = useMaterialUIController();
+  const { updater, toastInfos } = controller;
+
   let navigate = useNavigate();
 
   const [allSessions, setAllSessions] = useState([]);
   const [checked, setChecked] = useState(0);
   const [isChecked, setIsChecked] = useState(false);
-
-  const [controller] = useMaterialUIController();
-  const { updater } = controller;
+  const [openSnackBar, setOpenSnackBar] = useState(false);
 
   useEffect(() => {
     const getAllSessions = async () => {
@@ -75,6 +77,15 @@ export default function Data(cours, collab) {
     ],
 
     rows: [],
+
+    notifications: openSnackBar && (
+      <MySnackBar
+        color={toastInfos.color}
+        title={toastInfos.message}
+        open={openSnackBar}
+        close={() => setOpenSnackBar(!openSnackBar)}
+      />
+    ),
   };
 
   sessions.SubmitButton = async () => {
@@ -85,8 +96,14 @@ export default function Data(cours, collab) {
     });
     if (data.status) {
       navigate("/sessions");
+      setToastInfos(dispatch, {
+        color: "success",
+        message: "Request Accepted",
+      });
+      setOpenSnackBar(true);
     } else {
-      alert(data.msg);
+      setToastInfos(dispatch, { color: "warning", message: data.msg });
+      setOpenSnackBar(true);
     }
   };
 

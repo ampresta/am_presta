@@ -12,13 +12,16 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
 
 //component
+import DataTable from "examples/Tables/DataTable";
+import PolarChart from "examples/Charts/PolarChart";
+import DefaultLineChart from "examples/Charts/LineCharts/DefaultLineChart";
 
 // Data
-import authorsTableData from "./data/companiesTableData";
-import popularCoursesListData from "./data/popularCoursesListData";
-import DataTable from "examples/Tables/DataTable";
 import quotaGraph from "./data/quotaGraph";
 import collabGraph from "./data/collabGraph";
+import authorsTableData from "./data/companiesTableData";
+import popularCoursesListData from "./data/popularCoursesListData";
+
 // Hooks
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -28,20 +31,15 @@ import axios from "services/authAxios";
 
 // Endpoints
 import { SocCardsRoute } from "utils/APIRoutes";
-import PolarChart from "examples/Charts/PolarChart";
-import DefaultLineChart from "examples/Charts/LineCharts/DefaultLineChart";
 
 function Dashboard() {
   const { columns, rows } = authorsTableData();
-
   const { columns: quotacolumns, rows: quotarows } = popularCoursesListData();
-  console.log(quotacolumns, quotarows);
+
   const [sessionsCount, setSessionsCount] = useState(0);
   const [collaboratorsCount, setCollabsCount] = useState(0);
 
   useEffect(() => {
-    console.log("3la slamto");
-
     const fetchCards = async (model) => {
       const { data } = await axios.post(SocCardsRoute, { model });
       switch (model) {
@@ -79,7 +77,7 @@ function Dashboard() {
             <Grid item xs={12} md={12} lg={6}>
               <MDBox mb={1}>
                 <ComplexStatisticsCard
-                  color="primary"
+                  color="dark"
                   icon="business"
                   title="Total Sessions"
                   count={sessionsCount}
@@ -138,31 +136,36 @@ function Dashboard() {
             </Grid>
 
             <Grid item xs={12} md={12} lg={4}>
-              <MDBox
-                mx={2}
-                mt={-1}
-                py={3}
-                px={2}
-                variant="gradient"
-                bgColor="primary"
-                borderRadius="lg"
-                coloredShadow="primary"
-                display="flex"
-                justifyContent="space-between"
-              >
-                <MDTypography variant="h6" color="white">
-                  Quotas
-                </MDTypography>
-              </MDBox>
-              <MDBox pt={2}>
-                <DataTable
-                  table={{ columns: quotacolumns, rows: quotarows }}
-                  isSorted={false}
-                  entriesPerPage={false}
-                  showTotalEntries={false}
-                  noEndBorder
-                />
-              </MDBox>
+              <Card>
+                <MDBox
+                  mx={2}
+                  mt={-1}
+                  py={3}
+                  px={2}
+                  variant="gradient"
+                  bgColor="warning"
+                  borderRadius="lg"
+                  coloredShadow="primary"
+                  display="flex"
+                  justifyContent="space-between"
+                >
+                  <MDTypography variant="h6" color="white">
+                    Quotas
+                  </MDTypography>
+                </MDBox>
+                <MDBox pt={2}>
+                  <DataTable
+                    table={{
+                      columns: quotacolumns,
+                      rows: quotarows.slice(0, 3),
+                    }}
+                    isSorted={false}
+                    entriesPerPage={false}
+                    showTotalEntries={false}
+                    noEndBorder
+                  />
+                </MDBox>
+              </Card>
             </Grid>
           </Grid>
           <Grid item xs={12} md={12} lg={12}>

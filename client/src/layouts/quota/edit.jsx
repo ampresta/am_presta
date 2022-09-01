@@ -18,9 +18,9 @@ import { useEffect } from "react";
 import { AddQuotaRoute, AllQuotaRoute } from "utils/APIRoutes";
 
 // Material Dashboard 2 React contexts
-import { useMaterialUIController, setUpdater } from "context";
+import { useMaterialUIController, setUpdater, setToastInfos } from "context";
 
-function AddQuota({ openAddModel, companyID }) {
+function AddQuota({ openAddModel, companyID, openSnackBar }) {
   const [providers, setProviders] = useState([]);
 
   const [loading, setLoading] = useState(false);
@@ -67,8 +67,14 @@ function AddQuota({ openAddModel, companyID }) {
     if (data.status) {
       openAddModel(false);
       setUpdater(dispatch, !updater);
+      setToastInfos(dispatch, {
+        color: "success",
+        message: "Quota Updated Successfully",
+      });
+      openSnackBar(true);
     } else {
-      alert(data.msg);
+      setToastInfos(dispatch, { color: "warning", message: data.msg });
+      openSnackBar(true);
     }
   };
 

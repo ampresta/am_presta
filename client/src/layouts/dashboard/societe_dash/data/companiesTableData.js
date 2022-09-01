@@ -66,17 +66,6 @@ function Data(props) {
           company={collab.Prenom}
         />
       ),
-      // manager: (
-      //   <MDTypography
-      //     component="a"
-      //     href="#"
-      //     variant="caption"
-      //     color="text"
-      //     fontWeight="medium"
-      //   >
-      //     {collab.Collaborateurs[0].nom} {collab.Collaborateurs[0].prenom}
-      //   </MDTypography>
-      // ),
       certifs: (
         <MDTypography
           component="a"
@@ -90,7 +79,6 @@ function Data(props) {
       ),
     })
   );
-
   return table;
 }
 
