@@ -18,7 +18,7 @@ import DataTable from "examples/Tables/DataTable";
 import Icon from "@mui/material/Icon";
 
 //Add companies component
-import AddCourses from "./add";
+import AddCompanies from "./add";
 
 // Hook
 import { useEffect, useState } from "react";
@@ -32,6 +32,9 @@ import Papa from "papaparse";
 import CsvUploader from "examples/CsvUploader";
 import { getAccessToken } from "utils/accessToken";
 
+// Material Dashboard 2 React contexts
+import { useMaterialUIController } from "context";
+
 function Courses_am() {
   const navigate = useNavigate();
   useEffect(() => {
@@ -39,6 +42,9 @@ function Courses_am() {
       navigate("/login");
     }
   }, []);
+
+  const [controller] = useMaterialUIController();
+  const { toastInfos } = controller;
 
   const [openAddModel, setOpenAddModel] = useState(false);
   const [openCsvUploader, setOpenCsvUploader] = useState(false);
@@ -181,7 +187,7 @@ function Courses_am() {
         </MDBox>
       )}
       {openAddModel && (
-        <AddCourses
+        <AddCompanies
           closeAddModel={setOpenAddModel}
           openSnackBar={setOpenSnackBar}
           sendEdit={sendEdit}
@@ -197,10 +203,11 @@ function Courses_am() {
 
       {confirmation}
       {notifications}
+
       {openSnackBar && (
         <MySnackBar
-          color="success"
-          title="Course Added Successfully"
+          color={toastInfos.color}
+          title={toastInfos.message}
           open={openSnackBar}
           close={() => setOpenSnackBar(!openSnackBar)}
         />

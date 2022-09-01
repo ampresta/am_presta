@@ -18,10 +18,11 @@ import { useMaterialUIController } from "context";
 import sessionsTableData from "./data/requestsTableData";
 
 function Requests() {
-  const { columns, rows, confirmation, sessions } = sessionsTableData();
-
   const [controller] = useMaterialUIController();
   const { openRequestModel } = controller;
+
+  const { columns, rows, confirmation, sessions, notifications } =
+    sessionsTableData();
 
   return (
     <DashboardLayout>
@@ -61,6 +62,7 @@ function Requests() {
 
       {confirmation}
       {openRequestModel && sessions}
+      {notifications}
     </DashboardLayout>
   );
 }

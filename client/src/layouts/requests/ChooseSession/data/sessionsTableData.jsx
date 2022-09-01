@@ -28,7 +28,6 @@ export default function Data(cours, collab) {
   const [isChecked, setIsChecked] = useState(false);
 
   const [controller] = useMaterialUIController();
-
   const { updater } = controller;
 
   useEffect(() => {

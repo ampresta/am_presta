@@ -2,17 +2,17 @@
 import Card from "@mui/material/Card";
 import Icon from "@mui/material/Icon";
 import FormHelperText from "@mui/material/FormHelperText";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import OutlinedInput from "@mui/material/OutlinedInput";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
-import InputLabel from "@mui/material/InputLabel";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
-import OutlinedInput from "@mui/material/OutlinedInput";
 
 //import UseState Hook
 import { useEffect, useState } from "react";
@@ -21,13 +21,15 @@ import { useEffect, useState } from "react";
 import axios from "services/authAxios";
 
 // Material Dashboard 2 React contexts
-import { useMaterialUIController, setUpdater } from "context";
+import { useMaterialUIController, setUpdater, setToastInfos } from "context";
 
-import { allCompaniesRoute } from "utils/APIRoutes";
-import { allPartnersRoute } from "utils/APIRoutes";
-import { addVouchersAdminRoute } from "utils/APIRoutes";
+import {
+  allCompaniesRoute,
+  allPartnersRoute,
+  addVouchersAdminRoute,
+} from "utils/APIRoutes";
 
-function AddCollab({ closeAddModel }) {
+function AddCollab({ closeAddModel, openSnackBar }) {
   const [formErrors, setFormErrors] = useState({
     company: "",
     provider: "",
@@ -43,17 +45,12 @@ function AddCollab({ closeAddModel }) {
   const [allCompanies, setAllCompanies] = useState();
   const [allProviders, setAllProviders] = useState();
 
-  const [selectedCompany, setSelectedCompany] = useState();
-  const [selectedProvider, setSelectedProvider] = useState();
-
   const [controller, dispatch] = useMaterialUIController();
-
   const { updater } = controller;
 
   useEffect(() => {
     const getAllCompanies = async () => {
       const { data } = await axios.get(allCompaniesRoute);
-      console.log(data);
       let temp = [];
       data.msg.map((provider) =>
         temp.push({ id: provider.id, nom: provider.name })
@@ -76,13 +73,11 @@ function AddCollab({ closeAddModel }) {
   const handleSelectedCompany = (event) => {
     const company = event.target.value;
     setVoucher((prev) => ({ ...prev, company }));
-    setSelectedCompany(company);
   };
 
   const handleSelectedProvider = (event) => {
     const provider = event.target.value;
     setVoucher((prev) => ({ ...prev, provider }));
-    setSelectedProvider(provider);
   };
 
   const handleSubmit = async (event) => {
@@ -95,8 +90,20 @@ function AddCollab({ closeAddModel }) {
         code: voucher.code,
         provider: voucher.provider.nom,
       });
-      console.log(requestDATA);
-      await axios.post(addVouchersAdminRoute, requestDATA);
+      const { data } = await axios.post(addVouchersAdminRoute, requestDATA);
+
+      if (data.status) {
+        closeAddModel(false);
+        setUpdater(dispatch, !updater);
+        setToastInfos(dispatch, {
+          color: "success",
+          message: "Voucher Added Successfully",
+        });
+        openSnackBar(true);
+      } else {
+        setToastInfos(dispatch, { color: "warning", message: data.msg });
+        openSnackBar(true);
+      }
     }
   };
 
@@ -110,9 +117,15 @@ function AddCollab({ closeAddModel }) {
 
   const validate = (values) => {
     const errors = {};
-    // if (!values.nom) {
-    //   errors.coursename = "Collaborator Name is required !";
-    // }
+    if (!values.company) {
+      errors.company = "Company Name is required !";
+    }
+    if (!values.provider) {
+      errors.provider = "Provider Name is required !";
+    }
+    if (!values.code) {
+      errors.code = "Voucher Code is required !";
+    }
     return errors;
   };
 
@@ -153,17 +166,15 @@ function AddCollab({ closeAddModel }) {
           onSubmit={(event) => handleSubmit(event)}
         >
           <MDBox display="flex">
-            <MDBox mb={2} ml={2} sx={{ width: "50%" }}>
+            <MDBox mb={2} sx={{ width: "50%" }}>
               <FormControl sx={{ width: "100%" }}>
                 <InputLabel id="demo-simple-select-label">Company</InputLabel>
                 <Select
-                  error={formErrors.provider}
+                  error={formErrors.company}
                   name="provider"
                   sx={{ height: 45 }}
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  // value={selectedCompany.name}
-                  label="Age"
                   onChange={(e) => handleSelectedCompany(e)}
                   MenuProps={{
                     PaperProps: {
@@ -184,7 +195,7 @@ function AddCollab({ closeAddModel }) {
                       </MenuItem>
                     ))}
                 </Select>
-                <FormHelperText error>{formErrors.provider}</FormHelperText>
+                <FormHelperText error>{formErrors.company}</FormHelperText>
               </FormControl>
             </MDBox>
 
@@ -197,8 +208,6 @@ function AddCollab({ closeAddModel }) {
                   sx={{ height: 45 }}
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  // value={selectedProvider.name}
-                  label="Age"
                   onChange={(e) => handleSelectedProvider(e)}
                   MenuProps={{
                     PaperProps: {
@@ -232,9 +241,9 @@ function AddCollab({ closeAddModel }) {
               fullWidth
               name="code"
               onChange={(e) => handleChange(e)}
-              error={formErrors.coursename}
+              error={formErrors.code}
             />
-            <FormHelperText error>{formErrors.coursename}</FormHelperText>
+            <FormHelperText error>{formErrors.code}</FormHelperText>
           </MDBox>
 
           <MDBox mt={4} mb={2} display="flex" justifyContent="center">

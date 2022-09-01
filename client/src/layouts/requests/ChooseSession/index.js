@@ -23,18 +23,17 @@ import { useMaterialUIController, setOpenRequestModel } from "context";
 
 //Add companies component
 import AddSession from "./add";
+import MySnackBar from "components/MySnackBar";
 
 function Sessions({ cours, collab }) {
-  const { columns, rows, SubmitButton, isChecked } = sessionsTableData(
-    cours,
-    collab
-  );
-
+  const [controller, dispatch] = useMaterialUIController();
+  const { openRequestModel, toastInfos } = controller;
 
   const [openAddModel, setOpenAddModel] = useState(false);
+  const [openSnackBar, setOpenSnackBar] = useState(false);
 
-  const [controller, dispatch] = useMaterialUIController();
-  const { openRequestModel } = controller;
+  const { columns, rows, SubmitButton, isChecked, notifications } =
+    sessionsTableData(cours, collab);
 
   return (
     <>
@@ -121,7 +120,21 @@ function Sessions({ cours, collab }) {
           </Grid>
         </MDBox>
       )}
-      {openAddModel && <AddSession closeAddModel={setOpenAddModel} />}
+      {openAddModel && (
+        <AddSession
+          closeAddModel={setOpenAddModel}
+          openSnackBar={setOpenSnackBar}
+        />
+      )}
+      {notifications}
+      {openSnackBar && (
+        <MySnackBar
+          color={toastInfos.color}
+          title={toastInfos.message}
+          open={openSnackBar}
+          close={() => setOpenSnackBar(!openSnackBar)}
+        />
+      )}
     </>
   );
 }

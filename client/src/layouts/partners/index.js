@@ -6,14 +6,13 @@ import Card from "@mui/material/Card";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
+import MySnackBar from "components/MySnackBar";
 
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import DataTable from "examples/Tables/DataTable";
 import CsvUploader from "examples/CsvUploader";
-
-import MySnackBar from "components/MySnackBar";
 
 //import Hook
 import { useState } from "react";
@@ -23,13 +22,18 @@ import Icon from "@mui/material/Icon";
 
 //import Add component
 import AddPartner from "./add";
+import Papa from "papaparse";
 
 // Data
 import partnersTableData from "layouts/partners/data/partnersTableData";
 
-import Papa from "papaparse";
+// Material Dashboard 2 React contexts
+import { useMaterialUIController } from "context";
 
 function Partners() {
+  const [controller] = useMaterialUIController();
+  const { toastInfos } = controller;
+
   const [openAddModel, setOpenAddModel] = useState(false);
   const [openCsvUploader, setOpenCsvUploader] = useState(false);
   const [openSnackBar, setOpenSnackBar] = useState(false);
@@ -179,8 +183,8 @@ function Partners() {
       {notifications}
       {openSnackBar && (
         <MySnackBar
-          color="success"
-          title="Partner Added Successfully"
+          color={toastInfos.color}
+          title={toastInfos.message}
           open={openSnackBar}
           close={() => setOpenSnackBar(!openSnackBar)}
         />

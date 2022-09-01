@@ -21,13 +21,12 @@ import { useState } from "react";
 import axiosAuth from "services/authAxios";
 
 // Material Dashboard 2 React contexts
-import { useMaterialUIController, setUpdater } from "context";
+import { useMaterialUIController, setUpdater, setToastInfos } from "context";
 
 import { useEffect } from "react";
-import { allCompaniesRoute, addDepartementRoute } from "utils/APIRoutes";
-import {addDepartementAdminRoute} from "utils/APIRoutes";
+import { allCompaniesRoute, addDepartementAdminRoute } from "utils/APIRoutes";
 
-function AddDepartement({ closeAddModel }) {
+function AddDepartement({ closeAddModel, openSnackBar }) {
   const [formErrors, setFormErrors] = useState({
     deptname: "",
     company: "",
@@ -54,7 +53,6 @@ function AddDepartement({ closeAddModel }) {
   ]);
 
   const [controller, dispatch] = useMaterialUIController();
-
   const { updater } = controller;
 
   useEffect(() => {
@@ -70,7 +68,7 @@ function AddDepartement({ closeAddModel }) {
   }, []);
 
   const handleSubmit = async (event) => {
-	  // console.log("heey");
+    // console.log("heey");
     const { nom, company } = departement;
     event.preventDefault();
     setFormErrors(validate(departement));
@@ -82,8 +80,14 @@ function AddDepartement({ closeAddModel }) {
       if (data.status) {
         closeAddModel(false);
         setUpdater(dispatch, !updater);
+        setToastInfos(dispatch, {
+          color: "success",
+          message: "Department Added Successfully",
+        });
+        openSnackBar(true);
       } else {
-        alert(data.msg);
+        setToastInfos(dispatch, { color: "warning", message: data.msg });
+        openSnackBar(true);
       }
     }
   };
@@ -144,10 +148,7 @@ function AddDepartement({ closeAddModel }) {
       </MDBox>
 
       <MDBox pt={4} pb={3} px={10}>
-        <MDBox
-          component="form"
-          role="form"
-        >
+        <MDBox component="form" role="form">
           <MDBox display="flex"></MDBox>
           <MDBox mb={2}>
             <MDInput

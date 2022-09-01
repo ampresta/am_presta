@@ -5,6 +5,8 @@ import Card from "@mui/material/Card";
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
+import MDButton from "components/MDButton";
+import MySnackBar from "components/MySnackBar";
 
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
@@ -17,26 +19,27 @@ import { useState } from "react";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
+import Papa from "papaparse";
 
 // Data
 import companiesTableData from "layouts/companies/data/companiesTableData";
-import MDButton from "components/MDButton";
 
 //Add companies component
 import AddCompanies from "./add";
 
-import Papa from "papaparse";
-import MySnackBar from "components/MySnackBar";
+// Material Dashboard 2 React contexts
+import { useMaterialUIController } from "context";
 
 function Companies() {
-  const { columns, rows, confirmation, rawData, notifications } =
-    companiesTableData();
+  const [controller] = useMaterialUIController();
+  const { toastInfos } = controller;
 
   const [openAddModel, setOpenAddModel] = useState(false);
-
   const [openCsvUploader, setOpenCsvUploader] = useState(false);
-
   const [openSnackBar, setOpenSnackBar] = useState(false);
+
+  const { columns, rows, confirmation, rawData, notifications } =
+    companiesTableData();
 
   const handleDownload = (title, type) => {
     let columns = [];
@@ -192,8 +195,8 @@ function Companies() {
       {notifications}
       {openSnackBar && (
         <MySnackBar
-          color="success"
-          title="Company Added Successfully"
+          color={toastInfos.color}
+          title={toastInfos.message}
           open={openSnackBar}
           close={() => setOpenSnackBar(!openSnackBar)}
         />

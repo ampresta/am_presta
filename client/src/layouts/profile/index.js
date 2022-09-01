@@ -25,8 +25,15 @@ import ChangePassword from "./components/ChangePassword";
 import axios from "services/authAxios";
 import { getProfileRoute } from "utils/APIRoutes";
 import { updateProfileRoute } from "utils/APIRoutes";
+import MySnackBar from "components/MySnackBar";
+
+// Material Dashboard 2 React contexts
+import { useMaterialUIController, setToastInfos } from "context";
 
 function Overview() {
+  const [controller, dispatch] = useMaterialUIController();
+  const { toastInfos } = controller;
+
   const [tabValue, setTabValue] = useState("0");
   const handleSetTabValue = (event, newValue) => setTabValue(newValue);
 
@@ -38,6 +45,8 @@ function Overview() {
   const [userAvatar, setUserAvatar] = useState(null);
   const [userNom, setUserNom] = useState(null);
   const [userPrenom, setUserPrenom] = useState(null);
+
+  const [openSnackBar, setOpenSnackBar] = useState(false);
 
   useEffect(() => {
     const getProfile = async () => {
@@ -71,17 +80,25 @@ function Overview() {
   // Push the object values into the values array
   Object.values(infosProfile).forEach((el) => values.push(el));
 
-  console.log(tabValue);
-
   const updateProfile = async (event) => {
     event.preventDefault();
-    console.log("update");
-    axios.post(updateProfileRoute, {
+    const data = await axios.post(updateProfileRoute, {
       nom: userNom,
       prenom: userPrenom,
       email: infosProfile.emailPerso,
       username: infosProfile.username,
     });
+
+    if (data.status === 200) {
+      setToastInfos(dispatch, {
+        color: "success",
+        message: "Profile Updated Successfully",
+      });
+      setOpenSnackBar(true);
+    } else {
+      setToastInfos(dispatch, { color: "warning", message: data.msg });
+      setOpenSnackBar(true);
+    }
   };
 
   const paginate = [
@@ -143,9 +160,28 @@ function Overview() {
                   handleChangePrenom={setUserPrenom}
                   handleChangeNom={setUserNom}
                 />
+                {openSnackBar && (
+                  <MySnackBar
+                    color={toastInfos.color}
+                    title={toastInfos.message}
+                    open={openSnackBar}
+                    close={() => setOpenSnackBar(!openSnackBar)}
+                  />
+                )}
               </TabPanel>
               <TabPanel value="1">
-                <ChangePassword shadow={false} />
+                <ChangePassword
+                  shadow={false}
+                  setOpenSnackBar={setOpenSnackBar}
+                />
+                {openSnackBar && (
+                  <MySnackBar
+                    color={toastInfos.color}
+                    title={toastInfos.message}
+                    open={openSnackBar}
+                    close={() => setOpenSnackBar(!openSnackBar)}
+                  />
+                )}
               </TabPanel>
             </Grid>
           </Grid>

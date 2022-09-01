@@ -8,6 +8,7 @@ module.exports = async (req, res) => {
     raw: true,
     where: {
       SocieteId: req.societe,
+	    admin:false
     },
     attributes: [
       [sequelize.fn("count", sequelize.col("Collaborateur.id")), "count"],
@@ -36,6 +37,7 @@ module.exports = async (req, res) => {
         raw: true,
         where: {
           SocieteId: req.societe,
+		admin:false
         },
         include: {
           model: Session_Collab,
@@ -92,22 +94,26 @@ module.exports = async (req, res) => {
       res_index = 1;
       d_index = d.length - 1;
       while (true) {
-        val = 0;
+        val = 0;ex=0
          // (index, d[d_index], m, y);
         if (m == parseInt(d[d_index].month) && y == parseInt(d[d_index].year)) {
           val = parseInt(d[d_index].count);
           d_index--;
-          if (d_index < -1) {
-            break;
+          if (d_index < 0) {
+		  ex=1
+            
           }
         }
         results[length - res_index] = val;
          // ("inside", results, val, length - res_index);
         res_index++;
         //  // (res_index);
-        if (res_index == d_length + 1) {
+        if (res_index == length+1) {
           break;
         }
+	      if(ex===1){
+		break	
+	      }
         m--;
         if (m == 0) {
           m = 12;

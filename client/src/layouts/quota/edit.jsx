@@ -15,11 +15,7 @@ import { useState } from "react";
 import axios from "services/authAxios";
 
 import { useEffect } from "react";
-import {
-  allPartnersRoute,
-  AddQuotaRoute,
-  AllQuotaRoute,
-} from "utils/APIRoutes";
+import { AddQuotaRoute, AllQuotaRoute } from "utils/APIRoutes";
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setUpdater } from "context";
@@ -27,8 +23,6 @@ import { useMaterialUIController, setUpdater } from "context";
 function AddQuota({ openAddModel, companyID }) {
   const [providers, setProviders] = useState([]);
 
-  // const [quota, setQuota] = useState(0);
-  const [result, setResult] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const [controller, dispatch] = useMaterialUIController();
