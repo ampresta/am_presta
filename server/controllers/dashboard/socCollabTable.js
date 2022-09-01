@@ -3,9 +3,11 @@ const db = require("../../config/database");
 const { Societe, Collaborateur, Session_Collab, Proof } = db.models;
 module.exports = async (req, res) => {
   collabs = await Collaborateur.findAll({
-    // limit: 3,
+   limit: 3,
+   subQuery:false,	 
     where: {
       SocieteId: req.societe,
+	    admin:false
     },
     include: {
       model: Session_Collab,
@@ -29,7 +31,7 @@ module.exports = async (req, res) => {
     },
 
     group: ["Collaborateur.id"],
-    // order: ["certifs_count", "DESC"],
+     order: [sequelize.literal("certifs_count DESC")],
   });
   return res.send({
     collabs,

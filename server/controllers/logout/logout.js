@@ -1,11 +1,9 @@
 module.exports = (req, res) => {
-  res.clearCookie(
-    "jbid",
+  res.cookie(
+    "jbid"," ",
 
     {
-      httpOnly: true,
-      sameSite: "None",
-      secure: true,
+	maxAge:0	
     }
   );
   return res.send({ status: true });

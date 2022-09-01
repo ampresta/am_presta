@@ -40,6 +40,8 @@ module.exports = async (req, res) => {
           required: false,
           where: {
             SocieteId: collab.SocieteId,
+		  quota:{
+			  [Op.gt]:0}
           },
         },
       },

@@ -10,6 +10,7 @@ module.exports = async (req, res) => {
   if (model == "challenge") {
     Model = Challenge;
   } else if (model == "collab") {
+	  filters.where.admin=false
     Model = Collaborateur;
   } else if (model == "session") {
     Model = Session;
