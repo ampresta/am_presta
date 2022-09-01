@@ -2,6 +2,7 @@
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
+import MySnackBar from "components/MySnackBar";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -19,16 +20,16 @@ import { allDepartmentsRoute, DeleteInstances } from "utils/APIRoutes";
 import ConfirmPopup from "components/ConfirmPopup";
 
 // Material Dashboard 2 React contexts
-import { useMaterialUIController } from "context";
+import { useMaterialUIController, setToastInfos } from "context";
 
 export default function Data() {
   const [AllDepartements, setAllDepartements] = useState([]);
   const [confirmModel, setConfirmModel] = useState(false);
   const [tempDepartmentId, setTempDepartmentId] = useState(0);
+  const [openSnackBar, setOpenSnackBar] = useState(false);
 
-  const [controller] = useMaterialUIController();
-
-  const { updater } = controller;
+  const [controller, dispatch] = useMaterialUIController();
+  const { updater, toastInfos } = controller;
 
   useEffect(() => {
     const getAllDepartements = async () => {
@@ -47,9 +48,18 @@ export default function Data() {
       setAllDepartements(
         AllDepartements.filter((departement) => departement.id !== id)
       );
+      setToastInfos(dispatch, {
+        color: "error",
+        message: "Department Deleted Successfully",
+      });
+      setOpenSnackBar(true);
       setConfirmModel(!confirmModel);
     } else {
-      alert(data.msg);
+      setToastInfos(dispatch, {
+        color: "warning",
+        message: data.msg,
+      });
+      setOpenSnackBar(true);
     }
   };
 
@@ -95,6 +105,15 @@ export default function Data() {
         onConfirmPopup={() => setConfirmModel(!confirmModel)}
         handleDetele={handleDelete}
         Id_Item={tempDepartmentId}
+      />
+    ),
+
+    notifications: openSnackBar && (
+      <MySnackBar
+        color={toastInfos.color}
+        title={toastInfos.message}
+        open={openSnackBar}
+        close={() => setOpenSnackBar(!openSnackBar)}
       />
     ),
   };

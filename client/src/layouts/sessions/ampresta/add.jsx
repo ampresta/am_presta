@@ -21,12 +21,15 @@ import { useState, useEffect } from "react";
 import axios from "services/authAxios";
 
 // Material Dashboard 2 React contexts
-import { useMaterialUIController, setUpdater } from "context";
+import { useMaterialUIController, setUpdater, setToastInfos } from "context";
 
-import { allCoursesRoute, addSessionsAdminRoute } from "utils/APIRoutes";
-import {allCompaniesRoute} from "utils/APIRoutes";
+import {
+  allCoursesRoute,
+  addSessionsAdminRoute,
+  allCompaniesRoute,
+} from "utils/APIRoutes";
 
-function AddSession({ closeAddModel }) {
+function AddSession({ closeAddModel, openSnackBar }) {
   const [formErrors, setFormErrors] = useState({
     nom: "",
     course: "",
@@ -87,7 +90,6 @@ function AddSession({ closeAddModel }) {
   }, []);
 
   const [controller, dispatch] = useMaterialUIController();
-
   const { updater } = controller;
 
   const handleSubmit = async (event) => {
@@ -100,13 +102,19 @@ function AddSession({ closeAddModel }) {
         datedebut: dateDepart,
         datefin: dateFin,
         cours: course.id,
-	      soc:selectedCompany.id
+        soc: selectedCompany.id,
       });
       if (data.status) {
         closeAddModel(false);
         setUpdater(dispatch, !updater);
+        setToastInfos(dispatch, {
+          color: "success",
+          message: "Session Added Successfully",
+        });
+        openSnackBar(true);
       } else {
-        alert(data.msg);
+        setToastInfos(dispatch, { color: "warning", message: data.msg });
+        openSnackBar(true);
       }
     }
   };

@@ -2,17 +2,18 @@
 import Card from "@mui/material/Card";
 import Icon from "@mui/material/Icon";
 import FormHelperText from "@mui/material/FormHelperText";
+import Select from "@mui/material/Select";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
+
 //import UseState Hook
 import { useEffect, useState } from "react";
 import DropFileInput from "components/DropFileInput/DropFileInput";
@@ -21,21 +22,23 @@ import DropFileInput from "components/DropFileInput/DropFileInput";
 import axiosAuth from "services/authAxios";
 
 // Material Dashboard 2 React contexts
-import { useMaterialUIController, setUpdater } from "context";
+import { useMaterialUIController, setUpdater, setToastInfos } from "context";
 
-import { addCollabsRoute, uploadRoute } from "utils/APIRoutes";
+import {
+  uploadRoute,
+  allCompaniesRoute,
+  addCollabRouteAdmin,
+} from "utils/APIRoutes";
 
-import {allCompaniesRoute} from "utils/APIRoutes";
-import {addCollabRouteAdmin} from "utils/APIRoutes";
-function AddCollab({ closeAddModel }) {
+function AddCollab({ closeAddModel, openSnackBar }) {
   const [formErrors, setFormErrors] = useState({
     nom: "",
   });
 
   const [collaborator, setCollaborator] = useState({
     nom: "",
-	  prenom:"",
-	  mail:""
+    prenom: "",
+    mail: "",
   });
   const [selectedCompany, setSelectedCompany] = useState({
     nom: "",
@@ -59,8 +62,7 @@ function AddCollab({ closeAddModel }) {
     setCollaborator((prev) => ({ ...prev, company }));
     setSelectedCompany(company);
   };
-	useEffect(()=>{
-		
+  useEffect(() => {
     const getAllSociete = async () => {
       const { data } = await axiosAuth.get(allCompaniesRoute);
       let temp = [];
@@ -69,28 +71,20 @@ function AddCollab({ closeAddModel }) {
       );
       setCompanies(temp);
     };
- getAllSociete();
-
-	},[])
+    getAllSociete();
+  }, []);
 
   const handleSubmit = async (event) => {
-    const { nom } = collaborator;
     event.preventDefault();
     setFormErrors(validate(collaborator));
-	      console.log({account:{
-		      nom:collaborator.nom,
-		      prenom:collaborator.prenom,
-		      email: collaborator.mail,
-		      societe:collaborator.company.id
-	      }})
     if (Object.keys(validate(collaborator)).length === 0) {
       const { data } = await axiosAuth.post(addCollabRouteAdmin, {
-	      account:{
-		      nom:collaborator.nom,
-		      prenom:collaborator.prenom,
-		      email: collaborator.mail,
-		      societe:collaborator.company.id
-	      }
+        account: {
+          nom: collaborator.nom,
+          prenom: collaborator.prenom,
+          email: collaborator.mail,
+          societe: collaborator.company.id,
+        },
       });
 
       const ID = data.id;
@@ -99,7 +93,7 @@ function AddCollab({ closeAddModel }) {
         fd.append("image", file);
         fd.append("id", ID);
         fd.append("model", "Collaborateur");
-	console.log(fd.getAll("image"));
+        console.log(fd.getAll("image"));
         const config = {
           method: "post",
           url: uploadRoute,
@@ -113,8 +107,14 @@ function AddCollab({ closeAddModel }) {
 
         closeAddModel(false);
         setUpdater(dispatch, !updater);
+        setToastInfos(dispatch, {
+          color: "success",
+          message: "Collaborator Added Successfully",
+        });
+        openSnackBar(true);
       } else {
-        alert(data.msg);
+        setToastInfos(dispatch, { color: "warning", message: data.msg });
+        openSnackBar(true);
       }
     }
   };

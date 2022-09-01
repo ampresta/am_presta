@@ -5,6 +5,8 @@ import Card from "@mui/material/Card";
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
+import MDButton from "components/MDButton";
+import MySnackBar from "components/MySnackBar";
 
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
@@ -20,19 +22,24 @@ import Icon from "@mui/material/Icon";
 
 //import Add component
 import AddCollab from "./add";
+import Papa from "papaparse";
 
 // Data
 import VouchersTableData from "./data/VouchersTableData";
-import MDButton from "components/MDButton";
 
-import Papa from "papaparse";
+// Material Dashboard 2 React contexts
+import { useMaterialUIController } from "context";
 
 function Vouchers() {
-  const { columns, rows, confirmation, rawData } = VouchersTableData();
+  const [controller] = useMaterialUIController();
+  const { toastInfos } = controller;
 
   const [openAddModel, setOpenAddModel] = useState(false);
-
   const [openCsvUploader, setOpenCsvUploader] = useState(false);
+  const [openSnackBar, setOpenSnackBar] = useState(false);
+
+  const { columns, rows, confirmation, rawData, notifications } =
+    VouchersTableData();
 
   const handleDownload = (title, type) => {
     let data = [];
@@ -160,7 +167,12 @@ function Vouchers() {
           </Grid>
         </MDBox>
       )}
-      {openAddModel && <AddCollab closeAddModel={setOpenAddModel} />}
+      {openAddModel && (
+        <AddCollab
+          closeAddModel={setOpenAddModel}
+          openSnackBar={setOpenSnackBar}
+        />
+      )}
       {openCsvUploader && (
         <CsvUploader
           closeUploadModel={setOpenCsvUploader}
@@ -170,6 +182,15 @@ function Vouchers() {
         />
       )}
       {confirmation}
+      {notifications}
+      {openSnackBar && (
+        <MySnackBar
+          color={toastInfos.color}
+          title={toastInfos.message}
+          open={openSnackBar}
+          close={() => setOpenSnackBar(!openSnackBar)}
+        />
+      )}
     </DashboardLayout>
   );
 }

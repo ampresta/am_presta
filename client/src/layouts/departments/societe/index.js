@@ -5,6 +5,8 @@ import Card from "@mui/material/Card";
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
+import MDButton from "components/MDButton";
+import MySnackBar from "components/MySnackBar";
 
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
@@ -22,11 +24,20 @@ import AddDepartement from "./add";
 
 // Data
 import departementsTableData from "./data/departmentsTableData";
-import MDButton from "components/MDButton";
+
+// Material Dashboard 2 React contexts
+import { useMaterialUIController } from "context";
 
 function Departments() {
-  const { columns, rows, confirmation } = departementsTableData();
+  const [controller] = useMaterialUIController();
+  const { toastInfos } = controller;
+
   const [openAddModel, setOpenAddModel] = useState(false);
+  const [openSnackBar, setOpenSnackBar] = useState(false);
+
+  const { columns, rows, confirmation, notifications } =
+    departementsTableData();
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -78,8 +89,22 @@ function Departments() {
           </Grid>
         </MDBox>
       )}
-      {openAddModel && <AddDepartement closeAddModel={setOpenAddModel} />}
+      {openAddModel && (
+        <AddDepartement
+          closeAddModel={setOpenAddModel}
+          openSnackBar={setOpenSnackBar}
+        />
+      )}
       {confirmation}
+      {notifications}
+      {openSnackBar && (
+        <MySnackBar
+          color={toastInfos.color}
+          title={toastInfos.message}
+          open={openSnackBar}
+          close={() => setOpenSnackBar(!openSnackBar)}
+        />
+      )}
     </DashboardLayout>
   );
 }

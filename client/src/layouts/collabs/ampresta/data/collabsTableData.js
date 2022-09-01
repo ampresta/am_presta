@@ -4,6 +4,7 @@ import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
 import MDButton from "components/MDButton";
 import MDBadge from "components/MDBadge";
+import MySnackBar from "components/MySnackBar";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -25,16 +26,16 @@ import {
 import ConfirmPopup from "components/ConfirmPopup";
 
 // Material Dashboard 2 React contexts
-import { useMaterialUIController } from "context";
+import { useMaterialUIController, setToastInfos, setUpdater } from "context";
 
 export default function Data() {
   const [allCollabs, setAllCollabs] = useState([]);
   const [confirmModel, setConfirmModel] = useState(false);
   const [tempPartnerId, setTempPartnerId] = useState(0);
+  const [openSnackBar, setOpenSnackBar] = useState(false);
 
-  const [controller] = useMaterialUIController();
-
-  const { updater } = controller;
+  const [controller, dispatch] = useMaterialUIController();
+  const { updater, toastInfos } = controller;
 
   useEffect(() => {
     const getAllCollabs = async () => {
@@ -50,10 +51,19 @@ export default function Data() {
       id: id,
     });
     if (data.status) {
-      setAllCollabs(allCollabs.filter((course) => course.id !== id));
+      setUpdater(dispatch, !updater);
+      setToastInfos(dispatch, {
+        color: "error",
+        message: "Collaborator Deleted Successfully",
+      });
+      setOpenSnackBar(true);
       setConfirmModel(!confirmModel);
     } else {
-      alert(data.msg);
+      setToastInfos(dispatch, {
+        color: "warning",
+        message: data.msg,
+      });
+      setOpenSnackBar(true);
     }
   };
 
@@ -84,12 +94,6 @@ export default function Data() {
         width: "5%",
         align: "left",
       },
-      // {
-      //   Header: "Full Name",
-      //   accessor: "nom",
-      //   width: "10%",
-      //   align: "left",
-      // },
       {
         Header: "Number of Sessions",
         accessor: "session",
@@ -102,12 +106,6 @@ export default function Data() {
         align: "center",
         width: "30%",
       },
-      // {
-      //   Header: "Departmenet",
-      //   accessor: "departmenet",
-      //   align: "center",
-      //   width: "30%",
-      // },
       { Header: "Status", accessor: "status", align: "center", width: "25%" },
       { Header: "edit", accessor: "edit", align: "center", width: "3%" },
       { Header: "delete", accessor: "delete", align: "center", width: "3%" },
@@ -124,57 +122,64 @@ export default function Data() {
       />
     ),
 
+    notifications: openSnackBar && (
+      <MySnackBar
+        color={toastInfos.color}
+        title={toastInfos.message}
+        open={openSnackBar}
+        close={() => setOpenSnackBar(!openSnackBar)}
+      />
+    ),
+
     rawData: allCollabs,
   };
-  try {
-    allCollabs.map((collab) =>
-      collabs.rows.push({
-        author: (
-          <Company
-            company={collab.Societe.name}
-            name={`${collab.nom} ${collab.prenom}`}
-            image={collab.image}
-          />
-        ),
-        // nom: (
-        //   <MDTypography variant="caption" color="text" fontWeight="medium">
-        //     {`${collab.nom} ${collab.prenom}`}
-        //   </MDTypography>
-        // ),
-        session: (
-          <MDTypography variant="caption" color="text" fontWeight="medium">
-            {collab.session_count}
-          </MDTypography>
-        ),
-        certif: (
-          <MDTypography variant="caption" color="text" fontWeight="medium">
-            {collab.certifs_count}
-          </MDTypography>
-        ),
-        edit: (
+
+  allCollabs.map((collab) =>
+    collabs.rows.push({
+      author: (
+        <Company
+          company={collab.Societe.name}
+          name={`${collab.nom} ${collab.prenom}`}
+          image={collab.image}
+        />
+      ),
+      session: (
+        <MDTypography variant="caption" color="text" fontWeight="medium">
+          {collab.session_count}
+        </MDTypography>
+      ),
+      certif: (
+        <MDTypography variant="caption" color="text" fontWeight="medium">
+          {collab.certifs_count}
+        </MDTypography>
+      ),
+      edit: (
+        <MDButton variant="text" disabled={collab.deletedAt}>
           <MDTypography variant="caption" color="text" fontWeight="medium">
             <Icon fontSize="small">edit</Icon>
           </MDTypography>
-        ),
-        status: parseStatus(collab),
-        delete: (
-          <MDButton
-            variant="text"
-            onClick={() => {
-              setConfirmModel(!confirmModel);
-              setTempPartnerId(collab.id);
-            }}
-          >
-            <MDTypography variant="caption" color="text" fontWeight="medium">
-              <Icon fontSize="small" color="primary">
-                delete
-              </Icon>
-            </MDTypography>
-          </MDButton>
-        ),
-      })
-    );
-  } catch (error) {}
+        </MDButton>
+      ),
+
+      status: parseStatus(collab),
+      delete: (
+        <MDButton
+          variant="text"
+          onClick={() => {
+            setConfirmModel(!confirmModel);
+            setTempPartnerId(collab.id);
+          }}
+          disabled={collab.deletedAt}
+        >
+          <MDTypography variant="caption" color="text" fontWeight="medium">
+            <Icon fontSize="small" color="primary">
+              delete
+            </Icon>
+          </MDTypography>
+        </MDButton>
+      ),
+    })
+  );
 
   return collabs;
 }

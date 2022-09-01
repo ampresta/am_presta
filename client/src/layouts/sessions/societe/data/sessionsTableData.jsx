@@ -5,6 +5,7 @@ import MDTypography from "components/MDTypography";
 import MDProgress from "components/MDProgress";
 import Grid from "@mui/material/Grid";
 import MDButton from "components/MDButton";
+import MySnackBar from "components/MySnackBar";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -12,8 +13,11 @@ import Icon from "@mui/material/Icon";
 // React Hooks
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+
 // import axios from "services/authAxios";
 import axios from "services/authAxios";
+
+// Endpoint
 import {
   allSessionsRoute,
   baseURL,
@@ -25,7 +29,7 @@ import {
 import ConfirmPopup from "components/ConfirmPopup";
 
 // Material Dashboard 2 React contexts
-import { useMaterialUIController } from "context";
+import { useMaterialUIController, setUpdater, setToastInfos } from "context";
 
 import { dateFormat } from "utils/Helper";
 
@@ -33,6 +37,8 @@ export default function Data() {
   const [allSessions, setAllSessions] = useState([]);
   const [tempSessionId, setTempSessionId] = useState(0);
   const [confirmModel, setConfirmModel] = useState(false);
+  const [openSnackBar, setOpenSnackBar] = useState(false);
+
   const [providers, setProviders] = useState([
     {
       id: "",
@@ -40,9 +46,8 @@ export default function Data() {
     },
   ]);
 
-  const [controller] = useMaterialUIController();
-
-  const { updater } = controller;
+  const [controller, dispatch] = useMaterialUIController();
+  const { updater, toastInfos } = controller;
 
   useEffect(() => {
     const getAllSessions = async () => {
@@ -69,9 +74,18 @@ export default function Data() {
     });
     if (data.status) {
       setAllSessions(allSessions.filter((session) => session.id !== id));
+      setToastInfos(dispatch, {
+        color: "error",
+        message: "Session Deleted Successfully",
+      });
+      setOpenSnackBar(true);
       setConfirmModel(!confirmModel);
     } else {
-      alert(data.msg);
+      setToastInfos(dispatch, {
+        color: "warning",
+        message: data.msg,
+      });
+      setOpenSnackBar(true);
     }
   };
 
@@ -177,6 +191,15 @@ export default function Data() {
         onConfirmPopup={() => setConfirmModel(!confirmModel)}
         handleDetele={handleDelete}
         Id_Item={tempSessionId}
+      />
+    ),
+
+    notifications: openSnackBar && (
+      <MySnackBar
+        color={toastInfos.color}
+        title={toastInfos.message}
+        open={openSnackBar}
+        close={() => setOpenSnackBar(!openSnackBar)}
       />
     ),
 

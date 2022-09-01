@@ -58,20 +58,19 @@ function reducer(state, action) {
       return { ...state, openSelectCollabs: action.value };
     }
     case "ACCOUNTTYPE": {
-      // console.log(`type changed to ${action.value}`);
       return { ...state, accountType: action.value };
     }
     case "TYPELOADING": {
-      // console.log(`laoding changed to ${action.value}`);
       return { ...state, loadingType: action.value };
     }
     case "PASSWORDCHANGED": {
-      // console.log(`password changed to ${action.value}`);
       return { ...state, changedPassword: action.value };
     }
     case "NOTIFICATIONS": {
-      // console.log(`notif changed to ${action.value}`);
       return { ...state, changedNotif: action.value };
+    }
+    case "TOASTINFOS": {
+      return { ...state, toastInfos: action.value };
     }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
@@ -101,6 +100,7 @@ function MaterialUIControllerProvider({ children }) {
     accountType: false,
     changedPassword: false,
     changedNotif: 0,
+    toastInfos: { color: "", message: "" },
   };
 
   const [controller, dispatch] = useReducer(reducer, initialState);
@@ -169,6 +169,8 @@ const setChangedPassword = (dispatch, value) =>
   dispatch({ type: "PASSWORDCHANGED", value });
 const setChangedNotif = (dispatch, value) =>
   dispatch({ type: "NOTIFICATIONS", value });
+const setToastInfos = (dispatch, value) =>
+  dispatch({ type: "TOASTINFOS", value });
 
 export {
   MaterialUIControllerProvider,
@@ -192,4 +194,5 @@ export {
   setAccountType,
   setTypeLoading,
   setChangedNotif,
+  setToastInfos,
 };

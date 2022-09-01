@@ -18,7 +18,7 @@ import { useState } from "react";
 import axiosAuth from "services/authAxios";
 
 // Material Dashboard 2 React contexts
-import { useMaterialUIController, setUpdater } from "context";
+import { useMaterialUIController, setUpdater, setToastInfos } from "context";
 import { addPartnersRoute, uploadRoute } from "utils/APIRoutes";
 
 function AddPartner({ closeAddModel, openSnackBar, sendEdit }) {
@@ -64,9 +64,14 @@ function AddPartner({ closeAddModel, openSnackBar, sendEdit }) {
 
         closeAddModel(false);
         setUpdater(dispatch, !updater);
+        setToastInfos(dispatch, {
+          color: "success",
+          message: "Partner Added Successfully",
+        });
         openSnackBar(true);
       } else {
-        alert(data.msg);
+        setToastInfos(dispatch, { color: "warning", message: data.msg });
+        openSnackBar(true);
       }
     }
   };

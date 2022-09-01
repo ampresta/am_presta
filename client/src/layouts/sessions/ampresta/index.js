@@ -6,6 +6,7 @@ import Card from "@mui/material/Card";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
+import MySnackBar from "components/MySnackBar";
 
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
@@ -25,10 +26,19 @@ import sessionsTableData from "./data/sessionsTableData";
 //Add companies component
 import AddSession from "./add";
 
+// Material Dashboard 2 React contexts
+import { useMaterialUIController } from "context";
+
 function Sessions() {
-  const { columns, rows, confirmation, ProvidersFilter } = sessionsTableData();
+  const [controller] = useMaterialUIController();
+  const { toastInfos } = controller;
+
   const [openAddModel, setOpenAddModel] = useState(false);
   const [openFilter, setOpenFilter] = useState(false);
+  const [openSnackBar, setOpenSnackBar] = useState(false);
+
+  const { columns, rows, confirmation, ProvidersFilter, notifications } =
+    sessionsTableData();
 
   return (
     <DashboardLayout>
@@ -93,8 +103,22 @@ function Sessions() {
           </Grid>
         </MDBox>
       )}
-      {openAddModel && <AddSession closeAddModel={setOpenAddModel} />}
+      {openAddModel && (
+        <AddSession
+          closeAddModel={setOpenAddModel}
+          openSnackBar={setOpenSnackBar}
+        />
+      )}
       {confirmation}
+      {notifications}
+      {openSnackBar && (
+        <MySnackBar
+          color={toastInfos.color}
+          title={toastInfos.message}
+          open={openSnackBar}
+          close={() => setOpenSnackBar(!openSnackBar)}
+        />
+      )}
     </DashboardLayout>
   );
 }
