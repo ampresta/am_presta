@@ -72,6 +72,10 @@ function reducer(state, action) {
     case "TOASTINFOS": {
       return { ...state, toastInfos: action.value };
     }
+    case "USERID": {
+      // console.log(`notif changed to ${action.value}`);
+      return { ...state,userId: action.value };
+    }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
     }
@@ -100,6 +104,7 @@ function MaterialUIControllerProvider({ children }) {
     accountType: false,
     changedPassword: false,
     changedNotif: 0,
+    userId: false,
     toastInfos: { color: "", message: "" },
   };
 
@@ -172,6 +177,8 @@ const setChangedNotif = (dispatch, value) =>
 const setToastInfos = (dispatch, value) =>
   dispatch({ type: "TOASTINFOS", value });
 
+const setUserId = (dispatch, value) =>
+  dispatch({ type: "USERID", value });
 export {
   MaterialUIControllerProvider,
   useMaterialUIController,
@@ -194,5 +201,6 @@ export {
   setAccountType,
   setTypeLoading,
   setChangedNotif,
+  setUserId,
   setToastInfos,
 };

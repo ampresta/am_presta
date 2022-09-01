@@ -9,6 +9,7 @@ const Connection = {
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
+	logging:false
 };
 const sequelize = new Sequelize(Connection);
 sequelize.sync({ alter: true });
