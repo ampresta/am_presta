@@ -38,6 +38,7 @@ import ProofPreview from "components/ProofPreview";
 
 import { useParams } from "react-router-dom";
 import { asignVoucherSessionRoute } from "utils/APIRoutes";
+import NotifyEmail from "./notify";
 
 function Partners() {
   const { columns, rows, rawData } = sessionsDetailsTableData();
@@ -157,6 +158,20 @@ function Partners() {
                         onClick={() => assignAll()}
                       >
                         <Icon fontSize="big" color="light">
+                          send
+                        </Icon>
+                        &nbsp; Notify All
+                      </MDButton>
+                    </MDBox>
+
+                    <MDBox mr={1}>
+                      <MDButton
+                        variant="gradient"
+                        color="success"
+                        size="small"
+                        onClick={() => assignAll()}
+                      >
+                        <Icon fontSize="big" color="light">
                           done
                         </Icon>
                         &nbsp; Assign All
@@ -263,6 +278,7 @@ function Partners() {
           </Grid>
         </Grid>
       </MDBox>
+      <NotifyEmail />
     </DashboardLayout>
   );
 }

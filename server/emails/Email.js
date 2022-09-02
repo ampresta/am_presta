@@ -188,6 +188,20 @@ class Email {
         console.log("Email sent");
       });
   };
+
+  sendCustom = async (to_email, subject, message) => {
+    const options = {
+      from: this.from_email,
+      to: to_email,
+      subject,
+      text: message,
+    };
+    this.getTransporter()
+      .then((transporter) => transporter.sendMail(options))
+      .then((info) => {
+        console.log("Email sent");
+      });
+  };
 }
 
 module.exports = new Email("noreply@institute-eca.ma", "Am Presta");
