@@ -1,6 +1,7 @@
 const sequelize = require("sequelize");
 const db = require("../../config/database");
-const { Session_Collab, Session, Proof, Collaborateur, Voucher } = db.models;
+const { Session_Collab, Session, User, Proof, Collaborateur, Voucher } =
+  db.models;
 module.exports = async (req, res) => {
   const { sess } = req.body;
   if (!sess) {
@@ -12,35 +13,42 @@ module.exports = async (req, res) => {
       admin: false,
       instructor: false,
     },
-    include: {
-      model: Session_Collab,
-      attributes: ["id", "createdAt"],
+    include: [
+      {
+        model: Session_Collab,
+        attributes: ["id", "createdAt"],
 
-      where: {
-        SessionId: sess,
+        where: {
+          SessionId: sess,
+        },
+        include: [
+          {
+            model: Proof,
+            // attributes: ["id", "file"],
+            as: "certifs",
+            required: false,
+          },
+
+          {
+            model: Proof,
+            // attributes: ["id", "file"],
+            required: false,
+            as: "fincourse",
+          },
+          {
+            model: Voucher,
+            // attributes: ["code"],
+          },
+        ],
       },
-      include: [
-        {
-          model: Proof,
-          // attributes: ["id", "file"],
-          as: "certifs",
-          required: false,
-        },
-
-        {
-          model: Proof,
-          // attributes: ["id", "file"],
-          required: false,
-          as: "fincourse",
-        },
-        {
-          model: Voucher,
-          // attributes: ["code"],
-        },
-      ],
-    },
+      {
+        model: User,
+        attributes: ["email"],
+      },
+    ],
     group: [
       "Collaborateur.id",
+      "User.id",
       "Session_Collabs.id",
       "Session_Collabs->certifs.id",
       "Session_Collabs->Voucher.id",
