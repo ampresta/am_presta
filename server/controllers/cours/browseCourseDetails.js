@@ -1,5 +1,7 @@
 const sequelize = require("../../config/database");
 const { Cours, Collaborateur, Session, Provider, Quota } = sequelize.models;
+const { Op } = require("sequelize");
+
 module.exports = async (req, res) => {
   const { id } = req.body;
   if (!id) {
