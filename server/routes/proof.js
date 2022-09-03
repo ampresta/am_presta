@@ -7,6 +7,7 @@ const setProof = require("../controllers/proof/setProof");
 const checkCollaborateur = require("../middlewares/checkCollaborateur");
 const checkSuperAdmin = require("../middlewares/checkSuperAdmin");
 
+const checkSociete = require("../middlewares/checkSociete");
 // FILE STORAGE
 const STORAGE = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -22,7 +23,7 @@ const router = Router();
 router.use("/set", checkCollaborateur);
 router.post("/set", upload.single("proof"), setProof);
 
-router.use(checkSuperAdmin);
+router.use(checkSociete);
 router.post("/refuse", refuseProofs);
 router.post("/accept", acceptProof);
 router.post("/get", getProof);

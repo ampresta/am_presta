@@ -16,8 +16,16 @@ const CoursesGraph = () => {
     getData("cours", 9).then((data) => (graphs.datasets.data = data));
   }, []);
 
+  const today = new Date();
+  let lastSixMonths = [];
+  for (var i = 8; i >= 0; i -= 1) {
+    const date = new Date(today.getFullYear(), today.getMonth() - i, 1);
+    lastSixMonths.push(date.toLocaleDateString("en-US", { month: "short" }));
+  }
+
+  let months = lastSixMonths;
   let graphs = {
-    labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    labels: months,
     datasets: {
       label: "Courses",
       data: allCoursesData,

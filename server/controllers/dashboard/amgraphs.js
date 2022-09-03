@@ -2,8 +2,8 @@ const sequelize = require("sequelize");
 const db = require("../../config/database");
 const { Cours, Societe, Provider } = db.models;
 module.exports = async (req, res) => {
-  const { model, length } = req.body;
-  console.log(model);
+  const { model, } = req.body;
+	  length=9
   if (model == "cours") {
     Model = Cours;
   } else if (model == "societe") {
@@ -17,6 +17,7 @@ module.exports = async (req, res) => {
     return res.sendStatus(404);
   }
   chart = await Model.findAll({
+	  raw:true,
     attributes: [
       [db.fn("count", db.col("id")), "count"],
       [db.fn("extract", sequelize.literal('month FROM "createdAt"')), "month"],
@@ -29,9 +30,13 @@ module.exports = async (req, res) => {
   if (chart.length == 0) {
     results = Array(length).fill(0);
   } else {
-    final_year = chart.at(-1).dataValues.year;
-    final_month = chart.at(-1).dataValues.month;
-    results = [];
+
+      const date = Date();
+      const new_date = new Date(date);
+      final_year = new_date.getFullYear();
+      final_month = new_date.getMonth() + 1;
+    //results = [];
+     results = "0".repeat(length).split("");
     d = chart.slice(-length);
     d_length = d.length;
     m = final_month;
@@ -39,39 +44,36 @@ module.exports = async (req, res) => {
     res_index = 1;
     d_index = d.length - 1;
     while (true) {
+
+        console.log(d[d_index]);
       val = 0;
       ex = false;
       if (
-        m == parseInt(d[d_index].dataValues.month) &&
-        y == parseInt(d[d_index].dataValues.year)
+        m == parseInt(d[d_index].month) &&
+        y == parseInt(d[d_index].year)
       ) {
-        val = parseInt(d[d_index].dataValues.count);
+        val = parseInt(d[d_index].count);
 
         d_index--;
-        console.log(d_index);
-        if (d_index < -1) {
-          break;
+        if (d_index < 0) {
+		ex=1
         }
+
       }
       results[length - res_index] = val;
       res_index++;
-      console.log(res_index);
-      if (res_index == d_length + 1) {
+     // console.log(res_index);
+      if (res_index == length + 1) {
         break;
       }
+	    if (ex===1){
+		    break}
       m--;
       if (m == 0) {
         m = 12;
         y--;
       }
 
-      if (ex) {
-        break;
-      }
-    }
-    console.log(length, d_length);
-    for (i = 0; i < length - d_length; i++) {
-      results[i] = 0;
     }
   }
 

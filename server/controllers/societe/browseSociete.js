@@ -4,8 +4,8 @@ const { Societe, Collaborateur, Quota, Provider } = db.models;
 module.exports = async (req, res) => {
   filters = {};
   const { paranoid } = req.body;
-  console.log(paranoid);
   filters.paranoid = paranoid !== undefined ? false : true;
+	filters.order=[["createdAt","DESC"]]
   filters.include = {
     model: Collaborateur,
     attributes: ["nom", "prenom"],

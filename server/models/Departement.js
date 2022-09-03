@@ -14,9 +14,6 @@ const Departement = (db) => {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      ssss: {
-        type: Sequelize.STRING,
-      },
     },
     {
       Sequelize,
