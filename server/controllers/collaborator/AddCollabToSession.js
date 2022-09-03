@@ -39,6 +39,9 @@ module.exports = async (req, res) => {
       },
     ],
   });
+  if (!sess) {
+    return res.sendStatus(403);
+  }
   const collabo = await Collaborateur.findOne({
     where: {
       id: collab,
