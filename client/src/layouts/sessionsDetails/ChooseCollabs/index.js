@@ -96,8 +96,8 @@ function ChooseCollabs({ session }) {
                       color="success"
                       size="small"
                       sx={{ width: 100 }}
-                      onClick={() => {
-                        SubmitButton();
+                      onClick={(e) => {
+                        SubmitButton(e);
                         setOpenSelectCollabs(dispatch, !openSelectCollabs);
                       }}
                       disabled={!isChecked}

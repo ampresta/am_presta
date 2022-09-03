@@ -43,7 +43,6 @@ import NotifyEmail from "./notify";
 function Partners() {
   const { columns, rows, rawData, notifications } = sessionsDetailsTableData();
 
-  console.log("rawData", rawData);
   const [graph, setGraph] = useState([]);
 
   const [loading, setLoading] = useState(false);
@@ -62,7 +61,6 @@ function Partners() {
   useEffect(() => {
     const getGraph = async () => {
       const { data } = await axios.post(SessionGraph, { sess: id });
-      console.log("graph", data);
       setGraph(data);
       setLoading(true);
     };
