@@ -120,7 +120,7 @@ function AddProof({ sessionId }) {
                 Course Completion
               </MenuItem>
 
-              {sessionId.Session_Collabs[0].fincourse && (
+              {sessionId.Session_Collabs[0].Voucher && (
                 <MenuItem key={2} value={"certifs"}>
                   Certification
                 </MenuItem>

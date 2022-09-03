@@ -3,7 +3,8 @@ const { Societe, Collaborateur } = db.models;
 module.exports = async (req, res) => {
   companies = await Societe.findAll({
     limit: 3,
-    order: ["createdAt"],
+subQuery:false,
+    order: [["createdAt","DESC"]],
     include: {
       model: Collaborateur,
       attributes: ["nom", "prenom"],

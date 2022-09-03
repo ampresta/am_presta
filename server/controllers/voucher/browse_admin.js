@@ -20,6 +20,7 @@ module.exports = async (req, res) => {
         SessionCollabId: null,
       },
       order: [
+	      ["createdAt","DESC"],
         ["Provider", "id"],
         ["Societe", "id"],
       ],

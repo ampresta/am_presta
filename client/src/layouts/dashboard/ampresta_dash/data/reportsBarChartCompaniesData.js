@@ -15,9 +15,17 @@ const CompaniesGraph = () => {
     };
     getCompaniesData("societe", 7).then((data) => (graph.datasets.data = data));
   }, []);
+ 
+  const today = new Date();
+  let lastSixMonths = [];
+  for (var i = 8; i >= 0; i -= 1) {
+    const date = new Date(today.getFullYear(), today.getMonth() - i, 1);
+    lastSixMonths.push(date.toLocaleDateString("en-US", { month: "short" }));
+  }
 
+  let months = lastSixMonths;
   let graph = {
-    labels: ["M", "T", "W", "T", "F", "S", "S"],
+    labels: months,
     datasets: {
       label: "Companies",
       data: allCompaniesData,

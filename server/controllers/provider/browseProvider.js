@@ -5,6 +5,7 @@ const { Cours, Provider } = db.models;
 module.exports = async (req, res) => {
   const providers = await Provider.findAll({
     group: ["Provider.id"],
+	  order:[["createdAt","DESC"]],
     include: [
       {
         model: Cours,

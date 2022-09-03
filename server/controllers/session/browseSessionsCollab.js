@@ -1,6 +1,6 @@
 const sequelize = require("sequelize");
 const db = require("../../config/database");
-const { Cours, Session, Provider, Collaborateur, Proof, Session_Collab } =
+const {Voucher, Cours, Session, Provider, Collaborateur, Proof, Session_Collab } =
   db.models;
 module.exports = async (req, res) => {
   const { collab } = req;
@@ -33,6 +33,10 @@ module.exports = async (req, res) => {
           as: "fincourse",
           required: false,
         },
+	{
+	  model:Voucher,
+       	  attributes:["id"],
+ 	 }
       ],
       where: { CollaborateurId: collab },
     },
@@ -47,6 +51,7 @@ module.exports = async (req, res) => {
     "Session_Collabs.id",
     "Session_Collabs->fincourse.id",
     "Session_Collabs->certifs.id",
+    "Session_Collabs->Voucher.id",
     "Session.id",
     "Cour.id",
     "Cour->Provider.id",
