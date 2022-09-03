@@ -279,7 +279,11 @@ function Partners() {
         </Grid>
       </MDBox>
 <<<<<<< HEAD
+<<<<<<< HEAD
       <NotifyEmail />
+=======
+      {notifications}
+>>>>>>> 2449f4eb (make toast errors everywhere 2)
 =======
       {notifications}
 >>>>>>> 2449f4eb (make toast errors everywhere 2)

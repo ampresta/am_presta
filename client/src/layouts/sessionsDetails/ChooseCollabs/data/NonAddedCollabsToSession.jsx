@@ -30,14 +30,7 @@ export default function Data(session) {
   const [allCollabs, setAllCollabs] = useState([]);
   const [checked, setChecked] = useState([]);
   const [isChecked, setIsChecked] = useState(false);
-//<<<<<<< HEAD
-
-//  const [controller, dispatch] = useMaterialUIController();
- // const { updater } = controller;
-  
-//=======
   const [openSnackBar, setOpenSnackBar] = useState(false);
-//>>>>>>> 2449f4eb (make toast errors everywhere 2)
 
   useEffect(() => {
     const getAllCollabs = async () => {
