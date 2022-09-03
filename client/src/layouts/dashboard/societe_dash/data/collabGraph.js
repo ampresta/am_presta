@@ -8,12 +8,12 @@ const CompaniesGraph = () => {
   const today = new Date();
   let lastSixMonths = [];
 
-  for (var i = 9; i > 0; i -= 1) {
+  for (var i = 8; i >= 0; i -= 1) {
     const date = new Date(today.getFullYear(), today.getMonth() - i, 1);
     lastSixMonths.push(date.toLocaleDateString("en-US", { month: "short" }));
   }
 
-  let months = lastSixMonths.reverse();
+  let months = lastSixMonths
 
   useEffect(() => {
     const getCompaniesData = async () => {

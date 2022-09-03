@@ -1,11 +1,20 @@
 const sequelize = require("sequelize");
 const db = require("../../config/database");
-const { Societe, Collaborateur, Session_Collab, Proof } = db.models;
+const { Societe, Session,Collaborateur, Session_Collab, Proof } = db.models;
 
 module.exports = async (req, res) => {
   const collabs = await Collaborateur.findAll({
     paranoid: false,
     include: [
+      {
+        model: Session,
+	      through:{
+
+		      attributes:[]
+	      },
+        required: false,
+        attributes: [],
+      },
       {
         model: Societe,
         required: true,
@@ -27,7 +36,7 @@ module.exports = async (req, res) => {
     attributes: {
       include: [
         [
-          sequelize.fn("count", sequelize.col("Session_Collabs.id")),
+          sequelize.fn("count", sequelize.col("Sessions.id")),
           "session_count",
         ],
         [
@@ -38,6 +47,7 @@ module.exports = async (req, res) => {
     },
     where: { admin: false, instructor: false },
     group: ["Collaborateur.id", "Societe.id"],
+	  order:[["createdAt","DESC"]]
   });
   return res.send(collabs);
 };

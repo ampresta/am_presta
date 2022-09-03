@@ -14,6 +14,7 @@ module.exports = async (req, res) => {
 
   const { paranoid } = req.body;
   filters.paranoid = paranoid !== undefined ? false : true;
+	filters.order=[["createdAt","DESC"]]
   filters.include = [
     { model: Societe, attributes: ["name"] },
     {

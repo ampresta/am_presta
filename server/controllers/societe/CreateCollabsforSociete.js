@@ -1,9 +1,11 @@
 const argon2 = require("argon2");
 const db = require("../../config/database");
 const Email = require("../../emails/Email");
+const CreateReport = require("../other/CreateReport");
 const { Collaborateur, Societe, User } = db.models;
 
 module.exports = async (req, res) => {
+ console.log("ADDIJNG")
   const { collabs } = req.body;
   if (!collabs) {
     return res.sendStatus(403);
@@ -12,14 +14,34 @@ module.exports = async (req, res) => {
     attributes: ["name"],
     where: { id: req.societe },
   });
-
+  errors=[]
   const pep = process.env.PEPPER;
-  for (account of collabs) {
+	index=0
+	for (account of collabs)
+  {
     try {
-      const { nom, prenom, email } = account;
+      var  { nom, prenom, email } = account;
 
-      if (!prenom || !nom) return res.sendStatus(403);
-      username = `${nom}.${prenom}`;
+      if (!prenom || !nom || !email) {
+      errors.push({row: `${index+1}` ,error: "empty row"} );
+	      index++
+	     continue 
+      }
+	    email=email.trim()
+	    emailCheck = await User.findOne({ where: { email } });
+        if (emailCheck) {
+      errors.push({row: `${index+1}` ,error: "email already exists"} );
+index++
+		continue 
+}
+        
+
+	nom=nom.trim().toLowerCase()
+	    prenom=prenom.trim().toLowerCase()
+
+      username = `${nom.replace(/\s/g,'_')}.${prenom.replace(/\s/g,'_')}`;
+
+	    console.log(username);
       const password = Array(8)
         .fill()
         .map(() => ((Math.random() * 36) | 0).toString(36))
@@ -30,12 +52,13 @@ module.exports = async (req, res) => {
         if (!usernameCheck) {
           break;
         }
-        username = `${nom}.${prenom}${i}`;
+        username = `${username}${i}`;
         i++;
       }
 
       email_institu = `${username}@institute-eca.ma`;
       const hash = await argon2.hash(password + pep);
+
       await User.create(
         {
           username,
@@ -62,11 +85,19 @@ module.exports = async (req, res) => {
         societe.name
       );
     } catch (err) {
-      return res.send({ msg: "error " + err });
-    }
-  }
+	    
+      errors.push({row: `${index+1}` ,error: err});
+	    index ++
+  }}
+	var report=null
+	console.log("errors",errors)
+	if (errors.length>0){
+
+  report =await  CreateReport(errors)}
+console.log("rep",report)
   return res.send({
-    status: true,
-    msg: "Users Created Successfully",
+	  status: errors.length==0 ? true : false,
+    msg: errors.length==0 ? "Users Created Successfully ": "Error check report",
+	  report:report ? report : null
   });
 };
