@@ -3,10 +3,6 @@ const morgan = require("morgan");
 const express = require("express");
 const app = express();
 const server = require("http").createServer(app);
-//const  ioApp = require('http').createServer(handler);
-//console.log("server",ioApp)
-const   io  =require( "socket.io-client");
-//const io = require("./socket.js").init(server);
 const db = require("./config/database");
 const login = require("./routes/login");
 const register = require("./routes/register");
@@ -21,6 +17,7 @@ const voucher = require("./routes/voucher");
 const logout = require("./controllers/logout/logout");
 const notifs = require("./routes/notifs");
 const profile = require("./routes/profile");
+const edit = require("./routes/edit");
 const email = require("./routes/email");
 const PORT = process.env.PORT;
 const multer = require("multer");
@@ -83,6 +80,7 @@ app.use("/api/upload", changePhotoMiddleware);
 app.use("/api/notifs", notifs);
 app.use("/api/profile", profile);
 app.use("/api/email", email);
+app.use("/api/edit", edit);
 
 app.post("/api/upload", upload.single("image"), handleUpload);
 app.post("/api/delete", deleteInstances);
