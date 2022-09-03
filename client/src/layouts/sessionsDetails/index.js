@@ -41,7 +41,7 @@ import { asignVoucherSessionRoute } from "utils/APIRoutes";
 import NotifyEmail from "./notify";
 
 function Partners() {
-  const { columns, rows, rawData } = sessionsDetailsTableData();
+  const { columns, rows, rawData, notifications } = sessionsDetailsTableData();
 
   console.log("rawData", rawData);
   const [graph, setGraph] = useState([]);
@@ -278,24 +278,13 @@ function Partners() {
           </Grid>
         </Grid>
       </MDBox>
+<<<<<<< HEAD
       <NotifyEmail />
+=======
+      {notifications}
+>>>>>>> 2449f4eb (make toast errors everywhere 2)
     </DashboardLayout>
   );
 }
 
 export default Partners;
-
-// const data = {
-//   labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-//   datasets: {
-//     backgroundColor: "transparent",
-//     borderColor: "",
-//     color: "success",
-//     data: [30, 90, 40, 0, 290, 290, 340, 230, 400],
-//     fill: true,
-//     label: "Referral",
-//     maxBarThickness: 6,
-//     pointBackgroundColor: "#344767",
-//     pointRadius: 3,
-//   },
-// };

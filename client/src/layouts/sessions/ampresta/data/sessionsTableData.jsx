@@ -85,7 +85,11 @@ export default function Data() {
       setOpenSnackBar(true);
       setConfirmModel(!confirmModel);
     } else {
-      alert(data.msg);
+      setToastInfos(dispatch, {
+        color: "warning",
+        message: data.msg,
+      });
+      setOpenSnackBar(true);
     }
   };
 

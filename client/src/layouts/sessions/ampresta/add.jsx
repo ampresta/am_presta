@@ -35,6 +35,7 @@ function AddSession({ closeAddModel, openSnackBar }) {
     course: "",
     dateDepart: "",
     dateFin: "",
+    company: "",
   });
 
   const [session, setSession] = useState({
@@ -82,8 +83,6 @@ function AddSession({ closeAddModel, openSnackBar }) {
     getAllData1();
     const getAllData = async () => {
       const { data } = await axios.get(allCoursesRoute);
-      console.log("jat l3rossa");
-      console.log(data);
       setCourses(data);
     };
     getAllData();
@@ -152,7 +151,7 @@ function AddSession({ closeAddModel, openSnackBar }) {
     if (!values.dateFin) {
       errors.dateFin = "End Date is required !";
     }
-    if (!values.company) {
+    if (!values.company.id) {
       errors.company = "Company is required !";
     }
     return errors;
