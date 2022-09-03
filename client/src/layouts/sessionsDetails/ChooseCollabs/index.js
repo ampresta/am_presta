@@ -23,16 +23,18 @@ import { useMaterialUIController, setOpenSelectCollabs } from "context";
 
 //Add companies component
 import AddCollab from "./add";
+import MySnackBar from "components/MySnackBar";
 
 function ChooseCollabs({ session }) {
-  const { columns, rows, SubmitButton, isChecked } =
-    nonAddedCollabToSession(session);
-
+  const [controller, dispatch] = useMaterialUIController();
+  const { openSelectCollabs, toastInfos } = controller;
 
   const [openAddModel, setOpenAddModel] = useState(false);
+  const [openSnackBar, setOpenSnackBar] = useState(false);
 
-  const [controller, dispatch] = useMaterialUIController();
-  const { openSelectCollabs } = controller;
+  const { columns, rows, SubmitButton, isChecked, notifications } =
+    nonAddedCollabToSession(session);
+
   return (
     <>
       {!openAddModel && (
@@ -119,7 +121,21 @@ function ChooseCollabs({ session }) {
           </Grid>
         </MDBox>
       )}
-      {openAddModel && <AddCollab closeAddModel={setOpenAddModel} />}
+      {openAddModel && (
+        <AddCollab
+          closeAddModel={setOpenAddModel}
+          openSnackBar={setOpenSnackBar}
+        />
+      )}
+      {notifications}
+      {openSnackBar && (
+        <MySnackBar
+          color={toastInfos.color}
+          title={toastInfos.message}
+          open={openSnackBar}
+          close={() => setOpenSnackBar(!openSnackBar)}
+        />
+      )}
     </>
   );
 }

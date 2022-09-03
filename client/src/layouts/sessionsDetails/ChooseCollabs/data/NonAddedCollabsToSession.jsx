@@ -3,6 +3,7 @@
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
+import MySnackBar from "components/MySnackBar";
 import Checkbox from "@mui/material/Checkbox";
 
 // React Hooks
@@ -19,16 +20,17 @@ import {
 } from "utils/APIRoutes";
 
 // Material Dashboard 2 React contexts
-import { useMaterialUIController, setUpdater } from "context";
+import { useMaterialUIController, setUpdater, setToastInfos } from "context";
 import { toggleArrayItem } from "utils/Helper";
 
 export default function Data(session) {
+  const [controller, dispatch] = useMaterialUIController();
+  const { updater, toastInfos } = controller;
+
   const [allCollabs, setAllCollabs] = useState([]);
   const [checked, setChecked] = useState([]);
   const [isChecked, setIsChecked] = useState(false);
-
-  const [controller, dispatch] = useMaterialUIController();
-  const { updater } = controller;
+  const [openSnackBar, setOpenSnackBar] = useState(false);
 
   useEffect(() => {
     const getAllCollabs = async () => {
@@ -75,6 +77,15 @@ export default function Data(session) {
     ],
 
     rows: [],
+
+    notifications: openSnackBar && (
+      <MySnackBar
+        color={toastInfos.color}
+        title={toastInfos.message}
+        open={openSnackBar}
+        close={() => setOpenSnackBar(!openSnackBar)}
+      />
+    ),
   };
 
   collabs.SubmitButton = () => {
@@ -85,10 +96,14 @@ export default function Data(session) {
       });
 
       if (data.status) {
-        console.log("OKKKKKKKKKK");
         setUpdater(dispatch, !updater);
+        setToastInfos(dispatch, {
+          color: "success",
+          message: "Collaborator(s) Added to Session Successfully",
+        });
       } else {
-        alert(data.msg);
+        setToastInfos(dispatch, { color: "warning", message: data.msg });
+        setOpenSnackBar(true);
       }
     });
   };
@@ -96,17 +111,6 @@ export default function Data(session) {
   if (allCollabs.length === 0 || !Array.isArray(allCollabs)) {
     collabs.rows.push({ author: "No Collaborators Available" });
   } else {
-    // collabs.columns[0].Header = (
-    //   <Checkbox
-    //     onChange={(e) => {
-    //       allCollabs.map((collab) =>
-    //         setChecked(toggleArrayItem(collab.id, checked))
-    //       );
-    //       checked.length === 0 ? setIsChecked(false) : setIsChecked(true);
-    //     }}
-    //   ></Checkbox>
-    // );
-
     allCollabs.map((collab) =>
       collabs.rows.push({
         check: (

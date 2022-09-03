@@ -6,6 +6,7 @@ import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
 import MDBadge from "components/MDBadge";
 import MDButton from "components/MDButton";
+import MySnackBar from "components/MySnackBar";
 import Icon from "@mui/material/Icon";
 
 //React hooks
@@ -23,6 +24,7 @@ import {
   setcollabProofModel,
   setfileProofModel,
   setUpdater,
+  setToastInfos,
 } from "context";
 
 // Material Dashboard 2 React contexts
@@ -32,10 +34,11 @@ import { useParams } from "react-router-dom";
 import { asignOneVoucherRoute } from "utils/APIRoutes";
 
 export default function Data() {
-  const [allCollabs, setAllCollabs] = useState([]);
-
   const [controller, dispatch] = useMaterialUIController();
-  const { openProofModel, updater } = controller;
+  const { openProofModel, updater, toastInfos } = controller;
+
+  const [allCollabs, setAllCollabs] = useState([]);
+  const [openSnackBar, setOpenSnackBar] = useState(false);
 
   const { id } = useParams();
 
@@ -145,8 +148,17 @@ export default function Data() {
     const { data } = await axios.post(asignOneVoucherRoute, { id });
     if (data.status) {
       setUpdater(dispatch, !updater);
+      setToastInfos(dispatch, {
+        color: "success",
+        message: "Voucher Assigned Successfully",
+      });
+      setOpenSnackBar(true);
     } else {
-      alert(data.msg);
+      setToastInfos(dispatch, {
+        color: "warning",
+        message: data.msg,
+      });
+      setOpenSnackBar(true);
     }
   };
 
@@ -247,6 +259,15 @@ export default function Data() {
     ],
 
     rows: [],
+
+    notifications: openSnackBar && (
+      <MySnackBar
+        color={toastInfos.color}
+        title={toastInfos.message}
+        open={openSnackBar}
+        close={() => setOpenSnackBar(!openSnackBar)}
+      />
+    ),
 
     rawData: allCollabs,
   };

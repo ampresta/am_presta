@@ -2,10 +2,6 @@
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
-import MDButton from "components/MDButton";
-
-// @mui icons
-import Icon from "@mui/material/Icon";
 
 //React hooks
 import { useState, useEffect } from "react";
@@ -14,23 +10,17 @@ import { useState, useEffect } from "react";
 import axiosAuth from "services/authAxios";
 
 // Api Endpoint
-import { baseURL, DeleteInstances } from "utils/APIRoutes";
-
-// ConfirmPoppup component
-import ConfirmPopup from "components/ConfirmPopup";
+import { baseURL } from "utils/APIRoutes";
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController } from "context";
 import { browseVouchersSocRoute } from "utils/APIRoutes";
 
 export default function Data() {
-  const [allVouchers, setAllVouchers] = useState([]);
-  const [confirmModel, setConfirmModel] = useState(false);
-  const [tempPartnerId, setTempPartnerId] = useState(0);
-
   const [controller] = useMaterialUIController();
-
   const { updater } = controller;
+
+  const [allVouchers, setAllVouchers] = useState([]);
 
   useEffect(() => {
     const getAllVouchers = async () => {
@@ -39,19 +29,6 @@ export default function Data() {
     };
     getAllVouchers();
   }, [updater]);
-
-  const handleDelete = async (id) => {
-    const { data } = await axiosAuth.post(DeleteInstances, {
-      model: "Voucher",
-      id: id,
-    });
-    if (data.status) {
-      setAllVouchers(allVouchers.filter((voucher) => voucher.id !== id));
-      setConfirmModel(!confirmModel);
-    } else {
-      alert(data.msg);
-    }
-  };
 
   const Company = ({ image, name, company }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
@@ -82,17 +59,6 @@ export default function Data() {
     ],
 
     rows: [],
-    confirmation: confirmModel && (
-      <ConfirmPopup
-        title={"Are you sure you want to delete this provider ?"}
-        open={confirmModel}
-        onConfirmPopup={() => setConfirmModel(!confirmModel)}
-        handleDetele={handleDelete}
-        Id_Item={tempPartnerId}
-      />
-    ),
-
-    rawData: allVouchers,
   };
   try {
     allVouchers.map((voucher) =>
