@@ -35,19 +35,15 @@ import {
 
 import ChooseCollabs from "./ChooseCollabs";
 import ProofPreview from "components/ProofPreview";
+import NotifyEmail from "./notify";
 
 import { useParams } from "react-router-dom";
 import { asignVoucherSessionRoute } from "utils/APIRoutes";
-import NotifyEmail from "./notify";
 
 function Partners() {
   const { columns, rows, rawData, notifications } = sessionsDetailsTableData();
 
   console.log("rawData", rawData);
-  const [graph, setGraph] = useState([]);
-
-  const [loading, setLoading] = useState(false);
-
   const [controller, dispatch] = useMaterialUIController();
   const {
     collabProofModel,
@@ -57,6 +53,9 @@ function Partners() {
     updater,
   } = controller;
 
+  const [graph, setGraph] = useState([]);
+  const [openNotify, setOpenNotify] = useState(false);
+  const [loading, setLoading] = useState(false);
   let { id } = useParams();
 
   useEffect(() => {
@@ -94,7 +93,7 @@ function Partners() {
       {loading && <DashboardNavbar titleio={graph.session.nom} />}
       <MDBox pt={6} pb={1}>
         <Grid container spacing={2} rowSpacing={2}>
-          {!openSelectCollabs && !openProofModel && (
+          {!openNotify && !openSelectCollabs && !openProofModel && (
             <Grid item xs={12} md={7} lg={9}>
               <Card>
                 {loading && (
@@ -155,7 +154,7 @@ function Partners() {
                         variant="gradient"
                         color="success"
                         size="small"
-                        onClick={() => assignAll()}
+                        onClick={() => setOpenNotify(!openNotify)}
                       >
                         <Icon fontSize="big" color="light">
                           send
@@ -211,6 +210,13 @@ function Partners() {
               <ChooseCollabs session={id} />
             </Grid>
           )}
+
+          {openNotify && (
+            <Grid item xs={12} md={7} lg={9}>
+              <NotifyEmail closeNotify={setOpenNotify} />
+            </Grid>
+          )}
+
           {openProofModel && (
             <Grid item xs={12} md={7} lg={9}>
               <ProofPreview
@@ -279,7 +285,6 @@ function Partners() {
         </Grid>
       </MDBox>
       {notifications}
-      <NotifyEmail />
     </DashboardLayout>
   );
 }
