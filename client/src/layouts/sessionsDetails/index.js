@@ -279,6 +279,7 @@ function Partners() {
         </Grid>
       </MDBox>
       {notifications}
+	  <NotifyEmail />
     </DashboardLayout>
   );
 }
