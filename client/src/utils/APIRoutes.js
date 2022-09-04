@@ -51,6 +51,7 @@ export const addSessionsAdminRoute = `${baseURL}/session/addam`;
 export const SessionsofSociete = `${baseURL}/session/browsesoc`;
 export const AllSessionsAdminRoute = `${baseURL}/session/browseam`;
 export const AllSessionsCollabRoute = `${baseURL}/session/browsecollab`;
+export const OutSessionsCollabRoute = `${baseURL}/session/sessionout`;
 
 // Quota
 export const AllQuotaRoute = `${baseURL}/quota/browse`;
@@ -115,3 +116,5 @@ export const validatepasswordRoute = `${baseURL}/profile/validatepassword`;
 
 // Emails
 export const sendEmailRoute = `${baseURL}/email/send`;
+
+

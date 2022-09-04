@@ -8,11 +8,6 @@ import MDBox from "components/MDBox";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
 
 //import UseState Hook
 import { useState, useEffect } from "react";
@@ -20,27 +15,27 @@ import { useState, useEffect } from "react";
 // Axios
 import axios from "services/authAxios";
 
-import { allCompanyCoursesRoute, addSessionsRoute } from "utils/APIRoutes";
-
 // Material Dashboard 2 React contexts
-import { useMaterialUIController, setUpdater, setToastInfos } from "context";
 import { useParams } from "react-router-dom";
 import { SessionCollabRoute, sendEmailRoute } from "utils/APIRoutes";
 
 // Material Dashboard 2 React contexts
+import { useMaterialUIController, setToastInfos } from "context";
 
-export default function NotifyEmail({ closeAddModel, openSnackBar }) {
+export default function NotifyEmail({
+  closeAddModel,
+  openSnackBar,
+  closeNotify,
+}) {
   const { id } = useParams();
   const [emails, setEmails] = useState([]);
 
+  const [, dispatch] = useMaterialUIController();
 
   const [formErrors, setFormErrors] = useState({
     subject: "",
     message: "",
   });
-
-  const [controller, dispatch] = useMaterialUIController();
-  const { updater } = controller;
 
   const [form, setForm] = useState({
     subject: "",
@@ -100,7 +95,7 @@ export default function NotifyEmail({ closeAddModel, openSnackBar }) {
   };
 
   return (
-    <Card sx={{ mt: "50px" }}>
+    <Card>
       <MDBox
         display="flex"
         justifyContent="space-between"
@@ -111,7 +106,7 @@ export default function NotifyEmail({ closeAddModel, openSnackBar }) {
         coloredShadow="info"
         p={3}
         mx={2}
-        mt={-3}
+        mt={3}
         mb={1}
       >
         <MDTypography variant="h6" color="white">
@@ -123,7 +118,7 @@ export default function NotifyEmail({ closeAddModel, openSnackBar }) {
           color="dark"
           size="small"
           iconOnly
-          onClick={() => closeAddModel(false)}
+          onClick={() => closeNotify(false)}
         >
           <Icon fontSize="small">close</Icon>
         </MDButton>
@@ -143,9 +138,9 @@ export default function NotifyEmail({ closeAddModel, openSnackBar }) {
               name="subject"
               fullWidth
               onChange={(e) => handleChange(e)}
-              error={formErrors.nom}
+              error={formErrors.subject}
             />
-            <FormHelperText error>{formErrors.nom}</FormHelperText>
+            <FormHelperText error>{formErrors.subject}</FormHelperText>
           </MDBox>
 
           <MDInput
@@ -156,10 +151,10 @@ export default function NotifyEmail({ closeAddModel, openSnackBar }) {
             multiline
             fullWidth
             onChange={(e) => handleChange(e)}
-            error={formErrors.nom}
-            rows={6}
+            error={formErrors.message}
+            rows={5}
           />
-          <FormHelperText error>{formErrors.nom}</FormHelperText>
+          <FormHelperText error>{formErrors.message}</FormHelperText>
 
           <MDBox mt={4} mb={2} display="flex" justifyContent="center">
             <MDButton

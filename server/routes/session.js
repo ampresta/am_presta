@@ -7,6 +7,7 @@ const browseSessionsCollab = require("../controllers/session/browseSessionsColla
 const browseSessionSoc = require("../controllers/session/browseSessionSoc");
 const SessionCollab = require("../controllers/session/SessionCollab");
 const SessionDetailsGraph = require("../controllers/session/SessionDetailsGraph");
+const  browseSessionnotEnrolled= require("../controllers/session/browseSessionnotEnrolled");
 const checkCollaborateur = require("../middlewares/checkCollaborateur");
 const checkSociete = require("../middlewares/checkSociete");
 const checkSuperAdmin = require("../middlewares/checkSuperAdmin");
@@ -30,4 +31,5 @@ router.all("/browse", browseSession);
 router.post("/graph", SessionDetailsGraph);
 router.post("/collab", SessionCollab);
 
+router.post("/sessionout", browseSessionnotEnrolled);
 module.exports = router;
