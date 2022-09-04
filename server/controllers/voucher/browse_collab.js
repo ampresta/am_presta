@@ -8,13 +8,17 @@ module.exports = async (req, res) => {
         FROM "Vouchers" as v
         JOIN "Providers" prv ON  prv.id = v."ProviderId"
         JOIN "Session_Collabs" sc ON v."SessionCollabId" = sc.id
+        JOIN "Collaborateurs" cl ON sc."CollaborateurId" = cl.id
         JOIN "Sessions" s ON s.id = sc."SessionId"
         JOIN "Cours" c ON c.id = s."CourId"
-        WHERE v."SessionCollabId" in(
+        WHERE v."deletedAt" IS NULL 
+        AND v."SessionCollabId" in (
             SELECT  id
             FROM "Session_Collabs" as sc
             WHERE "CollaborateurId"=${req.collab}
         )
+        AND sc."deletedAt" IS NULL
+        AND cl."deletedAt" IS NULL
       `);
 
     return res.send(vouchers);
