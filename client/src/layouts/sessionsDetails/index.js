@@ -45,7 +45,7 @@ import NotifyEmail from "./notify";
 import { useParams } from "react-router-dom";
 
 function Partners() {
-  const { columns, rows, rawData, notifications } = sessionsDetailsTableData();
+  const { columns, rows, notifications } = sessionsDetailsTableData();
 
   const [controller, dispatch] = useMaterialUIController();
   const {
@@ -179,21 +179,6 @@ function Partners() {
                           done
                         </Icon>
                         &nbsp; Assign All
-                      </MDButton>
-                    </MDBox>
-
-                    <MDBox mr={2}>
-                      <MDButton
-                        variant="gradient"
-                        color="success"
-                        size="small"
-                        // onClick={() => handleDownload("allCourses", "export")}
-                        // disabled={rawData.length === 0}
-                      >
-                        <Icon fontSize="big" color="light">
-                          download
-                        </Icon>
-                        &nbsp; Export
                       </MDButton>
                     </MDBox>
                   </MDBox>
