@@ -17,8 +17,10 @@ import axios from "services/authAxios";
 
 // Material Dashboard 2 React contexts
 import { useParams } from "react-router-dom";
-import { SessionCollabRoute } from "utils/APIRoutes";
-import { sendEmailRoute } from "utils/APIRoutes";
+import { SessionCollabRoute, sendEmailRoute } from "utils/APIRoutes";
+
+// Material Dashboard 2 React contexts
+import { useMaterialUIController, setToastInfos } from "context";
 
 export default function NotifyEmail({
   closeAddModel,
@@ -26,8 +28,9 @@ export default function NotifyEmail({
   closeNotify,
 }) {
   const { id } = useParams();
-
   const [emails, setEmails] = useState([]);
+
+  const [, dispatch] = useMaterialUIController();
 
   const [formErrors, setFormErrors] = useState({
     subject: "",
@@ -55,11 +58,20 @@ export default function NotifyEmail({
     event.preventDefault();
     setFormErrors(validate(form));
     if (Object.keys(validate(form)).length === 0) {
-      await axios.post(sendEmailRoute, {
+      const data = await axios.post(sendEmailRoute, {
         email: emails,
         subject: subject,
         message: message,
       });
+
+      if (data.status === 200) {
+        closeNotify(false);
+        setToastInfos(dispatch, {
+          color: "success",
+          message: "Email Sent Successfully",
+        });
+        openSnackBar(true);
+      }
     }
   };
 

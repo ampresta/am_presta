@@ -7,6 +7,7 @@ import Card from "@mui/material/Card";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
+import MySnackBar from "components/MySnackBar";
 
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
@@ -25,7 +26,11 @@ import { useState, useEffect } from "react";
 
 // axios
 import axios from "services/authAxios";
-import { SessionGraph, baseURL } from "utils/APIRoutes";
+import {
+  SessionGraph,
+  baseURL,
+  asignVoucherSessionRoute,
+} from "utils/APIRoutes";
 
 import {
   useMaterialUIController,
@@ -38,7 +43,6 @@ import ProofPreview from "components/ProofPreview";
 import NotifyEmail from "./notify";
 
 import { useParams } from "react-router-dom";
-import { asignVoucherSessionRoute } from "utils/APIRoutes";
 
 function Partners() {
   const { columns, rows, rawData, notifications } = sessionsDetailsTableData();
@@ -51,11 +55,14 @@ function Partners() {
     openProofModel,
     openSelectCollabs,
     updater,
+    toastInfos,
   } = controller;
 
   const [graph, setGraph] = useState([]);
   const [openNotify, setOpenNotify] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [openSnackBar, setOpenSnackBar] = useState(false);
+
   let { id } = useParams();
 
   useEffect(() => {
@@ -213,7 +220,10 @@ function Partners() {
 
           {openNotify && (
             <Grid item xs={12} md={7} lg={9}>
-              <NotifyEmail closeNotify={setOpenNotify} />
+              <NotifyEmail
+                closeNotify={setOpenNotify}
+                openSnackBar={setOpenSnackBar}
+              />
             </Grid>
           )}
 
@@ -285,6 +295,14 @@ function Partners() {
         </Grid>
       </MDBox>
       {notifications}
+      {openSnackBar && (
+        <MySnackBar
+          color={toastInfos.color}
+          title={toastInfos.message}
+          open={openSnackBar}
+          close={() => setOpenSnackBar(!openSnackBar)}
+        />
+      )}
     </DashboardLayout>
   );
 }
