@@ -8,8 +8,9 @@ module.exports = async (req, res) => {
       attributes: ["nom"],
     },
     attributes: ["nom", "image"],
-    order: ["updatedAt"],
+    order: [["createdAt","DESC"]],
     limit: 3,
+	  subQuery:false,
   });
 
   return res.send({

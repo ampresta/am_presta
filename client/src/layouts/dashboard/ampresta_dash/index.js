@@ -79,11 +79,6 @@ function Dashboard() {
                 icon="business"
                 title="Total Companies"
                 count={companiesCount}
-                percentage={{
-                  color: "success",
-                  // amount: "+55%",
-                  label: "than lask month",
-                }}
               />
             </MDBox>
           </Grid>
@@ -94,11 +89,6 @@ function Dashboard() {
                 title="Total Courses"
                 color="success"
                 count={coursesCount}
-                percentage={{
-                  color: "success",
-                  // amount: "+3%",
-                  label: "than last month",
-                }}
               />
             </MDBox>
           </Grid>
@@ -109,11 +99,6 @@ function Dashboard() {
                 icon="handshake"
                 title="Total Partners"
                 count={partnersCount}
-                percentage={{
-                  color: "success",
-                  // amount: "+1%",
-                  label: "than last month",
-                }}
               />
             </MDBox>
           </Grid>
@@ -125,7 +110,7 @@ function Dashboard() {
                 <ReportsBarChart
                   color="info"
                   title="Total companies"
-                  date="campaign sent 2 days ago"
+                  date="updated minutes ago"
                   chart={CompaniesGraph()}
                 />
               </MDBox>

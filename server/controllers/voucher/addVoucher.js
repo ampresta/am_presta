@@ -5,8 +5,12 @@ module.exports = async (req, res) => {
   if (!vouchers) {
     return res.sendStatus(403);
   }
-  vouchers.map(async (voucher) => {
+  vouchers.map(async (voucher,index) => {
     const { societe, code, provider } = voucher;
+	  if( !societe || ! code || !provider){
+
+		  return res.send({status:false,msg:`Missing Value at ${index}`})
+	  }
     try {
       const prov = await Provider.findOne({
         where: { nom: provider },

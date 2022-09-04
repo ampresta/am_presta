@@ -7,6 +7,7 @@ module.exports = async (req, res) => {
       include: [
         {
           model: Collaborateur,
+		order:[["createdAt","DESC"]],
           attributes: [],
           include: {
             model: Session_Collab,

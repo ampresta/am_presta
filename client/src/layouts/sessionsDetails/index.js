@@ -47,7 +47,6 @@ import { useParams } from "react-router-dom";
 function Partners() {
   const { columns, rows, rawData, notifications } = sessionsDetailsTableData();
 
-  console.log("rawData", rawData);
   const [controller, dispatch] = useMaterialUIController();
   const {
     collabProofModel,
@@ -68,7 +67,6 @@ function Partners() {
   useEffect(() => {
     const getGraph = async () => {
       const { data } = await axios.post(SessionGraph, { sess: id });
-      console.log("graph", data);
       setGraph(data);
       setLoading(true);
     };
