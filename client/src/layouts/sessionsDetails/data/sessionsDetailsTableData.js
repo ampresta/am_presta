@@ -55,7 +55,6 @@ export default function Data() {
   const handleProof = (e) => {
     const rank = e.currentTarget.getAttribute("index");
     const type = e.currentTarget.getAttribute("typex");
-    console.log(allCollabs[rank]);
     const collab = allCollabs[rank];
     setcollabProofModel(dispatch, `${collab.nom} ${collab.prenom}`);
     if (type === "fincourse") {
@@ -164,7 +163,6 @@ export default function Data() {
 
   const getVoucherStatus = (collab) => {
     const session_collab = collab.Session_Collabs[0];
-    console.log(session_collab);
     if (
       session_collab.fincourse &&
       session_collab.fincourse.status === "accepted" &&
@@ -268,8 +266,6 @@ export default function Data() {
         close={() => setOpenSnackBar(!openSnackBar)}
       />
     ),
-
-    rawData: allCollabs,
   };
 
   allCollabs.map((collab, index) => {

@@ -57,7 +57,7 @@ function Overview() {
         emailPerso: User.email,
         emailInstitu: email_institu,
       });
-      setUserSociete(Societe.name);
+      setUserSociete(Societe ? Societe.name : "Societe non définie");
       setUserAvatar(image);
       setUserNom(nom);
       setUserPrenom(prenom);

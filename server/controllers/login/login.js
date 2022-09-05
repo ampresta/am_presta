@@ -1,5 +1,5 @@
 const db = require("../../config/database");
-const { User } = db.models;
+const { User, Collaborateur, Societe } = db.models;
 const argon2 = require("argon2");
 const { sign } = require("jsonwebtoken");
 const GetType = require("./GetType");
@@ -11,7 +11,16 @@ module.exports = async (req, res) => {
       return res.send({ status: false, msg: "Check parameters" });
     }
     const user = await User.findOne({
-      where: { [Op.or]: { username, email: username } },
+      include: {
+        model: Collaborateur,
+        attributes: ["id"],
+        include: {
+          model: Societe,
+        },
+      },
+      where: {
+        [Op.or]: { username, email: username },
+      },
     });
 
     if (user === null)
@@ -19,6 +28,13 @@ module.exports = async (req, res) => {
 
     const pep = process.env.PEPPER;
     let changedpass = "";
+
+    // start - BRICOLE DYAL DELETEDAT
+    const sociterNotDeleted = user.Collaborateur.Societe ? true : false;
+    if (!sociterNotDeleted) {
+      return res.send({ status: false, msg: "Societe deleted" });
+    }
+    // end - BRICOLE DYAL DELETEDAT
 
     const checkUser = await argon2.verify(user.password, password + pep);
     if (checkUser) {
@@ -52,13 +68,20 @@ module.exports = async (req, res) => {
 
       res.cookie("jbid", refreshtoken, {
         httpOnly: true,
-       // sameSite: "None",
-	      //        secure: true,
+        sameSite: "None",
+        secure: true,
       });
       accesstoken = sign(payload, process.env.JWTSALT, {
         expiresIn: "15m",
       });
-      return res.json({ status: true, accesstoken, type, changedpass,id:user.id });
+      return res.json({
+        status: true,
+        accesstoken,
+        type,
+        changedpass,
+        sociterNotDeleted,
+        id: user.id,
+      });
     }
 
     return res.send({ status: false, msg: "Username or Password incorrect" });
