@@ -1,4 +1,4 @@
-export const baseURL = `http://127.0.0.1:8000/api`;
+export const baseURL = `http://102.50.245.168:58356/api`;
 
 // Auth
 export const loginRoute = `${baseURL}/login`;
@@ -114,6 +114,4 @@ export const updateProfileRoute = `${baseURL}/profile/update`;
 export const validatepasswordRoute = `${baseURL}/profile/validatepassword`;
 
 // Emails
-
 export const sendEmailRoute = `${baseURL}/email/send`;
-

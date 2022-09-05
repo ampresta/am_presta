@@ -8,6 +8,11 @@ import MDBox from "components/MDBox";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
 //import UseState Hook
 import { useState, useEffect } from "react";
@@ -15,27 +20,26 @@ import { useState, useEffect } from "react";
 // Axios
 import axios from "services/authAxios";
 
+import { allCompanyCoursesRoute, addSessionsRoute } from "utils/APIRoutes";
+
 // Material Dashboard 2 React contexts
+import { useMaterialUIController, setUpdater, setToastInfos } from "context";
 import { useParams } from "react-router-dom";
-import { SessionCollabRoute, sendEmailRoute } from "utils/APIRoutes";
+import { SessionCollabRoute } from "utils/APIRoutes";
+import { sendEmailRoute } from "utils/APIRoutes";
 
-// Material Dashboard 2 React contexts
-import { useMaterialUIController, setToastInfos } from "context";
-
-export default function NotifyEmail({
-  closeAddModel,
-  openSnackBar,
-  closeNotify,
-}) {
+export default function NotifyEmail({ closeAddModel, openSnackBar }) {
   const { id } = useParams();
-  const [emails, setEmails] = useState([]);
 
-  const [, dispatch] = useMaterialUIController();
+  const [emails, setEmails] = useState([]);
 
   const [formErrors, setFormErrors] = useState({
     subject: "",
     message: "",
   });
+
+  const [controller, dispatch] = useMaterialUIController();
+  const { updater } = controller;
 
   const [form, setForm] = useState({
     subject: "",
@@ -58,20 +62,11 @@ export default function NotifyEmail({
     event.preventDefault();
     setFormErrors(validate(form));
     if (Object.keys(validate(form)).length === 0) {
-      const data = await axios.post(sendEmailRoute, {
+      await axios.post(sendEmailRoute, {
         email: emails,
         subject: subject,
         message: message,
       });
-
-      if (data.status === 200) {
-        closeNotify(false);
-        setToastInfos(dispatch, {
-          color: "success",
-          message: "Email Sent Successfully",
-        });
-        openSnackBar(true);
-      }
     }
   };
 
@@ -95,7 +90,7 @@ export default function NotifyEmail({
   };
 
   return (
-    <Card>
+    <Card sx={{ mt: "50px" }}>
       <MDBox
         display="flex"
         justifyContent="space-between"
@@ -106,7 +101,7 @@ export default function NotifyEmail({
         coloredShadow="info"
         p={3}
         mx={2}
-        mt={3}
+        mt={-3}
         mb={1}
       >
         <MDTypography variant="h6" color="white">
@@ -118,7 +113,7 @@ export default function NotifyEmail({
           color="dark"
           size="small"
           iconOnly
-          onClick={() => closeNotify(false)}
+          onClick={() => closeAddModel(false)}
         >
           <Icon fontSize="small">close</Icon>
         </MDButton>
@@ -138,9 +133,9 @@ export default function NotifyEmail({
               name="subject"
               fullWidth
               onChange={(e) => handleChange(e)}
-              error={formErrors.subject}
+              error={formErrors.nom}
             />
-            <FormHelperText error>{formErrors.subject}</FormHelperText>
+            <FormHelperText error>{formErrors.nom}</FormHelperText>
           </MDBox>
 
           <MDInput
@@ -151,10 +146,10 @@ export default function NotifyEmail({
             multiline
             fullWidth
             onChange={(e) => handleChange(e)}
-            error={formErrors.message}
-            rows={5}
+            error={formErrors.nom}
+            rows={6}
           />
-          <FormHelperText error>{formErrors.message}</FormHelperText>
+          <FormHelperText error>{formErrors.nom}</FormHelperText>
 
           <MDBox mt={4} mb={2} display="flex" justifyContent="center">
             <MDButton
