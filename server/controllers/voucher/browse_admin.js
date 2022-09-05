@@ -14,13 +14,14 @@ module.exports = async (req, res) => {
         {
           model: Societe,
           attributes: ["id", "name"],
+          required: true,
         },
       ],
       where: {
         SessionCollabId: null,
       },
       order: [
-	      ["createdAt","DESC"],
+        ["createdAt", "DESC"],
         ["Provider", "id"],
         ["Societe", "id"],
       ],
