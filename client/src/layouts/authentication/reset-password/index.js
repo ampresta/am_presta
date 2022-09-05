@@ -22,11 +22,20 @@ import bgImage from "assets/images/bg-reset-cover.jpeg";
 import axios from "services/authAxios";
 
 import { useNavigate } from "react-router-dom";
-import { useMaterialUIController, setChangedPassword } from "context";
+import {
+  useMaterialUIController,
+  setChangedPassword,
+  setToastInfos,
+} from "context";
+import MySnackBar from "components/MySnackBar";
 
 function PasswordReset() {
   useEffect(() => {}, []);
-  const [, dispatch] = useMaterialUIController();
+  const [controller, dispatch] = useMaterialUIController();
+  const { toastInfos } = controller;
+
+  const [openSnackBar, setOpenSnackBar] = useState(false);
+
   let navigate = useNavigate();
   const [newPassword, setNewPassword] = useState("");
   const [showStrength, setShowStrength] = useState(false);
@@ -44,6 +53,14 @@ function PasswordReset() {
     if (data.status) {
       setChangedPassword(dispatch, true);
       navigate("/dashboard");
+      setToastInfos(dispatch, {
+        color: "success",
+        message: "Password Changed Successfully",
+      });
+      setOpenSnackBar(true);
+    } else {
+      setToastInfos(dispatch, { color: "warning", message: data });
+      setOpenSnackBar(true);
     }
   };
 
@@ -124,6 +141,14 @@ function PasswordReset() {
           </MDBox>
         </MDBox>
       </Card>
+      {openSnackBar && (
+        <MySnackBar
+          color={toastInfos.color}
+          title={toastInfos.message}
+          open={openSnackBar}
+          close={() => setOpenSnackBar(!openSnackBar)}
+        />
+      )}
     </BasicLayout>
   );
 }
