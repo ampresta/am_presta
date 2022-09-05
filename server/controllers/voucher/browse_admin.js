@@ -14,6 +14,7 @@ module.exports = async (req, res) => {
         {
           model: Societe,
           attributes: ["id", "name"],
+	  required: true,
         },
       ],
       where: {
