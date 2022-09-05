@@ -266,8 +266,6 @@ export default function Data() {
         close={() => setOpenSnackBar(!openSnackBar)}
       />
     ),
-
-    rawData: allCollabs,
   };
 
   allCollabs.map((collab, index) => {

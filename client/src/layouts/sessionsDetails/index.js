@@ -7,6 +7,7 @@ import Card from "@mui/material/Card";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
+import MySnackBar from "components/MySnackBar";
 
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
@@ -25,7 +26,11 @@ import { useState, useEffect } from "react";
 
 // axios
 import axios from "services/authAxios";
-import { SessionGraph, baseURL } from "utils/APIRoutes";
+import {
+  SessionGraph,
+  baseURL,
+  asignVoucherSessionRoute,
+} from "utils/APIRoutes";
 
 import {
   useMaterialUIController,
@@ -35,17 +40,12 @@ import {
 
 import ChooseCollabs from "./ChooseCollabs";
 import ProofPreview from "components/ProofPreview";
-
-import { useParams } from "react-router-dom";
-import { asignVoucherSessionRoute } from "utils/APIRoutes";
 import NotifyEmail from "./notify";
 
+import { useParams } from "react-router-dom";
+
 function Partners() {
-  const { columns, rows, rawData, notifications } = sessionsDetailsTableData();
-
-  const [graph, setGraph] = useState([]);
-
-  const [loading, setLoading] = useState(false);
+  const { columns, rows, notifications } = sessionsDetailsTableData();
 
   const [controller, dispatch] = useMaterialUIController();
   const {
@@ -54,7 +54,13 @@ function Partners() {
     openProofModel,
     openSelectCollabs,
     updater,
+    toastInfos,
   } = controller;
+
+  const [graph, setGraph] = useState([]);
+  const [openNotify, setOpenNotify] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [openSnackBar, setOpenSnackBar] = useState(false);
 
   let { id } = useParams();
 
@@ -92,7 +98,7 @@ function Partners() {
       {loading && <DashboardNavbar titleio={graph.session.nom} />}
       <MDBox pt={6} pb={1}>
         <Grid container spacing={2} rowSpacing={2}>
-          {!openSelectCollabs && !openProofModel && (
+          {!openNotify && !openSelectCollabs && !openProofModel && (
             <Grid item xs={12} md={7} lg={9}>
               <Card>
                 {loading && (
@@ -153,7 +159,7 @@ function Partners() {
                         variant="gradient"
                         color="success"
                         size="small"
-                        onClick={() => assignAll()}
+                        onClick={() => setOpenNotify(!openNotify)}
                       >
                         <Icon fontSize="big" color="light">
                           send
@@ -175,21 +181,6 @@ function Partners() {
                         &nbsp; Assign All
                       </MDButton>
                     </MDBox>
-
-                    <MDBox mr={2}>
-                      <MDButton
-                        variant="gradient"
-                        color="success"
-                        size="small"
-                        // onClick={() => handleDownload("allCourses", "export")}
-                        // disabled={rawData.length === 0}
-                      >
-                        <Icon fontSize="big" color="light">
-                          download
-                        </Icon>
-                        &nbsp; Export
-                      </MDButton>
-                    </MDBox>
                   </MDBox>
                 </Grid>
 
@@ -209,6 +200,16 @@ function Partners() {
               <ChooseCollabs session={id} />
             </Grid>
           )}
+
+          {openNotify && (
+            <Grid item xs={12} md={7} lg={9}>
+              <NotifyEmail
+                closeNotify={setOpenNotify}
+                openSnackBar={setOpenSnackBar}
+              />
+            </Grid>
+          )}
+
           {openProofModel && (
             <Grid item xs={12} md={7} lg={9}>
               <ProofPreview
@@ -277,9 +278,14 @@ function Partners() {
         </Grid>
       </MDBox>
       {notifications}
-
-      <NotifyEmail />
-
+      {openSnackBar && (
+        <MySnackBar
+          color={toastInfos.color}
+          title={toastInfos.message}
+          open={openSnackBar}
+          close={() => setOpenSnackBar(!openSnackBar)}
+        />
+      )}
     </DashboardLayout>
   );
 }
