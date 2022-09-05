@@ -12,6 +12,7 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
+import MySnackBar from "components/MySnackBar";
 
 // Authentication layout components
 import BasicLayout from "layouts/authentication/components/BasicLayout";
@@ -26,17 +27,27 @@ import {
   useMaterialUIController,
   setAccountType,
   setChangedPassword,
+  setToastInfos,
 } from "context";
 
 function Basic(props) {
+  const [controller, dispatch] = useMaterialUIController();
+  const { loadingType, toastInfos } = controller;
+
+  const [openSnackBar, setOpenSnackBar] = useState(false);
+
   const navigate = useNavigate();
   const { state } = useLocation();
-  const [controller, dispatch] = useMaterialUIController();
-  const { loadingType } = controller;
 
   useEffect(() => {
     if (getAccessToken() !== "") {
-      if (state && state.prevPath && state.prevPath !=="/" && state.prevPath !== "/login" && state.prev !=="") {
+      if (
+        state &&
+        state.prevPath &&
+        state.prevPath !== "/" &&
+        state.prevPath !== "/login" &&
+        state.prev !== ""
+      ) {
         navigate(state.prevPath);
       } else navigate("/dashboard");
     }
@@ -56,6 +67,14 @@ function Basic(props) {
       setAccountType(dispatch, data.type);
       setChangedPassword(dispatch, data.changedpass);
       navigate("/dashboard");
+      setToastInfos(dispatch, {
+        color: "success",
+        message: "Logged In Successfully",
+      });
+      setOpenSnackBar(true);
+    } else {
+      setToastInfos(dispatch, { color: "warning", message: data });
+      setOpenSnackBar(true);
     }
   };
 
@@ -147,6 +166,14 @@ function Basic(props) {
           </MDBox>
         </MDBox>
       </Card>
+      {openSnackBar && (
+        <MySnackBar
+          color={toastInfos.color}
+          title={toastInfos.message}
+          open={openSnackBar}
+          close={() => setOpenSnackBar(!openSnackBar)}
+        />
+      )}
     </BasicLayout>
   );
 }
