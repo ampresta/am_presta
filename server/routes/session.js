@@ -3,6 +3,7 @@ const addSession = require("../controllers/session/addSession");
 const addSessionAdmin = require("../controllers/session/addSessionAdmin");
 const browseSession = require("../controllers/session/browseSession");
 const browseSessionAdmin = require("../controllers/session/browseSessionAdmin");
+const browseSessionnotEnrolled = require("../controllers/session/browseSessionnotEnrolled");
 const browseSessionsCollab = require("../controllers/session/browseSessionsCollab");
 const browseSessionSoc = require("../controllers/session/browseSessionSoc");
 const SessionCollab = require("../controllers/session/SessionCollab");
@@ -29,5 +30,6 @@ router.post("/add", addSession);
 router.all("/browse", browseSession);
 router.post("/graph", SessionDetailsGraph);
 router.post("/collab", SessionCollab);
+router.post("/sessionout", browseSessionnotEnrolled);
 
 module.exports = router;

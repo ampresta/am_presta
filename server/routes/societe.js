@@ -8,11 +8,16 @@ const CreateCollabAdmin = require("../controllers/societe/CreateCollabAdmin");
 const CreateCollabsforSociete = require("../controllers/societe/CreateCollabsforSociete");
 const CreateOneCollabforSociete = require("../controllers/societe/CreateOneCollabforSociete");
 const getUerSociete = require("../controllers/societe/getUerSociete");
+const restore_societe = require("../controllers/societe/restore_societe");
 const checkSociete = require("../middlewares/checkSociete");
 const router = require("express").Router();
+const checkSuperAdmin = require("../middlewares/checkSuperAdmin");
 const signedin = require("../middlewares/signedin");
 
 // router.use(signedin);
+
+router.use("/restore", checkSuperAdmin);
+router.post("/restore", restore_societe);
 
 router.post("/add", addSociete);
 router.all("/browse", browseSociete);

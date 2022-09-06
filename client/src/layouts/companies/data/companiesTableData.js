@@ -24,6 +24,7 @@ import axiosAuth from "services/authAxios";
 
 // ConfirmPoppup component
 import ConfirmPopup from "components/ConfirmPopup";
+import { restoreSocialRoute } from "utils/APIRoutes";
 
 export default function Data() {
   const [allCompanies, setAllCompanies] = useState([]);
@@ -34,6 +35,10 @@ export default function Data() {
 
   const [controller, dispatch] = useMaterialUIController();
   const { updater, toastInfos } = controller;
+
+  const restoreCompany = async (id) => {
+    await axiosAuth.post(restoreSocialRoute, { id });
+  };
 
   useEffect(() => {
     const getAllCompanies = async () => {
@@ -94,6 +99,7 @@ export default function Data() {
       { Header: "Status", accessor: "status", align: "center", width: "15%" },
       { Header: "edit", accessor: "edit", align: "center", width: "1%" },
       { Header: "delete", accessor: "delete", align: "center", width: "1%" },
+      { Header: "restore", accessor: "restore", align: "center", width: "1%" },
     ],
 
     rows: [],
@@ -162,6 +168,24 @@ export default function Data() {
           <MDTypography variant="caption" color="text" fontWeight="medium">
             <Icon fontSize="small" color="primary">
               delete
+            </Icon>
+          </MDTypography>
+        </MDButton>
+      ),
+      restore: (
+        <MDButton
+          variant="outlined"
+          onClick={() => {
+            // setConfirmModel(!confirmModel);
+            // setTempCompanyId(company.id);
+            restoreCompany(company.id);
+            window.location.reload();
+          }}
+          disabled={!company.deletedAt}
+        >
+          <MDTypography variant="caption" color="text" fontWeight="medium">
+            <Icon fontSize="small" color="primary">
+              restore
             </Icon>
           </MDTypography>
         </MDButton>

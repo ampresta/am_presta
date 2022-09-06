@@ -12,14 +12,11 @@ import { useNavigate } from "react-router-dom";
 import axios from "services/authAxios";
 
 // import APIRoutes
-import {
-  baseURL,
-  SessionsofSociete,
-  AcceptRequestRoute,
-} from "utils/APIRoutes";
+import { baseURL, AcceptRequestRoute } from "utils/APIRoutes";
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setToastInfos } from "context";
+import { AllSessionsCollabNotEnrolledRoute } from "utils/APIRoutes";
 
 export default function Data(cours, collab) {
   const [controller, dispatch] = useMaterialUIController();
@@ -34,10 +31,11 @@ export default function Data(cours, collab) {
 
   useEffect(() => {
     const getAllSessions = async () => {
-      const { data } = await axios.post(SessionsofSociete, {
-        cours,
+      const { data } = await axios.post(AllSessionsCollabNotEnrolledRoute, {
+        collabId: collab,
+        coursId: cours,
       });
-      setAllSessions(data);
+      setAllSessions(data.sess);
     };
     getAllSessions();
   }, [updater]);
