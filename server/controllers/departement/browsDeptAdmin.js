@@ -9,7 +9,7 @@ module.exports = async (req, res) => {
       paranoid: paranoid !== undefined ? false : true,
 
       include: [
-        { model: Societe, attributes: ["name"] },
+        { model: Societe, attributes: ["name"] ,required:true},
         {
           model: Collaborateur,
           attributes: [],

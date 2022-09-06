@@ -9,7 +9,7 @@ module.exports = async (req, res) => {
   }
   const pep = process.env.PEPPER;
   try {
-    const { nom, prenom, email, societe } = account;
+    let { nom, prenom, email, societe } = account;
     const societes = await Societe.findOne({
       attributes: ["name"],
       where: { id: societe },
@@ -18,7 +18,11 @@ module.exports = async (req, res) => {
       return res.send({ status: false, msg: "Please specify a company" });
     }
     if (!prenom || !nom) return res.sendStatus(403);
-    username = `${nom}.${prenom}`;
+	nom=nom.trim().toLowerCase()
+	    prenom=prenom.trim().toLowerCase()
+
+      username = `${nom.replace(/\s/g,'_')}.${prenom.replace(/\s/g,'_')}`;
+   // username = `${nom}.${prenom}`;
     const password = Array(8)
       .fill()
       .map(() => ((Math.random() * 36) | 0).toString(36))
@@ -29,7 +33,7 @@ module.exports = async (req, res) => {
       if (!usernameCheck) {
         break;
       }
-      username = `${nom}.${prenom}${i}`;
+      username = `${username}${i}`;
       i++;
     }
     email_institu = `${username}@institute-eca.ma`;

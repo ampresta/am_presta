@@ -5,8 +5,8 @@ const { Collaborateur, Societe, User } = db.models;
 module.exports = async (req, res) => {
   let user = null;
   try {
-    const { username, nom, prenom, societe, email } = req.body;
-
+    let  { username, nom, prenom, societe, email } = req.body;
+societe=societe.toLowerCase()
     const pep = process.env.PEPPER;
     if (!societe || !prenom || !nom || !username || !email)
       return res.sendStatus(403);

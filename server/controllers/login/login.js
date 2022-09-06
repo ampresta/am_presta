@@ -1,5 +1,5 @@
 const db = require("../../config/database");
-const { User } = db.models;
+const { User, Collaborateur, Societe,SuperAdmin } = db.models;
 const argon2 = require("argon2");
 const { sign } = require("jsonwebtoken");
 const GetType = require("./GetType");
@@ -11,7 +11,18 @@ module.exports = async (req, res) => {
       return res.send({ status: false, msg: "Check parameters" });
     }
     const user = await User.findOne({
-      where: { [Op.or]: { username, email: username } },
+	    include: [{
+        model: Collaborateur,
+        attributes: ["id"],
+        include: {
+          model: Societe,
+        },
+      },
+	    {
+		   model: SuperAdmin,
+		            },],
+      where: {
+	      [Op.or]: { username, email: username } },
     });
 
     if (user === null)
@@ -19,7 +30,15 @@ module.exports = async (req, res) => {
 
     const pep = process.env.PEPPER;
     let changedpass = "";
-
+// start - BRICOLE DYAL DELETEDAT
+	 const checkSuperadmin = user.SuperAdmin ? true : false;
+	      if (!checkSuperadmin) {
+    const sociterNotDeleted = user.Collaborateur.Societe ? true : false;
+    if (!sociterNotDeleted) {
+      return res.send({ status: false, msg: "Societe deleted" });
+    }
+	      }
+    // end - BRICOLE DYAL DELETEDAT
     const checkUser = await argon2.verify(user.password, password + pep);
     if (checkUser) {
       type = await GetType(user);
@@ -63,6 +82,7 @@ module.exports = async (req, res) => {
 
     return res.send({ status: false, msg: "Username or Password incorrect" });
   } catch (err) {
+	  console.log(err)
     return res.send("error: " + err);
   }
 };

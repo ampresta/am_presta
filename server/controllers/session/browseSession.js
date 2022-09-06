@@ -114,6 +114,7 @@ module.exports = async (req, res) => {
       attributes: ["id", "image", "nom"],
       include: {
         model: Provider,
+	      required:true,
         attributes: ["nom", "id"],
       },
     });
