@@ -28,13 +28,11 @@ import { useParams } from "react-router-dom";
 import { SessionCollabRoute, sendEmailRoute } from "utils/APIRoutes";
 
 // Material Dashboard 2 React contexts
-import { useMaterialUIController, setToastInfos } from "context";
 
 export default function NotifyEmail({ closeAddModel, openSnackBar }) {
   const { id } = useParams();
   const [emails, setEmails] = useState([]);
 
-  const [, dispatch] = useMaterialUIController();
 
   const [formErrors, setFormErrors] = useState({
     subject: "",
