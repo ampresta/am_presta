@@ -16,7 +16,7 @@ module.exports = async (req, res) => {
   filters.paranoid = paranoid !== undefined ? false : true;
 	filters.order=[["createdAt","DESC"]]
   filters.include = [
-    { model: Societe, attributes: ["name"], required: true },
+    { model: Societe, attributes: ["name"] },
     {
       model: Session_Collab,
       attributes: [],

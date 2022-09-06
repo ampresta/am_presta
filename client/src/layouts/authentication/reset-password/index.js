@@ -59,7 +59,7 @@ function PasswordReset() {
       });
       setOpenSnackBar(true);
     } else {
-      setToastInfos(dispatch, { color: "warning", message: data });
+      setToastInfos(dispatch, { color: "warning", message: data.msg });
       setOpenSnackBar(true);
     }
   };
