@@ -19,6 +19,7 @@ export const topCompaniesRoute = `${baseURL}/dashboard/amtable`;
 export const topCoursesRoute = `${baseURL}/dashboard/topcourses`;
 
 export const CollabDashboard = `${baseURL}/dashboard/collab`;
+
 // Societe Dashboard
 export const SocCardsRoute = `${baseURL}/dashboard/soccards`;
 export const graphsSocRoute = `${baseURL}/dashboard/socgraph`;
@@ -30,6 +31,7 @@ export const topChallengesRoute = `${baseURL}/dashboard/topcourses`;
 export const registerRoute = `${baseURL}/register`;
 export const allCompaniesRoute = `${baseURL}/societe/browse`;
 export const addCollabRouteAdmin = `${baseURL}/societe/addcollabadmin`;
+export const restoreSocialRoute = `${baseURL}/societe/restore`;
 
 // Partners
 export const allPartnersRoute = `${baseURL}/provider/browse`;
@@ -50,7 +52,7 @@ export const addSessionsAdminRoute = `${baseURL}/session/addam`;
 export const SessionsofSociete = `${baseURL}/session/browsesoc`;
 export const AllSessionsAdminRoute = `${baseURL}/session/browseam`;
 export const AllSessionsCollabRoute = `${baseURL}/session/browsecollab`;
-export const OutSessionsCollabRoute = `${baseURL}/session/sessionout`;
+export const AllSessionsCollabNotEnrolledRoute = `${baseURL}/session/sessionout`;
 
 // Quota
 export const AllQuotaRoute = `${baseURL}/quota/browse`;
