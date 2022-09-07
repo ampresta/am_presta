@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 // react-router-dom components
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -30,11 +30,16 @@ import {
   setToastInfos,
 } from "context";
 
+// reCaptcha
+import ReCAPTCHA from "react-google-recaptcha";
+
 function Basic(props) {
   const [controller, dispatch] = useMaterialUIController();
   const { loadingType, toastInfos } = controller;
 
   const [openSnackBar, setOpenSnackBar] = useState(false);
+
+  const recaptchaRef = useRef();
 
   const navigate = useNavigate();
   const { state } = useLocation();
@@ -61,8 +66,9 @@ function Basic(props) {
 
   const handleSubmit = async (event) => {
     const { username, password } = formDetails;
+    const captcha = recaptchaRef.current.getValue();
     event.preventDefault();
-    const data = await authService.login(username, password);
+    const data = await authService.login(username, password, captcha);
     if (data.status) {
       setAccountType(dispatch, data.type);
       setChangedPassword(dispatch, data.changedpass);
@@ -85,6 +91,8 @@ function Basic(props) {
   };
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
+
+  const { SITE_KEY } = require("utils/config");
 
   return (
     <BasicLayout image={bgImage}>
@@ -163,6 +171,7 @@ function Basic(props) {
                 </MDTypography>
               </MDTypography>
             </MDBox>
+            <ReCAPTCHA ref={recaptchaRef} sitekey={SITE_KEY} />
           </MDBox>
         </MDBox>
       </Card>
