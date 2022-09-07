@@ -1,4 +1,5 @@
-export const baseURL = `http://institute-eca.ma:58356/api`;
+export const { baseURL } = require("./config.json");
+
 // Auth
 export const loginRoute = `${baseURL}/login`;
 
@@ -117,5 +118,3 @@ export const validatepasswordRoute = `${baseURL}/profile/validatepassword`;
 
 // Emails
 export const sendEmailRoute = `${baseURL}/email/send`;
-
-
