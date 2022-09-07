@@ -1,4 +1,4 @@
-export const baseURL = `http://127.0.0.1:8000/api`;
+export const { baseURL } = require("./config.json");
 
 // Auth
 export const loginRoute = `${baseURL}/login`;
@@ -119,4 +119,3 @@ export const validatepasswordRoute = `${baseURL}/profile/validatepassword`;
 // Emails
 
 export const sendEmailRoute = `${baseURL}/email/send`;
-
