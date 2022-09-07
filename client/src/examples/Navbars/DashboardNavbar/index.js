@@ -101,7 +101,9 @@ function DashboardNavbar({ absolute, light, isMini, collab }) {
             label={item.label}
             transmitter={item.transmitter}
             subject={item.subject}
-            onClick={() => markRead(item.id)}
+            onClick={() => {
+              markRead(item.notifId);
+            }}
           />
         ))}
       </Menu>

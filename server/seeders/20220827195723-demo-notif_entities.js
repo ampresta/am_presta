@@ -61,13 +61,13 @@ module.exports = {
         },
         {
           entity: "Proof",
-          description: "Collab uploaded course completion",
+          description: "has submited a proof of course completion",
           createdAt: "2022-02-12",
           updatedAt: new Date(),
         },
         {
           entity: "Proof",
-          description: "Collab uploaded certification",
+          description: "has submited a proof of certification",
           createdAt: "2022-02-12",
           updatedAt: new Date(),
         },

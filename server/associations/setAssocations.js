@@ -47,7 +47,7 @@ module.exports = (db) => {
   Notifications_Entity.hasOne(Notifications_object);
   Notifications_object.belongsTo(Notifications_Entity);
 
-  Notifications_object.belongsTo(Proof);
+  Notifications_object.belongsTo(Session_Collab);
   Notifications_object.belongsTo(Voucher);
   Notifications_object.belongsTo(Request);
   Notifications_object.belongsTo(Session);

@@ -1,5 +1,4 @@
 const Sequelize = require("sequelize");
-const io = require("../socket").get();
 const { connections } = require("../socket");
 const Request = (db) => {
   db.define(

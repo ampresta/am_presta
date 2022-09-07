@@ -7,11 +7,11 @@ const {
   Notifications_Entity,
   Collaborateur,
   Provider,
-  Proof,
   Session,
   Voucher,
   Request,
   User,
+  Session_Collab,
   Cours,
 } = db.models;
 
@@ -73,7 +73,10 @@ module.exports = async (req, res) => {
           model: Voucher,
         },
         {
-          model: Proof,
+          model: Session_Collab,
+          include: {
+            model: Session,
+          },
         },
         {
           model: Request,

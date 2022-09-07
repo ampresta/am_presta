@@ -7,13 +7,13 @@ import { getNotifsCollabRoute, getNotifsSocRoute } from "utils/APIRoutes";
 import { useMaterialUIController, setChangedNotif } from "context";
 import { marknoptifReadRoute } from "utils/APIRoutes";
 
-const generate_notif = (data, entity, description, emetteur, id) => {
+const generate_notif = (data, entity, description, emetteur, notifId) => {
   switch (entity) {
     case "Request":
       if (data.Request !== null) {
         const cours = data.Request.Cour.nom;
         const notif_component = {
-          id,
+          id: notifId,
           icon: <Icon>warning</Icon>,
           route: "/requests",
           label: description,
@@ -23,7 +23,29 @@ const generate_notif = (data, entity, description, emetteur, id) => {
         return notif_component;
       }
       return {
-        id,
+        id: notifId,
+
+        icon: <Icon>warning</Icon>,
+        route: "/requests",
+        label: description,
+        transmitter: emetteur,
+        subject: "",
+      };
+    case "Proof":
+      if (data.Session_Collab !== null) {
+        const { nom, id } = data.Session_Collab.Session;
+        const notif_component = {
+          notifId,
+          icon: <Icon>warning</Icon>,
+          route: `/sessions/details/${id}`,
+          label: description,
+          transmitter: emetteur,
+          subject: nom,
+        };
+        return notif_component;
+      }
+      return {
+        id: notifId,
         icon: <Icon>warning</Icon>,
         route: "/requests",
         label: description,
@@ -32,7 +54,14 @@ const generate_notif = (data, entity, description, emetteur, id) => {
       };
 
     default:
-      break;
+      return {
+        id: notifId,
+        icon: <Icon>warning</Icon>,
+        route: "/dashboard",
+        label: description,
+        transmitter: emetteur,
+        subject: "",
+      };
   }
 };
 
