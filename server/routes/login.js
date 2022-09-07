@@ -12,9 +12,9 @@ router.use(cookieParser());
 // Routing
 //
 //
+router.get("/refreshtoken", refreshtoken);
 router.use("/", checkCaptcha);
 router.post("/", login);
-router.get("/refreshtoken", refreshtoken);
 
 router.post("/changepass", changePassword);
 router.use("/getimage", checkSociete);
