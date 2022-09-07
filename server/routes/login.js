@@ -4,6 +4,7 @@ const router = require("express").Router();
 const login = require("../controllers/login/login");
 const refreshtoken = require("../controllers/login/refreshtoken");
 const getImage = require("../controllers/other/getImage");
+const checkCaptcha = require("../middlewares/checkCaptcha");
 const checkSociete = require("../middlewares/checkSociete");
 // Middleware
 router.use(cookieParser());
@@ -11,6 +12,7 @@ router.use(cookieParser());
 // Routing
 //
 //
+router.use("/", checkCaptcha);
 router.post("/", login);
 router.get("/refreshtoken", refreshtoken);
 
