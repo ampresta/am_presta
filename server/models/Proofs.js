@@ -1,14 +1,16 @@
-const sequelize = require("sequelize");
+const Sequelize = require("sequelize");
+const { connections } = require("../socket");
 
 const Proof = (db) => {
+
   db.define("Proof", {
-    id: {
-      type: sequelize.INTEGER,
+	  id:{
+      type: Sequelize.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
     status: {
-      type: sequelize.STRING,
+      type: Sequelize.STRING,
       defaultValue: "pending",
       validate: {
         inside: (value) => {
@@ -20,11 +22,11 @@ const Proof = (db) => {
       },
     },
     file: {
-      type: sequelize.STRING,
+      type: Sequelize.STRING,
     },
-    name: { type: sequelize.STRING },
-    mimetype: { type: sequelize.STRING },
-    size: { type: sequelize.INTEGER },
+    name: { type: Sequelize.STRING },
+    mimetype: { type: Sequelize.STRING },
+    size: { type: Sequelize.INTEGER },
   });
 };
 

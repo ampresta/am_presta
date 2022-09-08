@@ -62,7 +62,7 @@ const ProofModel = ({ finCourse, certifCompletion, open, onClose }) => {
                 </MDBox>
               </MDBox>
               {certifCompletion !== `${baseURL}/api/null` && (
-                <MDBox ml={1}
+                <MDBox ml={1}>
                   <img
                     src={certifCompletion}
                     alt="show my proof"
