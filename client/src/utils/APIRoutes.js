@@ -1,5 +1,4 @@
-export const baseURL = `http://102.50.245.168:58356/api`;
-
+export const baseURL = `http://institute-eca.ma:58356/api`;
 // Auth
 export const loginRoute = `${baseURL}/login`;
 

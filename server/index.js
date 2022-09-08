@@ -44,7 +44,21 @@ try {
 //     credentials: true,
 //   })
 // );
-app.use(cors({ credentials: true, origin: "*" }));
+//
+var whitelist = ['http://www.institute-eca.ma:58356', 'http://institute-eca.ma:58356']
+var corsOptions = {
+	credentials:true,
+  origin: function (origin, callback) {
+	  console.log(origin)
+      if (whitelist.indexOf(origin) !== -1||!origin) {
+            callback(null, true)
+                } else {
+                      callback(new Error('Not allowed by CORS'))
+                          }
+                            }
+                            }
+
+app.use(cors(corsOptions));
 
 app.use(morgan("tiny"));
 app.use(express.json());

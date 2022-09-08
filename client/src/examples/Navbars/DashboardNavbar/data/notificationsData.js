@@ -4,7 +4,7 @@ import { io } from "socket.io-client";
 import axios from "services/authAxios";
 import { getNotifsCollabRoute, getNotifsSocRoute } from "utils/APIRoutes";
 
-import { useMaterialUIController, setChangedNotif } from "context";
+import { useMaterialUIController, setChangedNotif,setUpdater } from "context";
 import { marknoptifReadRoute } from "utils/APIRoutes";
 
 
@@ -43,7 +43,7 @@ export const markRead = async (notifId) => {
 
 export default function Data() {
   const [controller, dispatch] = useMaterialUIController();
-  const { accountType,userId } = controller;
+  const { accountType,userId,updater } = controller;
 
   const [notifs, setNotifs] = useState(null);
 
@@ -61,18 +61,19 @@ export default function Data() {
       setChangedNotif(dispatch, data.length);
     };
     getNotifs();
+	  setUpdater(dispatch,!updater);
   }, []);
 
   const socket = useRef();
 
   // Update Notifs using ws
-  useEffect(() => {
-    socket.current = io("ws://102.50.245.168:58356/ws");
+ // useEffect(() => {
+    //socket.current = io("ws://102.50.245.168:58356/ws");
 
-  }, [socket]);
+ // }, [socket]);
 
   useEffect(() => {
-     const socket_=new WebSocket("ws://102.50.245.168:58356/ws")
+     const socket_=new WebSocket("ws://institute-eca.ma:58356/ws")
 	  socket_.onopen = function(e) {
 	  socket_.send(JSON.stringify({
 		    type: "join",

@@ -10,7 +10,7 @@ import MDButton from "components/MDButton";
 // @mui icons
 import Icon from "@mui/material/Icon";
 import MDTypography from "components/MDTypography";
-
+import {baseURL} from "utils/APIRoutes";
 const ProofModel = ({ finCourse, certifCompletion, open, onClose }) => {
   return (
     <Modal open={open} onClose={onClose} disableAutoFocus={true}>
@@ -44,7 +44,7 @@ const ProofModel = ({ finCourse, certifCompletion, open, onClose }) => {
             >
               <MDBox
                 mr={
-                  certifCompletion !== "http://127.0.0.1:8000/api/null" ? 1 : 0
+                  certifCompletion !== `${baseURL}/api/null` ? 1 : 0
                 }
                 mb={1}
               >
@@ -61,8 +61,8 @@ const ProofModel = ({ finCourse, certifCompletion, open, onClose }) => {
                   </MDTypography>
                 </MDBox>
               </MDBox>
-              {certifCompletion !== "http://127.0.0.1:8000/api/null" && (
-                <MDBox ml={1}>
+              {certifCompletion !== `${baseURL}/api/null` && (
+                <MDBox ml={1}
                   <img
                     src={certifCompletion}
                     alt="show my proof"
