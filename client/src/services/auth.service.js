@@ -11,7 +11,7 @@ const login = (username, password, captcha) => {
     .then(async (response) => {
       if (response.data.accesstoken) {
         setAccessToken(response.data.accesstoken);
-        setAccessToken(response.data.type);
+        // setAccessToken(response.data.type);
       }
 
       return response.data;
