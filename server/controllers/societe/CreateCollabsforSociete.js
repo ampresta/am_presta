@@ -5,7 +5,7 @@ const CreateReport = require("../other/CreateReport");
 const { Collaborateur, Societe, User } = db.models;
 
 module.exports = async (req, res) => {
- console.log("ADDIJNG")
+  // console.log("ADDIJNG")
   const { collabs } = req.body;
   if (!collabs) {
     return res.sendStatus(403);
@@ -14,34 +14,31 @@ module.exports = async (req, res) => {
     attributes: ["name"],
     where: { id: req.societe },
   });
-  errors=[]
+  errors = [];
   const pep = process.env.PEPPER;
-	index=0
-	for (account of collabs)
-  {
+  index = 1;
+  for (account of collabs) {
     try {
-      var  { nom, prenom, email } = account;
+      var { nom, prenom, email } = account;
 
       if (!prenom || !nom || !email) {
-      errors.push({row: `${index+1}` ,error: "empty row"} );
-	      index++
-	     continue 
+        errors.push({ row: `${index + 1}`, error: "empty row" });
+        index++;
+        continue;
       }
-	    email=email.trim()
-	    emailCheck = await User.findOne({ where: { email } });
-        if (emailCheck) {
-      errors.push({row: `${index+1}` ,error: "email already exists"} );
-index++
-		continue 
-}
-        
+      email = email.trim();
+      emailCheck = await User.findOne({ where: { email } });
+      if (emailCheck) {
+        errors.push({ row: `${index + 1}`, error: "email already exists" });
+        index++;
+        continue;
+      }
 
-	nom=nom.trim().toLowerCase()
-	    prenom=prenom.trim().toLowerCase()
+      nom = nom.trim().toLowerCase();
+      prenom = prenom.trim().toLowerCase();
 
-      username = `${nom.replace(/\s/g,'_')}.${prenom.replace(/\s/g,'_')}`;
+      username = `${nom.replace(/\s/g, "_")}.${prenom.replace(/\s/g, "_")}`;
 
-	    console.log(username);
       const password = Array(8)
         .fill()
         .map(() => ((Math.random() * 36) | 0).toString(36))
@@ -84,20 +81,22 @@ index++
         password,
         societe.name
       );
+      index++;
     } catch (err) {
-	    
-      errors.push({row: `${index+1}` ,error: err});
-	    index ++
-  }}
-	var report=null
-	console.log("errors",errors)
-	if (errors.length>0){
-
-  report =await  CreateReport(errors)}
-console.log("rep",report)
+      errors.push({ row: `${index + 1}`, error: err });
+      index++;
+    }
+  }
+  var report = null;
+  console.log("errors", errors);
+  if (errors.length > 0) {
+    report = await CreateReport(errors);
+  }
+  console.log("rep", report);
   return res.send({
-	  status: errors.length==0 ? true : false,
-    msg: errors.length==0 ? "Users Created Successfully ": "Error check report",
-	  report:report ? report : null
+    status: errors.length == 0 ? true : false,
+    msg:
+      errors.length == 0 ? "Users Created Successfully " : "Error check report",
+    report: report ? report : null,
   });
 };
