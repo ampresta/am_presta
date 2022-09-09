@@ -11,6 +11,7 @@ const {
 } = db.models;
 module.exports = async (req, res) => {
   const { model, id } = req.body;
+  var filters = { where: { id } };
   if (model == "cours") {
     Model = Cours;
   } else if (model == "societe") {
@@ -18,12 +19,15 @@ module.exports = async (req, res) => {
   } else if (model == "provider") {
     Model = Provider;
   } else if (model == "Collaborateur") {
+    filters.where.SocieteId = req.societe;
     Model = Collaborateur;
   } else if (model == "Request") {
     Model = Request;
   } else if (model == "Session") {
+    filters.where.SocieteId = req.societe;
     Model = Session;
   } else if (model == "Departement") {
+    filters.where.SocieteId = req.societe;
     Model = Departement;
   } else if (model == "Voucher") {
     Model = Voucher;
@@ -31,6 +35,9 @@ module.exports = async (req, res) => {
     return res.sendStatus(404);
   }
   // const associations = Model.associations;
+  if (req.admin) {
+    filters = { where: { id } };
+  }
   try {
     // Object.keys(associations).forEach((key) => {
     //   if (associations[key].options.onDelete === "CASCADE") {
@@ -39,7 +46,7 @@ module.exports = async (req, res) => {
     //   }
     // });
 
-    await Model.destroy({ where: { id } });
+    await Model.destroy(filters);
 
     return res.send({ status: true, msg: "deleted" });
   } catch (err) {

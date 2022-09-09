@@ -4,7 +4,7 @@ import { io } from "socket.io-client";
 import axios from "services/authAxios";
 import { getNotifsCollabRoute, getNotifsSocRoute } from "utils/APIRoutes";
 
-import { useMaterialUIController, setChangedNotif } from "context";
+import { setUpdater,useMaterialUIController, setChangedNotif } from "context";
 import { marknoptifReadRoute } from "utils/APIRoutes";
 
 const generate_notif = (data, entity, description, emetteur, notifId) => {
@@ -71,7 +71,7 @@ export const markRead = async (notifId) => {
 
 export default function Data() {
   const [controller, dispatch] = useMaterialUIController();
-  const { accountType, userId } = controller;
+  const { accountType, userId,updater } = controller;
 
   const [notifs, setNotifs] = useState(null);
 
@@ -118,6 +118,7 @@ export default function Data() {
         const { data } = await axios.post(route);
         setNotifs(data);
         setChangedNotif(dispatch, data.length);
+        setUpdater(dispatch, !updater);
       }
     });
   }, [socket]);
