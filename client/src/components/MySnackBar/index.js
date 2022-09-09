@@ -7,12 +7,12 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import MDBox from "components/MDBox";
 import Fade from "@mui/material/Fade";
-
+import { baseURL } from "utils/APIRoutes";
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export default function MySnackBar({ title, color, open, close }) {
+export default function MySnackBar({ report, title, color, open, close }) {
   return (
     <Stack spacing={2}>
       <Snackbar
@@ -28,6 +28,11 @@ export default function MySnackBar({ title, color, open, close }) {
         <MDBox minWidth="20rem" shadow="xs" borderRadius="md">
           <Alert onClose={close} severity={color}>
             {title}
+            {report && (
+              <a href={`${baseURL}${report}`}>
+                <b>Report</b>
+              </a>
+            )}
           </Alert>
         </MDBox>
       </Snackbar>
