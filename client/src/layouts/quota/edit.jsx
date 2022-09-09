@@ -9,12 +9,11 @@ import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
 
 //import UseState Hook
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // Axios
 import axios from "services/authAxios";
 
-import { useEffect } from "react";
 import { AddQuotaRoute, AllQuotaRoute } from "utils/APIRoutes";
 
 // Material Dashboard 2 React contexts
@@ -84,7 +83,7 @@ function AddQuota({ openAddModel, companyID, openSnackBar }) {
     values[index].quota = quota;
     setProviders(values);
   };
-  console.log(loading);
+
   return (
     <Card sx={{ mt: "50px" }}>
       {loading && (
