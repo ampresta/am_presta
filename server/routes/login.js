@@ -12,11 +12,11 @@ router.use(cookieParser());
 // Routing
 //
 //
+router.post("/changepass", changePassword);
+router.use("/getimage", checkSociete);
+router.get("/getimage", getImage);
 router.get("/refreshtoken", refreshtoken);
 router.use("/", checkCaptcha);
 router.post("/", login);
 
-router.post("/changepass", changePassword);
-router.use("/getimage", checkSociete);
-router.get("/getimage", getImage);
 module.exports = router;

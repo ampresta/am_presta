@@ -1,7 +1,11 @@
 const db = require("../../config/database");
 const { Collaborateur, Cours, Provider, Societe } = db.models;
 const upload = require("./upload");
-module.exports = async (req, res) => {
+module.exports = async (req, res, err) => {
+  if (err) {
+    // console.log("hererererere");
+    return res.send({ status: false, msg: err.message });
+  }
   if (!req.file) {
     return res.send({ status: false });
   }

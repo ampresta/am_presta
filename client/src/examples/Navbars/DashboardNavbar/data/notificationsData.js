@@ -4,7 +4,11 @@ import { io } from "socket.io-client";
 import axios from "services/authAxios";
 import { getNotifsCollabRoute, getNotifsSocRoute } from "utils/APIRoutes";
 
+<<<<<<< HEAD
 import { useMaterialUIController, setChangedNotif,setUpdater } from "context";
+=======
+import { setUpdater,useMaterialUIController, setChangedNotif } from "context";
+>>>>>>> c41f8a86 (delete middleware,limitting file uploads)
 import { marknoptifReadRoute } from "utils/APIRoutes";
 
 const generate_notif = (data, entity, description, emetteur, notifId) => {
@@ -71,7 +75,11 @@ export const markRead = async (notifId) => {
 
 export default function Data() {
   const [controller, dispatch] = useMaterialUIController();
+<<<<<<< HEAD
   const { accountType,userId,updater } = controller;
+=======
+  const { accountType, userId,updater } = controller;
+>>>>>>> c41f8a86 (delete middleware,limitting file uploads)
 
   const [notifs, setNotifs] = useState(null);
 
@@ -102,26 +110,29 @@ export default function Data() {
 
   useEffect(() => {
      const socket_=new WebSocket("ws://institute-eca.ma:58356/ws")
-	  socket_.onopen = function(e) {
-	  socket_.send(JSON.stringify({
-		    type: "join",
-		  username:userId
-	  }));
-	  }
-	  socket_.addEventListener('message',async (event) => {
-		      console.log('Message from server ', event.data);
-     const  data=JSON.parse(event.data);
-		  if(data.type==="notif"){
-      let route;
-      if (accountType === "Societe") {
-        route = getNotifsSocRoute;
-      } else if (accountType === "Collab") {
-        route = getNotifsCollabRoute;
+    socket_.onopen = function (e) {
+      socket_.send(
+        JSON.stringify({
+          type: "join",
+          username: userId,
+        })
+      );
+    };
+    socket_.addEventListener("message", async (event) => {
+      console.log("Message from server ", event.data);
+      const data = JSON.parse(event.data);
+      if (data.type === "notif") {
+        let route;
+        if (accountType === "Societe") {
+          route = getNotifsSocRoute;
+        } else if (accountType === "Collab") {
+          route = getNotifsCollabRoute;
+        }
+        const { data } = await axios.post(route);
+        setNotifs(data);
+        setChangedNotif(dispatch, data.length);
+        setUpdater(dispatch, !updater);
       }
-      const { data } = await axios.post(route);
-      setNotifs(data);
-      setChangedNotif(dispatch, data.length);
-		  }});
   }, [socket]);
 
 

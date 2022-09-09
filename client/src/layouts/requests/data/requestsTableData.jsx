@@ -38,7 +38,7 @@ export default function Data() {
   const [openSnackBar, setOpenSnackBar] = useState(false);
 
   const [controller, dispatch] = useMaterialUIController();
-  const { openRequestModel, toastInfos } = controller;
+  const { updater,openRequestModel, toastInfos } = controller;
 
   useEffect(() => {
     const getAllRequests = async () => {
@@ -46,7 +46,7 @@ export default function Data() {
       setAllRequests(data);
     };
     getAllRequests();
-  }, []);
+  }, [updater]);
 
   const handleDelete = async (id) => {
     const { data } = await axiosAuth.post(RefuseRequestRoute, {
