@@ -37,6 +37,7 @@ function Vouchers() {
   const [openAddModel, setOpenAddModel] = useState(false);
   const [openCsvUploader, setOpenCsvUploader] = useState(false);
   const [openSnackBar, setOpenSnackBar] = useState(false);
+  const [report, setReport] = useState(false);
 
   const { columns, rows, confirmation, rawData, notifications } =
     VouchersTableData();
@@ -179,6 +180,8 @@ function Vouchers() {
           DownloadTemplate={handleDownload}
           type={"addVouchersTemplate"}
           uploadType="vouchers"
+          openSnackBar={setOpenSnackBar}
+          report={setReport}
         />
       )}
       {confirmation}
@@ -188,6 +191,7 @@ function Vouchers() {
           color={toastInfos.color}
           title={toastInfos.message}
           open={openSnackBar}
+          report={report}
           close={() => setOpenSnackBar(!openSnackBar)}
         />
       )}

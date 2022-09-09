@@ -1,16 +1,23 @@
 const db = require("../../config/database");
+const CreateReport = require("../other/CreateReport");
 const { Voucher, Societe, Provider } = db.models;
 module.exports = async (req, res) => {
   const { vouchers } = req.body;
   if (!vouchers) {
     return res.sendStatus(403);
   }
-  vouchers.map(async (voucher,index) => {
-    const { societe, code, provider } = voucher;
-	  if( !societe || ! code || !provider){
+  errors = [];
+  index = 1;
+  for (let voucher of vouchers) {
+    var { societe, code, provider } = voucher;
 
-		  return res.send({status:false,msg:`Missing Value at ${index}`})
-	  }
+    if (!societe || !code || !provider) {
+      errors.push({ row: `${index + 1}`, error: "empty row" });
+      index++;
+      continue;
+    }
+    societe = societe.trim().toLowerCase();
+    provider = provider.trim().toLowerCase();
     try {
       const prov = await Provider.findOne({
         where: { nom: provider },
@@ -27,17 +34,27 @@ module.exports = async (req, res) => {
           ProviderId: prov.id,
         });
       } else {
-        console.log("no prov or soc");
-        return res.send({
-          status: false,
-          msg: "Provider or Societe Incorrect",
+        errors.push({
+          row: `${index + 1}`,
+          error: "Provider or Societe Incorrect",
         });
+        index++;
+        continue;
       }
+      index++;
     } catch (err) {
-      console.log(err);
-      return res.send({ status: false });
+      errors.push({ row: `${index + 1}`, error: err });
+      index++;
     }
+  }
+  var report = null;
+  // console.log("errors", errors);
+  if (errors.length > 0) {
+    report = await CreateReport(errors);
+  }
+  return res.send({
+    status: errors.length == 0 ? true : false,
+    msg: errors.length == 0 ? "Vouchers Created Successfully " : "Error check ",
+    report: report ? report : null,
   });
-
-  return res.send({ status: true, msg: "Done" });
 };

@@ -5,12 +5,15 @@ const { Collaborateur, Societe, User } = db.models;
 module.exports = async (req, res) => {
   let user = null;
   try {
-    let  { username, nom, prenom, societe, email } = req.body;
-societe=societe.toLowerCase()
+    let { username, nom, prenom, societe, email } = req.body;
+
     const pep = process.env.PEPPER;
     if (!societe || !prenom || !nom || !username || !email)
       return res.sendStatus(403);
-
+    societe = societe.trim().toLowerCase();
+    email = email.trim().toLowerCase();
+    nom = nom.trim().toLowerCase();
+    prenom = prenom.trim().toLowerCase();
     const societeCheck = await Societe.findOne({ where: { name: societe } });
     if (societeCheck)
       return res.json({ status: false, msg: "societe already used" });
@@ -55,14 +58,6 @@ societe=societe.toLowerCase()
       id: user.Collaborateur.SocieteId,
     });
   } catch (err) {
-    // collab = await user.getCollaborator();
-    // soc = await collab.getSociete();
-    // console.log(collab);
-
-    // console.log(soc);
-    // await soc.destroy({ force: true });
-    // await collab.destroy({ force: true });
-    // await user.destroy({ force: true });
     return res.send({ msg: "error " + err });
   }
 };
