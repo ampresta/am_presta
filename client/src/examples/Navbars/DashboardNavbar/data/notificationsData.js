@@ -11,7 +11,6 @@ import {
 } from "utils/APIRoutes";
 
 import { setUpdater, useMaterialUIController, setChangedNotif } from "context";
-import { marknoptifReadRoute } from "utils/APIRoutes";
 
 const generate_notif = (data, entity, description, emetteur, notifId) => {
   switch (entity) {
