@@ -31,6 +31,7 @@ const quota = require("./routes/quota");
 const GetTypeController = require("./controllers/login/GetTypeController");
 const changePhotoMiddleware = require("./middlewares/changePhotoMiddleware");
 const sockets = require("./socket.js");
+const deleteMiddleware = require("./middlewares/deleteMiddleware");
 //Database Setup
 try {
   db.authenticate();
@@ -61,7 +62,27 @@ const STORAGE = multer.diskStorage({
     cb(null, Date.now() + file.originalname);
   },
 });
-const upload = multer({ storage: STORAGE });
+const upload = multer({
+  storage: STORAGE,
+
+  fileFilter: (req, file, cb) => {
+    console.log("mimetype: ", file.mimetype);
+    if (
+      file.mimetype == "image/png" ||
+      file.mimetype == "image/jpg" ||
+      file.mimetype == "image/jpeg"
+    ) {
+      cb(null, true);
+    } else {
+      cb(null, false);
+      return cb(
+        false,
+        false,
+        new Error("Only .png, .jpg and .jpeg format allowed!")
+      );
+    }
+  },
+});
 
 // Routing
 
@@ -83,9 +104,12 @@ app.use("/api/notifs", notifs);
 app.use("/api/profile", profile);
 app.use("/api/email", email);
 app.use("/api/edit", edit);
-
+// delete Middlewares
+app.use("/api/delete", changePhotoMiddleware);
+app.use("/api/delete", deleteMiddleware);
 
 app.post("/api/upload", upload.single("image"), handleUpload);
+
 app.post("/api/delete", deleteInstances);
 app.post("/api/logout", logout);
 app.use("/api/media", express.static("media"));
