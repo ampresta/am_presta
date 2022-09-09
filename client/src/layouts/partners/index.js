@@ -177,6 +177,7 @@ function Partners() {
           closeUploadModel={setOpenCsvUploader}
           DownloadTemplate={handleDownload}
           type={"addProviderTemplate"}
+          openSnackBar={setOpenSnackBar}
         />
       )}
       {confirmation}

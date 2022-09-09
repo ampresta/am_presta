@@ -34,7 +34,6 @@ import {
 
 // Material Dashboard 2 React context
 import { useMaterialUIController, setMiniSidenav } from "context";
-
 import notificationsData, { markRead } from "./data/notificationsData";
 
 function DashboardNavbar({ absolute, light, isMini, collab }) {

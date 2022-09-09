@@ -178,6 +178,7 @@ function Collabs() {
           closeUploadModel={setOpenCsvUploader}
           DownloadTemplate={handleDownload}
           type={"addCollabsTemplate"}
+          openSnackBar={setOpenSnackBar}
         />
       )}
       {confirmation}
