@@ -25,27 +25,31 @@ import MDButton from "components/MDButton";
 import DropFileInput from "components/DropFileInput/DropFileInput";
 
 // Material Dashboard 2 React contexts
-import { useMaterialUIController, setUpdater, setToastInfos } from "context";
-import { addVouchersAdminRoute, addManyCollabsRoute } from "utils/APIRoutes";
+import { setToastInfos, useMaterialUIController, setUpdater } from "context";
+import { addVouchersAdminRoute } from "utils/APIRoutes";
+import { addManyCollabsRoute } from "utils/APIRoutes";
+import { baseURL } from "utils/APIRoutes";
 
 // Allowed extensions for input file
 const allowedExtensions = ["csv"];
 
 function CsvUploader({
+  report,
+  openSnackBar,
   closeUploadModel,
   DownloadTemplate,
   type,
   uploadType,
-  openSnackBar,
 }) {
-  const [controller, dispatch] = useMaterialUIController();
-  const { updater } = controller;
-
   const [error, setError] = useState("");
 
   const [file, setFile] = useState("");
 
   const [charging, setCharging] = useState(false);
+
+  const [controller, dispatch] = useMaterialUIController();
+
+  const { updater } = controller;
 
   const upload = (data) => {
     switch (uploadType) {
@@ -179,6 +183,7 @@ function CsvUploader({
       });
     });
     const { data } = await axios.post(addVouchersAdminRoute, requestDATA);
+
     if (data.status) {
       closeUploadModel(false);
       setUpdater(dispatch, !updater);
@@ -188,6 +193,7 @@ function CsvUploader({
       });
       openSnackBar(true);
     } else {
+      report(data.report);
       setToastInfos(dispatch, { color: "warning", message: data.msg });
       openSnackBar(true);
     }
