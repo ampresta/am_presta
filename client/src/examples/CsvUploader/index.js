@@ -99,6 +99,7 @@ function CsvUploader({
         });
         openSnackBar(true);
       } else {
+        report(data.report);
         setToastInfos(dispatch, { color: "warning", message: data.msg });
         openSnackBar(true);
       }
@@ -118,6 +119,7 @@ function CsvUploader({
         });
         openSnackBar(true);
       } else {
+        report(data.report);
         setToastInfos(dispatch, { color: "warning", message: data.msg });
         openSnackBar(true);
       }
@@ -142,6 +144,7 @@ function CsvUploader({
         });
         openSnackBar(true);
       } else {
+        report(data.report);
         setToastInfos(dispatch, { color: "warning", message: data.msg });
         openSnackBar(true);
       }
@@ -168,6 +171,7 @@ function CsvUploader({
       });
       openSnackBar(true);
     } else {
+      report(data.report);
       setToastInfos(dispatch, { color: "warning", message: data.msg });
       openSnackBar(true);
     }
