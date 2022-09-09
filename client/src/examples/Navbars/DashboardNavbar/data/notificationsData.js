@@ -4,11 +4,7 @@ import { io } from "socket.io-client";
 import axios from "services/authAxios";
 import { getNotifsCollabRoute, getNotifsSocRoute } from "utils/APIRoutes";
 
-<<<<<<< HEAD
-import { useMaterialUIController, setChangedNotif,setUpdater } from "context";
-=======
 import { setUpdater,useMaterialUIController, setChangedNotif } from "context";
->>>>>>> c41f8a86 (delete middleware,limitting file uploads)
 import { marknoptifReadRoute } from "utils/APIRoutes";
 
 const generate_notif = (data, entity, description, emetteur, notifId) => {
