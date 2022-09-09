@@ -181,6 +181,7 @@ function Vouchers() {
           type={"addVouchersTemplate"}
           uploadType="vouchers"
           openSnackBar={setOpenSnackBar}
+          report={setReport}
         />
       )}
       {confirmation}
