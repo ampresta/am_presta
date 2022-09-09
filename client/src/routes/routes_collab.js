@@ -1,13 +1,13 @@
+import CoursesDetails from "layouts/courses catalogue/chooseCourse";
+import CatalogueCourses from "layouts/courses catalogue";
 import Dashboard from "layouts/dashboard/collab_dash";
-import Sessions from "layouts/sessions/collab";
 import SessionsDetails from "layouts/sessionsDetails";
 import SignIn from "layouts/authentication/sign-in";
 import Logout from "layouts/authentication/logout";
+import Sessions from "layouts/sessions/collab";
 import Vouchers from "layouts/vouchers/collab";
-import Error404 from "layouts/error404";
-import CatalogueCourses from "layouts/courses catalogue";
-import CoursesDetails from "layouts/courses catalogue/chooseCourse";
 import MyRequests from "layouts/MyRequests";
+import Error404 from "layouts/error404";
 import Profile from "layouts/profile";
 
 // @mui icons
@@ -47,9 +47,9 @@ const routes = [
   {
     type: "collapse",
     name: "My Vouchers",
-    key: "myVouchers",
+    key: "vouchers",
     icon: <Icon fontSize="small">local_activity</Icon>,
-    route: "/myVouchers",
+    route: "/vouchers",
     component: <Vouchers />,
   },
   {
@@ -62,7 +62,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "profile",
+    name: "My Profile",
     key: "profile",
     icon: <Icon fontSize="small">person</Icon>,
     route: "/profile",

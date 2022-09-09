@@ -1,11 +1,16 @@
-import { Icon } from "@mui/material";
+import Icon from "@mui/material/Icon";
+
 import { useEffect, useRef, useState } from "react";
-import { io } from "socket.io-client";
+
 import axios from "services/authAxios";
-import { getNotifsCollabRoute, getNotifsSocRoute } from "utils/APIRoutes";
+
+import {
+  getNotifsCollabRoute,
+  getNotifsSocRoute,
+  marknoptifReadRoute,
+} from "utils/APIRoutes";
 
 import { useMaterialUIController, setChangedNotif } from "context";
-import { marknoptifReadRoute } from "utils/APIRoutes";
 
 const generate_notif = (data, entity, description, emetteur, notifId) => {
   switch (entity) {
@@ -93,8 +98,6 @@ export default function Data() {
 
   const socket = useRef();
 
-  // Update Notifs using ws
-
   useEffect(() => {
     const socket_ = new WebSocket("ws://127.0.0.1:8888");
     socket_.onopen = function (e) {
@@ -123,9 +126,6 @@ export default function Data() {
   }, [socket]);
 
   const notificationsData = [];
-
-  // console.log(notifs);
-
   if (Array.isArray(notifs) && notifs.length > 0) {
     notifs.map((notif) => {
       const { nom, prenom } = notif.Notification_change.emetteur;
