@@ -31,7 +31,7 @@ import {
   setAccountType,
   setChangedPassword,
   setTypeLoading,
-	setUserId
+  setUserId,
 } from "context";
 import axios from "services/authAxios";
 
@@ -63,7 +63,7 @@ function App() {
         setTypeLoading(dispatch, false);
         setAccessToken(data.accesstoken);
         setAccountType(dispatch, data.type);
-	      setUserId(dispatch,data.id)
+        setUserId(dispatch, data.id);
         if (data.changedpass !== "") {
           setChangedPassword(dispatch, data.changedpass);
         } else {
@@ -154,8 +154,6 @@ function App() {
       <Routes>
         {accountType && getRoutes(Routing(accountType))}
         {!accountType && getRoutes(Routing(""))}
-
-        {/* {<Route path="*" element={<Navigate to="/dashboard" />} />} */}
 
         {!accountType && loadingType !== true && (
           <Route
