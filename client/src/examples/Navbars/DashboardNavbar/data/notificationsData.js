@@ -71,11 +71,7 @@ export const markRead = async (notifId) => {
 
 export default function Data() {
   const [controller, dispatch] = useMaterialUIController();
-<<<<<<< HEAD
-  const { accountType,userId,updater } = controller;
-=======
   const { accountType, userId,updater } = controller;
->>>>>>> c41f8a86 (delete middleware,limitting file uploads)
 
   const [notifs, setNotifs] = useState(null);
 
