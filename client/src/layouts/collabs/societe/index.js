@@ -176,6 +176,7 @@ function Collabs() {
           DownloadTemplate={handleDownload}
           type={"addCollabsTemplate"}
           uploadType="collabs"
+          openSnackBar={setOpenSnackBar}
         />
       )}
       {confirmation}

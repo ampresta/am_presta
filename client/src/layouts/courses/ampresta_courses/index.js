@@ -198,6 +198,7 @@ function Courses_am() {
           closeUploadModel={setOpenCsvUploader}
           DownloadTemplate={handleDownload}
           type={"addCourseTemplate"}
+          openSnackBar={setOpenSnackBar}
         />
       )}
 

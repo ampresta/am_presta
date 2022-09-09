@@ -179,6 +179,7 @@ function Vouchers() {
           DownloadTemplate={handleDownload}
           type={"addVouchersTemplate"}
           uploadType="vouchers"
+          openSnackBar={setOpenSnackBar}
         />
       )}
       {confirmation}
