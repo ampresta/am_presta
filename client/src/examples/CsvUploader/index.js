@@ -93,8 +93,15 @@ function CsvUploader({
       if (data.status) {
         closeUploadModel(false);
         setUpdater(dispatch, !updater);
+        setToastInfos(dispatch, {
+          color: "success",
+          message: "Courses Added Successfully",
+        });
+        openSnackBar(true);
       } else {
-        alert(data.msg);
+        report(data.report);
+        setToastInfos(dispatch, { color: "warning", message: data.msg });
+        openSnackBar(true);
       }
     });
   };
@@ -106,8 +113,15 @@ function CsvUploader({
       if (data.status) {
         closeUploadModel(false);
         setUpdater(dispatch, !updater);
+        setToastInfos(dispatch, {
+          color: "success",
+          message: "Providers Added Successfully",
+        });
+        openSnackBar(true);
       } else {
-        alert(data.msg);
+        report(data.report);
+        setToastInfos(dispatch, { color: "warning", message: data.msg });
+        openSnackBar(true);
       }
     });
   };
@@ -124,8 +138,15 @@ function CsvUploader({
       if (data.status) {
         closeUploadModel(false);
         setUpdater(dispatch, !updater);
+        setToastInfos(dispatch, {
+          color: "success",
+          message: "Companies Added Successfully",
+        });
+        openSnackBar(true);
       } else {
-        alert(data.msg);
+        report(data.report);
+        setToastInfos(dispatch, { color: "warning", message: data.msg });
+        openSnackBar(true);
       }
     });
   };
@@ -144,8 +165,15 @@ function CsvUploader({
     if (data.status) {
       closeUploadModel(false);
       setUpdater(dispatch, !updater);
+      setToastInfos(dispatch, {
+        color: "success",
+        message: "Collaborators Added Successfully",
+      });
+      openSnackBar(true);
     } else {
-      alert(data.msg);
+      report(data.report);
+      setToastInfos(dispatch, { color: "warning", message: data.msg });
+      openSnackBar(true);
     }
   };
 

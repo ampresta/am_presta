@@ -189,6 +189,7 @@ function Companies() {
           closeUploadModel={setOpenCsvUploader}
           DownloadTemplate={handleDownload}
           type={"addCompanyTemplate"}
+          openSnackBar={setOpenSnackBar}
         />
       )}
       {confirmation}
