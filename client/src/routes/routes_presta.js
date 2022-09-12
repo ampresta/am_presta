@@ -1,20 +1,21 @@
-import Dashboard from "layouts/dashboard/ampresta_dash";
-import Companies from "layouts/companies";
-import Partners from "layouts/partners";
-import Courses from "layouts/courses/ampresta_courses";
-import Collabs from "layouts/collabs/ampresta";
-import Vouchers from "layouts/vouchers/ampresta";
-import Quota from "layouts/quota";
-import SignIn from "layouts/authentication/sign-in";
-import Logout from "layouts/authentication/logout";
-import Sessions from "layouts/sessions/ampresta";
-import Departments from "layouts/departments/ampresta";
-import Error404 from "layouts/error404";
-
-import ResetPassword from "layouts/authentication/reset-password";
-
+import { lazy } from "react";
 // @mui icons
 import Icon from "@mui/material/Icon";
+const Logout = lazy(() => import("layouts/authentication/logout"));
+const ResetPassword = lazy(() =>
+  import("layouts/authentication/reset-password")
+);
+const Sessions = lazy(() => import("layouts/sessions/ampresta"));
+const Partners = lazy(() => import("layouts/partners"));
+const Courses = lazy(() => import("layouts/courses/ampresta_courses"));
+const Collabs = lazy(() => import("layouts/collabs/ampresta"));
+const Departments = lazy(() => import("layouts/departments/ampresta"));
+const Companies = lazy(() => import("layouts/companies"));
+const Quota = lazy(() => import("layouts/quota"));
+const Vouchers = lazy(() => import("layouts/vouchers/ampresta"));
+const Error404 = lazy(() => import("layouts/error404"));
+const SignIn = lazy(() => import("layouts/authentication/sign-in"));
+const Dashboard = lazy(() => import("layouts/dashboard/ampresta_dash"));
 
 const routes = [
   {

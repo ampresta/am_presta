@@ -4,28 +4,35 @@ import MDProgress from "components/MDProgress";
 import MDTypography from "components/MDTypography";
 
 // PasswordTester Package import
-import zxcvbn from "zxcvbn";
+// import zxcvbn from "zxcvbn";
 
 // prop-types is library for typechecking of props
 import PropTypes from "prop-types";
+import { useState } from "react";
 
 const PasswordTest = ({ password }) => {
-  const testResult = zxcvbn(password);
-  const num = (testResult.score * 100) / 4;
-  let caption = "";
-  let barColor = "";
-
-  if (num === 50) {
-    caption = "Good";
-    barColor = "info";
-  } else if (num > 70) {
-    caption = "Strong";
-    barColor = "success";
-  } else {
-    caption = "Weak";
-    barColor = "primary";
-  }
-
+  const [barColor, setBarColor] = useState("primary");
+  const [caption, setCaption] = useState("Weak");
+  const [num, setNum] = useState(0);
+  import("zxcvbn").then((zxcvbn) => {
+    const testResult = zxcvbn.default(password);
+    setNum((testResult.score * 100) / 4);
+    const num2 = (testResult.score * 100) / 4;
+    let caption2 = "";
+    let barColor2 = "";
+    if (num2 === 50) {
+      caption2 = "Good";
+      barColor2 = "info";
+    } else if (num2 > 70) {
+      caption2 = "Strong";
+      barColor2 = "success";
+    } else {
+      caption2 = "Weak";
+      barColor2 = "primary";
+    }
+    setCaption(caption2);
+    setBarColor(barColor2);
+  });
   return (
     <MDBox display="flex" alignItems="center" mt={0.2}>
       <MDTypography variant="caption" color="text">
