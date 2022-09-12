@@ -89,7 +89,7 @@ export default function Data() {
       setChangedNotif(dispatch, data.length);
     };
     getNotifs();
-	  setUpdater(dispatch,!updater);
+   setUpdater(dispatch,!updater);
   }, []);
 
   const socket = useRef();
@@ -125,6 +125,8 @@ export default function Data() {
         setChangedNotif(dispatch, data.length);
         setUpdater(dispatch, !updater);
       }
+    }
+    )
   }, [socket]);
 
 
