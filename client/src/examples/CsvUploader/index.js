@@ -25,14 +25,22 @@ import MDButton from "components/MDButton";
 import DropFileInput from "components/DropFileInput/DropFileInput";
 
 // Material Dashboard 2 React contexts
-import { useMaterialUIController, setUpdater } from "context";
+import { setToastInfos, useMaterialUIController, setUpdater } from "context";
 import { addVouchersAdminRoute } from "utils/APIRoutes";
 import { addManyCollabsRoute } from "utils/APIRoutes";
+import { baseURL } from "utils/APIRoutes";
 
 // Allowed extensions for input file
 const allowedExtensions = ["csv"];
 
-function CsvUploader({ closeUploadModel, DownloadTemplate, type, uploadType }) {
+function CsvUploader({
+  report,
+  openSnackBar,
+  closeUploadModel,
+  DownloadTemplate,
+  type,
+  uploadType,
+}) {
   const [error, setError] = useState("");
 
   const [file, setFile] = useState("");
@@ -85,8 +93,15 @@ function CsvUploader({ closeUploadModel, DownloadTemplate, type, uploadType }) {
       if (data.status) {
         closeUploadModel(false);
         setUpdater(dispatch, !updater);
+        setToastInfos(dispatch, {
+          color: "success",
+          message: "Courses Added Successfully",
+        });
+        openSnackBar(true);
       } else {
-        alert(data.msg);
+        report(data.report);
+        setToastInfos(dispatch, { color: "warning", message: data.msg });
+        openSnackBar(true);
       }
     });
   };
@@ -98,8 +113,15 @@ function CsvUploader({ closeUploadModel, DownloadTemplate, type, uploadType }) {
       if (data.status) {
         closeUploadModel(false);
         setUpdater(dispatch, !updater);
+        setToastInfos(dispatch, {
+          color: "success",
+          message: "Providers Added Successfully",
+        });
+        openSnackBar(true);
       } else {
-        alert(data.msg);
+        report(data.report);
+        setToastInfos(dispatch, { color: "warning", message: data.msg });
+        openSnackBar(true);
       }
     });
   };
@@ -116,8 +138,15 @@ function CsvUploader({ closeUploadModel, DownloadTemplate, type, uploadType }) {
       if (data.status) {
         closeUploadModel(false);
         setUpdater(dispatch, !updater);
+        setToastInfos(dispatch, {
+          color: "success",
+          message: "Companies Added Successfully",
+        });
+        openSnackBar(true);
       } else {
-        alert(data.msg);
+        report(data.report);
+        setToastInfos(dispatch, { color: "warning", message: data.msg });
+        openSnackBar(true);
       }
     });
   };
@@ -136,8 +165,15 @@ function CsvUploader({ closeUploadModel, DownloadTemplate, type, uploadType }) {
     if (data.status) {
       closeUploadModel(false);
       setUpdater(dispatch, !updater);
+      setToastInfos(dispatch, {
+        color: "success",
+        message: "Collaborators Added Successfully",
+      });
+      openSnackBar(true);
     } else {
-      alert(data.msg);
+      report(data.report);
+      setToastInfos(dispatch, { color: "warning", message: data.msg });
+      openSnackBar(true);
     }
   };
 
@@ -151,11 +187,19 @@ function CsvUploader({ closeUploadModel, DownloadTemplate, type, uploadType }) {
       });
     });
     const { data } = await axios.post(addVouchersAdminRoute, requestDATA);
+
     if (data.status) {
       closeUploadModel(false);
       setUpdater(dispatch, !updater);
+      setToastInfos(dispatch, {
+        color: "success",
+        message: "Vouchers Added Successfully",
+      });
+      openSnackBar(true);
     } else {
-      alert(data.msg);
+      report(data.report);
+      setToastInfos(dispatch, { color: "warning", message: data.msg });
+      openSnackBar(true);
     }
   };
 

@@ -6,3 +6,5 @@ server/.env
 logs/*
 logs
 *.swp
+client/build/*
+client/build

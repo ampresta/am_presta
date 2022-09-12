@@ -1,19 +1,20 @@
-import Dashboard from "layouts/dashboard/societe_dash";
-import Requests from "layouts/requests";
-import Departments from "layouts/departments/societe";
-import Sessions from "layouts/sessions/societe";
-import SessionsDetails from "layouts/sessionsDetails";
-import SignIn from "layouts/authentication/sign-in";
-import Logout from "layouts/authentication/logout";
-import Courses from "layouts/courses/courses catalogue";
-import Collabs from "layouts/collabs/societe";
-import Vouchers from "layouts/vouchers/societe";
-import Error404 from "layouts/error404";
-import CoursesDetails from "layouts/courses/courses catalogue/chooseCourse";
-
 // @mui icons
 import Icon from "@mui/material/Icon";
-import Loading from "examples/Loading";
+import { lazy } from "react";
+const CoursesDetails = lazy(() =>
+  import("layouts/courses/courses catalogue/chooseCourse")
+);
+const Logout = lazy(() => import("layouts/authentication/logout"));
+const Sessions = lazy(() => import("layouts/sessions/societe"));
+const SessionsDetails = lazy(() => import("layouts/sessionsDetails"));
+const Courses = lazy(() => import("layouts/courses/courses catalogue"));
+const Collabs = lazy(() => import("layouts/collabs/societe"));
+const Departments = lazy(() => import("layouts/departments/societe"));
+const Requests = lazy(() => import("layouts/requests"));
+const Vouchers = lazy(() => import("layouts/vouchers/societe"));
+const Error404 = lazy(() => import("layouts/error404"));
+const SignIn = lazy(() => import("layouts/authentication/sign-in"));
+const Dashboard = lazy(() => import("layouts/dashboard/societe_dash"));
 
 const routes = [
   {

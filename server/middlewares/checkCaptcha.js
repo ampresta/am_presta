@@ -2,6 +2,7 @@ require("dotenv").config({ path: "../.env" });
 const request = require("request");
 
 module.exports = (req, res, next) => {
+  // return next();
   const { captcha } = req.body;
   if (!captcha || captcha === undefined || captcha === null) {
     return res.json({

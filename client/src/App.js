@@ -1,7 +1,14 @@
 import { useEffect } from "react";
+import Loading from "examples/Loading";
 import { imageRoute, refreshRoute, baseURL } from "utils/APIRoutes";
 // react-router components
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  Navigate,
+  useLocation,
+  BrowserRouter,
+} from "react-router-dom";
 import SpecialRoute from "routes/SpecialRoute";
 // @mui material components
 import { ThemeProvider } from "@mui/material/styles";
@@ -31,12 +38,13 @@ import {
   setAccountType,
   setChangedPassword,
   setTypeLoading,
-	setUserId
+  setUserId,
 } from "context";
 import axios from "services/authAxios";
 
 import { setAccessToken } from "utils/accessToken";
 import React, { useState } from "react";
+import { Suspense } from "react";
 
 function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -63,7 +71,7 @@ function App() {
         setTypeLoading(dispatch, false);
         setAccessToken(data.accesstoken);
         setAccountType(dispatch, data.type);
-	      setUserId(dispatch,data.id)
+        setUserId(dispatch, data.id);
         if (data.changedpass !== "") {
           setChangedPassword(dispatch, data.changedpass);
         } else {
@@ -151,19 +159,19 @@ function App() {
           {darkModeToggle}
         </>
       )}
-      <Routes>
-        {accountType && getRoutes(Routing(accountType))}
-        {!accountType && getRoutes(Routing(""))}
+      <Suspense fallback={<Loading />}>
+        <Routes>
+          {accountType && getRoutes(Routing(accountType))}
+          {!accountType && getRoutes(Routing(""))}
 
-        {/* {<Route path="*" element={<Navigate to="/dashboard" />} />} */}
-
-        {!accountType && loadingType !== true && (
-          <Route
-            path="*"
-            element={<Navigate to="/login" state={{ prevPath: pathname }} />}
-          />
-        )}
-      </Routes>
+          {!accountType && loadingType !== true && (
+            <Route
+              path="*"
+              element={<Navigate to="/login" state={{ prevPath: pathname }} />}
+            />
+          )}
+        </Routes>
+      </Suspense>
     </ThemeProvider>
   );
 }

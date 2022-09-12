@@ -1,18 +1,19 @@
-import Dashboard from "layouts/dashboard/collab_dash";
-import Sessions from "layouts/sessions/collab";
-import SessionsDetails from "layouts/sessionsDetails";
-import SignIn from "layouts/authentication/sign-in";
-import Logout from "layouts/authentication/logout";
-import Vouchers from "layouts/vouchers/collab";
-import Error404 from "layouts/error404";
-import CatalogueCourses from "layouts/courses catalogue";
-import CoursesDetails from "layouts/courses catalogue/chooseCourse";
-import MyRequests from "layouts/MyRequests";
-import Profile from "layouts/profile";
-
+import { lazy } from "react";
 // @mui icons
 import Icon from "@mui/material/Icon";
-
+const Profile = lazy(() => import("layouts/profile"));
+const MyRequests = lazy(() => import("layouts/MyRequests"));
+const Logout = lazy(() => import("layouts/authentication/logout"));
+const Sessions = lazy(() => import("layouts/sessions/collab"));
+const Vouchers = lazy(() => import("layouts/vouchers/collab"));
+const Error404 = lazy(() => import("layouts/error404"));
+const SignIn = lazy(() => import("layouts/authentication/sign-in"));
+const Dashboard = lazy(() => import("layouts/dashboard/collab_dash"));
+const SessionsDetails = lazy(() => import("layouts/sessionsDetails"));
+const CoursesDetails = lazy(() =>
+  import("layouts/courses catalogue/chooseCourse")
+);
+const CatalogueCourses = lazy(() => import("layouts/courses catalogue"));
 const routes = [
   {
     type: "collapse",
@@ -47,9 +48,9 @@ const routes = [
   {
     type: "collapse",
     name: "My Vouchers",
-    key: "myVouchers",
+    key: "vouchers",
     icon: <Icon fontSize="small">local_activity</Icon>,
-    route: "/myVouchers",
+    route: "/vouchers",
     component: <Vouchers />,
   },
   {
@@ -62,7 +63,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "profile",
+    name: "My Profile",
     key: "profile",
     icon: <Icon fontSize="small">person</Icon>,
     route: "/profile",

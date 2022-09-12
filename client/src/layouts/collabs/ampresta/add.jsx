@@ -31,6 +31,9 @@ import {
 } from "utils/APIRoutes";
 
 function AddCollab({ closeAddModel, openSnackBar }) {
+  const [controller, dispatch] = useMaterialUIController();
+  const { updater } = controller;
+
   const [formErrors, setFormErrors] = useState({
     nom: "",
   });
@@ -54,9 +57,6 @@ function AddCollab({ closeAddModel, openSnackBar }) {
 
   const [file, setFile] = useState(null);
 
-  const [controller, dispatch] = useMaterialUIController();
-
-  const { updater } = controller;
   const handleSelectedCompany = (event) => {
     const company = event.target.value;
     setCollaborator((prev) => ({ ...prev, company }));

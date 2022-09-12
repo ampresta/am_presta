@@ -1,11 +1,16 @@
-import { Icon } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
-import { io } from "socket.io-client";
-import axios from "services/authAxios";
-import { getNotifsCollabRoute, getNotifsSocRoute } from "utils/APIRoutes";
+import Icon from "@mui/material/Icon";
 
-import { useMaterialUIController, setChangedNotif } from "context";
-import { marknoptifReadRoute } from "utils/APIRoutes";
+import { useEffect, useRef, useState } from "react";
+
+import axios from "services/authAxios";
+
+import {
+  getNotifsCollabRoute,
+  getNotifsSocRoute,
+  marknoptifReadRoute,
+} from "utils/APIRoutes";
+
+import { setUpdater, useMaterialUIController, setChangedNotif } from "context";
 
 const generate_notif = (data, entity, description, emetteur, notifId) => {
   switch (entity) {
@@ -71,7 +76,7 @@ export const markRead = async (notifId) => {
 
 export default function Data() {
   const [controller, dispatch] = useMaterialUIController();
-  const { accountType, userId } = controller;
+  const { accountType, userId, updater } = controller;
 
   const [notifs, setNotifs] = useState(null);
 
@@ -93,10 +98,8 @@ export default function Data() {
 
   const socket = useRef();
 
-  // Update Notifs using ws
-
   useEffect(() => {
-    const socket_ = new WebSocket("ws://127.0.0.1:8888");
+    const socket_ = new WebSocket("ws://127.0.0.1:8888/ws");
     socket_.onopen = function (e) {
       socket_.send(
         JSON.stringify({
@@ -118,14 +121,12 @@ export default function Data() {
         const { data } = await axios.post(route);
         setNotifs(data);
         setChangedNotif(dispatch, data.length);
+        setUpdater(dispatch, !updater);
       }
     });
   }, [socket]);
 
   const notificationsData = [];
-
-  // console.log(notifs);
-
   if (Array.isArray(notifs) && notifs.length > 0) {
     notifs.map((notif) => {
       const { nom, prenom } = notif.Notification_change.emetteur;

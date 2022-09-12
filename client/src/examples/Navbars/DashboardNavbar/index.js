@@ -17,6 +17,8 @@ import Icon from "@mui/material/Icon";
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDBadge from "components/MDBadge";
+import MDButton from "components/MDButton";
+import MDTypography from "components/MDTypography";
 
 // Material Dashboard 2 React example components
 import Breadcrumbs from "examples/Breadcrumbs";
@@ -32,13 +34,11 @@ import {
 
 // Material Dashboard 2 React context
 import { useMaterialUIController, setMiniSidenav } from "context";
-
-import notificationsData from "./data/notificationsData";
-import { markRead } from "./data/notificationsData";
-import MDTypography from "components/MDTypography";
+import notificationsData, { markRead } from "./data/notificationsData";
 
 function DashboardNavbar({ absolute, light, isMini, collab }) {
   const [controller, dispatch] = useMaterialUIController();
+
   const {
     miniSidenav,
     transparentNavbar,
@@ -46,6 +46,7 @@ function DashboardNavbar({ absolute, light, isMini, collab }) {
     changedNotif,
     accountType,
   } = controller;
+
   const [openMenu, setOpenMenu] = useState(false);
   const [openNotifsMenu, setOpenNotifsMenu] = useState(false);
 
@@ -79,6 +80,11 @@ function DashboardNavbar({ absolute, light, isMini, collab }) {
     </Menu>
   );
 
+  const AllNotifsId = [];
+  NotifsData.map((item) => {
+    AllNotifsId.push(item.id);
+  });
+
   // Render the notifications menu
   const renderNotifications = () =>
     NotifsData.length !== 0 ? (
@@ -93,19 +99,34 @@ function DashboardNavbar({ absolute, light, isMini, collab }) {
         onClose={() => setOpenNotifsMenu(false)}
         sx={{ mt: 2 }}
       >
-        {NotifsData.map((item) => (
-          <NotificationsList
-            key={item.id}
-            icon={item.icon}
-            route={item.route}
-            label={item.label}
-            transmitter={item.transmitter}
-            subject={item.subject}
-            onClick={() => {
-              markRead(item.notifId);
-            }}
-          />
-        ))}
+        <MDBox>
+          <MDBox display="flex" justifyContent="flex-end">
+            <MDButton
+              size="small"
+              onClick={() => {
+                AllNotifsId.forEach(function (e) {
+                  markRead(e);
+                });
+                window.location.reload();
+              }}
+            >
+              Mark All As Read
+            </MDButton>
+          </MDBox>
+          {NotifsData.map((item) => (
+            <NotificationsList
+              key={item.id}
+              icon={item.icon}
+              route={item.route}
+              label={item.label}
+              transmitter={item.transmitter}
+              subject={item.subject}
+              onClick={() => {
+                markRead(item.notifId);
+              }}
+            />
+          ))}
+        </MDBox>
       </Menu>
     ) : (
       <Menu
@@ -119,9 +140,11 @@ function DashboardNavbar({ absolute, light, isMini, collab }) {
         onClose={() => setOpenNotifsMenu(false)}
         sx={{ mt: 2 }}
       >
-        <MDTypography variant="text" color="info">
-          No notifications available !
-        </MDTypography>
+        <MDBox p={0.5}>
+          <MDTypography variant="text" color="dark">
+            No notifications available !
+          </MDTypography>
+        </MDBox>
       </Menu>
     );
 
