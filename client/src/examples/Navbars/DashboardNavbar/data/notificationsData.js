@@ -71,11 +71,7 @@ export const markRead = async (notifId) => {
 
 export default function Data() {
   const [controller, dispatch] = useMaterialUIController();
-<<<<<<< HEAD
-  const { accountType,userId,updater } = controller;
-=======
   const { accountType, userId,updater } = controller;
->>>>>>> c41f8a86 (delete middleware,limitting file uploads)
 
   const [notifs, setNotifs] = useState(null);
 
@@ -93,7 +89,7 @@ export default function Data() {
       setChangedNotif(dispatch, data.length);
     };
     getNotifs();
-	  setUpdater(dispatch,!updater);
+   setUpdater(dispatch,!updater);
   }, []);
 
   const socket = useRef();
@@ -129,6 +125,8 @@ export default function Data() {
         setChangedNotif(dispatch, data.length);
         setUpdater(dispatch, !updater);
       }
+    }
+    )
   }, [socket]);
 
 

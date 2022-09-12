@@ -46,7 +46,7 @@ try {
 //   })
 // );
 //
-var whitelist = ['http://www.institute-eca.ma:58356', 'http://institute-eca.ma:58356']
+var whitelist = ['https://www.institute-eca.ma:58355', 'https://institute-eca.ma:58355']
 var corsOptions = {
 	credentials:true,
   origin: function (origin, callback) {
