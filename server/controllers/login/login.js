@@ -72,7 +72,7 @@ module.exports = async (req, res) => {
       res.cookie("jbid", refreshtoken, {
         httpOnly: true,
        // sameSite: "None",
-	      //        secure: true,
+              secure: true,
       });
       accesstoken = sign(payload, process.env.JWTSALT, {
         expiresIn: "15m",

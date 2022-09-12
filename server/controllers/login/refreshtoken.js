@@ -34,7 +34,7 @@ module.exports = async (req, res) => {
     });
     res.cookie("jbid", refreshtoken, {
       httpOnly: true,
-//      secure: true,
+     secure: true,
   //    sameSite: "None",
     });
     return res.send({
