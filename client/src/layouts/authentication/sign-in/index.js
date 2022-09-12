@@ -81,6 +81,10 @@ function Basic(props) {
     } else {
       setToastInfos(dispatch, { color: "warning", message: data.msg });
       setOpenSnackBar(true);
+      if (captcha) {
+        window.grecaptcha.reset();
+      }
+
     }
   };
 
