@@ -9,20 +9,24 @@ module.exports = async (req, res) => {
   }
   const pep = process.env.PEPPER;
   try {
-    let { nom, prenom, email, societe } = account;
+    var { nom, prenom, email, societe } = account;
+    if (!societe) {
+      return res.send({ status: false, msg: "Please specify a company" });
+    }
     const societes = await Societe.findOne({
       attributes: ["name"],
       where: { id: societe },
     });
-    if (!societe) {
-      return res.send({ status: false, msg: "Please specify a company" });
-    }
-    if (!prenom || !nom) return res.sendStatus(403);
-	nom=nom.trim().toLowerCase()
-	    prenom=prenom.trim().toLowerCase()
+    if (!prenom || !email || !nom) return res.sendStatus(403);
+    nom = nom.trim().toLowerCase();
+    prenom = prenom.trim().toLowerCase();
+    email = email.trim();
+    emailCheck = await User.findOne({ where: { email } });
 
-      username = `${nom.replace(/\s/g,'_')}.${prenom.replace(/\s/g,'_')}`;
-   // username = `${nom}.${prenom}`;
+    if (emailCheck) {
+      return res.send({ status: false, msg: "Email exists " });
+    }
+    username = `${nom.replace(/\s/g, "_")}.${prenom.replace(/\s/g, "_")}`;
     const password = Array(8)
       .fill()
       .map(() => ((Math.random() * 36) | 0).toString(36))
@@ -56,19 +60,14 @@ module.exports = async (req, res) => {
         include: [{ association: User.Collaborateur }],
       }
     );
-    Email.sendRegister(
-      email,
-      email_institu,
-      username,
-      password,
-      societes.name,
-    );
+    Email.sendRegister(email, email_institu, username, password, societes.name);
     return res.send({
       status: true,
       msg: "Users Created Successfully",
       id: user.Collaborateur.id,
     });
   } catch (err) {
+    console.log(err);
     return res.send({ msg: "error " + err });
   }
 };
