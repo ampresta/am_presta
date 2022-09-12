@@ -99,7 +99,7 @@ export default function Data() {
   const socket = useRef();
 
   useEffect(() => {
-    const socket_ = new WebSocket("ws://127.0.0.1:8888");
+    const socket_ = new WebSocket("ws://127.0.0.1:8888/ws");
     socket_.onopen = function (e) {
       socket_.send(
         JSON.stringify({
