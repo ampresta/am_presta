@@ -49,6 +49,7 @@ function Courses_am() {
   const [openAddModel, setOpenAddModel] = useState(false);
   const [openCsvUploader, setOpenCsvUploader] = useState(false);
   const [openSnackBar, setOpenSnackBar] = useState(false);
+  const [report, setReport] = useState(false);
 
   const { columns, rows, confirmation, rawData, notifications, sendEdit } =
     coursesTableData(setOpenAddModel);
@@ -199,6 +200,7 @@ function Courses_am() {
           DownloadTemplate={handleDownload}
           type={"addCourseTemplate"}
           openSnackBar={setOpenSnackBar}
+          report={setReport}
         />
       )}
 
@@ -211,6 +213,7 @@ function Courses_am() {
           title={toastInfos.message}
           open={openSnackBar}
           close={() => setOpenSnackBar(!openSnackBar)}
+          report={report}
         />
       )}
     </DashboardLayout>

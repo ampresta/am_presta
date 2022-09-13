@@ -37,6 +37,7 @@ function Companies() {
   const [openAddModel, setOpenAddModel] = useState(false);
   const [openCsvUploader, setOpenCsvUploader] = useState(false);
   const [openSnackBar, setOpenSnackBar] = useState(false);
+  const [report, setReport] = useState(false);
 
   const { columns, rows, confirmation, rawData, notifications } =
     companiesTableData();
@@ -190,6 +191,7 @@ function Companies() {
           DownloadTemplate={handleDownload}
           type={"addCompanyTemplate"}
           openSnackBar={setOpenSnackBar}
+          report={setReport}
         />
       )}
       {confirmation}
@@ -200,6 +202,7 @@ function Companies() {
           title={toastInfos.message}
           open={openSnackBar}
           close={() => setOpenSnackBar(!openSnackBar)}
+          report={report}
         />
       )}
     </DashboardLayout>
