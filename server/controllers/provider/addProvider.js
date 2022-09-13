@@ -26,6 +26,6 @@ module.exports = async (req, res) => {
     });
   } catch (err) {
     console.log(err);
-    return res.send({ status: false });
+    return res.send({ status: false,msg:"Error" });
   }
 };

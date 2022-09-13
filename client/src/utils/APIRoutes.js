@@ -110,6 +110,7 @@ export const addNotifRoute = `${baseURL}/notifs/add`;
 export const getNotifsSocRoute = `${baseURL}/notifs/browsesoc`;
 export const getNotifsCollabRoute = `${baseURL}/notifs/browsecollab`;
 export const marknoptifReadRoute = `${baseURL}/notifs/readonenotif`;
+export const markallnoptifReadRoute = `${baseURL}/notifs/readallnotifsoc`;
 
 // Profile
 export const getProfileRoute = `${baseURL}/profile/`;
@@ -117,5 +118,4 @@ export const updateProfileRoute = `${baseURL}/profile/update`;
 export const validatepasswordRoute = `${baseURL}/profile/validatepassword`;
 
 // Emails
-
 export const sendEmailRoute = `${baseURL}/email/send`;

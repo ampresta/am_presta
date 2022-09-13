@@ -69,13 +69,10 @@ function reducer(state, action) {
     case "NOTIFICATIONS": {
       return { ...state, changedNotif: action.value };
     }
-
     case "USERID": {
       return { ...state,userId: action.value };}
     case "TOASTINFOS": {
       return { ...state, toastInfos: action.value };
-
-
     }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
@@ -202,8 +199,6 @@ export {
   setAccountType,
   setTypeLoading,
   setChangedNotif,
-
  setToastInfos,
 	setUserId,
-
 };

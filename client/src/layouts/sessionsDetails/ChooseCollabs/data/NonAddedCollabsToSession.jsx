@@ -37,7 +37,7 @@ export default function Data(session) {
       const { data } = await axios.post(browseCollabsOutOfSessionRoute, {
         sess: session,
       });
-      data.collabs.map((collab) => (collab.checked = -1));
+      console.log(data.collabs);
       setAllCollabs((prev) => data.collabs);
     };
     getAllCollabs();
@@ -88,27 +88,24 @@ export default function Data(session) {
     ),
   };
 
-  collabs.SubmitButton = (event) => {
-    event.preventDefault();
-    setChecked(allCollabs.filter((c) => c.checked === 1));
-    if (checked.length > 0) {
-      checked.map(async (collab) => {
-        const { data } = await axios.post(addCollabsSessionRoute, {
-          session,
-          collab: collab.id,
-        });
-        if (data.status) {
-          setUpdater(dispatch, !updater);
-          setToastInfos(dispatch, {
-            color: "success",
-            message: "Collaborator(s) Added to Session Successfully",
-          });
-        } else {
-          setToastInfos(dispatch, { color: "warning", message: data.msg });
-          setOpenSnackBar(true);
-        }
+  collabs.SubmitButton = () => {
+    checked.map(async (collab) => {
+      const { data } = await axios.post(addCollabsSessionRoute, {
+        session,
+        collab,
       });
-    }
+
+      if (data.status) {
+        setUpdater(dispatch, !updater);
+        setToastInfos(dispatch, {
+          color: "success",
+          message: "Collaborator(s) Added to Session Successfully",
+        });
+      } else {
+        setToastInfos(dispatch, { color: "warning", message: data.msg });
+        setOpenSnackBar(true);
+      }
+    });
   };
 
   if (allCollabs.length === 0 || !Array.isArray(allCollabs)) {
@@ -118,13 +115,9 @@ export default function Data(session) {
       collabs.rows.push({
         check: (
           <Checkbox
-            checked={collab.checked === 1}
-            onChange={() => {
-              collab.checked *= -1; // toggle
-              setChecked(allCollabs.filter((c) => c.checked === 1));
-              setIsChecked(
-                allCollabs.filter((c) => c.checked === 1).length > 0
-              );
+            onChange={(e) => {
+              setChecked(toggleArrayItem(collab.id, checked));
+              checked.length === 0 ? setIsChecked(false) : setIsChecked(true);
             }}
           ></Checkbox>
         ),
