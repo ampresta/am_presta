@@ -191,8 +191,8 @@ function Vouchers() {
           color={toastInfos.color}
           title={toastInfos.message}
           open={openSnackBar}
-          report={report}
           close={() => setOpenSnackBar(!openSnackBar)}
+          report={report}
         />
       )}
     </DashboardLayout>

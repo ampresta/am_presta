@@ -37,6 +37,7 @@ function Partners() {
   const [openAddModel, setOpenAddModel] = useState(false);
   const [openCsvUploader, setOpenCsvUploader] = useState(false);
   const [openSnackBar, setOpenSnackBar] = useState(false);
+  const [report, setReport] = useState(false);
 
   const { columns, rows, confirmation, rawData, notifications, sendEdit } =
     partnersTableData(setOpenAddModel);
@@ -178,6 +179,7 @@ function Partners() {
           DownloadTemplate={handleDownload}
           type={"addProviderTemplate"}
           openSnackBar={setOpenSnackBar}
+          report={setReport}
         />
       )}
       {confirmation}
@@ -188,6 +190,7 @@ function Partners() {
           title={toastInfos.message}
           open={openSnackBar}
           close={() => setOpenSnackBar(!openSnackBar)}
+          report={report}
         />
       )}
     </DashboardLayout>
