@@ -25,6 +25,9 @@ import Breadcrumbs from "examples/Breadcrumbs";
 import NotificationItem from "examples/Items/NotificationItem";
 import NotificationsList from "examples/Items/NotificationsList";
 
+// axios
+import axios from "services/authAxios";
+
 // Custom styles for DashboardNavbar
 import {
   navbar,
@@ -35,6 +38,7 @@ import {
 // Material Dashboard 2 React context
 import { useMaterialUIController, setMiniSidenav } from "context";
 import notificationsData, { markRead } from "./data/notificationsData";
+import { markallnoptifReadRoute } from "utils/APIRoutes";
 
 function DashboardNavbar({ absolute, light, isMini, collab }) {
   const [controller, dispatch] = useMaterialUIController();
@@ -80,11 +84,6 @@ function DashboardNavbar({ absolute, light, isMini, collab }) {
     </Menu>
   );
 
-  const AllNotifsId = [];
-  NotifsData.map((item) => {
-    AllNotifsId.push(item.id);
-  });
-
   // Render the notifications menu
   const renderNotifications = () =>
     NotifsData.length !== 0 ? (
@@ -103,11 +102,8 @@ function DashboardNavbar({ absolute, light, isMini, collab }) {
           <MDBox display="flex" justifyContent="flex-end">
             <MDButton
               size="small"
-              onClick={() => {
-                AllNotifsId.forEach(function (e) {
-                  markRead(e);
-                });
-                window.location.reload();
+              onClick={async () => {
+                await axios.post(markallnoptifReadRoute);
               }}
             >
               Mark All As Read
