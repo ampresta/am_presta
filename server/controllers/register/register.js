@@ -58,14 +58,6 @@ module.exports = async (req, res) => {
       id: user.Collaborateur.SocieteId,
     });
   } catch (err) {
-    // collab = await user.getCollaborator();
-    // soc = await collab.getSociete();
-    // console.log(collab);
-
-    // console.log(soc);
-    // await soc.destroy({ force: true });
-    // await collab.destroy({ force: true });
-    // await user.destroy({ force: true });
     return res.send({ msg: "error " + err });
   }
 };

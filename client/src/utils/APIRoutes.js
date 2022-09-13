@@ -117,5 +117,4 @@ export const updateProfileRoute = `${baseURL}/profile/update`;
 export const validatepasswordRoute = `${baseURL}/profile/validatepassword`;
 
 // Emails
-
 export const sendEmailRoute = `${baseURL}/email/send`;

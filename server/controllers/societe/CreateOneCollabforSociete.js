@@ -13,12 +13,16 @@ module.exports = async (req, res) => {
   });
   const pep = process.env.PEPPER;
   try {
-    const { nom, prenom, email } = account;
+    let { nom, prenom, email } = account;
     if (!email || !prenom || !nom) return res.sendStatus(403);
     const emailCheck = await User.findOne({ where: { email } });
     if (emailCheck)
       return res.json({ status: false, msg: "email already used" });
-    username = `${nom}.${prenom}`;
+	nom=nom.trim().toLowerCase()
+	    prenom=prenom.trim().toLowerCase()
+
+      username = `${nom.replace(/\s/g,'_')}.${prenom.replace(/\s/g,'_')}`;
+   // username = `${nom}.${prenom}`;
     const password = Array(8)
       .fill()
       .map(() => ((Math.random() * 36) | 0).toString(36))
@@ -29,7 +33,7 @@ module.exports = async (req, res) => {
       if (!usernameCheck) {
         break;
       }
-      username = `${nom}.${prenom}${i}`;
+      username = `${username}${i}`;
       i++;
     }
     email_institu = `${username}@institute-eca.ma`;

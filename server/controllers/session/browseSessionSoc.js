@@ -12,6 +12,7 @@ module.exports = async (req, res) => {
         required: true,
         include: {
           model: Provider,
+		required:true
         },
         where: {
           id: cours,

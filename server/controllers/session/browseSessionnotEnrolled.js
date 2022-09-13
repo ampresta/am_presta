@@ -9,7 +9,10 @@ module.exports = async (req, res) => {
   }
 
   const sess = await Session.findAll({
+
     where: {
+	    SocieteId:req.societe,
+
       $Collaborateurs$: null,
     },
     include: [
