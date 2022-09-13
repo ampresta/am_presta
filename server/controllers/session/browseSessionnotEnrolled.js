@@ -12,6 +12,7 @@ module.exports = async (req, res) => {
 
     where: {
 	    SocieteId:req.societe,
+
       $Collaborateurs$: null,
     },
     include: [

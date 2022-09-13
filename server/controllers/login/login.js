@@ -1,9 +1,11 @@
 const db = require("../../config/database");
-const { User, Collaborateur, Societe,SuperAdmin } = db.models;
+
+const { User, Collaborateur, Societe, SuperAdmin } = db.models;
 const argon2 = require("argon2");
 const { sign } = require("jsonwebtoken");
 const GetType = require("./GetType");
 const { Op } = require("sequelize");
+
 module.exports = async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -11,16 +13,19 @@ module.exports = async (req, res) => {
       return res.send({ status: false, msg: "Check parameters" });
     }
     const user = await User.findOne({
-	    include: [{
-        model: Collaborateur,
-        attributes: ["id"],
-        include: {
-          model: Societe,
+
+      include: [
+        {
+          model: Collaborateur,
+          attributes: ["id"],
+          include: {
+            model: Societe,
+          },
         },
-      },
-	    {
-		   model: SuperAdmin,
-		            },],
+        {
+          model: SuperAdmin,
+        },
+      ],
       where: {
 	      [Op.or]: { username, email: username } },
     });
@@ -30,12 +35,15 @@ module.exports = async (req, res) => {
 
     const pep = process.env.PEPPER;
     let changedpass = "";
-// start - BRICOLE DYAL DELETEDAT
-	 const checkSuperadmin = user.SuperAdmin ? true : false;
-	      if (!checkSuperadmin) {
-    const sociterNotDeleted = user.Collaborateur.Societe ? true : false;
-    if (!sociterNotDeleted) {
-      return res.send({ status: false, msg: "Societe deleted" });
+
+
+    // start - BRICOLE DYAL DELETEDAT
+    const checkSuperadmin = user.SuperAdmin ? true : false;
+    if (!checkSuperadmin) {
+      const sociterNotDeleted = user.Collaborateur.Societe ? true : false;
+      if (!sociterNotDeleted) {
+        return res.send({ status: false, msg: "Societe deleted" });
+      }
     }
 	      }
     // end - BRICOLE DYAL DELETEDAT
@@ -77,12 +85,20 @@ module.exports = async (req, res) => {
       accesstoken = sign(payload, process.env.JWTSALT, {
         expiresIn: "15m",
       });
-      return res.json({ status: true, accesstoken, type, changedpass,id:user.id });
+
+      return res.json({
+        status: true,
+        accesstoken,
+        type,
+        changedpass,
+        id: user.id,
+      });
     }
 
     return res.send({ status: false, msg: "Username or Password incorrect" });
   } catch (err) {
-	  console.log(err)
+
+    console.log(err);
     return res.send("error: " + err);
   }
 };
