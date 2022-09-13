@@ -37,6 +37,7 @@ function Collabs() {
   const [openAddModel, setOpenAddModel] = useState(false);
   const [openCsvUploader, setOpenCsvUploader] = useState(false);
   const [openSnackBar, setOpenSnackBar] = useState(false);
+  const [report, setReport] = useState(false);
 
   const { columns, rows, confirmation, rawData, notifications } =
     collabsTableData();
@@ -179,6 +180,7 @@ function Collabs() {
           DownloadTemplate={handleDownload}
           type={"addCollabsTemplate"}
           openSnackBar={setOpenSnackBar}
+          report={setReport}
         />
       )}
       {confirmation}
@@ -189,6 +191,7 @@ function Collabs() {
           title={toastInfos.message}
           open={openSnackBar}
           close={() => setOpenSnackBar(!openSnackBar)}
+          report={report}
         />
       )}
     </DashboardLayout>
