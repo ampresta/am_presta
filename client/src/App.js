@@ -16,7 +16,7 @@ import Switch from "@mui/material/Switch";
 
 // Material Dashboard 2 React themes
 import theme from "assets/theme";
-
+import GlobalStyles from "@mui/material/GlobalStyles";
 // Logo
 import AmpLogo from "assets/images/amp-logo.png";
 
@@ -143,6 +143,7 @@ function App() {
   return (
     <ThemeProvider theme={darkMode ? themeDark : theme}>
       <CssBaseline />
+      <GlobalStyles styles={{ "@font-face ": { "font-display": "swap" } }} />
       {layout === "dashboard" && (
         <>
           <Sidenav
