@@ -25,7 +25,7 @@ import { useMaterialUIController, setOpenRequestModel } from "context";
 import AddSession from "./add";
 import MySnackBar from "components/MySnackBar";
 
-function Sessions({ cours, collab }) {
+function Sessions({ request,cours, collab }) {
   const [controller, dispatch] = useMaterialUIController();
   const { openRequestModel, toastInfos } = controller;
 
@@ -33,7 +33,7 @@ function Sessions({ cours, collab }) {
   const [openSnackBar, setOpenSnackBar] = useState(false);
 
   const { columns, rows, SubmitButton, isChecked, notifications } =
-    sessionsTableData(cours, collab);
+    sessionsTableData(request,cours, collab);
 
   return (
     <>
