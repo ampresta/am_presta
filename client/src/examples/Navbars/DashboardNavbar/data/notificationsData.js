@@ -94,12 +94,15 @@ export default function Data() {
       setChangedNotif(dispatch, data.length);
     };
     getNotifs();
+   setUpdater(dispatch,!updater);
   }, []);
 
   const socket = useRef();
 
   useEffect(() => {
+
     const socket_ = new WebSocket("ws://127.0.0.1:8888/ws");
+
     socket_.onopen = function (e) {
       socket_.send(
         JSON.stringify({
@@ -123,8 +126,10 @@ export default function Data() {
         setChangedNotif(dispatch, data.length);
         setUpdater(dispatch, !updater);
       }
-    });
+    }
+    )
   }, [socket]);
+
 
   const notificationsData = [];
   if (Array.isArray(notifs) && notifs.length > 0) {

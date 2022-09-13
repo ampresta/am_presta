@@ -12,11 +12,13 @@ const checkSociete = require("../middlewares/checkSociete");
 router.use("/browsesoc", checkSociete);
 router.post("/browsesoc", browseNotifsSoc);
 
+router.use("/readallnotifsoc", checkSociete);
+router.post("/readallnotifsoc", readNotifsSoc);
+
 router.use("/browsecollab", checkCollaborateur);
 router.post("/browsecollab", browseNotifsCollab);
 
 router.post("/readallnotifcollab", readNotifsCollab);
-router.post("/readallnotifsoc", readNotifsSoc);
 
 router.post("/readonenotif", readOneNotif)
 

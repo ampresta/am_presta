@@ -3,7 +3,6 @@ const morgan = require("morgan");
 const express = require("express");
 const app = express();
 const server = require("http").createServer(app);
-
 const db = require("./config/database");
 const login = require("./routes/login");
 const register = require("./routes/register");
@@ -19,7 +18,6 @@ const logout = require("./controllers/logout/logout");
 const notifs = require("./routes/notifs");
 const profile = require("./routes/profile");
 const edit = require("./routes/edit");
-
 const email = require("./routes/email");
 const PORT = process.env.PORT;
 const multer = require("multer");
@@ -47,12 +45,26 @@ try {
 //     credentials: true,
 //   })
 // );
-app.use(cors({ credentials: true, origin: "http://127.0.0.1:3000" }));
+//
+var whitelist = ['https://www.institute-eca.ma:58355', 'https://institute-eca.ma:58355']
+var corsOptions = {
+	credentials:true,
+  origin: function (origin, callback) {
+	  console.log(origin)
+      if (whitelist.indexOf(origin) !== -1||!origin) {
+            callback(null, true)
+                } else {
+                      callback(new Error('Not allowed by CORS'))
+                          }
+                            }
+                            }
+
+app.use(cors(corsOptions));
 
 app.use(morgan("tiny"));
 app.use(express.json());
 require("dotenv").config();
-// app.set("trust proxy", true);
+app.set("trust proxy", true); 
 // FILE STORAGE
 const STORAGE = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -114,9 +126,10 @@ app.use("/api/media", express.static("media"));
 // Listener
 
 // Sockets
-function handler(req, res) {
-  res.writeHead(200).end({});
+function handler (req, res) {
+	  res.writeHead(200).end({});
 }
 //ioApp.listen(8888);
 
 server.listen(PORT, () => console.log(`Server listening on ${PORT}...`));
+

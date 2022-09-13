@@ -9,11 +9,13 @@ module.exports = async (req, res) => {
       include: [
         {
           model: Provider,
+		required:true,
           attributes: ["id", "nom", "image"],
         },
         {
           model: Societe,
           attributes: ["id", "name"],
+	  required: true,
         },
       ],
       where: {

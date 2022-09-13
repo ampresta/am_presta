@@ -1,18 +1,23 @@
-const sequelize = require("sequelize");
 const db = require("../../config/database");
 
-const { Notifications_object, Notification_change } = db.models;
+const { Notifications_object, Notification_change, Collaborateur } = db.models;
 
 module.exports = async (req, res) => {
-  const { SocieteId } = req.body;
-  if (!SocieteId) {
+  const { societe } = req;
+  if (!societe) {
     return res.status(403);
   }
   try {
+    const recepteur = await Collaborateur.findOne({
+      where: {
+        SocieteId: societe,
+        admin: true,
+      },
+    });
     Notifications_object.findAll({
       include: {
         model: Notification_change,
-        where: { SocieteId },
+        where: { recepteurId: recepteur.id },
       },
     }).then((notifs) => {
       if (notifs) {

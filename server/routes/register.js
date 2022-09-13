@@ -8,7 +8,7 @@ const signedin = require("../middlewares/signedin");
 
 // router.use(signedin);
 router.post("/", register);
-router.post("/superadmin", registerSuperAdmin);
+//router.post("/superadmin", registerSuperAdmin);
 router.get("/refreshtoken", refreshtoken);
 
 module.exports = router;
