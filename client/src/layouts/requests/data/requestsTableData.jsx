@@ -138,6 +138,7 @@ export default function Data() {
 
     sessions: openRequestModel && (
       <ChooseSession
+	request={tempCourseId}
         cours={confirmCourseId}
         collab={collabId}
         Id_Item={tempCourseId}
@@ -173,6 +174,7 @@ export default function Data() {
             onClick={() => {
               setcollabId(request.CollaborateurId);
               setconfirmCourseId(request.CourId);
+              setTempCourseId(request.id);
               setOpenRequestModel(dispatch, !openRequestModel);
             }}
           >

@@ -4,7 +4,7 @@ const Email = require("../../emails/Email");
 const { Cours, Collaborateur, Request, Session, Quota, Provider, User } =
   db.models;
 module.exports = async (req, res) => {
-  const { session, collab, request } = req.body;
+  const { session, collab, request, requestid } = req.body;
   if (!session || !collab) {
     return res.sendStatus(403);
   }
@@ -62,32 +62,20 @@ module.exports = async (req, res) => {
 
   const { nom } = await Session.findByPk(session);
 
-  if (request) {
-    const cours = await Cours.findOne({
-      attributes: ["nom"],
-      include: {
-        attributes: [],
-        model: Session,
-        where: {
-          id: session,
-        },
-      },
-    });
-
+  if (request && requestid) {
     const reqs = await Request.findOne({
       where: {
-        CourId: sess.CourId,
-        CollaborateurId: collab,
+        id: requestid,
       },
     });
+    console.log("collab request: ", reqs);
     reqs.status = "accepted";
     await reqs.save();
-    
+
     // Email.sendAccepteResponse(email, "accepted", cours.nom, nom);
   } else {
     // Email.sendAddToSession(email, nom);
   }
-
 
   return res.send({
     status: true,

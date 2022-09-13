@@ -7,10 +7,12 @@ module.exports = async (req, res) => {
     return res.sendStatus(404);
   }
   nom = nom.trim().toLowerCase();
-  const test_provider = await Provider.findAll({
-    nom,
+  console.log(nom);
+  const test_provider = await Provider.findOne({
+    where: { nom },
   });
   if (test_provider) {
+    console.log(test_provider);
     return res.send({ status: false, msg: "Provider Already Exists" });
   }
   try {
