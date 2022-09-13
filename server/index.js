@@ -86,12 +86,9 @@ const upload = multer({
     ) {
       cb(null, true);
     } else {
-      cb(null, false);
-      return cb(
-        false,
-        false,
-        new Error("Only .png, .jpg and .jpeg format allowed!")
-      );
+      // cb(null, false);
+      req.err = true;
+      return cb(false, false);
     }
   },
 });

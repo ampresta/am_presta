@@ -2,13 +2,7 @@ import { useEffect } from "react";
 import Loading from "examples/Loading";
 import { imageRoute, refreshRoute, baseURL } from "utils/APIRoutes";
 // react-router components
-import {
-  Routes,
-  Route,
-  Navigate,
-  useLocation,
-  BrowserRouter,
-} from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import SpecialRoute from "routes/SpecialRoute";
 // @mui material components
 import { ThemeProvider } from "@mui/material/styles";

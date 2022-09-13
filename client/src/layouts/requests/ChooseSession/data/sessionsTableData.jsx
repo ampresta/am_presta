@@ -18,7 +18,7 @@ import { baseURL, AcceptRequestRoute } from "utils/APIRoutes";
 import { useMaterialUIController, setToastInfos } from "context";
 import { AllSessionsCollabNotEnrolledRoute } from "utils/APIRoutes";
 
-export default function Data(cours, collab) {
+export default function Data(request, cours, collab) {
   const [controller, dispatch] = useMaterialUIController();
   const { updater, toastInfos } = controller;
 
@@ -87,10 +87,12 @@ export default function Data(cours, collab) {
   };
 
   sessions.SubmitButton = async () => {
+	  console.log("request",request);
     const { data } = await axios.post(AcceptRequestRoute, {
       session: checked,
       collab: collab,
       request: true,
+      requestid:request,
     });
     if (data.status) {
       navigate("/sessions");

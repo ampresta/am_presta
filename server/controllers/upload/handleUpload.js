@@ -1,11 +1,9 @@
-const { MulterError } = require("multer");
 const db = require("../../config/database");
 const { Collaborateur, Cours, Provider, Societe } = db.models;
 const upload = require("./upload");
-module.exports = async (req, res, err) => {
-  console.log("error", err, req.file);
-  if (err instanceof MulterError) {
-    return res.send({ status: false, msg: err });
+module.exports = async (req, res) => {
+  if (req.err) {
+    return res.send({ status: false, msg: "Not allowed Extension" });
   }
   if (!req.file) {
     return res.send({ status: false, msg: "No file sent" });
