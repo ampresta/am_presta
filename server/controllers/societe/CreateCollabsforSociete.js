@@ -96,7 +96,7 @@ module.exports = async (req, res) => {
   return res.send({
     status: errors.length == 0 ? true : false,
     msg:
-      errors.length == 0 ? "Users Created Successfully " : "Error check report",
+      errors.length == 0 ? "Users Created Successfully " : "Error check ",
     report: report ? report : null,
   });
 };
