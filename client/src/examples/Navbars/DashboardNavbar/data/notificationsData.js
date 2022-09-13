@@ -100,7 +100,9 @@ export default function Data() {
   const socket = useRef();
 
   useEffect(() => {
-     const socket_=new WebSocket("wss://institute-eca.ma:58355/ws")
+
+    const socket_ = new WebSocket("ws://127.0.0.1:8888/ws");
+
     socket_.onopen = function (e) {
       socket_.send(
         JSON.stringify({
@@ -127,7 +129,6 @@ export default function Data() {
     }
     )
   }, [socket]);
-
 
 
   const notificationsData = [];
