@@ -99,6 +99,7 @@ function CsvUploader({
         });
         openSnackBar(true);
       } else {
+	     console.log(data,report)
         report(data.report);
         setToastInfos(dispatch, { color: "warning", message: data.msg });
         openSnackBar(true);
@@ -171,6 +172,7 @@ function CsvUploader({
       });
       openSnackBar(true);
     } else {
+	    console.log(data,report)
       report(data.report);
       setToastInfos(dispatch, { color: "warning", message: data.msg });
       openSnackBar(true);
